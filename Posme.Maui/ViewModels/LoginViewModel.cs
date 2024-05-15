@@ -5,48 +5,54 @@ namespace Posme.Maui.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        string userName;
-        string password;
-        int idcompany;
+        private string _userName;
+        private string _password;
+        private bool _opcionPagar;
+        private int _idcompany;
 
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked, ValidateLogin);
-            PropertyChanged +=
-                (_, __) => LoginCommand.ChangeCanExecute();
+            PropertyChanged += (_, __) => LoginCommand.ChangeCanExecute();
         }
 
+        public Command PagarCheckCommand { get; set; }
+
+        public bool OpcionPagar
+        {
+            get => _opcionPagar;
+            set => SetProperty(ref _opcionPagar, value);
+        }
 
         public string UserName
         {
-            get => this.userName;
-            set => SetProperty(ref this.userName, value);
+            get => this._userName;
+            set => SetProperty(ref this._userName, value);
         }
 
         public string Password
         {
-            get => this.password;
-            set => SetProperty(ref this.password, value);
+            get => this._password;
+            set => SetProperty(ref this._password, value);
         }
 
         public int Idcompany
         {
-            get=> this.idcompany;
-            set=> SetProperty(ref this.idcompany, value);
+            get=> this._idcompany;
+            set=> SetProperty(ref this._idcompany, value);
         }
         public Command LoginCommand { get; }
-
-
-        async void OnLoginClicked()
+        
+        private async void OnLoginClicked()
         {
             await Navigation.NavigateToAsync<AboutViewModel>(true);
-            Password = String.Empty;
+            Password = string.Empty;
         }
-
-        bool ValidateLogin()
+        
+        private bool ValidateLogin()
         {
-            return !String.IsNullOrWhiteSpace(UserName)
-                && !String.IsNullOrWhiteSpace(Password);
+            return !string.IsNullOrWhiteSpace(UserName)
+                && !string.IsNullOrWhiteSpace(Password);
         }
     }
 }
