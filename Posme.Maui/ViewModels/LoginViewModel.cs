@@ -1,9 +1,13 @@
-﻿namespace Posme.Maui.ViewModels
+﻿using System;
+using Microsoft.Maui.Controls;
+
+namespace Posme.Maui.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
         string userName;
         string password;
+        int idcompany;
 
         public LoginViewModel()
         {
@@ -25,6 +29,11 @@
             set => SetProperty(ref this.password, value);
         }
 
+        public int Idcompany
+        {
+            get=> this.idcompany;
+            set=> SetProperty(ref this.idcompany, value);
+        }
         public Command LoginCommand { get; }
 
 

@@ -1,6 +1,7 @@
 ﻿using DevExpress.Maui;
 using DevExpress.Maui.Core;
-using Microsoft.Maui.Controls.Compatibility.Hosting;
+using Microsoft.Maui.Controls.Hosting;
+using Microsoft.Maui.Hosting;
 
 namespace Posme.Maui
 {

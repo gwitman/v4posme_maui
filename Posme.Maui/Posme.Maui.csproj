@@ -42,6 +42,8 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.21" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.21" />
+		<PackageReference Include="Microsoft.Maui.Controls.Core" Version="8.0.21" />
+		<PackageReference Include="Microsoft.Maui.Core" Version="8.0.21" />
 	</ItemGroup>
 
 
@@ -53,6 +55,8 @@
 		<PackageReference Include="DevExpress.Maui.Editors" Version="23.2.5" />
 		<PackageReference Include="DevExpress.Maui.DataGrid" Version="23.2.5" />
 		<PackageReference Include="DevExpress.Maui.Scheduler" Version="23.2.5" />
+		<PackageReference Include="SimpleToolkit.Core" Version="4.0.0" />
+		<PackageReference Include="SimpleToolkit.SimpleShell" Version="4.1.0" />
 		<TrimmableAssembly Include="DevExpress.Data.v23.2" />
 	</ItemGroup>
 </Project>

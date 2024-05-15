@@ -1,4 +1,5 @@
-﻿using Posme.Maui.Services;
+﻿using Microsoft.Maui.Controls;
+using Posme.Maui.Services;
 using Posme.Maui.Views;
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -14,7 +15,7 @@ namespace Posme.Maui
             DependencyService.Register<NavigationService>();
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             Routing.RegisterRoute(typeof(NewItemPage).FullName, typeof(NewItemPage));
-            MainPage = new MainPage();
+            MainPage = new LoginPage();
         }
     }
 }

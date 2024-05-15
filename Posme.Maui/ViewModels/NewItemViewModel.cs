@@ -1,4 +1,6 @@
-﻿using DevExpress.Maui.DataForm;
+﻿using System;
+using DevExpress.Maui.DataForm;
+using Microsoft.Maui.Controls;
 using Posme.Maui.Models;
 
 namespace Posme.Maui.ViewModels

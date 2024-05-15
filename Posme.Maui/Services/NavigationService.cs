@@ -1,8 +1,11 @@
-﻿using Posme.Maui.ViewModels;
+﻿using System;
+using Posme.Maui.ViewModels;
 using Posme.Maui.Views;
 using System.Globalization;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Maui.Controls;
 
 namespace Posme.Maui.Services
 {

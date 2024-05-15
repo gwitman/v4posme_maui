@@ -1,4 +1,5 @@
-﻿using Posme.Maui.Models;
+﻿using System.Collections.Generic;
+using Posme.Maui.Models;
 using System.Collections.ObjectModel;
 
 namespace Posme.Maui.ViewModels
