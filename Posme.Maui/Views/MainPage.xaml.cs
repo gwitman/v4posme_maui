@@ -12,7 +12,7 @@ namespace Posme.Maui.Views
 
         async void OnMenuItemClicked(object sender, EventArgs e)
         {
-            await Current.GoToAsync("//LoginPage");
+            Application.Current!.MainPage = new LoginPage();
         }
 
         void OnCloseClicked(object sender, EventArgs e)

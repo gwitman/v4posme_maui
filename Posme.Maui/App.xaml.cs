@@ -14,6 +14,8 @@ namespace Posme.Maui
             DependencyService.Register<NavigationService>();
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             Routing.RegisterRoute(typeof(NewItemPage).FullName, typeof(NewItemPage));
+            var dataBase = new DataBase();
+            _ = dataBase.Init();
             MainPage = new LoginPage();
         }
     }

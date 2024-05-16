@@ -1,22 +1,31 @@
-﻿namespace Posme.Maui.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using SQLite;
+
+namespace Posme.Maui.Models;
 
 public class TbUser
 {
-    /*companyID             int          default 0   not null,
-    branchID              int          default 0   not null,
-    userID                int auto_increment
-    primary key,
-        nickname              varchar(250)             null,
-    password              varchar(250)             null,
-    createdOn             varchar(250)             null,
-    isActive              tinyint(1)               null,
-    email                 varchar(250) default '0' not null,
-    createdBy             int          default 0   not null,
-    employeeID            int          default 0   not null,
-    useMobile             int          default 0   not null,
-    phone                 varchar(255)             null,
-    lastPayment           datetime                 null,
-    comercio              varchar(255)             null,
-    foto                  varchar(255)             null,
-    token_google_calendar varchar(1200)            null*/
+    public int CompanyId { get; set; }
+    public int BranchId { get; set; }
+    [PrimaryKey, AutoIncrement]
+    public int UserId { get; set; }
+    [Length(maximumLength:250,minimumLength:5)]
+    public string Nickname { get; set; }
+    [Length(maximumLength:250,minimumLength:5)]
+    public string Password { get; set; }
+    public string CreatedOn { get; set; }
+    public bool IsActive { get; set; }
+    [Length(maximumLength:250,minimumLength:5)]
+    public string Email { get; set; }
+    public int CreatedBy { get; set; }
+    public int EmployeeId { get; set; }
+    public int UseMobile { get; set; }
+    public string Phone { get; set; }
+    public DateTime LastPayment { get; set; }
+    [Length(maximumLength:250,minimumLength:5)]
+    public string Comercio { get; set; }
+    [Length(maximumLength:250,minimumLength:5)]
+    public string Foto { get; set; }
+    [Length(maximumLength:250,minimumLength:5)]
+    public string TokenGoogleCalendar { get; set; }
 }
