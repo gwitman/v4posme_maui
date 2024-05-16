@@ -8,9 +8,8 @@ public class DataBase
 
     public DataBase()
     {
-        _ = Init();
     }
-    private async Task Init()
+    public async Task Init()
     {
         if (Database is not null)
             return;
@@ -26,8 +25,7 @@ public class DataBase
                     (
                         companyID             int          default 0   not null,
                         branchID              int          default 0   not null,
-                        userID                int auto_increment
-                            primary key,
+                        userID                int auto_increment primary key,
                         nickname              varchar(250)             null,
                         password              varchar(250)             null,
                         createdOn             varchar(250)             null,

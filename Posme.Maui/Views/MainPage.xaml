@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:Posme.Maui.Views"
@@ -7,27 +8,32 @@
        xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
        ios:Page.UseSafeArea="true"
        x:Class="Posme.Maui.Views.MainPage">
-    <MenuItem Text="Close" IconImageSource="close" Clicked="OnCloseClicked"/>
+    <Shell.FlyoutHeader>
+        <Image Source="pm_png_144px.png" />
+    </Shell.FlyoutHeader>
+    <FlyoutItem Title="About" Icon="about.svg">
+        <ShellContent Title="About US" Icon="about.svg"
+                      ContentTemplate="{DataTemplate local:AboutPage}" />
 
-    <ShellContent Title="About" Icon="about"
-                  ContentTemplate="{DataTemplate local:AboutPage}"
-                  Route="Posme.Maui.Views.AboutPage"/>
+        <ShellContent Title="Charts" Icon="charts.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
 
-    <ShellContent Title="Browse" Icon="browse"
-                  ContentTemplate="{DataTemplate local:ItemsPage}" />
-    
-    <ShellContent Title="Scheduler" Icon="scheduler"
-                  ContentTemplate="{DataTemplate local:SchedulerPage}" />
-    <ShellContent Title="DataGrid" Icon="grid"
-                  ContentTemplate="{DataTemplate local:DataGridPage}"/>
-    <ShellContent Title="Charts" Icon="charts"
-                  ContentTemplate="{DataTemplate local:ChartsPage}" />
-    <ShellContent Title="Popup" Icon="popup"
-                  ContentTemplate="{DataTemplate local:PopupPage}" />
-    
-    <MenuItem Text="Logout" IconImageSource="logout" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked"/>
+    </FlyoutItem>
+    <FlyoutItem Title="PopUp" Icon="popup.svg">
+        <ShellContent Title="Pop Up" Icon="popup.svg"
+                      ContentTemplate="{DataTemplate local:PopupPage}" />
 
-    <TabBar>
-        <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
-    </TabBar>    
+        <ShellContent Title="About US" Icon="about.svg"
+                      ContentTemplate="{DataTemplate local:AboutPage}" />
+
+        <ShellContent Title="Charts" Icon="charts.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+
+    </FlyoutItem>
+
+    <MenuItem Text="Logout" 
+              IconImageSource="logout" 
+              StyleClass="MenuItemLayoutStyle" 
+              Clicked="OnMenuItemClicked" />
+
 </Shell>
