@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Posme.Maui.Services;
+﻿using Posme.Maui.Services;
 using Posme.Maui.Views;
 using Application = Microsoft.Maui.Controls.Application;
 

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Posme.Maui.Models;
+﻿using Posme.Maui.Models;
 using Posme.Maui.Services;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
 
 namespace Posme.Maui.ViewModels
 {

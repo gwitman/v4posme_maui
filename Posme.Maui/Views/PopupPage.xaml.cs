@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
-using Posme.Maui.ViewModels;
+﻿using Posme.Maui.ViewModels;
 
 namespace Posme.Maui.Views
 {

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Posme.Maui.ViewModels;
+﻿using Posme.Maui.ViewModels;
 
 namespace Posme.Maui.Services
 {

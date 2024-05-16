@@ -1,7 +1,4 @@
-﻿
-using Foundation;
-using Microsoft.Maui;
-using Microsoft.Maui.Hosting;
+﻿using Foundation;
 
 namespace Posme.Maui
 {

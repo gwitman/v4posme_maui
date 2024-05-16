@@ -24,10 +24,10 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#FFF" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#FFFFFF" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -40,10 +40,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.21" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.21" />
-		<PackageReference Include="Microsoft.Maui.Controls.Core" Version="8.0.21" />
-		<PackageReference Include="Microsoft.Maui.Core" Version="8.0.21" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
 	</ItemGroup>
 
 
@@ -55,8 +55,6 @@
 		<PackageReference Include="DevExpress.Maui.Editors" Version="23.2.5" />
 		<PackageReference Include="DevExpress.Maui.DataGrid" Version="23.2.5" />
 		<PackageReference Include="DevExpress.Maui.Scheduler" Version="23.2.5" />
-		<PackageReference Include="SimpleToolkit.Core" Version="4.0.0" />
-		<PackageReference Include="SimpleToolkit.SimpleShell" Version="4.1.0" />
 		<TrimmableAssembly Include="DevExpress.Data.v23.2" />
 	</ItemGroup>
 </Project>
