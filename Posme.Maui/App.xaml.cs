@@ -1,4 +1,5 @@
-﻿using Posme.Maui.Services;
+﻿using DevExpress.Maui.Core;
+using Posme.Maui.Services;
 using Posme.Maui.Views;
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -9,7 +10,6 @@ namespace Posme.Maui
         public App()
         {
             InitializeComponent();
-
             DependencyService.Register<MockDataStore>();
             DependencyService.Register<NavigationService>();
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
