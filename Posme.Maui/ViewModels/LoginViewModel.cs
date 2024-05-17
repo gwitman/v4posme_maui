@@ -1,4 +1,7 @@
-﻿using Posme.Maui.Views;
+﻿using System.Windows.Input;
+using DevExpress.Maui.Controls;
+using Posme.Maui.Services.Helpers;
+using Posme.Maui.Views;
 using static Microsoft.Maui.Controls.Application;
 
 namespace Posme.Maui.ViewModels
@@ -9,49 +12,74 @@ namespace Posme.Maui.ViewModels
         private string _password;
         private bool _opcionPagar;
         private string _company;
+        private bool _popupShow;
+        private string _mensaje = string.Empty;
+
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked, ValidateLogin);
-            PropertyChanged +=
-                (_, __) => LoginCommand.ChangeCanExecute();
+            PropertyChanged += (_, __) => LoginCommand.ChangeCanExecute();
+        }
+        public Command LoginCommand { get; }
+        
+        public string Mensaje
+        {
+            get => _mensaje;
+            set => SetProperty(ref _mensaje, value);
         }
 
+        public bool PopupShow
+        {
+            get => _popupShow;
+            set => SetProperty(ref _popupShow, value);
+        }
 
         public string UserName
         {
-            get => this._userName;
+            get => _userName;
             set => SetProperty(ref this._userName, value);
         }
 
         public string Password
         {
-            get => this._password;
+            get => _password;
             set => SetProperty(ref this._password, value);
         }
+
         public string Company
         {
-            get => this._company;
+            get => _company;
             set => SetProperty(ref this._company, value);
         }
+
         public bool OpcionPagar
         {
-            get => this._opcionPagar;
+            get => _opcionPagar;
             set => SetProperty(ref this._opcionPagar, value);
         }
-        public Command LoginCommand { get; }
 
-
-        async void OnLoginClicked()
+       private async void OnLoginClicked()
         {
-            //await Navigation.NavigateToAsync<AboutViewModel>(true);
+            VariablesGlobales.CompanyKey = Company.ToLower();
+            var restServiceUser = new RestServiceUser();
+            PopupShow = await restServiceUser.FindUser(UserName, Password);
+            if (!PopupShow)
+            {
+                await Current!.MainPage!.DisplayAlert("Inicio Sesion", Mensaje, "OK");
+                return;
+            }
+
+            Password = string.Empty;
             Current!.MainPage = new MainPage();
-            Password = String.Empty;
         }
-
-        bool ValidateLogin()
+        private bool ValidateLogin()
         {
-            return !String.IsNullOrWhiteSpace(UserName)
-                && !String.IsNullOrWhiteSpace(Password);
+            return !string.IsNullOrWhiteSpace(UserName)
+                   && !string.IsNullOrWhiteSpace(Password)
+                   && !string.IsNullOrWhiteSpace(Company)
+                   && UserName.Length > 3
+                   && Password.Length > 3
+                   && Company.Length > 3;
         }
     }
 }

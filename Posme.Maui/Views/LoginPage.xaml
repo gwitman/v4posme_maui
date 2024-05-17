@@ -1,56 +1,57 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:controls="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              ios:Page.UseSafeArea="true"
              x:Class="Posme.Maui.Views.LoginPage"
              BackgroundColor="White">
-    <VerticalStackLayout Padding="15" VerticalOptions="Center" >
-
+    <VerticalStackLayout Padding="15" VerticalOptions="Center">
 
         <dx:DXStackLayout Grid.Row="0" Margin="0,-50,0,0">
-            <dx:DXImage                    
-                     Margin="0"
-                     Source="pm_png_192px.png"/>
+            <dx:DXImage
+                Margin="0"
+                Source="pm_png_192px.png" />
         </dx:DXStackLayout>
 
         <dxe:TextEdit
             IconColor="#006E98"
             StartIcon="user.svg"
-            Text="{Binding UserName}" 
-            LabelText="Usuario" 
+            Text="{Binding UserName}"
+            LabelText="Usuario"
             Margin="0" />
 
-        <dxe:PasswordEdit 
+        <dxe:PasswordEdit
             IconColor="#006E98"
             StartIcon="password.svg"
-            Text="{Binding Password}" 
-            LabelText="Contraseña"  
+            Text="{Binding Password}"
+            LabelText="Contraseña"
             LabelFontSize="Small"
             Margin="0" />
 
         <dxe:CheckEdit
             HorizontalOptions="Start"
-                Margin="0,10,0,10" 
-                Padding="3"
-                Label="Recordar Usuario"/>
+            Margin="0,10,0,10"
+            Padding="3"
+            Label="Recordar Usuario" />
 
-        <dx:DXButton 
+        <dx:DXButton
             BackgroundColor="{StaticResource Secondary}"
             Icon="login.svg"
             Content="Iniciar Sesión"
-            Command="{Binding LoginCommand}" 
-            Margin="0,10,0,0">
-        </dx:DXButton>
+            Command="{Binding LoginCommand}"
+            Margin="0,10,0,0"/>
 
         <dxe:CheckEdit
             HorizontalOptions="Start"
             IsChecked="{Binding OpcionPagar}"
-                Margin="0,10,10,0"
-                Padding="3"
-                Label="Realizar pago..."/>
+            Margin="0,10,10,0"
+            Padding="3"
+            Label="Realizar pago..." />
 
         <dxe:ComboBoxEdit
             IsEnabled="{Binding OpcionPagar}"
@@ -67,7 +68,7 @@
             </dxe:ComboBoxEdit.ItemsSource>
         </dxe:ComboBoxEdit>
 
-        <dx:DXButton 
+        <dx:DXButton
             IsEnabled="{Binding OpcionPagar}"
             Icon="payment.svg"
             Content="Realizar Pago"
@@ -75,9 +76,10 @@
         </dx:DXButton>
 
         <dxe:TextEdit
-                Text="{Binding Company}" 
-                LabelText="Compañia" 
-                Margin="0,10,0,0" />
+            x:Name="TxtCompany"
+            Text="{Binding Company}"
+            LabelText="Compañia"
+            Margin="0,10,0,0" />
 
     </VerticalStackLayout>
 </ContentPage>
