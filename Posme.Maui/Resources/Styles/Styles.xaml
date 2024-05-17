@@ -1,22 +1,28 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ResourceDictionary 
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
     xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core">
 
     <Style TargetType="ActivityIndicator">
-        <Setter Property="Color" Value="{dx:ThemeColor Primary}" />
+        <Setter Property="Color" Value="{StaticResource Primary}" />
     </Style>
-
+    <Style TargetType="dxe:ComboBoxEdit">
+        <Setter Property="DropDownBackgroundColor" Value="{StaticResource Secondary}" />
+        <Setter Property="DropDownItemTextColor" Value="{StaticResource White}" />
+        <Setter Property="IconColor" Value="{StaticResource Primary}" />
+        <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
+    </Style>
     <Style TargetType="dx:DXButton">
         <Setter Property="TextColor" Value="{StaticResource White}" />
         <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-        <Setter Property="FontFamily" Value="OpenSansRegular"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Padding" Value="14,10"/>
-        <Setter Property="MinimumHeightRequest" Value="44"/>
-        <Setter Property="MinimumWidthRequest" Value="44"/>
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -32,22 +38,36 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
-   
+
     <Style TargetType="dxe:TextEdit">
-        <Setter Property="TextColor" Value="{dx:ThemeColor Primary}"/>
-        <Setter Property="BorderThickness" Value="1"      />
+        <Setter Property="TextColor" Value="{dx:ThemeColor Primary}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
+        <Setter Property="LabelColor" Value="{StaticResource Primary}" />
+        <Setter Property="FocusedLabelColor" Value="{StaticResource Primary}" />
+    </Style>
+    <Style TargetType="dxe:PasswordEdit">
+        <Setter Property="TextColor" Value="{dx:ThemeColor Primary}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
+        <Setter Property="LabelColor" Value="{StaticResource Primary}" />
+        <Setter Property="FocusedLabelColor" Value="{StaticResource Primary}" />
+    </Style>
+    <Style TargetType="dxe:CheckEdit">
+        <Setter Property="CheckBoxColor" Value="{StaticResource Primary}" />
+        <Setter Property="CheckedCheckBoxColor" Value="{StaticResource Secondary}" />
     </Style>
     <Style TargetType="CheckBox">
-        <Setter Property="Color" Value="{dx:ThemeColor Primary}" />
-        <Setter Property="MinimumHeightRequest" Value="44"/>
-        <Setter Property="MinimumWidthRequest" Value="44"/>
+        <Setter Property="Color" Value="{StaticResource Primary}" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="Color" Value="{dx:ThemeColor OnSurface, Alpha=0.38}" />
+                            <Setter Property="Color" Value="{dx:ThemeColor Primary, Alpha=0.38}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -75,7 +95,7 @@
     </Style>
 
     <Style x:Key="PrimaryText" TargetType="Label">
-        <Setter Property="TextColor" Value="{dx:ThemeColor OnSurface}" />
+        <Setter Property="TextColor" Value="{dx:ThemeColor Primary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="16" />
@@ -83,7 +103,7 @@
     </Style>
 
     <Style x:Key="SecondaryText" TargetType="Label">
-        <Setter Property="TextColor" Value="{dx:ThemeColor OnSurfaceVariant}" />
+        <Setter Property="TextColor" Value="{dx:ThemeColor Secondary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="14" />
@@ -203,17 +223,19 @@
     </Style>
 
     <Style TargetType="Page" ApplyToDerivedTypes="True">
-        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Padding" Value="0" />
         <Setter Property="BackgroundColor" Value="{dx:ThemeColor Surface}" />
     </Style>
     <Style Class="FlyoutItemLabelStyle" TargetType="Label">
-        <Setter Property="TextColor" Value="White" />
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
     </Style>
-
+    <Style TargetType="ShellContent">
+        
+    </Style>
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
         <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
         <Setter Property="ForegroundColor" Value="{StaticResource White}" />
-        <Setter Property="TitleColor" Value="{StaticResource White}" />
+        <Setter Property="TitleColor" Value="{StaticResource Primary}" />
         <Setter Property="NavBarHasShadow" Value="True" />
         <Setter Property="TabBarBackgroundColor" Value="{StaticResource Secondary}" />
         <Setter Property="TabBarForegroundColor" Value="{StaticResource White}" />

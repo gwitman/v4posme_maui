@@ -11,27 +11,102 @@
     <Shell.FlyoutHeader>
         <Image Source="pm_png_144px.png" />
     </Shell.FlyoutHeader>
-    <FlyoutItem Title="About" Icon="about.svg">
-        <ShellContent Title="About US" Icon="about.svg"
+    <FlyoutItem Title="Inicio" Icon="basic_home.svg">
+        <ShellContent Title="Inicio" Icon="basic_home.svg"
                       ContentTemplate="{DataTemplate local:AboutPage}" />
 
-        <ShellContent Title="Charts" Icon="charts.svg"
+        <ShellContent Title="Abono" Icon="coin.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Factura" Icon="invoice.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Parametros" Icon="parameters.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
 
     </FlyoutItem>
-    <FlyoutItem Title="PopUp" Icon="popup.svg">
-        <ShellContent Title="Pop Up" Icon="popup.svg"
-                      ContentTemplate="{DataTemplate local:PopupPage}" />
-
-        <ShellContent Title="About US" Icon="about.svg"
+    
+    <FlyoutItem Title="Descargar" Icon="download.svg">
+        
+        <ShellContent Title="Inicio" Icon="basic_home.svg"
                       ContentTemplate="{DataTemplate local:AboutPage}" />
 
-        <ShellContent Title="Charts" Icon="charts.svg"
+        <ShellContent Title="Abono" Icon="coin.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Factura" Icon="invoice.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Parametros" Icon="parameters.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
 
     </FlyoutItem>
 
-    <MenuItem Text="Logout" 
+    <FlyoutItem Title="Subir" Icon="upload.svg">
+        
+        <ShellContent Title="Inicio" Icon="basic_home.svg"
+                      ContentTemplate="{DataTemplate local:AboutPage}" />
+
+        <ShellContent Title="Abono" Icon="coin.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Factura" Icon="invoice.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Parametros" Icon="parameters.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+
+    </FlyoutItem>
+    
+    <FlyoutItem Title="Clientes" Icon="person.svg">
+        
+        <ShellContent Title="Inicio" Icon="basic_home.svg"
+                      ContentTemplate="{DataTemplate local:AboutPage}" />
+
+        <ShellContent Title="Abono" Icon="coin.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Factura" Icon="invoice.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Parametros" Icon="parameters.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+
+    </FlyoutItem>
+    
+    <FlyoutItem Title="Productos" Icon="products.svg">
+        
+        <ShellContent Title="Inicio" Icon="basic_home.svg"
+                      ContentTemplate="{DataTemplate local:AboutPage}" />
+
+        <ShellContent Title="Abono" Icon="coin.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Factura" Icon="invoice.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Parametros" Icon="parameters.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+
+    </FlyoutItem>
+    
+    <FlyoutItem Title="Impresora" Icon="printer.svg">
+        
+        <ShellContent Title="Inicio" Icon="basic_home.svg"
+                      ContentTemplate="{DataTemplate local:AboutPage}" />
+
+        <ShellContent Title="Abono" Icon="coin.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Factura" Icon="invoice.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+        
+        <ShellContent Title="Parametros" Icon="parameters.svg"
+                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+
+    </FlyoutItem>
+    
+    <MenuItem Text="Salir" 
               IconImageSource="logout" 
               StyleClass="MenuItemLayoutStyle" 
               Clicked="OnMenuItemClicked" />

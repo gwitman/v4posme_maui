@@ -15,13 +15,13 @@
                                 <VisualState x:Name="Normal"/>
                                 <VisualState x:Name="Selected">
                                     <VisualState.Setters>
-                                        <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{dx:ThemeColor Primary}" />                                         
+                                        <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />                                         
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateGroupList>
                     </VisualStateManager.VisualStateGroups>
-                    <dx:DXImage x:Name="Image" Source="{Binding Icon}" HorizontalOptions="Center" TintColor="{dx:ThemeColor Primary}"/>
+                    <dx:DXImage x:Name="Image" Source="{Binding Icon}" HorizontalOptions="Center" TintColor="{StaticResource Primary}"/>
                     <Label x:Name="FlyoutItemLabel" Text="{Binding Title}"
                         Grid.Column="1"
                         TextColor="{dx:ThemeColor OnSurface}"
