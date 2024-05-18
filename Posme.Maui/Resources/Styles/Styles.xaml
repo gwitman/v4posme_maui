@@ -40,14 +40,12 @@
     </Style>
 
     <Style TargetType="dxe:TextEdit">
-        <Setter Property="TextColor" Value="{dx:ThemeColor Primary}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
         <Setter Property="LabelColor" Value="{StaticResource Primary}" />
         <Setter Property="FocusedLabelColor" Value="{StaticResource Primary}" />
     </Style>
     <Style TargetType="dxe:PasswordEdit">
-        <Setter Property="TextColor" Value="{dx:ThemeColor Primary}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
         <Setter Property="LabelColor" Value="{StaticResource Primary}" />

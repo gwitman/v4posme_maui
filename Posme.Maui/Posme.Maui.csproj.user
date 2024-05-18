@@ -3,7 +3,11 @@
   <PropertyGroup>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <ActiveDebugFramework>net8.0-android</ActiveDebugFramework>
+<<<<<<< HEAD
     <ActiveDebugProfile>INFINIX X6516 (Android 12.0 - API 31)</ActiveDebugProfile>
+=======
+    <ActiveDebugProfile>Samsung SM-A145M (Android 13.0 - API 33)</ActiveDebugProfile>
+>>>>>>> 3fb29003e2100097421ad90f797013aa199436c1
     <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
     <DefaultDevice>pixel_5_-_api_34</DefaultDevice>
   </PropertyGroup>
