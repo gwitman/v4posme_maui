@@ -8,7 +8,7 @@ namespace Posme.Maui.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private readonly RestServiceUser _restServiceUser = new();
+        private readonly RestApiCoreAcountMLogin _restServiceUser = new();
         
         private string _userName;
         private string _password;
@@ -67,7 +67,7 @@ namespace Posme.Maui.ViewModels
 
         private void OnMensaje()
         {
-            Mensaje = PopupShow ? "" : @"Credenciales incorrectas o nombre de compañía no existe. Inténtalo nuevamente.";
+            Mensaje = PopupShow ? "" : Mensajes.mensajeCredencialesInvalida;
         }
 
         private bool ValidateError()

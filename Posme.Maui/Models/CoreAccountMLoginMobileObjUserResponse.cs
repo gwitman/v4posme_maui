@@ -5,7 +5,7 @@ using SQLite;
 namespace Posme.Maui.Models;
 
 [Table("tb_user")]
-public class ObjUser
+public class CoreAccountMLoginMobileObjUserResponse
 {
     public int? CompanyID { get; set; }
 
@@ -44,6 +44,7 @@ public class ObjUser
     [Length(maximumLength: 250, minimumLength: 5)]
     [Column("token_google_calendar")]
     public string? TokenGoogleCalendar { get; set; }
-    
+
+    [Column("remember")]
     public bool Remember { get; set; }
 }

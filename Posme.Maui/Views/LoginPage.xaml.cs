@@ -8,7 +8,7 @@ namespace Posme.Maui.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        private readonly RestServiceUser _restServiceUser = new();
+        private readonly RestApiCoreAcountMLogin _restServiceUser = new();
 
         public LoginPage()
         {
@@ -29,7 +29,7 @@ namespace Posme.Maui.Views
             await Navigation.PushModalAsync(new LoadingPage());
             var model = (LoginViewModel)BindingContext;
             VariablesGlobales.CompanyKey = model.Company.ToLower();
-            model.PopupShow = await _restServiceUser.FindUserApi(model.UserName, model.Password);
+            model.PopupShow = await _restServiceUser.LoginMobile(model.UserName, model.Password);
             if (!model.PopupShow)
             {
                 model.MensajeCommand.Execute(null);
