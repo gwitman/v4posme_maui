@@ -2,14 +2,12 @@
 using System.Net.Http.Json;
 using Newtonsoft.Json;
 using Posme.Maui.Models;
-
 namespace Posme.Maui.Services.Helpers;
 
 public class RestApiCoreAcountMLogin
 {
     private readonly HttpClient _httpClient = new();
-    private readonly DataBase _dataBase = new();
-
+    
     public async Task<bool> LoginMobile(string nickname, string password)
     {
         Constantes.UrlRequestLogin = Constantes.UrlRequestLogin.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
@@ -39,47 +37,5 @@ public class RestApiCoreAcountMLogin
         }
     }
 
-    public async Task InsertUser(CoreAccountMLoginMobileObjUserResponse objUser)
-    {
-        await _dataBase.Database.InsertAsync(objUser);
-    }
-
-    public async Task UpdateUser(CoreAccountMLoginMobileObjUserResponse objUser)
-    {
-        await _dataBase.Database.UpdateAsync(objUser);
-    }
-    public async Task OnRemember()
-    {
-        var listAsync = await _dataBase.Database.Table<CoreAccountMLoginMobileObjUserResponse>().ToListAsync();
-        if (listAsync.Count<=0)
-        {
-            return;
-        }
-        
-        foreach (var user in listAsync)
-        {
-            user.Remember = false;
-        }
-        
-        await _dataBase.Database.UpdateAllAsync(listAsync);
-    }
-
-    public async Task<CoreAccountMLoginMobileObjUserResponse> FindUserRemember()
-    {
-        return await _dataBase.Database.Table<CoreAccountMLoginMobileObjUserResponse>()
-            .Where(user => user.Remember)
-            .FirstOrDefaultAsync();
-    }
-
-    public async Task<CoreAccountMLoginMobileObjUserResponse> FindUserByNicknameAndPassword(string nickname, string password)
-    {
-        return await _dataBase.Database.Table<CoreAccountMLoginMobileObjUserResponse>()
-            .Where(user => user.Nickname==nickname && user.Password==password)
-            .FirstOrDefaultAsync();
-    }
     
-    public async Task<int> RowCount()
-    {
-        return await _dataBase.Database.Table<CoreAccountMLoginMobileObjUserResponse>().CountAsync();
-    }
 }

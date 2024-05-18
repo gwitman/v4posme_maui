@@ -2,6 +2,7 @@
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.ViewModels;
+using Posme.Maui.Services.Repository;
 
 namespace Posme.Maui.Views
 {
@@ -9,6 +10,7 @@ namespace Posme.Maui.Views
     public partial class LoginPage : ContentPage
     {
         private readonly RestApiCoreAcountMLogin _restServiceUser = new();
+        private readonly TbUser _tbUserRespository = new();
 
         public LoginPage()
         {
@@ -18,7 +20,7 @@ namespace Posme.Maui.Views
 
         protected override async void OnAppearing()
         {
-            var findUserRemember = await _restServiceUser.FindUserRemember();
+            var findUserRemember = await _tbUserRespository.PosmeFindUserRemember();
             if (findUserRemember is null) return;
             ((LoginViewModel)BindingContext).UserName = findUserRemember.Nickname;
             ((LoginViewModel)BindingContext).Password = findUserRemember.Password;
@@ -40,22 +42,22 @@ namespace Posme.Maui.Views
 
             if (ChkRemember.IsChecked!.Value)
             {
-                var findUserRemember = await _restServiceUser.FindUserByNicknameAndPassword(model.UserName, model.Password);
-                await _restServiceUser.OnRemember();
+                var findUserRemember = await _tbUserRespository.PosMeFindUserByNicknameAndPassword(model.UserName, model.Password);
+                await _tbUserRespository.PosMeOnRemember();
                 if (findUserRemember is not null)
                 {
                     findUserRemember.Remember = true;
-                    await _restServiceUser.UpdateUser(findUserRemember);
+                    await _tbUserRespository.PosMeUpdate(findUserRemember);
                 }
                 else
                 {
                     VariablesGlobales.User.Remember = true;
-                    await _restServiceUser.InsertUser(VariablesGlobales.User);
+                    await _tbUserRespository.PosMeInsert(VariablesGlobales.User);
                 }
             }
             else
             {
-                await _restServiceUser.OnRemember();
+                await _tbUserRespository.PosMeOnRemember();
             }
 
             await Navigation.PopModalAsync();
