@@ -6,3 +6,4 @@
 /.idea/.idea.v4posme_maui/.idea
 /Posme.Maui/obj
 /Posme.Maui/bin/Debug/net8.0-android
+/Posme.Maui/bin/Debug/net8.0-ios
