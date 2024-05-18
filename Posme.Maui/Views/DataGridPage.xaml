@@ -7,11 +7,13 @@
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              ios:Page.UseSafeArea="true"
              x:Class="Posme.Maui.Views.DataGridPage">
-    <dxg:DataGridView x:Name="grid" ItemsSource="{Binding Items}">
-        <dxg:DataGridView.Columns>
-            <dxg:TextColumn FieldName="Text" Caption="Text" />
-            <dxg:TextColumn FieldName="Description" Caption="Description" />
-            <dxg:DateColumn FieldName="StartTime" Caption="Time" DisplayFormat="h:mm tt" />
-        </dxg:DataGridView.Columns>
-    </dxg:DataGridView>
+    <ContentPage.Content>
+        <dxg:DataGridView x:Name="grid" ItemsSource="{Binding Items}">
+            <dxg:DataGridView.Columns>
+                <dxg:TextColumn FieldName="Text" Caption="Text" />
+                <dxg:TextColumn FieldName="Description" Caption="Description" />
+                <dxg:DateColumn FieldName="StartTime" Caption="Time" DisplayFormat="h:mm tt" />
+            </dxg:DataGridView.Columns>
+        </dxg:DataGridView>
+    </ContentPage.Content>
 </ContentPage>

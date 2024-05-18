@@ -9,6 +9,12 @@
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{StaticResource Primary}" />
     </Style>
+    <Style TargetType="Grid">
+        <Setter Property="Background" Value="{StaticResource White}" />
+    </Style>
+    <Style TargetType="ContentPage">
+        <Setter Property="Background" Value="{StaticResource White}" />
+    </Style>
     <Style TargetType="dxe:ComboBoxEdit">
         <Setter Property="DropDownBackgroundColor" Value="{StaticResource Secondary}" />
         <Setter Property="DropDownItemTextColor" Value="{StaticResource White}" />
@@ -40,18 +46,21 @@
     </Style>
 
     <Style TargetType="dxe:TextEdit">
+        <Setter Property="TextColor" Value="{StaticResource Black}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
         <Setter Property="LabelColor" Value="{StaticResource Primary}" />
         <Setter Property="FocusedLabelColor" Value="{StaticResource Primary}" />
     </Style>
     <Style TargetType="dxe:PasswordEdit">
+        <Setter Property="TextColor" Value="{StaticResource Black}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
         <Setter Property="LabelColor" Value="{StaticResource Primary}" />
         <Setter Property="FocusedLabelColor" Value="{StaticResource Primary}" />
     </Style>
     <Style TargetType="dxe:CheckEdit">
+        <Setter Property="LabelColor" Value="{StaticResource Black}" />
         <Setter Property="CheckBoxColor" Value="{StaticResource Primary}" />
         <Setter Property="CheckedCheckBoxColor" Value="{StaticResource Secondary}" />
     </Style>
@@ -125,7 +134,7 @@
     </Style>
 
     <Style TargetType="RefreshView">
-        <Setter Property="RefreshColor" Value="{dx:ThemeColor Primary}" />
+        <Setter Property="RefreshColor" Value="{StaticResource White}" />
     </Style>
 
     <Style TargetType="Slider">
@@ -222,23 +231,20 @@
 
     <Style TargetType="Page" ApplyToDerivedTypes="True">
         <Setter Property="Padding" Value="0" />
-        <Setter Property="BackgroundColor" Value="{dx:ThemeColor Surface}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource White}" />
     </Style>
     <Style Class="FlyoutItemLabelStyle" TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource Primary}" />
     </Style>
-    <Style TargetType="ShellContent">
-        
-    </Style>
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
         <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
         <Setter Property="ForegroundColor" Value="{StaticResource White}" />
-        <Setter Property="TitleColor" Value="{StaticResource Primary}" />
+        <Setter Property="TitleColor" Value="{StaticResource White}" />
         <Setter Property="NavBarHasShadow" Value="True" />
         <Setter Property="TabBarBackgroundColor" Value="{StaticResource Secondary}" />
         <Setter Property="TabBarForegroundColor" Value="{StaticResource White}" />
         <Setter Property="TabBarTitleColor" Value="{StaticResource White}" />
-        <Setter Property="TabBarUnselectedColor" Value="{dx:ThemeColor OnSurfaceVariant}" />
+        <Setter Property="TabBarUnselectedColor" Value="{StaticResource PrimaryDark}" />
     </Style>
 
     <Style TargetType="NavigationPage">
@@ -248,9 +254,9 @@
     </Style>
 
     <Style TargetType="TabbedPage">
-        <Setter Property="BarBackgroundColor" Value="{dx:ThemeColor Surface}" />
+        <Setter Property="BarBackgroundColor" Value="{StaticResource SecondaryDarkText}" />
         <Setter Property="BarTextColor" Value="{dx:ThemeColor OnSurface}" />
-        <Setter Property="UnselectedTabColor" Value="{dx:ThemeColor OnSurface}" />
+        <Setter Property="UnselectedTabColor" Value="{StaticResource PrimaryDark}" />
         <Setter Property="SelectedTabColor" Value="{dx:ThemeColor Primary}" />
     </Style>
 

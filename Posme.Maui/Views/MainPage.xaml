@@ -3,26 +3,29 @@
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:Posme.Maui.Views"
-       Shell.ItemTemplate="{StaticResource ShellMenuItemTemplate}"
-       Shell.MenuItemTemplate="{StaticResource ShellMenuItemTemplate}"
+       ItemTemplate="{StaticResource ShellMenuItemTemplate}"
+       MenuItemTemplate="{StaticResource ShellMenuItemTemplate}"
        xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
        ios:Page.UseSafeArea="true"
+       BackgroundColor="{StaticResource Primary}"
        x:Class="Posme.Maui.Views.MainPage">
     <Shell.FlyoutHeader>
-        <Image Source="pm_png_144px.png" />
+        <Frame BackgroundColor="White">
+            <Image Source="pm_png_144px.png" />
+        </Frame>
     </Shell.FlyoutHeader>
     <FlyoutItem Title="Inicio" Icon="basic_home.svg">
         <ShellContent Title="Inicio" Icon="basic_home.svg"
                       ContentTemplate="{DataTemplate local:AboutPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate local:DataGridPage}" />
         
         <ShellContent Title="Factura" Icon="invoice.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate local:SchedulerPage}" />
         
         <ShellContent Title="Parametros" Icon="parameters.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate local:ItemsPage}" />
 
     </FlyoutItem>
     
@@ -110,5 +113,11 @@
               IconImageSource="logout" 
               StyleClass="MenuItemLayoutStyle" 
               Clicked="OnMenuItemClicked" />
-
+    <Shell.FlyoutBackgroundColor>
+        White
+    </Shell.FlyoutBackgroundColor>
+    <Shell.FlyoutFooter>
+        <Grid RowDefinitions="100,*,Auto">
+        </Grid>
+    </Shell.FlyoutFooter>
 </Shell>
