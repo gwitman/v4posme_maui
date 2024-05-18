@@ -11,7 +11,7 @@ public class ObjUser
 
     public int? BranchID { get; set; }
 
-    [PrimaryKey, AutoIncrement] 
+    [PrimaryKey] 
     public int UserID { get; set; }
 
     [Length(maximumLength: 250, minimumLength: 5)]
@@ -42,6 +42,7 @@ public class ObjUser
     public string? Foto { get; set; }
 
     [Length(maximumLength: 250, minimumLength: 5)]
+    [Column("token_google_calendar")]
     public string? TokenGoogleCalendar { get; set; }
     
     public bool Remember { get; set; }

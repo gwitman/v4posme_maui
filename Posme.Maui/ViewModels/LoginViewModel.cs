@@ -8,6 +8,8 @@ namespace Posme.Maui.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
+        private readonly RestServiceUser _restServiceUser = new();
+        
         private string _userName;
         private string _password;
         private bool _opcionPagar;
@@ -61,17 +63,6 @@ namespace Posme.Maui.ViewModels
 
        private async void OnLoginClicked()
         {
-            /*VariablesGlobales.CompanyKey = Company.ToLower();
-            var restServiceUser = new RestServiceUser();
-            PopupShow = await restServiceUser.FindUser(UserName, Password);
-            if (!PopupShow)
-            {
-                await Current!.MainPage!.DisplayAlert("Inicio Sesion", Mensaje, "OK");
-                return;
-            }
-
-            Password = string.Empty;
-            Current!.MainPage = new MainPage();*/
         }
 
         private void OnMensaje()

@@ -8,9 +8,9 @@ namespace Posme.Maui.Services.Helpers;
 public class RestServiceUser
 {
     private readonly HttpClient _httpClient = new();
-    private readonly DataBase _dataBase = DependencyService.Get<DataBase>();
+    private readonly DataBase _dataBase = new();
 
-    public async Task<bool> FindUser(string nickname, string password)
+    public async Task<bool> FindUserApi(string nickname, string password)
     {
         VariablesGlobales.UrlRequestLogin =
             $"{VariablesGlobales.UrlBase}/v4posme/{VariablesGlobales.CompanyKey}/public/core_acount/loginMobile";
@@ -42,23 +42,27 @@ public class RestServiceUser
 
     public async Task InsertUser(ObjUser objUser)
     {
-        if (objUser.UserID != 0)
-        {
-            await _dataBase.Database.UpdateAsync(objUser);
-            return;
-        }
-
         await _dataBase.Database.InsertAsync(objUser);
     }
 
+    public async Task UpdateUser(ObjUser objUser)
+    {
+        await _dataBase.Database.UpdateAsync(objUser);
+    }
     public async Task OnRemember()
     {
         var listAsync = await _dataBase.Database.Table<ObjUser>().ToListAsync();
+        if (listAsync.Count<=0)
+        {
+            return;
+        }
+        
         foreach (var user in listAsync)
         {
             user.Remember = false;
-            await InsertUser(user);
         }
+        
+        await _dataBase.Database.UpdateAllAsync(listAsync);
     }
 
     public async Task<ObjUser> FindUserRemember()
@@ -68,6 +72,13 @@ public class RestServiceUser
             .FirstOrDefaultAsync();
     }
 
+    public async Task<ObjUser> FindUserByNicknameAndPassword(string nickname, string password)
+    {
+        return await _dataBase.Database.Table<ObjUser>()
+            .Where(user => user.Nickname==nickname && user.Password==password)
+            .FirstOrDefaultAsync();
+    }
+    
     public async Task<int> RowCount()
     {
         return await _dataBase.Database.Table<ObjUser>().CountAsync();
