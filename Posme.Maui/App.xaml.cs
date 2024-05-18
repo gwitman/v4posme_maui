@@ -10,13 +10,18 @@ namespace Posme.Maui
         public App()
         {
             InitializeComponent();
+            
+            MainPage = new LoginPage();
+        }
+
+        protected override void OnStart()
+        {
             DependencyService.Register<MockDataStore>();
             DependencyService.Register<NavigationService>();
+            DependencyService.Register<DataBase>();
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             Routing.RegisterRoute(typeof(NewItemPage).FullName, typeof(NewItemPage));
-            var dataBase = new DataBase();
-            _ = dataBase.Init();
-            MainPage = new LoginPage();
+            new DataBase().Init();
         }
     }
 }

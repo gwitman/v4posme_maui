@@ -5,11 +5,8 @@ namespace Posme.Maui.Services;
 public class DataBase
 {
     public SQLiteAsyncConnection Database;
-
-    public DataBase()
-    {
-    }
-    public async Task Init()
+    
+    public async void Init()
     {
         if (Database is not null)
             return;
@@ -29,7 +26,6 @@ public class DataBase
                         nickname              varchar(250)             null,
                         password              varchar(250)             null,
                         createdOn             varchar(250)             null,
-                        isActive              tinyint(1)               null,
                         email                 varchar(250) default '0' not null,
                         createdBy             int          default 0   not null,
                         employeeID            int          default 0   not null,
@@ -38,8 +34,8 @@ public class DataBase
                         lastPayment           datetime                 null,
                         comercio              varchar(255)             null,
                         foto                  varchar(255)             null,
-                        token_google_calendar varchar(1200)            null
-                    )
+                        remember              tinyint default 0          null
+                    );
                     """;
         await Database.ExecuteAsync(query);
     }

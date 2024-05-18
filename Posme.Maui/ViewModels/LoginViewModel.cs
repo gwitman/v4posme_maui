@@ -18,10 +18,11 @@ namespace Posme.Maui.ViewModels
         public LoginViewModel()
         {
             LoginCommand = new Command(OnLoginClicked, ValidateLogin);
+            MensajeCommand = new Command(OnMensaje, ValidateError);
             PropertyChanged += (_, __) => LoginCommand.ChangeCanExecute();
         }
         public Command LoginCommand { get; }
-        
+        public Command MensajeCommand { get; }
         public string Mensaje
         {
             get => _mensaje;
@@ -60,7 +61,7 @@ namespace Posme.Maui.ViewModels
 
        private async void OnLoginClicked()
         {
-            VariablesGlobales.CompanyKey = Company.ToLower();
+            /*VariablesGlobales.CompanyKey = Company.ToLower();
             var restServiceUser = new RestServiceUser();
             PopupShow = await restServiceUser.FindUser(UserName, Password);
             if (!PopupShow)
@@ -70,8 +71,19 @@ namespace Posme.Maui.ViewModels
             }
 
             Password = string.Empty;
-            Current!.MainPage = new MainPage();
+            Current!.MainPage = new MainPage();*/
         }
+
+        private void OnMensaje()
+        {
+            Mensaje = PopupShow ? "" : @"Credenciales incorrectas o nombre de compañía no existe. Inténtalo nuevamente.";
+        }
+
+        private bool ValidateError()
+        {
+            return PopupShow;
+        }
+
         private bool ValidateLogin()
         {
             return !string.IsNullOrWhiteSpace(UserName)
