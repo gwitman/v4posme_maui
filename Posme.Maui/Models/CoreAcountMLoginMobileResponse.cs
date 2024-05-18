@@ -1,7 +1,7 @@
 ﻿using SQLite;
 using System.ComponentModel.DataAnnotations;
-#nullable enable
 
+#nullable enable
 
 
 namespace Posme.Maui.Models;
@@ -9,8 +9,8 @@ namespace Posme.Maui.Models;
 public class CoreAcountMLoginMobileResponse
 {
     public bool Error { get; set; }
-    public string Message { get; set; }
-    public CoreAccountMLoginMobileObjUserResponse ObjUser { get; set; }
+    public string? Message { get; set; }
+    public CoreAccountMLoginMobileObjUserResponse? ObjUser { get; set; }
 }
 
 [Table("tb_user")]
@@ -20,8 +20,7 @@ public class CoreAccountMLoginMobileObjUserResponse
 
     public int? BranchID { get; set; }
 
-    [PrimaryKey]
-    public int UserID { get; set; }
+    [PrimaryKey] public int UserID { get; set; }
 
     [Length(maximumLength: 250, minimumLength: 5)]
     public string? Nickname { get; set; }
@@ -54,6 +53,7 @@ public class CoreAccountMLoginMobileObjUserResponse
     [Column("token_google_calendar")]
     public string? TokenGoogleCalendar { get; set; }
 
-    [Column("remember")]
-    public bool Remember { get; set; }
+    [Column("remember")] public bool Remember { get; set; }
+
+    [Column("company")] public string? Company { get; set; }
 }

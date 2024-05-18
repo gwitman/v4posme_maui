@@ -9,10 +9,10 @@
 		<RootNamespace>Posme.Maui</RootNamespace>
 
 		<!-- Display name -->
-		<ApplicationTitle>Posme.Maui</ApplicationTitle>
+		<ApplicationTitle>posMe</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.Posme.Maui</ApplicationId>
+		<ApplicationId>com.v4posme.app.Posme.Maui</ApplicationId>
 		<ApplicationIdGuid>1B4DCD25-5D2B-4407-A472-CE6DCB2779F0</ApplicationIdGuid>
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -63,6 +63,6 @@
 
 
 	<ItemGroup>
-	  <Folder Include="Services\Library\" />
+	  <Folder Include="ServicesLibrary\" />
 	</ItemGroup>
 </Project>

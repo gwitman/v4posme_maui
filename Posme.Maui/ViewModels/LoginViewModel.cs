@@ -67,7 +67,7 @@ namespace Posme.Maui.ViewModels
 
         private void OnMensaje()
         {
-            Mensaje = PopupShow ? "" : Mensajes.mensajeCredencialesInvalida;
+            //Mensaje = PopupShow ? "" : Mensajes.mensajeCredencialesInvalida;
         }
 
         private bool ValidateError()

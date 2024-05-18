@@ -24,6 +24,7 @@ namespace Posme.Maui.Views
             if (findUserRemember is null) return;
             ((LoginViewModel)BindingContext).UserName = findUserRemember.Nickname;
             ((LoginViewModel)BindingContext).Password = findUserRemember.Password;
+            ((LoginViewModel)BindingContext).Company = findUserRemember.Company;
         }
 
         private async void DXButtonBase_OnClicked(object sender, EventArgs e)
@@ -31,33 +32,52 @@ namespace Posme.Maui.Views
             await Navigation.PushModalAsync(new LoadingPage());
             var model = (LoginViewModel)BindingContext;
             VariablesGlobales.CompanyKey = model.Company.ToLower();
-            model.PopupShow = await _restServiceUser.LoginMobile(model.UserName, model.Password);
-            if (!model.PopupShow)
-            {
-                model.MensajeCommand.Execute(null);
-                Popup.Show();
-                await Navigation.PopModalAsync();
-                return;
-            }
-
+            var findUserRemember =
+                await _tbUserRespository.PosMeFindUserByNicknameAndPassword(model.UserName, model.Password);
             if (ChkRemember.IsChecked!.Value)
             {
-                var findUserRemember = await _tbUserRespository.PosMeFindUserByNicknameAndPassword(model.UserName, model.Password);
+                model.PopupShow = await _restServiceUser.LoginMobile(model.UserName, model.Password);
+                if (!model.PopupShow)
+                {
+                    model.Mensaje = model.PopupShow ? "" : Mensajes.MensajeCredencialesInvalida;
+                    model.MensajeCommand.Execute(null);
+                    Popup.Show();
+                    await Navigation.PopModalAsync();
+                    return;
+                }
+
                 await _tbUserRespository.PosMeOnRemember();
                 if (findUserRemember is not null)
                 {
                     findUserRemember.Remember = true;
+                    findUserRemember.Company = model.Company;
                     await _tbUserRespository.PosMeUpdate(findUserRemember);
                 }
                 else
                 {
+                    VariablesGlobales.User.Company = model.Company;
                     VariablesGlobales.User.Remember = true;
                     await _tbUserRespository.PosMeInsert(VariablesGlobales.User);
                 }
             }
             else
             {
-                await _tbUserRespository.PosMeOnRemember();
+                if (await _tbUserRespository.PosMeRowCount()<=0)
+                {
+                    model.Mensaje = Mensajes.MensajeSinDatosTabla;
+                    model.MensajeCommand.Execute(null);
+                    Popup.Show();
+                    await Navigation.PopModalAsync();
+                    return;
+                }
+                if (findUserRemember is null)
+                {
+                    model.Mensaje = Mensajes.MensajeCredencialesInvalida;
+                    model.MensajeCommand.Execute(null);
+                    Popup.Show();
+                    await Navigation.PopModalAsync();
+                    return;
+                }
             }
 
             await Navigation.PopModalAsync();

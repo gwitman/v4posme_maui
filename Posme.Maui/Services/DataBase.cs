@@ -39,7 +39,8 @@ public class DataBase
                         comercio              varchar(255)             null,
                         foto                  varchar(255)             null,
                         remember              tinyint default 0          null,
-                        token_google_calendar varchar(250) null
+                        token_google_calendar varchar(250) null,
+                        company              varchar(250) null
                     );
                     """;
         await Database.ExecuteAsync(query);
