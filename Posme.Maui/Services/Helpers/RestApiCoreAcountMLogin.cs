@@ -26,7 +26,7 @@ public class RestApiCoreAcountMLogin
             if (!response.IsSuccessStatusCode) return false;
             var responseBody = await response.Content.ReadAsStringAsync();
             var apiResponse = JsonConvert.DeserializeObject<CoreAcountMLoginMobileResponse>(responseBody);
-            if (apiResponse.ObjUser is null) return false;
+            if (apiResponse is null || apiResponse.Error) return false;
             VariablesGlobales.User = apiResponse.ObjUser;
             return true;
         }

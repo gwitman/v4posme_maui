@@ -11,6 +11,5 @@ public static class Constantes
     public static int CompanyId = 2;
     public const string UrlBase = "https://posme.net";
     public static string UrlRequestLogin = UrlBase + "/v4posme/{CompanyKey}/public/core_acount/loginMobile";
-    public static string UrlRequestDownload;
-
+    public static string UrlRequestDownload = UrlBase + "/v4posme/{CompanyKey}/public/app_mobile_api/getDataDownload";
 }

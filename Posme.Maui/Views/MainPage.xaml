@@ -31,8 +31,8 @@
     
     <FlyoutItem Title="Descargar" Icon="download.svg">
         
-        <ShellContent Title="Inicio" Icon="basic_home.svg"
-                      ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Descargar" Icon="download.svg"
+                      ContentTemplate="{DataTemplate local:DownloadPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />

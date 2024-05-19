@@ -1,6 +1,9 @@
 ﻿using DevExpress.Maui;
 using DevExpress.Maui.Core;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using Posme.Maui.Services;
+using Posme.Maui.Services.Repository;
+using Posme.Maui.Views;
 
 namespace Posme.Maui
 {
@@ -8,7 +11,8 @@ namespace Posme.Maui
     {
         public static MauiApp CreateMauiApp()
         {
-            ThemeManager.ApplyThemeToSystemBars = true;
+            //ThemeManager.ApplyThemeToSystemBars = true;
+
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
@@ -22,6 +26,14 @@ namespace Posme.Maui
                     fonts.AddFont("univia-pro-regular.ttf", "Univia-Pro");
                     fonts.AddFont("univia-pro-medium.ttf", "Univia-Pro Medium");
                 });
+            builder.Services.AddTransient<IRepositoryTbUser, RepositoryTbUser>();
+            builder.Services.AddTransient<IRepositoryTbCustomer, RepositoryTbCustomer>();
+            builder.Services.AddTransient<IRepositoryDocumentCreditAmortization, RepositoryDocumentCreditAmortization>();
+            builder.Services.AddTransient<IRepositoryDocumentCredit, RepositoryDocumentCredit>();
+            builder.Services.AddTransient<IRepositoryItems, RepositoryItems>();
+            builder.Services.AddTransient<IRepositoryParameters, RepositoryParameters>();
+            builder.Services.AddSingleton<DataBase>();
+            builder.Services.AddSingleton<DownloadPage>();
             DevExpress.Maui.Charts.Initializer.Init();
             DevExpress.Maui.CollectionView.Initializer.Init();
             DevExpress.Maui.Controls.Initializer.Init();

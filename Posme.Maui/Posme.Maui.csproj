@@ -21,6 +21,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<UseInterpreter Condition="$(TargetFramework.Contains('-ios')) AND '$(Configuration)' == 'Release'">True</UseInterpreter>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
@@ -41,6 +42,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0-preview.3.24172.9" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-preview.3.24172.9" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

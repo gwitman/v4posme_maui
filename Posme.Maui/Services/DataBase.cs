@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Posme.Maui.Models;
+using SQLite;
 
 namespace Posme.Maui.Services;
 
@@ -19,6 +20,14 @@ public class DataBase
         await CreateTableUser();
     }
 
+    public async void InitDownloadTables()
+    {
+        await Database.CreateTableAsync<CoreAcountCustomers>();
+        await Database.CreateTableAsync<CoreAcountDocumentCredit>();
+        await Database.CreateTableAsync<CoreAcountDocumentCreditAmortization>();
+        await Database.CreateTableAsync<CoreAcountItems>();
+        await Database.CreateTableAsync<CoreAcountParameters>();
+    }
     private async Task CreateTableUser()
     {
         var query = """

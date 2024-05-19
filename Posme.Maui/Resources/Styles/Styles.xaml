@@ -191,28 +191,28 @@
     </Style>
 
     <Style x:Key="SwitchStyle-Android" TargetType="Switch">
-        <Setter Property="OnColor" Value="{dx:ThemeColor Primary}" />
-        <Setter Property="ThumbColor" Value="{dx:ThemeColor OnPrimary}" />
+        <Setter Property="OnColor" Value="{StaticResource Primary}" />
+        <Setter Property="ThumbColor" Value="{StaticResource Secondary}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="OnColor" Value="{dx:ThemeColor SurfaceVariant}" />
-                            <Setter Property="ThumbColor" Value="{dx:ThemeColor Outline}" />
+                            <Setter Property="OnColor" Value="{StaticResource PrimaryDark}" />
+                            <Setter Property="ThumbColor" Value="{StaticResource Tertiary}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="On">
                         <VisualState.Setters>
-                            <Setter Property="OnColor" Value="{dx:ThemeColor Primary, Alpha=0.38}" />
-                            <Setter Property="ThumbColor" Value="{dx:ThemeColor Primary}" />
+                            <Setter Property="OnColor" Value="{StaticResource Primary}" />
+                            <Setter Property="ThumbColor" Value="{StaticResource Secondary}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Off">
                         <VisualState.Setters>
-                            <Setter Property="ThumbColor" Value="{dx:ThemeColor Outline}" />
-                            <Setter Property="OnColor" Value="{dx:ThemeColor SurfaceVariant}" />
+                            <Setter Property="OnColor" Value="{StaticResource PrimaryDark}" />
+                            <Setter Property="ThumbColor" Value="{StaticResource Tertiary}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -248,7 +248,7 @@
     </Style>
 
     <Style TargetType="NavigationPage">
-        <Setter Property="BarBackgroundColor" Value="{dx:ThemeColor Primary}" />
+        <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
         <Setter Property="BarTextColor" Value="{dx:ThemeColor OnSurface}" />
         <Setter Property="IconColor" Value="{dx:ThemeColor OnSecondary}" />
     </Style>
