@@ -22,11 +22,11 @@ public class DataBase
 
     public async void InitDownloadTables()
     {
-        await Database.CreateTableAsync<CoreAcountCustomers>();
-        await Database.CreateTableAsync<CoreAcountDocumentCredit>();
-        await Database.CreateTableAsync<CoreAcountDocumentCreditAmortization>();
-        await Database.CreateTableAsync<CoreAcountItems>();
-        await Database.CreateTableAsync<CoreAcountParameters>();
+        await Database.CreateTableAsync<AppMobileApiMGetDataDownloadCustomerResponse>();
+        await Database.CreateTableAsync<AppMobileApiMGetDataDownloadItemsResponse>();
+        await Database.CreateTableAsync<AppMobileApiMGetDataDownloadParametersResponse>();
+        await Database.CreateTableAsync<AppMobileApiMGetDataDownloadDocumentCreditResponse>();
+        await Database.CreateTableAsync<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>();
     }
     private async Task CreateTableUser()
     {

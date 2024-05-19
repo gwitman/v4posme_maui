@@ -2,8 +2,8 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public interface IRepositoryTbCustomer : IRepositoryFacade<CoreAcountCustomers>
+public interface IRepositoryTbCustomer : IRepositoryFacade<AppMobileApiMGetDataDownloadCustomerResponse>
 {
-    Task<CoreAcountCustomers> PosMeFindCustomer(string customerNumber);
+    Task<AppMobileApiMGetDataDownloadCustomerResponse> PosMeFindCustomer(string customerNumber);
 
 }

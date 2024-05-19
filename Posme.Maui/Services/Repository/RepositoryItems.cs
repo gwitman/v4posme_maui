@@ -2,6 +2,6 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public class RepositoryItems(DataBase dataBase) : RepositoryFacade<CoreAcountItems>(dataBase),IRepositoryItems
+public class RepositoryItems(DataBase dataBase) : RepositoryFacade<AppMobileApiMGetDataDownloadItemsResponse>(dataBase),IRepositoryItems
 {
 }

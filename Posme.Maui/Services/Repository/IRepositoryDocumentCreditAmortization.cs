@@ -2,7 +2,7 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public interface IRepositoryDocumentCreditAmortization : IRepositoryFacade<CoreAcountDocumentCreditAmortization>
+public interface IRepositoryDocumentCreditAmortization : IRepositoryFacade<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>
 {
     
 }

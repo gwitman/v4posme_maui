@@ -2,6 +2,6 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public class RepositoryParameters(DataBase dataBase) : RepositoryFacade<CoreAcountParameters>(dataBase), IRepositoryParameters
+public class RepositoryParameters(DataBase dataBase) : RepositoryFacade<AppMobileApiMGetDataDownloadParametersResponse>(dataBase), IRepositoryParameters
 {
 }

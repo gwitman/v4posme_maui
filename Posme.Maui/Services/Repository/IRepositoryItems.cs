@@ -2,7 +2,7 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public interface IRepositoryItems : IRepositoryFacade<CoreAcountItems>
+public interface IRepositoryItems : IRepositoryFacade<AppMobileApiMGetDataDownloadItemsResponse>
 {
     
 }

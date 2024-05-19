@@ -2,6 +2,6 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public class RepositoryDocumentCredit(DataBase dataBase) : RepositoryFacade<CoreAcountDocumentCredit>(dataBase),IRepositoryDocumentCredit
+public class RepositoryDocumentCredit(DataBase dataBase) : RepositoryFacade<AppMobileApiMGetDataDownloadDocumentCreditResponse>(dataBase),IRepositoryDocumentCredit
 {
 }

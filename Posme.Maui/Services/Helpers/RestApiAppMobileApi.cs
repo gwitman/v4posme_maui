@@ -5,7 +5,7 @@ using Posme.Maui.Services.Repository;
 
 namespace Posme.Maui.Services.Helpers;
 
-public class RestApiDownload(IServiceProvider services)
+public class RestApiAppMobileApi(IServiceProvider services)
 {
     private readonly HttpClient _httpClient = new();
     private readonly IRepositoryTbCustomer? _repositoryTbCustomer = services.GetService<IRepositoryTbCustomer>();
@@ -14,7 +14,7 @@ public class RestApiDownload(IServiceProvider services)
     private readonly IRepositoryDocumentCreditAmortization? _repositoryDocumentCreditAmortization = services.GetService<IRepositoryDocumentCreditAmortization>();
     private readonly IRepositoryDocumentCredit? _repositoryDocumentCredit = services.GetService<IRepositoryDocumentCredit>();
 
-    public async Task<bool> DownloadData()
+    public async Task<bool> GetDataDownload()
     {
         Constantes.UrlRequestDownload = Constantes.UrlRequestDownload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
         if (VariablesGlobales.User is null)
@@ -38,8 +38,9 @@ public class RestApiDownload(IServiceProvider services)
             var response = await _httpClient.SendAsync(req);
             if (!response.IsSuccessStatusCode) return false;
             var responseBody = await response.Content.ReadAsStringAsync();
-            var apiResponse = JsonConvert.DeserializeObject<CoreAcountMDownloadResponse>(responseBody);
+            var apiResponse = JsonConvert.DeserializeObject<AppMobileApiMGetDataDownloadResponse>(responseBody);
             if (apiResponse is null || apiResponse.Error) return false;
+
             var taskCustomer= _repositoryTbCustomer!.PosMeInsertAll(apiResponse.ListCustomer);
             var taskItem= _repositoryItems!.PosMeInsertAll(apiResponse.ListItem);
             var taskDocumentCreditAmortization= _repositoryDocumentCreditAmortization!.PosMeInsertAll(apiResponse.ListDocumentCreditAmortization);

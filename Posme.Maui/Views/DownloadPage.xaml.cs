@@ -11,14 +11,14 @@ namespace Posme.Maui.Views;
 
 public partial class DownloadPage : ContentPage
 {
-    private readonly RestApiDownload _restApiDownload;
+    private readonly RestApiAppMobileApi _restApiDownload;
 
     private readonly IServiceProvider _services;
     
     public DownloadPage(IServiceProvider services)
     {
         _services = services; 
-        _restApiDownload = new RestApiDownload(services);
+        _restApiDownload = new RestApiAppMobileApi(services);
         InitializeComponent();
         BindingContext = new DownloadViewModel();
     }
@@ -31,6 +31,7 @@ public partial class DownloadPage : ContentPage
     private async void DXButtonBase_OnClicked(object? sender, EventArgs e)
     {
         await Navigation.PushModalAsync(new LoadingPage());
+
         if (VariablesGlobales.CantidadTransacciones != 0)
         {
             ((DownloadViewModel)BindingContext).Mensaje = Mensajes.MensajeDownloadCantidadTransacciones;
@@ -39,7 +40,8 @@ public partial class DownloadPage : ContentPage
             await Navigation.PopModalAsync();
             return;
         }
-        var result = await _restApiDownload.DownloadData();
+
+        var result = await _restApiDownload.GetDataDownload();
         if (result)
         {
             ((DownloadViewModel)BindingContext).PopupBackgroundColor = Colors.Green;

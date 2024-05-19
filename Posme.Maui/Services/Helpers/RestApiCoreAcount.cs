@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Posme.Maui.Models;
 namespace Posme.Maui.Services.Helpers;
 
-public class RestApiCoreAcountMLogin
+public class RestApiCoreAcount
 {
     private readonly HttpClient _httpClient = new();
     

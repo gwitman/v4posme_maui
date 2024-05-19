@@ -8,8 +8,8 @@ namespace Posme.Maui.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private readonly RestApiCoreAcountMLogin _restServiceUser = new();
-
+        private readonly RestApiCoreAcount _restServiceUser = new();
+        
         private string _userName;
         private string _password;
         private bool _opcionPagar;
@@ -23,10 +23,8 @@ namespace Posme.Maui.ViewModels
             MensajeCommand = new Command(OnMensaje, ValidateError);
             PropertyChanged += (_, __) => LoginCommand.ChangeCanExecute();
         }
-
         public Command LoginCommand { get; }
         public Command MensajeCommand { get; }
-
         public string Mensaje
         {
             get => _mensaje;
@@ -63,7 +61,7 @@ namespace Posme.Maui.ViewModels
             set => SetProperty(ref this._opcionPagar, value);
         }
 
-        private async void OnLoginClicked()
+       private async void OnLoginClicked()
         {
         }
 
