@@ -1,6 +1,6 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="{Binding Title}"
+             Title="Inicio"
              xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:dxc="clr-namespace:DevExpress.Maui.Charts;assembly=DevExpress.Maui.Charts"
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
@@ -13,20 +13,49 @@
              x:Class="Posme.Maui.Views.AboutPage">
     <Grid RowDefinitions="100,*,Auto">
         <Grid>
-            <Image Source="pm_png_144px.png" HorizontalOptions="Center" Aspect="AspectFit" />
+            <Image Source="pm_png_144px.png"
+                   HorizontalOptions="Center"
+                   Aspect="AspectFit" />
         </Grid>
-        <Grid Grid.Row="1" RowDefinitions="Auto, Auto, Auto" Padding="25,25,25,15" RowSpacing="10">
+        <Grid Grid.Row="1"
+              RowDefinitions="Auto, Auto, Auto"
+              Padding="25,25,25,15"
+              RowSpacing="10">
             <Label Grid.Row="0"
-                   Style="{StaticResource PrimaryText}"
-                   Text="Get the most out of your mobile hardware 
-            and OS" />
-            <Label Grid.Row="1" Style="{StaticResource SecondaryText}"
-                   Text="All .NET MAUI UI controls are written in Objective-C for iOS and Java/Kotlin for Android and are seamlessly integrated with the .NET MAUI platform." />
-            <Label
-                Grid.Row="2"
-                Style="{StaticResource SecondaryText}"
-                Text="DevExpress UI controls abstract the complexities of native mobile development and deliver unmatched performance, usability, and functionality."
-                Padding="0,0,0,7" />
+                   HorizontalTextAlignment="Center"
+                   FontAttributes="Bold"
+                   FontSize="15"
+                   Text="Optimiza tu Tiempo con Prioridades Claras" />
+            <Label Grid.Row="1"
+                   Text="En el mundo de los negocios, la gestión eficaz del tiempo es crucial. Aquí tienes algunos consejos para mejorar tu productividad:" />
+            <Label Grid.Row="2">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="1. Define Prioridades: " FontAttributes="Bold" />
+                        <Span
+                            Text="Cada mañana, haz una lista de tareas y clasifícalas por importancia y urgencia. Enfócate primero en las tareas que más impacto tienen." />
+                        <Span Text="&#10;" />
+                        <Span Text="2. Evita la Multitarea: " FontAttributes="Bold" />
+                        <Span
+                            Text="En lugar de hacer varias cosas a la vez, concéntrate en una sola tarea y complétala antes de pasar a la siguiente. Esto mejora la calidad de tu trabajo y reduce el estrés." />
+                        <Span Text="&#10;" />
+                        <Span Text="3. Establece Plazos Realistas: " FontAttributes="Bold" />
+                        <Span
+                            Text="Asigna tiempos específicos para completar cada tarea. Los plazos ayudan a mantener el ritmo y evitar la procrastinación." />
+                        <Span Text="&#10;" />
+                        <Span Text="4. Descansa Adecuadamente: " FontAttributes="Bold" />
+                        <Span
+                            Text="Tomar pequeños descansos durante tu jornada laboral puede aumentar tu productividad. El cerebro necesita pausas para mantenerse fresco y enfocado." />
+                        <Span Text="&#10;" />
+                        <Span
+                            Text="Recuerda, la clave de la eficiencia no es hacer más en menos tiempo, sino hacer lo correcto en el momento adecuado." />
+                        <Span Text="&#10;" />
+                        <Span Text="&#10;" />
+                        <Span Text="¡Implementa estos consejos y observa cómo mejora tu gestión del tiempo y productividad!" 
+                              FontAttributes="Bold"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
         </Grid>
     </Grid>
 </ContentPage>

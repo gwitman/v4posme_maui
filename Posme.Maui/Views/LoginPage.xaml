@@ -13,11 +13,20 @@
     <VerticalStackLayout Padding="15" VerticalOptions="Center">
         <dxco:DXPopup x:Name="Popup"
                       AllowScrim="True"
+                      BackgroundColor="Red"
+                      VerticalAlignment="Bottom"
                       ScrimColor="#b3adb9ce">
             <StackLayout WidthRequest="250">
-                <Label Text="{Binding Mensaje}" Margin="10, 10"/>
-                <Button Text="Aceptar" Clicked="ClosePopup_Clicked" 
-                        BackgroundColor="Transparent" TextColor="#343434"></Button>
+                <Label Text="{Binding Mensaje}" 
+                       FontAttributes="Bold"
+                       FontSize="15"
+                       TextColor="{StaticResource White}"
+                       Margin="20, 20"/>
+                <Button Text="Aceptar" 
+                        Clicked="ClosePopup_Clicked" 
+                        BackgroundColor="{StaticResource Gray600}" 
+                        FontSize="20"
+                        TextColor="White" />
             </StackLayout>
         </dxco:DXPopup>
         <dx:DXStackLayout Grid.Row="0" Margin="0,-50,0,0">
@@ -69,11 +78,9 @@
             StartIcon="money.svg">
             <dxe:ComboBoxEdit.ItemsSource>
                 <x:Array Type="{x:Type x:Decimal}">
-                    <x:Decimal>0</x:Decimal>
                     <x:Decimal>5</x:Decimal>
                     <x:Decimal>10</x:Decimal>
-                    <x:Decimal>20</x:Decimal>
-                    <x:Decimal>30</x:Decimal>
+                    <x:Decimal>15</x:Decimal>
                 </x:Array>
             </dxe:ComboBoxEdit.ItemsSource>
         </dxe:ComboBoxEdit>
