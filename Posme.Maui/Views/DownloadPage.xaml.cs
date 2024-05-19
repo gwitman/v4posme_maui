@@ -31,6 +31,14 @@ public partial class DownloadPage : ContentPage
     private async void DXButtonBase_OnClicked(object? sender, EventArgs e)
     {
         await Navigation.PushModalAsync(new LoadingPage());
+        if (VariablesGlobales.CantidadTransacciones != 0)
+        {
+            ((DownloadViewModel)BindingContext).Mensaje = Mensajes.MensajeDownloadCantidadTransacciones;
+            ((DownloadViewModel)BindingContext).PopupBackgroundColor = Colors.Red;
+            Popup.Show();
+            await Navigation.PopModalAsync();
+            return;
+        }
         var result = await _restApiDownload.DownloadData();
         if (result)
         {

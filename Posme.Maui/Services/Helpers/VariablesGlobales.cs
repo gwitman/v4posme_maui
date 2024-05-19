@@ -5,4 +5,5 @@ public static class VariablesGlobales
 {
     public static string CompanyKey;
     public static CoreAccountMLoginMobileObjUserResponse? User;
+    public static int CantidadTransacciones = 0;
 }
