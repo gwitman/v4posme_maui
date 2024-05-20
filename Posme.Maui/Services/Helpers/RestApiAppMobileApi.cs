@@ -40,7 +40,13 @@ public class RestApiAppMobileApi(IServiceProvider services)
             var responseBody = await response.Content.ReadAsStringAsync();
             var apiResponse = JsonConvert.DeserializeObject<AppMobileApiMGetDataDownloadResponse>(responseBody);
             if (apiResponse is null || apiResponse.Error) return false;
-
+            var customerDeleteAll = _repositoryTbCustomer!.PosMeDeleteAll();
+            var itemsDeleteAll = _repositoryItems!.PosMeDeleteAll();
+            var documentCreditAmortizationDeleteAll = _repositoryDocumentCreditAmortization!.PosMeDeleteAll();
+            var parametersDeleteAll = _repositoryParameters!.PosMeDeleteAll();
+            var documentCreditDeleteAll = _repositoryDocumentCredit!.PosMeDeleteAll();
+            await Task.WhenAll([customerDeleteAll, itemsDeleteAll, documentCreditAmortizationDeleteAll, parametersDeleteAll, documentCreditDeleteAll]);
+            
             var taskCustomer= _repositoryTbCustomer!.PosMeInsertAll(apiResponse.ListCustomer);
             var taskItem= _repositoryItems!.PosMeInsertAll(apiResponse.ListItem);
             var taskDocumentCreditAmortization= _repositoryDocumentCreditAmortization!.PosMeInsertAll(apiResponse.ListDocumentCreditAmortization);
