@@ -21,7 +21,7 @@ namespace Posme.Maui.Services
 
         public async Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel
         {
-            await InternalNavigateToAsync(typeof(TViewModel), parameter, false);
+            await InternalNavigateToAsync(typeof(TViewModel), parameter);
         }
 
         public async Task GoBackAsync()

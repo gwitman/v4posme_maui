@@ -1,41 +1,59 @@
-﻿using System.Web;
+﻿using System.Diagnostics;
+using System.Web;
+using Posme.Maui.Services.Repository;
 
 namespace Posme.Maui.ViewModels
 {
     public class ItemDetailViewModel : BaseViewModel, IQueryAttributable
     {
-        public const string ViewName = "ItemDetailPage";
+        private readonly IRepositoryItems? _repositoryItems;
+        private string? _barCode;
+        private string? _name;
+        private string? _itemNumber;
+        private decimal? _precioPublico;
 
-        string text;
-        string description;
-
-
-        public string Id { get; set; }
-
-        public string Text
+        public ItemDetailViewModel(IServiceProvider serviceProvider)
         {
-            get => this.text;
-            set => SetProperty(ref this.text, value);
+            _repositoryItems = serviceProvider.GetService<IRepositoryItems>();
         }
 
-        public string Description
+        public decimal? PrecioPublico
         {
-            get => this.description;
-            set => SetProperty(ref this.description, value);
+            get => _precioPublico;
+            set => SetProperty(ref _precioPublico, value);
+        }
+
+        public string ItemNumber
+        {
+            get => _itemNumber;
+            set => SetProperty(ref _itemNumber, value);
+        }
+
+        public string BarCode
+        {
+            get => this._barCode;
+            set => SetProperty(ref this._barCode, value);
+        }
+
+        public string Name
+        {
+            get => this._name;
+            set => SetProperty(ref this._name, value);
         }
 
         public async Task LoadItemId(string itemId)
         {
             try
             {
-                var item = await DataStore.GetItemAsync(itemId);
-                Id = item.Id;
-                Text = item.Text;
-                Description = item.Description;
+                var item = await _repositoryItems!.PosMeFindByItemNumber(itemId);
+                ItemNumber = item.ItemNumber!;
+                BarCode = item.BarCode!;
+                Name = item.Name!;
+                PrecioPublico = item.PrecioPublico;
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                System.Diagnostics.Debug.WriteLine("Failed to Load Item");
+                Debug.WriteLine(exception);
             }
         }
 
@@ -46,7 +64,7 @@ namespace Posme.Maui.ViewModels
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            string id = HttpUtility.UrlDecode(query["id"] as string);
+            var id = HttpUtility.UrlDecode(query["id"] as string);
             await LoadItemId(id);
         }
     }

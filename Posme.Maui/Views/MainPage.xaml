@@ -79,8 +79,8 @@
     
     <FlyoutItem Title="Productos" Icon="products.svg">
         
-        <ShellContent Title="Inicio" Icon="basic_home.svg"
-                      ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Productos" Icon="products.svg"
+                      ContentTemplate="{DataTemplate local:ItemsPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />

@@ -8,23 +8,6 @@
              x:Class="Posme.Maui.Views.ChartsPage">
 
     <ContentPage.Content>
-        <Grid RowDefinitions="Auto, *" BackgroundColor="White">
-            <dxc:PieChartView x:Name="chart" Grid.Row="1">
-                <dxc:PieChartView.Series>
-                    <dxc:DonutSeries>
-                        <dxc:DonutSeries.Data>
-                            <dxc:PieSeriesDataAdapter DataSource="{Binding Items}"
-                                                      LabelDataMember="Text"
-                                                      ValueDataMember="Value"/>
-                        </dxc:DonutSeries.Data>
-                    </dxc:DonutSeries>
-                </dxc:PieChartView.Series>
-                <dxc:PieChartView.Legend>
-                    <dxc:Legend Orientation="TopToBottom"
-                                HorizontalPosition="RightOutside"
-                                VerticalPosition="Center"/>
-                </dxc:PieChartView.Legend>
-            </dxc:PieChartView>
-        </Grid>
+        
     </ContentPage.Content>
 </ContentPage>

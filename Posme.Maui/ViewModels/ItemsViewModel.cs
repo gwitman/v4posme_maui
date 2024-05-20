@@ -1,32 +1,45 @@
-﻿using Posme.Maui.Models;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using Posme.Maui.Models;
+using Posme.Maui.Services.Repository;
+using Debug = System.Diagnostics.Debug;
 
 namespace Posme.Maui.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        Item _selectedItem;
+        AppMobileApiMGetDataDownloadItemsResponse _selectedItem;
+        private string? _textSearch;
+        private IRepositoryItems? _repositoryItems;
 
-
-        public ItemsViewModel()
+        public ItemsViewModel(IServiceProvider services)
         {
-            Title = "Browse";
-            Items = new ObservableCollection<Item>();
-            LoadItemsCommand = new Command(() => ExecuteLoadItemsCommand());
-            ItemTapped = new Command<Item>(OnItemSelected);
-            AddItemCommand = new Command(OnAddItem);
+            Title = "Productos";
+            SearchCommand = new Command(OnSearchItems);
+            LoadItemsCommand = new Command(ExecuteLoadItemsCommand);
+            ItemTapped = new Command<AppMobileApiMGetDataDownloadItemsResponse>(OnItemSelected);
+            _repositoryItems = services.GetService<IRepositoryItems>();
+            Items = new ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse>();
         }
 
-
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse> Items
+        {
+            get;
+        }
 
         public Command LoadItemsCommand { get; }
+        public Command SearchCommand { get; }
 
         public Command AddItemCommand { get; }
 
-        public Command<Item> ItemTapped { get; }
+        public Command<AppMobileApiMGetDataDownloadItemsResponse> ItemTapped { get; }
 
-        public Item SelectedItem
+        public string? TextSearch
+        {
+            get => _textSearch;
+            set => SetProperty(ref _textSearch, value);
+        }
+
+        public AppMobileApiMGetDataDownloadItemsResponse SelectedItem
         {
             get => this._selectedItem;
             set
@@ -40,25 +53,36 @@ namespace Posme.Maui.ViewModels
         {
             IsBusy = true;
             SelectedItem = null;
-            ExecuteLoadItemsCommand();
+            LoadItemsCommand.Execute(null);
         }
 
-        void ExecuteLoadItemsCommand()
+        private async void OnSearchItems(object obj)
+        {
+            TextSearch = obj.ToString();
+            Items.Clear();
+            var searchItems = await _repositoryItems!.PosMeFilterdByItemNumber(TextSearch);
+            foreach (var item in searchItems)
+            {
+                Items.Add(item);
+            }
+        }
+
+
+        private async void ExecuteLoadItemsCommand()
         {
             IsBusy = true;
             try
             {
                 Items.Clear();
-                var items = DataStore.GetItems(true);
+                var items = await _repositoryItems!.PosMeFindAll();
                 foreach (var item in items)
                 {
-                    item.Text = item.Text;
                     Items.Add(item);
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex);
+                Debug.WriteLine(ex);
             }
             finally
             {
@@ -66,16 +90,11 @@ namespace Posme.Maui.ViewModels
             }
         }
 
-        async void OnAddItem(object obj)
-        {
-            await Navigation.NavigateToAsync<NewItemViewModel>(null);
-        }
-
-        async void OnItemSelected(Item item)
+        async void OnItemSelected(AppMobileApiMGetDataDownloadItemsResponse? item)
         {
             if (item == null)
                 return;
-            await Navigation.NavigateToAsync<ItemDetailViewModel>(item.Id);
+            await Navigation.NavigateToAsync<ItemDetailViewModel>(item.ItemNumber!);
         }
     }
 }

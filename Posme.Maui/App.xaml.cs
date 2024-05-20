@@ -1,6 +1,4 @@
-﻿using DevExpress.Maui.Core;
-using DevExpress.Maui.Core.Internal;
-using Posme.Maui.Services;
+﻿using Posme.Maui.Services;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Views;
 using Application = Microsoft.Maui.Controls.Application;
@@ -15,19 +13,16 @@ namespace Posme.Maui
         {
             _services = services;
             InitializeComponent();
-            
+
             MainPage = new LoginPage(services);
-            UserAppTheme = AppTheme.Light; 
+            UserAppTheme = AppTheme.Light;
         }
 
         protected override void OnStart()
         {
-            DependencyService.Register<MockDataStore>();
-            DependencyService.Register<NavigationService>();
-            DependencyService.Register<DataBase>();
-            Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
-            Routing.RegisterRoute(typeof(NewItemPage).FullName, typeof(NewItemPage));
             var dataBase = new DataBase();
+            DependencyService.Register<NavigationService>();
+            Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             dataBase.Init();
             dataBase.InitDownloadTables();
         }

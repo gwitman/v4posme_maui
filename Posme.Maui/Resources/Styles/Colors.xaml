@@ -12,13 +12,21 @@
     <Color x:Key="Secondary">#00C868</Color>
     <Color x:Key="SecondaryDarkText">#1F7A8C</Color>
     <Color x:Key="Tertiary">#7F8497</Color>
-
+    <Color x:Key="IconColor">#49454F</Color>
+    <Color x:Key="IconColorDark">#CAC4D0</Color>
+    <Color x:Key="CardColor">#FFFFFF</Color>
+    <Color x:Key="CardColorDark">#322F37</Color>
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
     <Color x:Key="Magenta">#D600AA</Color>
     <Color x:Key="MidnightBlue">#190649</Color>
     <Color x:Key="OffBlack">#1f1f1f</Color>
-
+    <Color x:Key="FabColor">#EADDFF</Color>
+    <Color x:Key="FabColorDark">#4F378B</Color>
+    <Color x:Key="FabShadowColor">Gray</Color>
+    <Color x:Key="FabShadowColorDark">Black</Color>
+    <Color x:Key="SeparatorColor">#CAC4D0</Color>
+    <Color x:Key="SeparatorColorDark">#625B71</Color>
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>
     <Color x:Key="Gray300">#ACACAC</Color>

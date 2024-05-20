@@ -8,15 +8,12 @@ namespace Posme.Maui.Views
         public ChartsPage()
         {
             InitializeComponent();
-            BindingContext = ViewModel = new ChartsViewModel();
         }
 
-        ChartsViewModel ViewModel { get; }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            ViewModel.OnAppearing();
         }
     }
 }

@@ -5,19 +5,16 @@ namespace Posme.Maui.Services;
 
 public class DataBase
 {
-    public SQLiteAsyncConnection Database;
+    public readonly SQLiteAsyncConnection Database;
 
     public DataBase()
     {
-        Init();
+        Database ??= new SQLiteAsyncConnection(ConstantsSqlite.DatabasePath, ConstantsSqlite.Flags);
     }
+
     public async void Init()
     {
-        if (Database is not null)
-            return;
-
-        Database = new SQLiteAsyncConnection(ConstantsSqlite.DatabasePath, ConstantsSqlite.Flags);
-        await CreateTableUser();
+        await Database.CreateTableAsync<CoreAccountMLoginMobileObjUserResponse>();
     }
 
     public async void InitDownloadTables()
@@ -28,6 +25,7 @@ public class DataBase
         await Database.CreateTableAsync<AppMobileApiMGetDataDownloadDocumentCreditResponse>();
         await Database.CreateTableAsync<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>();
     }
+
     private async Task CreateTableUser()
     {
         var query = """

@@ -7,7 +7,7 @@ namespace Posme.Maui.ViewModels
         public const string ViewName = "AboutPage";
         public AboutViewModel()
         {
-            Title = "About";
+            Title = "Inicio";
             OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://www.devexpress.com/maui/"));
         }
 

@@ -8,12 +8,6 @@
              ios:Page.UseSafeArea="true"
              x:Class="Posme.Maui.Views.DataGridPage">
     <ContentPage.Content>
-        <dxg:DataGridView x:Name="grid" ItemsSource="{Binding Items}">
-            <dxg:DataGridView.Columns>
-                <dxg:TextColumn FieldName="Text" Caption="Text" />
-                <dxg:TextColumn FieldName="Description" Caption="Description" />
-                <dxg:DateColumn FieldName="StartTime" Caption="Time" DisplayFormat="h:mm tt" />
-            </dxg:DataGridView.Columns>
-        </dxg:DataGridView>
+       
     </ContentPage.Content>
 </ContentPage>

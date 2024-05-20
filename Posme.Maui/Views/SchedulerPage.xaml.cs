@@ -5,10 +5,10 @@ namespace Posme.Maui.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SchedulerPage : ContentPage
     {
-        public SchedulerPage()
+        public SchedulerPage(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            BindingContext = ViewModel = new SchedulerViewModel();
+            BindingContext = ViewModel = new SchedulerViewModel(serviceProvider);
         }
 
         SchedulerViewModel ViewModel { get; }

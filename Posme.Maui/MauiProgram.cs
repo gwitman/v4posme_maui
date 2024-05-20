@@ -1,8 +1,10 @@
-﻿using DevExpress.Maui;
+﻿using CommunityToolkit.Maui;
+using DevExpress.Maui;
 using DevExpress.Maui.Core;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using Posme.Maui.Services;
 using Posme.Maui.Services.Repository;
+using Posme.Maui.ViewModels;
 using Posme.Maui.Views;
 
 namespace Posme.Maui
@@ -11,11 +13,11 @@ namespace Posme.Maui
     {
         public static MauiApp CreateMauiApp()
         {
-            //ThemeManager.ApplyThemeToSystemBars = true;
-
+            ThemeManager.ApplyThemeToSystemBars = false;
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .UseDevExpress(useLocalization: true)
                 .ConfigureFonts(fonts =>
                 {
@@ -34,6 +36,11 @@ namespace Posme.Maui
             builder.Services.AddTransient<IRepositoryParameters, RepositoryParameters>();
             builder.Services.AddSingleton<DataBase>();
             builder.Services.AddSingleton<DownloadPage>();
+            builder.Services.AddSingleton<SchedulerPage>();
+            builder.Services.AddSingleton<ItemDetailPage>();
+            builder.Services.AddSingleton<ItemsPage>();
+            builder.Services.AddSingleton<ItemsViewModel>();
+            builder.Services.AddSingleton<ItemDetailViewModel>();
             DevExpress.Maui.Charts.Initializer.Init();
             DevExpress.Maui.CollectionView.Initializer.Init();
             DevExpress.Maui.Controls.Initializer.Init();

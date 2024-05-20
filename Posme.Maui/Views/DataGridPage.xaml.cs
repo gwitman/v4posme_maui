@@ -8,15 +8,12 @@ namespace Posme.Maui.Views
         public DataGridPage()
         {
             InitializeComponent();
-            BindingContext = ViewModel = new DataGridViewModel();
         }
 
-        DataGridViewModel ViewModel { get; }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            ViewModel.OnAppearing();
         }
     }
 }

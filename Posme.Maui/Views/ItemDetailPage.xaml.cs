@@ -5,10 +5,10 @@ namespace Posme.Maui.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemDetailPage : ContentPage
     {
-        public ItemDetailPage()
+        public ItemDetailPage(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            BindingContext = new ItemDetailViewModel();
+            BindingContext = new ItemDetailViewModel(serviceProvider);
         }
     }
 }

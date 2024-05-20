@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using DevExpress.Maui.Core;
+using SQLite;
 
 namespace Posme.Maui.Models;
 
@@ -93,7 +94,7 @@ public class AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse
 
 
 [Table("tb_items")]
-public class AppMobileApiMGetDataDownloadItemsResponse
+public class AppMobileApiMGetDataDownloadItemsResponse :BindableBase
 {
     [PrimaryKey, AutoIncrement] public int ItemPk { get; set; }
 
@@ -106,7 +107,7 @@ public class AppMobileApiMGetDataDownloadItemsResponse
     public string? Name { get; set; }
 
     public decimal? Quantity { get; set; }
-
+    
     public decimal? PrecioPublico { get; set; }
 }
 
