@@ -7,17 +7,15 @@ namespace Posme.Maui.Views
 {
     public partial class MainPage : Shell
     {
-        private readonly IServiceProvider _services;
 
-        public MainPage(IServiceProvider services)
+        public MainPage()
         {
-            _services = services;
             InitializeComponent();
         }
 
         async void OnMenuItemClicked(object sender, EventArgs e)
         {
-            Application.Current!.MainPage = new LoginPage(_services);
+            Application.Current!.MainPage = new LoginPage();
         }
 
         void OnCloseClicked(object sender, EventArgs e)

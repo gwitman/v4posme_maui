@@ -2,25 +2,37 @@
 using Newtonsoft.Json;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Repository;
+using Unity;
 
 namespace Posme.Maui.Services.Helpers;
 
-public class RestApiAppMobileApi(IServiceProvider services)
+public class RestApiAppMobileApi
 {
     private readonly HttpClient _httpClient = new();
-    private readonly IRepositoryTbCustomer? _repositoryTbCustomer = services.GetService<IRepositoryTbCustomer>();
-    private readonly IRepositoryItems? _repositoryItems = services.GetService<IRepositoryItems>();
-    private readonly IRepositoryParameters? _repositoryParameters = services.GetService<IRepositoryParameters>();
-    private readonly IRepositoryDocumentCreditAmortization? _repositoryDocumentCreditAmortization = services.GetService<IRepositoryDocumentCreditAmortization>();
-    private readonly IRepositoryDocumentCredit? _repositoryDocumentCredit = services.GetService<IRepositoryDocumentCredit>();
+
+    private readonly IRepositoryTbCustomer? _repositoryTbCustomer =
+        VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
+
+    private readonly IRepositoryItems? _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
+
+    private readonly IRepositoryParameters? _repositoryParameters =
+        VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
+
+    private readonly IRepositoryDocumentCreditAmortization? _repositoryDocumentCreditAmortization =
+        VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
+
+    private readonly IRepositoryDocumentCredit? _repositoryDocumentCredit =
+        VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
 
     public async Task<bool> GetDataDownload()
     {
-        Constantes.UrlRequestDownload = Constantes.UrlRequestDownload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
+        Constantes.UrlRequestDownload =
+            Constantes.UrlRequestDownload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
         if (VariablesGlobales.User is null)
         {
             return false;
         }
+
         try
         {
             var nickname = VariablesGlobales.User.Nickname!;
@@ -45,16 +57,21 @@ public class RestApiAppMobileApi(IServiceProvider services)
             var documentCreditAmortizationDeleteAll = _repositoryDocumentCreditAmortization!.PosMeDeleteAll();
             var parametersDeleteAll = _repositoryParameters!.PosMeDeleteAll();
             var documentCreditDeleteAll = _repositoryDocumentCredit!.PosMeDeleteAll();
-            await Task.WhenAll([customerDeleteAll, itemsDeleteAll, documentCreditAmortizationDeleteAll, parametersDeleteAll, documentCreditDeleteAll]);
-            
-            var taskCustomer= _repositoryTbCustomer!.PosMeInsertAll(apiResponse.ListCustomer);
-            var taskItem= _repositoryItems!.PosMeInsertAll(apiResponse.ListItem);
-            var taskDocumentCreditAmortization= _repositoryDocumentCreditAmortization!.PosMeInsertAll(apiResponse.ListDocumentCreditAmortization);
-            var taskParameters= _repositoryParameters!.PosMeInsertAll(apiResponse.ListParameter);
-            var taskDocumentCredit= _repositoryDocumentCredit!.PosMeInsertAll(apiResponse.ListDocumentCredit);
-            await Task.WhenAll([taskCustomer, taskItem, taskDocumentCreditAmortization, taskParameters, taskDocumentCredit]);
-            return true;
+            await Task.WhenAll([
+                customerDeleteAll, itemsDeleteAll, documentCreditAmortizationDeleteAll, parametersDeleteAll,
+                documentCreditDeleteAll
+            ]);
 
+            var taskCustomer = _repositoryTbCustomer!.PosMeInsertAll(apiResponse.ListCustomer);
+            var taskItem = _repositoryItems!.PosMeInsertAll(apiResponse.ListItem);
+            var taskDocumentCreditAmortization =
+                _repositoryDocumentCreditAmortization!.PosMeInsertAll(apiResponse.ListDocumentCreditAmortization);
+            var taskParameters = _repositoryParameters!.PosMeInsertAll(apiResponse.ListParameter);
+            var taskDocumentCredit = _repositoryDocumentCredit!.PosMeInsertAll(apiResponse.ListDocumentCredit);
+            await Task.WhenAll([
+                taskCustomer, taskItem, taskDocumentCreditAmortization, taskParameters, taskDocumentCredit
+            ]);
+            return true;
         }
         catch (Exception ex)
         {

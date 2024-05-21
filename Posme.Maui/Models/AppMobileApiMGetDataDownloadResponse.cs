@@ -1,4 +1,5 @@
-﻿using DevExpress.Maui.Core;
+﻿using System.Runtime.Serialization;
+using DevExpress.Maui.Core;
 using SQLite;
 
 namespace Posme.Maui.Models;
@@ -94,21 +95,51 @@ public class AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse
 }
 
 [Table("tb_items")]
-public class AppMobileApiMGetDataDownloadItemsResponse
+public class AppMobileApiMGetDataDownloadItemsResponse : BindableBase
 {
-    [PrimaryKey, AutoIncrement] public int ItemPk { get; set; }
-
-    public int ItemId { get; set; }
-
-    public string BarCode { get; set; }
-
-    public string ItemNumber { get; set; }
-
-    public string Name { get; set; }
-
-    public decimal Quantity { get; set; }
-
-    public decimal PrecioPublico { get; set; }
+    [PrimaryKey, AutoIncrement]
+    [DataMember]
+    public int ItemPk
+    {
+        get => GetValue<int>();
+        set => SetValue(value);
+    }
+    [DataMember]
+    public int ItemId
+    {
+        get => GetValue<int>();
+        set => SetValue(value);
+    }
+    [DataMember]
+    public string BarCode
+    {
+        get => GetValue<string>();
+        set => SetValue(value);
+    }
+    [DataMember]
+    public string ItemNumber
+    {
+        get => GetValue<string>();
+        set => SetValue(value);
+    }
+    [DataMember]
+    public string Name
+    {
+        get => GetValue<string>();
+        set => SetValue(value);
+    }
+    [DataMember]
+    public decimal Quantity
+    {
+        get => GetValue<decimal>();
+        set => SetValue(value);
+    }
+    [DataMember]
+    public decimal PrecioPublico
+    {
+        get => GetValue<decimal>();
+        set => SetValue(value);
+    }
 }
 
 [Table("tb_parameters")]

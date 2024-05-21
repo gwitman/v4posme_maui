@@ -16,7 +16,7 @@ namespace Posme.Maui
             var dataBase = new DataBase();
             dataBase.Init();
             dataBase.InitDownloadTables();
-            MainPage = new LoginPage(services);
+            MainPage = new LoginPage();
             UserAppTheme = AppTheme.Light;
             
         }

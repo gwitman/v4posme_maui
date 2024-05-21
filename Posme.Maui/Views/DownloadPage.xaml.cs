@@ -12,13 +12,10 @@ namespace Posme.Maui.Views;
 public partial class DownloadPage : ContentPage
 {
     private readonly RestApiAppMobileApi _restApiDownload;
-
-    private readonly IServiceProvider _services;
     
-    public DownloadPage(IServiceProvider services)
+    public DownloadPage()
     {
-        _services = services; 
-        _restApiDownload = new RestApiAppMobileApi(services);
+        _restApiDownload = new RestApiAppMobileApi();
         InitializeComponent();
         BindingContext = new DownloadViewModel();
     }

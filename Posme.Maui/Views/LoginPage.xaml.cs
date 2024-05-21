@@ -3,22 +3,21 @@ using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.ViewModels;
 using Posme.Maui.Services.Repository;
+using Unity;
 
 namespace Posme.Maui.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        private readonly IServiceProvider _services;
         private readonly IRepositoryTbUser? _tbUserRespository;
         private readonly RestApiCoreAcount _restServiceUser = new();
 
-        public LoginPage(IServiceProvider services)
+        public LoginPage()
         {
-            _services = services;
             InitializeComponent();
             BindingContext = new LoginViewModel();
-            _tbUserRespository = services.GetService<IRepositoryTbUser>();
+            _tbUserRespository = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbUser>();
         }
 
         protected override async void OnAppearing()
@@ -86,7 +85,7 @@ namespace Posme.Maui.Views
             }
 
             await Navigation.PopModalAsync();
-            Application.Current!.MainPage = new MainPage(_services);
+            Application.Current!.MainPage = new MainPage();
         }
 
         private void ClosePopup_Clicked(object sender, EventArgs e)

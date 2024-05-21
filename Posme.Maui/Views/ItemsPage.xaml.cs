@@ -5,18 +5,18 @@ namespace Posme.Maui.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemsPage : ContentPage
     {
-        public ItemsPage(IServiceProvider services)
+        public ItemsPage()
         {
             InitializeComponent();
-            BindingContext = ViewModel = new ItemsViewModel(services);
+            BindingContext = ViewModel = new ItemsViewModel();
         }
 
-        ItemsViewModel ViewModel { get; }
+       ItemsViewModel ViewModel { get; }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
-            ViewModel.OnAppearing();
+            ViewModel.OnAppearing(Navigation);
         }
 
         private void SearchBar_OnTextChanged(object? sender, TextChangedEventArgs e)

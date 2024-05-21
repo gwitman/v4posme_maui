@@ -12,12 +12,15 @@ namespace Posme.Maui.ViewModels
         private bool _isBusy;
         private string _title = string.Empty;
 
-        public INavigationService Navigation => DependencyService.Get<INavigationService>();
-
         public bool IsBusy
         {
             get => this._isBusy;
-            set => SetProperty(ref this._isBusy, value);
+            set
+            {
+                this._isBusy = value;
+                RaisePropertiesChanged();
+                SetProperty(ref this._isBusy, value);
+            }
         }
 
         public string Title

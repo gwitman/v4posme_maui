@@ -1,20 +1,84 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxcn="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              Title="{Binding Title}"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              ios:Page.UseSafeArea="true"
-             x:Class="Posme.Maui.Views.ItemDetailPage">
-    <ContentPage.Content>
+             x:Class="Posme.Maui.Views.ItemDetailPage"
+             Style="{StaticResource DetailPageStyle}">
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior
+            StatusBarColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
+            StatusBarStyle="{AppThemeBinding Light=DarkContent, Dark=LightContent}" />
+    </ContentPage.Behaviors>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding EditCommand}" Text="Edit"
+                     IconImageSource="{AppThemeBinding Light=edit, Dark=edit_dark}" />
+        <ToolbarItem Clicked="DeleteItemClick" Text="Delete"
+                     IconImageSource="{AppThemeBinding Light=delete, Dark=delete_dark}" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <dx:DXStackLayout Orientation="Vertical" Padding="0, 10, 0, 0">
+            <dx:DXImage Source="product_delivery.png" WidthRequest="100" HeightRequest="100"
+                        Margin="0,0,0,10">
+                <dx:DXImage.Clip>
+                    <EllipseGeometry RadiusX="50" RadiusY="50" Center="50, 50" />
+                </dx:DXImage.Clip>
+            </dx:DXImage>
+            <dx:DXStackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="{Binding Item.BarCode}" FontSize="24" FontAttributes="Bold" />
+                <Label Text="{Binding Item.ItemNumber}" Margin="10,0,0,0" FontSize="24" FontAttributes="Bold" />
+            </dx:DXStackLayout>
+            
+            <dx:DXBorder Style="{StaticResource PropertyBorder}">
+                <dx:DXStackLayout Orientation="Vertical">
+                    <Label Text="Descripcion" FontAttributes="Bold" />
+                    <Label Text="{Binding Item.Name}"  />
+                </dx:DXStackLayout>
+            </dx:DXBorder>
+            <dx:DXBorder Style="{StaticResource PropertyBorder}">
+                <dx:DXStackLayout Orientation="Vertical">
+                    <Label Text="Cantidad" FontAttributes="Bold" />
+                    <Label Text="{Binding Item.Quantity}"  />
+                </dx:DXStackLayout>
+            </dx:DXBorder>
+            <dx:DXBorder Style="{StaticResource PropertyBorder}">
+                <dx:DXStackLayout Orientation="Vertical">
+                    <Label Text="Precio al publico: " FontAttributes="Bold" />
+                    <Label Text="{Binding Item.PrecioPublico}"  />
+                </dx:DXStackLayout>
+            </dx:DXBorder>
+            <dxcn:DXPopup x:Name="popup" AllowScrim="True" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                          Margin="16" CornerRadius="16"
+                          BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+                <dx:DXStackLayout Orientation="Vertical" Padding="10">
+                    <Label Text="Do you want to delete the record?" Margin="0,20" HorizontalTextAlignment="Center"
+                           FontAttributes="Bold" />
+                    <dx:DXBorder Style="{StaticResource SeparatorStyle}" />
+                    <dx:DXButton Content="Delete" Clicked="DeleteConfirmedClick"
+                                 Style="{StaticResource PopupActionButtonStyle}" />
+                    <dx:DXBorder Style="{StaticResource SeparatorStyle}" />
+                    <dx:DXButton Content="Cancel" Clicked="CancelDeleteClick"
+                                 Style="{StaticResource PopupActionButtonStyle}" />
+                </dx:DXStackLayout>
+            </dxcn:DXPopup>
+        </dx:DXStackLayout>
+    </ScrollView>
+    <!--<ContentPage.Content>
         <StackLayout Spacing="5" Padding="15">
-            <Label Text="Codigo de Barra:" FontFamily="Roboto" Style="{StaticResource PrimaryText}"/>
-            <Label Text="{Binding BarCode}" FontFamily="Roboto" Margin="0, 0, 0, 15"/>
+            <Label Text="Codigo de Barra:" FontFamily="Roboto" Style="{StaticResource PrimaryText}" />
+            <Label Text="{Binding BarCode}" FontFamily="Roboto" Margin="0, 0, 0, 15" />
             <Label Text="Codigo:" FontFamily="Roboto" Style="{StaticResource PrimaryText}" />
-            <Label Text="{Binding ItemNumber}" FontFamily="Roboto" Margin="0, 0, 0, 15"/>
+            <Label Text="{Binding ItemNumber}" FontFamily="Roboto" Margin="0, 0, 0, 15" />
             <Label Text="Descripcion:" FontFamily="Roboto" Style="{StaticResource PrimaryText}" />
-            <Label Text="{Binding Name}" FontFamily="Roboto" Margin="0, 0, 0, 15"/>
+            <Label Text="{Binding Name}" FontFamily="Roboto" Margin="0, 0, 0, 15" />
             <Label Text="Precio:" FontFamily="Roboto" Style="{StaticResource PrimaryText}" />
-            <Label Text="{Binding PrecioPublico}" FontFamily="Roboto" Margin="0, 0, 0, 15"/>
+            <Label Text="{Binding PrecioPublico}" FontFamily="Roboto" Margin="0, 0, 0, 15" />
         </StackLayout>
-    </ContentPage.Content>
+    </ContentPage.Content>-->
 </ContentPage>

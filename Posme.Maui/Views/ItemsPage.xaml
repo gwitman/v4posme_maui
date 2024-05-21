@@ -8,15 +8,19 @@
              IconImageSource="browse"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:models="clr-namespace:Posme.Maui.Models"
-             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              ios:Page.UseSafeArea="true"
              x:Class="Posme.Maui.Views.ItemsPage">
-    <Grid RowSpacing="5">
+    <ContentPage.BindingContext>
+        <local:ItemsViewModel />
+    </ContentPage.BindingContext>
+    
+    <dx:DXStackLayout>
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        <Grid RowSpacing="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <SearchBar
@@ -29,75 +33,84 @@
                                Orientation="Vertical"
                                Grid.Row="1"
                                ItemsSource="{Binding Items}"
-                               SelectionMode="Single" IsRefreshing="{Binding IsBusy, Mode=OneTime}">
+                               SelectedItem="{Binding SelectedItem}"
+                               SelectionMode="Single" 
+                               IsRefreshing="{Binding IsBusy, Mode=OneTime}">
             <dxcv:DXCollectionView.ItemTemplate>
                 <DataTemplate>
-                    <dx:DXStackLayout CornerRadius="5" 
-                                      BackgroundColor="{StaticResource Primary}"
-                                      Margin="5">
+                    <dx:DXButton CornerRadius="5"
+                                 HorizontalContentAlignment="Start"
+                                 BackgroundColor="{StaticResource Primary}"
+                                 Margin="5" PressedBackgroundColor="{StaticResource Secondary}"
+                                 Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailForm}"
+                                 CommandParameter="{Binding}">
                         <Grid x:DataType="models:AppMobileApiMGetDataDownloadItemsResponse"
-                          Margin="5"
-                          BackgroundColor="Transparent">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="75" />
-                            <ColumnDefinition Width="200" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                              Margin="5"
+                              MinimumWidthRequest="350"
+                              HorizontalOptions="Start"
+                              BackgroundColor="Transparent">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <Frame WidthRequest="50"
-                               BackgroundColor="Transparent"
-                               Grid.Column="0"
-                               Grid.RowSpan="2"
-                               HeightRequest="50">
-                            <dx:DXImage WidthRequest="35"
-                                          HeightRequest="35"
-                                          Source="product_item.svg"
-                                          Aspect="Fill" />
-                        </Frame>
-                        <Label Grid.Column="1" Grid.Row="0" FontAttributes="Bold"
-                               Grid.ColumnSpan="2"
-                               TextColor="White"
-                               Text="{Binding BarCode}" />
-                        <HorizontalStackLayout Grid.Column="1" Grid.Row="1">
-                            <Label
-                                HorizontalOptions="Start">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding ItemNumber}" TextColor="White" />
-                                        <Span Text=" - "></Span>
-                                        <Span Text="{Binding Name}" TextColor="White" />
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Grid.Column="2" Grid.Row="1">
-                            <Label Text="Precio: C$ " TextColor="White" />
-                            <Label
-                                HorizontalOptions="End"
-                                Text="{Binding PrecioPublico}" TextColor="White" />
-                        </HorizontalStackLayout>
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"
-                                CommandParameter="{Binding .}">
-                            </TapGestureRecognizer>
-                        </Grid.GestureRecognizers>
-                    </Grid>
-                    </dx:DXStackLayout>
+                            <Frame WidthRequest="50"
+                                   BackgroundColor="Transparent"
+                                   Grid.Column="0"
+                                   Grid.RowSpan="2"
+                                   HeightRequest="50">
+                                <dx:DXImage WidthRequest="35"
+                                            HeightRequest="35"
+                                            Source="product_item.svg"
+                                            Aspect="Fill" />
+                            </Frame>
+                            <Label Grid.Column="1" Grid.Row="0" FontAttributes="Bold"
+                                   Grid.ColumnSpan="2"
+                                   TextColor="White"
+                                   Text="{Binding BarCode}" />
+                            <HorizontalStackLayout Grid.Column="1" Grid.Row="1">
+                                <Label
+                                    HorizontalOptions="Start">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding ItemNumber}" TextColor="White" />
+                                            <Span Text=" - " />
+                                            <Span Text="{Binding Name}" TextColor="White" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Grid.Column="2" Grid.Row="1">
+                                <Label Text="Precio: C$ " TextColor="White" />
+                                <Label
+                                    HorizontalOptions="End"
+                                    Text="{Binding PrecioPublico}" TextColor="White" />
+                            </HorizontalStackLayout>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    NumberOfTapsRequired="1"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=CreateDetailFormViewModelCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </dx:DXButton>
                 </DataTemplate>
             </dxcv:DXCollectionView.ItemTemplate>
         </dxcv:DXCollectionView>
         <dx:DXButton Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailNewItemForm}"
                      Content="+"
-                     Grid.Row="2"
-                     Margin="18" Grid.RowSpan="2" VerticalOptions="End" HorizontalOptions="End"
-                     Style="{StaticResource FabStyle}">
-        </dx:DXButton>
+                     Grid.Row="1"
+                     Margin="18"
+                     Grid.RowSpan="2"
+                     VerticalOptions="End"
+                     HorizontalOptions="End"
+                     Style="{StaticResource FabStyle}" />
     </Grid>
+    </dx:DXStackLayout>
 </ContentPage>

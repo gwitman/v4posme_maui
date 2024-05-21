@@ -38,11 +38,11 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
-    </Style>
+    </Style>    
     <Style TargetType="dx:DXButton" x:Key="FabStyle">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"/>
-        <Setter Property="WidthRequest" Value="56"/>
-        <Setter Property="HeightRequest" Value="56"/>
+        <Setter Property="WidthRequest" Value="40"/>
+        <Setter Property="HeightRequest" Value="40"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FabColor}, Dark={StaticResource FabColorDark}}"/>
         <Setter Property="FontSize" Value="28"/>
@@ -50,7 +50,7 @@
         <Setter Property="FontAttributes" Value="None"/>
         <Setter Property="Shadow">
             <Setter.Value>
-                <Shadow Brush="{AppThemeBinding Light={StaticResource FabShadowColor}, Dark=Transparent}" Offset="4,8" Radius="10" />
+                <Shadow Brush="{AppThemeBinding Light={StaticResource FabShadowColor}, Dark=Transparent}" Offset="4,8" Radius="15" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -286,5 +286,33 @@
         <Setter Property="UnselectedTabColor" Value="{StaticResource PrimaryDark}" />
         <Setter Property="SelectedTabColor" Value="{StaticResource Primary}" />
     </Style>
-
+    <Style TargetType="ContentPage" x:Key="DetailPageStyle">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"/>
+        <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+        <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+    </Style>
+    
+    <Style TargetType="dx:DXBorder" x:Key="PropertyBorder">
+        <Setter Property="Margin" Value="10,8,10,8" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Radius="20" Brush="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SeparatorStyle" TargetType="dx:DXBorder">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SeparatorColor}, Dark={StaticResource SeparatorColorDark}}" />
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style TargetType="dx:DXButton" x:Key="PopupActionButtonStyle">
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="HeightRequest" Value="50"/>
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+    </Style>
 </ResourceDictionary>
