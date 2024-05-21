@@ -81,6 +81,8 @@ namespace Posme.Maui.Views
                     await Navigation.PopModalAsync();
                     return;
                 }
+
+                VariablesGlobales.User = findUserRemember;
             }
 
             await Navigation.PopModalAsync();

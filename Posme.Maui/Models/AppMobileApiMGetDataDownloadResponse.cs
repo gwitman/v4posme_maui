@@ -11,9 +11,13 @@ public class AppMobileApiMGetDataDownloadResponse
     public List<AppMobileApiMGetDataDownloadCustomerResponse> ListCustomer { get; set; } = [];
     public List<AppMobileApiMGetDataDownloadParametersResponse> ListParameter { get; set; } = [];
     public List<AppMobileApiMGetDataDownloadDocumentCreditResponse> ListDocumentCredit { get; set; } = [];
-    public List<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse> ListDocumentCreditAmortization { get; set; } = [];
-}
 
+    public List<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse> ListDocumentCreditAmortization
+    {
+        get;
+        set;
+    } = [];
+}
 
 [Table("tb_customers")]
 public class AppMobileApiMGetDataDownloadCustomerResponse
@@ -34,8 +38,6 @@ public class AppMobileApiMGetDataDownloadCustomerResponse
 
     public string? LastName { get; set; }
 }
-
-
 
 [Table("tb_document_credit")]
 public class AppMobileApiMGetDataDownloadDocumentCreditResponse
@@ -65,7 +67,6 @@ public class AppMobileApiMGetDataDownloadDocumentCreditResponse
     public string? StatusAmortizationName { get; set; }
 }
 
-
 [Table("document_credit_amortization")]
 public class AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse
 {
@@ -92,26 +93,23 @@ public class AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse
     public decimal ShareCapital { get; set; }
 }
 
-
 [Table("tb_items")]
-public class AppMobileApiMGetDataDownloadItemsResponse :BindableBase
+public class AppMobileApiMGetDataDownloadItemsResponse
 {
     [PrimaryKey, AutoIncrement] public int ItemPk { get; set; }
 
     public int ItemId { get; set; }
 
-    public string? BarCode { get; set; }
+    public string BarCode { get; set; }
 
-    public string? ItemNumber { get; set; }
+    public string ItemNumber { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; }
 
-    public decimal? Quantity { get; set; }
-    
-    public decimal? PrecioPublico { get; set; }
+    public decimal Quantity { get; set; }
+
+    public decimal PrecioPublico { get; set; }
 }
-
-
 
 [Table("tb_parameters")]
 public class AppMobileApiMGetDataDownloadParametersResponse

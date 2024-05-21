@@ -13,18 +13,18 @@ namespace Posme.Maui
         {
             _services = services;
             InitializeComponent();
-
+            var dataBase = new DataBase();
+            dataBase.Init();
+            dataBase.InitDownloadTables();
             MainPage = new LoginPage(services);
             UserAppTheme = AppTheme.Light;
+            
         }
 
         protected override void OnStart()
         {
-            var dataBase = new DataBase();
             DependencyService.Register<NavigationService>();
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
-            dataBase.Init();
-            dataBase.InitDownloadTables();
         }
     }
 }
