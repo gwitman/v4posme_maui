@@ -31,9 +31,16 @@
                     <EllipseGeometry RadiusX="50" RadiusY="50" Center="50, 50" />
                 </dx:DXImage.Clip>
             </dx:DXImage>
-            <dx:DXStackLayout Orientation="Vertical" HorizontalOptions="Center">
-                <Label Text="{Binding Item.BarCode}" FontSize="24" FontAttributes="Bold" />
-                <Label Text="{Binding Item.ItemNumber}" Margin="10,0,0,0" FontSize="24" FontAttributes="Bold" />
+            <dx:DXStackLayout Orientation="Vertical" 
+                              HorizontalOptions="Center">
+                <Label Text="{Binding Item.BarCode}" 
+                       FontSize="24" 
+                       HorizontalTextAlignment="Center"
+                       FontAttributes="Bold" />
+                <Label Text="{Binding Item.ItemNumber}"     
+                       HorizontalTextAlignment="Center"
+                       FontSize="24" 
+                       FontAttributes="Bold" />
             </dx:DXStackLayout>
             
             <dx:DXBorder Style="{StaticResource PropertyBorder}">
@@ -58,13 +65,18 @@
                           Margin="16" CornerRadius="16"
                           BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
                 <dx:DXStackLayout Orientation="Vertical" Padding="10">
-                    <Label Text="Do you want to delete the record?" Margin="0,20" HorizontalTextAlignment="Center"
+                    <Label Text="¿Seguro quiere elimar este producto? Está acción no se puede revertir" 
+                           Margin="0,20" 
+                           HorizontalTextAlignment="Center"
                            FontAttributes="Bold" />
                     <dx:DXBorder Style="{StaticResource SeparatorStyle}" />
-                    <dx:DXButton Content="Delete" Clicked="DeleteConfirmedClick"
-                                 Style="{StaticResource PopupActionButtonStyle}" />
+                    <dx:DXButton Content="Eliminar" 
+                                 Icon="delete"
+                                 Clicked="DeleteConfirmedClick"
+                                 Style="{StaticResource PopupActionDeleteButtonStyle}" />
                     <dx:DXBorder Style="{StaticResource SeparatorStyle}" />
-                    <dx:DXButton Content="Cancel" Clicked="CancelDeleteClick"
+                    <dx:DXButton Content="Cancelar" 
+                                 Clicked="CancelDeleteClick"
                                  Style="{StaticResource PopupActionButtonStyle}" />
                 </dx:DXStackLayout>
             </dxcn:DXPopup>

@@ -309,10 +309,16 @@
         <Setter Property="HeightRequest" Value="1" />
         <Setter Property="BorderThickness" Value="1" />
     </Style>
-    <Style TargetType="dx:DXButton" x:Key="PopupActionButtonStyle">
-        <Setter Property="BackgroundColor" Value="Transparent"/>
+    <Style TargetType="dx:DXButton" x:Key="PopupActionDeleteButtonStyle">
+        <Setter Property="BackgroundColor" Value="{StaticResource Red}"/>
         <Setter Property="HeightRequest" Value="50"/>
-        <Setter Property="CornerRadius" Value="0"/>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"/>
+    </Style>
+    <Style TargetType="dx:DXButton" x:Key="PopupActionButtonStyle">
+        <Setter Property="BackgroundColor" Value="{StaticResource Gray400}"/>
+        <Setter Property="HeightRequest" Value="50"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"/>
     </Style>
 </ResourceDictionary>

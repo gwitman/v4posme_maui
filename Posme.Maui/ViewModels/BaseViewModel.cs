@@ -14,19 +14,18 @@ namespace Posme.Maui.ViewModels
 
         public bool IsBusy
         {
-            get => this._isBusy;
+            get => GetValue<bool>();
             set
             {
-                this._isBusy = value;
+                SetValue(value);
                 RaisePropertiesChanged();
-                SetProperty(ref this._isBusy, value);
             }
         }
 
         public string Title
         {
-            get => this._title;
-            set => SetProperty(ref this._title, value);
+            get => GetValue<string>();
+            set => SetValue(value);
         }
 
 

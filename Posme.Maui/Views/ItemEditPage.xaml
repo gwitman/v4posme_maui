@@ -45,6 +45,8 @@
                                        EditorLabelColor="{StaticResource Primary}"
                                        EditorLabelWidth="0"
                                        IsAutoGenerationEnabled="False"
+                                       ValidationMode="LostFocus"
+                                       ValidateForm="DataForm_OnValidateForm"
                                        ValidateProperty="dataForm_ValidateProperty"
                                        Margin="0,10,0,0" Background="Transparent">
                         <dxdf:DataFormCustomItem>
@@ -59,6 +61,7 @@
                                 IconColor="#006E98"
                                 StartIcon="quantity"
                                 Text="{Binding ItemNumber}"
+                                ErrorText="No puede estar vacío"
                                 LabelText="Código de producto" />
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>

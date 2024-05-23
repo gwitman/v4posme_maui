@@ -7,6 +7,8 @@ public interface IRepositoryFacade<T>
 
     Task PosMeUpdate(T model);
 
+    Task<bool> PosMeDelete(T model);
+    
     Task<bool> PosMeDeleteAll();
     
     Task<List<T>> PosMeFindAll();

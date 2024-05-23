@@ -3,6 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+             xmlns:dxcn="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:local="clr-namespace:Posme.Maui.ViewModels"
              xmlns:views="clr-namespace:Posme.Maui.Views"
              xmlns:models="clr-namespace:Posme.Maui.Models"
@@ -17,7 +18,6 @@
     </ContentPage.BindingContext>
     
     <dx:DXStackLayout>
-        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
         <Grid RowSpacing="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -114,5 +114,15 @@
                      HorizontalOptions="End"
                      Style="{StaticResource FabStyle}" />
     </Grid>
+        <dxcn:DXPopup x:Name="PopupLoading" 
+                      AllowScrim="True" 
+                      IsOpen="{Binding IsBusy}"
+                      VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                      Margin="16" CornerRadius="16"
+                      BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+            <dx:DXStackLayout Orientation="Vertical" Padding="10">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" />
+            </dx:DXStackLayout>
+        </dxcn:DXPopup>
     </dx:DXStackLayout>
 </ContentPage>

@@ -36,7 +36,9 @@ namespace Posme.Maui.ViewModels
 
         private async void ExecuteLoadItemsAsync()
         {
+            IsBusy = true;
             await ExecuteLoadItemsCommand();
+            IsBusy = false;
         }
 
         async void ValidateAndSave(ValidateItemEventArgs e)
@@ -101,7 +103,6 @@ namespace Posme.Maui.ViewModels
 
         private async Task ExecuteLoadItemsCommand()
         {
-            IsBusy = true;
             try
             {
                 Items.Clear();
@@ -111,10 +112,6 @@ namespace Posme.Maui.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
             }
         }
     }

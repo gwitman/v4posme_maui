@@ -1,6 +1,9 @@
 ﻿using DevExpress.Maui.Core;
 using Posme.Maui.Models;
+using Posme.Maui.Services.Helpers;
+using Posme.Maui.Services.Repository;
 using Posme.Maui.ViewModels;
+using Unity;
 
 namespace Posme.Maui.Views
 {
@@ -8,29 +11,47 @@ namespace Posme.Maui.Views
     public partial class ItemDetailPage : ContentPage
     {
         DetailFormViewModel ViewModel => ((DetailFormViewModel)BindingContext);
-        bool isDeleting;
-        public AppMobileApiMGetDataDownloadItemsResponse SelectedItem => (AppMobileApiMGetDataDownloadItemsResponse)ViewModel.Item;
+        private readonly IRepositoryItems _repositoryItems;
+        private bool _isDeleting;
+        private AppMobileApiMGetDataDownloadItemsResponse SelectedItem => (AppMobileApiMGetDataDownloadItemsResponse)ViewModel.Item;
 
         public ItemDetailPage()
         {
             Title = "Datos de Producto";
+            _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
             InitializeComponent();
-        }
-
-        private void SaveItemClick(object? sender, EventArgs e)
-        {
         }
 
         private void DeleteItemClick(object? sender, EventArgs e)
         {
+            popup.IsOpen = true;
         }
 
-        private void DeleteConfirmedClick(object? sender, EventArgs e)
+        private async void DeleteConfirmedClick(object? sender, EventArgs e)
         {
+            if (_isDeleting)
+                return;
+            _isDeleting = true;
+
+            try
+            {
+                if (ViewModel.Delete())
+                {
+                    _isDeleting = await _repositoryItems.PosMeDelete(SelectedItem);
+                }
+                else
+                {
+                    _isDeleting = false;
+                }
+            } catch (Exception ex) {
+                _isDeleting = false;
+                await DisplayAlert("Error", ex.Message, "OK");
+            }
         }
 
         private void CancelDeleteClick(object? sender, EventArgs e)
         {
+            popup.IsOpen = false;
         }
     }
 }

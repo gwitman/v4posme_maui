@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using DevExpress.Maui.Core;
 using SQLite;
 
@@ -111,18 +113,21 @@ public class AppMobileApiMGetDataDownloadItemsResponse : BindableBase
         set => SetValue(value);
     }
     [DataMember]
+    [Required(ErrorMessage = "Required")]
     public string BarCode
     {
         get => GetValue<string>();
         set => SetValue(value);
     }
     [DataMember]
+    [Required(ErrorMessage = "Required")]
     public string? ItemNumber
     {
         get => GetValue<string>();
         set => SetValue(value);
     }
     [DataMember]
+    [Required(ErrorMessage = "Required")]
     public string Name
     {
         get => GetValue<string>();
