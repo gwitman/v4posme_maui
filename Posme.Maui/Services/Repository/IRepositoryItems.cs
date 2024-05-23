@@ -7,4 +7,5 @@ public interface IRepositoryItems : IRepositoryFacade<AppMobileApiMGetDataDownlo
     Task<AppMobileApiMGetDataDownloadItemsResponse?> PosMeFindByBarCode(string barCode);
     Task<AppMobileApiMGetDataDownloadItemsResponse> PosMeFindByItemNumber(string? itemNumber);
     Task<List<AppMobileApiMGetDataDownloadItemsResponse>> PosMeFilterdByItemNumber(string? textSearch);
+    Task<List<AppMobileApiMGetDataDownloadItemsResponse>> PosMeFilterdByItemNumberAndBarCodeAndName(string? textSearch);
 }

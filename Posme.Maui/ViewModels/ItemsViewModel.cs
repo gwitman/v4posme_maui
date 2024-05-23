@@ -95,7 +95,7 @@ namespace Posme.Maui.ViewModels
             IsBusy = true;
             TextSearch = obj.ToString();
             Items.Clear();
-            var searchItems = await _repositoryItems!.PosMeFilterdByItemNumber(TextSearch);
+            var searchItems = await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(TextSearch);
             Items = new ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse>(searchItems);
             IsBusy = false;
         }
