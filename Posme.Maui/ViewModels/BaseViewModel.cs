@@ -17,6 +17,7 @@ namespace Posme.Maui.ViewModels
             get => GetValue<bool>();
             set
             {
+                _isBusy = value;
                 SetValue(value);
                 RaisePropertiesChanged();
             }

@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              xmlns:dxcn="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dxe="http://schemas.devexpress.com/maui/2022/xaml"
              xmlns:local="clr-namespace:Posme.Maui.ViewModels"
              xmlns:views="clr-namespace:Posme.Maui.Views"
              xmlns:models="clr-namespace:Posme.Maui.Models"
@@ -11,19 +12,17 @@
              IconImageSource="browse"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              ios:Page.UseSafeArea="true"
              x:Class="Posme.Maui.Views.ItemsPage">
     <ContentPage.BindingContext>
         <local:ItemsViewModel />
     </ContentPage.BindingContext>
-    
-    <dx:DXStackLayout>
-        <Grid RowSpacing="5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="add"
+                     Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailNewItemForm}" />
+    </ContentPage.ToolbarItems>
+    <dx:DXStackLayout VerticalOptions="Start" HorizontalOptions="Center">
         <SearchBar
             x:Name="SearchBar"
             TextChanged="SearchBar_OnTextChanged"
@@ -38,7 +37,7 @@
                                DetailNewItemFormTemplate="{DataTemplate views:ItemEditPage}"
                                ItemsSource="{Binding Items}"
                                SelectedItem="{Binding SelectedItem}"
-                               SelectionMode="Single" 
+                               SelectionMode="Single"
                                IsRefreshing="{Binding IsBusy, Mode=OneTime}">
             <dxcv:DXCollectionView.ItemTemplate>
                 <DataTemplate>
@@ -84,11 +83,11 @@
                                     HorizontalOptions="Start">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{Binding ItemNumber}" 
+                                            <Span Text="{Binding ItemNumber}"
                                                   TextColor="White" />
                                             <Span Text=" - " TextColor="White" />
-                                            <Span Text="{Binding Name}" 
-                                                  TextColor="White" 
+                                            <Span Text="{Binding Name}"
+                                                  TextColor="White"
                                                   FontAttributes="Bold" />
                                         </FormattedString>
                                     </Label.FormattedText>
@@ -105,17 +104,8 @@
                 </DataTemplate>
             </dxcv:DXCollectionView.ItemTemplate>
         </dxcv:DXCollectionView>
-        <dx:DXButton Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailNewItemForm}"
-                     Content="+"
-                     Grid.Row="1"
-                     Margin="18"
-                     Grid.RowSpan="2"
-                     VerticalOptions="End"
-                     HorizontalOptions="End"
-                     Style="{StaticResource FabStyle}" />
-    </Grid>
-        <dxcn:DXPopup x:Name="PopupLoading" 
-                      AllowScrim="True" 
+        <dxcn:DXPopup x:Name="PopupLoading"
+                      AllowScrim="True"
                       IsOpen="{Binding IsBusy}"
                       VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
                       Margin="16" CornerRadius="16"

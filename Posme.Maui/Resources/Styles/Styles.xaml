@@ -46,7 +46,7 @@
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FabColor}, Dark={StaticResource FabColorDark}}"/>
         <Setter Property="FontSize" Value="28"/>
-        <Setter Property="CornerRadius" Value="14"/>
+        <Setter Property="CornerRadius" Value="20"/>
         <Setter Property="FontAttributes" Value="None"/>
         <Setter Property="Shadow">
             <Setter.Value>
