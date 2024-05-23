@@ -22,7 +22,7 @@ namespace Posme.Maui.ViewModels
         public ICommand AddItemCommand { get; }
         public ICommand ValidateAndSaveCommand { get; }
         public ICommand CreateDetailFormViewModelCommand { get; }
-        public Command<AppMobileApiMGetDataDownloadItemsResponse> ItemTapped { get; }
+        
         public ItemsViewModel()
         {
             Title = "Productos";
@@ -30,7 +30,6 @@ namespace Posme.Maui.ViewModels
             ValidateAndSaveCommand = new Command<ValidateItemEventArgs>(ValidateAndSave);
             SearchCommand = new Command(OnSearchItems);
             LoadItemsCommand = new Command(ExecuteLoadItemsAsync);
-            ItemTapped = new Command<AppMobileApiMGetDataDownloadItemsResponse>(OnItemSelected);
             _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
             Items = new ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse>();
         }
@@ -74,11 +73,11 @@ namespace Posme.Maui.ViewModels
         AppMobileApiMGetDataDownloadItemsResponse? _selectedItem;
         public AppMobileApiMGetDataDownloadItemsResponse? SelectedItem
         {
-            get => this._selectedItem;
+            get => _selectedItem;
             set
             {
                 SetProperty(ref this._selectedItem, value);
-                OnItemSelected(value);
+                RaisePropertyChanged();
             }
         }
 
@@ -117,13 +116,6 @@ namespace Posme.Maui.ViewModels
             {
                 IsBusy = false;
             }
-        }
-
-        async void OnItemSelected(AppMobileApiMGetDataDownloadItemsResponse? item)
-        {
-            if (item == null)
-                return;
-            //await Navigation.NavigateToAsync<ItemDetailViewModel>(item.ItemNumber!);
         }
     }
 }

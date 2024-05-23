@@ -288,8 +288,8 @@
     </Style>
     <Style TargetType="ContentPage" x:Key="DetailPageStyle">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"/>
-        <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
-        <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+        <Setter Property="Shell.TitleColor" Value="White"/>
+        <Setter Property="Shell.ForegroundColor" Value="White"/>
     </Style>
     
     <Style TargetType="dx:DXBorder" x:Key="PropertyBorder">

@@ -13,7 +13,7 @@ public class RepositoryItems(DataBase dataBase)
             .FirstOrDefaultAsync(response => response.BarCode == barCode);
     }
 
-    public async Task<AppMobileApiMGetDataDownloadItemsResponse?> PosMeFindByItemNumber(string itemNumber)
+    public async Task<AppMobileApiMGetDataDownloadItemsResponse> PosMeFindByItemNumber(string? itemNumber)
     {
         return await _dataBase.Database.Table<AppMobileApiMGetDataDownloadItemsResponse>()
             .FirstOrDefaultAsync(response => response.ItemNumber == itemNumber);

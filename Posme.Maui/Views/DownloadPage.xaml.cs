@@ -12,12 +12,12 @@ namespace Posme.Maui.Views;
 public partial class DownloadPage : ContentPage
 {
     private readonly RestApiAppMobileApi _restApiDownload;
-    
+    private readonly DownloadViewModel _viewModel;
     public DownloadPage()
     {
         _restApiDownload = new RestApiAppMobileApi();
         InitializeComponent();
-        BindingContext = new DownloadViewModel();
+        BindingContext =_viewModel= new DownloadViewModel();
     }
 
     private void ClosePopup_Clicked(object? sender, EventArgs e)
@@ -31,8 +31,8 @@ public partial class DownloadPage : ContentPage
 
         if (VariablesGlobales.CantidadTransacciones != 0)
         {
-            ((DownloadViewModel)BindingContext).Mensaje = Mensajes.MensajeDownloadCantidadTransacciones;
-            ((DownloadViewModel)BindingContext).PopupBackgroundColor = Colors.Red;
+            _viewModel.Mensaje = Mensajes.MensajeDownloadCantidadTransacciones;
+            _viewModel.PopupBackgroundColor = Colors.Red;
             Popup.Show();
             await Navigation.PopModalAsync();
             return;
@@ -41,13 +41,13 @@ public partial class DownloadPage : ContentPage
         var result = await _restApiDownload.GetDataDownload();
         if (result)
         {
-            ((DownloadViewModel)BindingContext).PopupBackgroundColor = Colors.Green;
-            ((DownloadViewModel)BindingContext).Mensaje = Mensajes.MensajeDownloadSuccess;
+            _viewModel.PopupBackgroundColor = Colors.Green;
+            _viewModel.Mensaje = Mensajes.MensajeDownloadSuccess;
         }
         else
         {
-            ((DownloadViewModel)BindingContext).Mensaje = Mensajes.MensajeDownloadError;
-            ((DownloadViewModel)BindingContext).PopupBackgroundColor = Colors.Red;
+            _viewModel.Mensaje = Mensajes.MensajeDownloadError;
+            _viewModel.PopupBackgroundColor = Colors.Red;
         }
 
         Popup.Show();

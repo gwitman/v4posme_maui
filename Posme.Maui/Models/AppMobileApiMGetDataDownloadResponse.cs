@@ -117,7 +117,7 @@ public class AppMobileApiMGetDataDownloadItemsResponse : BindableBase
         set => SetValue(value);
     }
     [DataMember]
-    public string ItemNumber
+    public string? ItemNumber
     {
         get => GetValue<string>();
         set => SetValue(value);

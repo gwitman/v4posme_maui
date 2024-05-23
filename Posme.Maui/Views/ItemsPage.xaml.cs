@@ -21,10 +21,10 @@ namespace Posme.Maui.Views
 
         private void SearchBar_OnTextChanged(object? sender, TextChangedEventArgs e)
         {
-            SearchBar searchBar = (SearchBar)sender;
+            var searchBar = (SearchBar)sender!;
             if (string.IsNullOrEmpty(searchBar.Text))
             {
-                ((ItemsViewModel)BindingContext).LoadItemsCommand.Execute(null);
+                ViewModel.LoadItemsCommand.Execute(null);
             }
         }
     }

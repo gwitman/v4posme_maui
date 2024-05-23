@@ -1,55 +1,34 @@
 ﻿using System.Diagnostics;
 using System.Web;
+using Posme.Maui.Models;
+using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
+using Unity;
 
 namespace Posme.Maui.ViewModels
 {
     public class ItemDetailViewModel : BaseViewModel, IQueryAttributable
     {
-        private readonly IRepositoryItems? _repositoryItems;
-        private string? _barCode;
-        private string? _name;
-        private string? _itemNumber;
-        private decimal? _precioPublico;
+        private readonly IRepositoryItems _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
+        
+        private AppMobileApiMGetDataDownloadItemsResponse _selectedItem;
 
-        public ItemDetailViewModel(IServiceProvider serviceProvider)
+        public AppMobileApiMGetDataDownloadItemsResponse SelectedItem
         {
-            _repositoryItems = serviceProvider.GetService<IRepositoryItems>();
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                SetProperty(ref _selectedItem, value);
+                RaisePropertyChanged();
+            }
         }
 
-        public decimal? PrecioPublico
-        {
-            get => _precioPublico;
-            set => SetProperty(ref _precioPublico, value);
-        }
-
-        public string ItemNumber
-        {
-            get => _itemNumber;
-            set => SetProperty(ref _itemNumber, value);
-        }
-
-        public string BarCode
-        {
-            get => this._barCode;
-            set => SetProperty(ref this._barCode, value);
-        }
-
-        public string Name
-        {
-            get => this._name;
-            set => SetProperty(ref this._name, value);
-        }
-
-        public async Task LoadItemId(string itemId)
+        private async Task LoadItemId(string? itemId)
         {
             try
             {
-                var item = await _repositoryItems!.PosMeFindByItemNumber(itemId);
-                ItemNumber = item.ItemNumber!;
-                BarCode = item.BarCode!;
-                Name = item.Name!;
-                PrecioPublico = item.PrecioPublico;
+                _selectedItem = await _repositoryItems.PosMeFindByItemNumber(itemId);
             }
             catch (Exception exception)
             {

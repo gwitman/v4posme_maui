@@ -5,6 +5,7 @@
              xmlns:dxcn="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              Title="{Binding Title}"
+             xmlns:local="clr-namespace:Posme.Maui.ViewModels"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              ios:Page.UseSafeArea="true"
@@ -17,9 +18,9 @@
     </ContentPage.Behaviors>
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding EditCommand}" Text="Edit"
-                     IconImageSource="{AppThemeBinding Light=edit, Dark=edit_dark}" />
+                     IconImageSource="{AppThemeBinding Light=edit, Dark=edit}" />
         <ToolbarItem Clicked="DeleteItemClick" Text="Delete"
-                     IconImageSource="{AppThemeBinding Light=delete, Dark=delete_dark}" />
+                     IconImageSource="{AppThemeBinding Light=delete, Dark=delete}" />
     </ContentPage.ToolbarItems>
 
     <ScrollView>
@@ -30,27 +31,27 @@
                     <EllipseGeometry RadiusX="50" RadiusY="50" Center="50, 50" />
                 </dx:DXImage.Clip>
             </dx:DXImage>
-            <dx:DXStackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <dx:DXStackLayout Orientation="Vertical" HorizontalOptions="Center">
                 <Label Text="{Binding Item.BarCode}" FontSize="24" FontAttributes="Bold" />
                 <Label Text="{Binding Item.ItemNumber}" Margin="10,0,0,0" FontSize="24" FontAttributes="Bold" />
             </dx:DXStackLayout>
             
             <dx:DXBorder Style="{StaticResource PropertyBorder}">
                 <dx:DXStackLayout Orientation="Vertical">
-                    <Label Text="Descripcion" FontAttributes="Bold" />
-                    <Label Text="{Binding Item.Name}"  />
+                    <Label Text="Descripcion" FontAttributes="Bold" FontSize="18" />
+                    <Label Text="{Binding Item.Name}"  FontSize="18" />
                 </dx:DXStackLayout>
             </dx:DXBorder>
             <dx:DXBorder Style="{StaticResource PropertyBorder}">
                 <dx:DXStackLayout Orientation="Vertical">
-                    <Label Text="Cantidad" FontAttributes="Bold" />
-                    <Label Text="{Binding Item.Quantity}"  />
+                    <Label Text="Cantidad" FontAttributes="Bold" FontSize="18"/>
+                    <Label Text="{Binding Item.Quantity}" FontSize="18" />
                 </dx:DXStackLayout>
             </dx:DXBorder>
             <dx:DXBorder Style="{StaticResource PropertyBorder}">
                 <dx:DXStackLayout Orientation="Vertical">
-                    <Label Text="Precio al publico: " FontAttributes="Bold" />
-                    <Label Text="{Binding Item.PrecioPublico}"  />
+                    <Label Text="Precio al publico: " FontAttributes="Bold" FontSize="18" />
+                    <Label Text="{Binding Item.PrecioPublico}" FontSize="18"  />
                 </dx:DXStackLayout>
             </dx:DXBorder>
             <dxcn:DXPopup x:Name="popup" AllowScrim="True" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
@@ -69,16 +70,4 @@
             </dxcn:DXPopup>
         </dx:DXStackLayout>
     </ScrollView>
-    <!--<ContentPage.Content>
-        <StackLayout Spacing="5" Padding="15">
-            <Label Text="Codigo de Barra:" FontFamily="Roboto" Style="{StaticResource PrimaryText}" />
-            <Label Text="{Binding BarCode}" FontFamily="Roboto" Margin="0, 0, 0, 15" />
-            <Label Text="Codigo:" FontFamily="Roboto" Style="{StaticResource PrimaryText}" />
-            <Label Text="{Binding ItemNumber}" FontFamily="Roboto" Margin="0, 0, 0, 15" />
-            <Label Text="Descripcion:" FontFamily="Roboto" Style="{StaticResource PrimaryText}" />
-            <Label Text="{Binding Name}" FontFamily="Roboto" Margin="0, 0, 0, 15" />
-            <Label Text="Precio:" FontFamily="Roboto" Style="{StaticResource PrimaryText}" />
-            <Label Text="{Binding PrecioPublico}" FontFamily="Roboto" Margin="0, 0, 0, 15" />
-        </StackLayout>
-    </ContentPage.Content>-->
 </ContentPage>

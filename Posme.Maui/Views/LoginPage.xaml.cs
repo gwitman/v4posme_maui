@@ -12,11 +12,11 @@ namespace Posme.Maui.Views
     {
         private readonly IRepositoryTbUser? _tbUserRespository;
         private readonly RestApiCoreAcount _restServiceUser = new();
-
+        private readonly LoginViewModel _viewModel;
         public LoginPage()
         {
             InitializeComponent();
-            BindingContext = new LoginViewModel();
+            BindingContext = _viewModel = new LoginViewModel();
             _tbUserRespository = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbUser>();
         }
 
@@ -24,9 +24,9 @@ namespace Posme.Maui.Views
         {
             var findUserRemember = await _tbUserRespository!.PosmeFindUserRemember();
             if (findUserRemember is null) return;
-            ((LoginViewModel)BindingContext).UserName = findUserRemember.Nickname!;
-            ((LoginViewModel)BindingContext).Password = findUserRemember.Password!;
-            ((LoginViewModel)BindingContext).Company = findUserRemember.Company!;
+            _viewModel.UserName = findUserRemember.Nickname!;
+            _viewModel.Password = findUserRemember.Password!;
+            _viewModel.Company = findUserRemember.Company!;
         }
 
         private async void DXButtonBase_OnClicked(object sender, EventArgs e)

@@ -4,10 +4,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              xmlns:local="clr-namespace:Posme.Maui.ViewModels"
+             xmlns:views="clr-namespace:Posme.Maui.Views"
+             xmlns:models="clr-namespace:Posme.Maui.Models"
              Title="{Binding Title}"
              IconImageSource="browse"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             xmlns:models="clr-namespace:Posme.Maui.Models"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              ios:Page.UseSafeArea="true"
              x:Class="Posme.Maui.Views.ItemsPage">
@@ -32,6 +33,9 @@
         <dxcv:DXCollectionView x:Name="ItemsListView"
                                Orientation="Vertical"
                                Grid.Row="1"
+                               DetailFormTemplate="{DataTemplate  views:ItemDetailPage}"
+                               DetailEditFormTemplate="{DataTemplate views:ItemEditPage}"
+                               DetailNewItemFormTemplate="{DataTemplate views:ItemEditPage}"
                                ItemsSource="{Binding Items}"
                                SelectedItem="{Binding SelectedItem}"
                                SelectionMode="Single" 
@@ -41,6 +45,7 @@
                     <dx:DXButton CornerRadius="5"
                                  HorizontalContentAlignment="Start"
                                  BackgroundColor="{StaticResource Primary}"
+                                 Padding="0"
                                  Margin="5" PressedBackgroundColor="{StaticResource Secondary}"
                                  Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailForm}"
                                  CommandParameter="{Binding}">
@@ -79,9 +84,12 @@
                                     HorizontalOptions="Start">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{Binding ItemNumber}" TextColor="White" />
-                                            <Span Text=" - " />
-                                            <Span Text="{Binding Name}" TextColor="White" />
+                                            <Span Text="{Binding ItemNumber}" 
+                                                  TextColor="White" />
+                                            <Span Text=" - " TextColor="White" />
+                                            <Span Text="{Binding Name}" 
+                                                  TextColor="White" 
+                                                  FontAttributes="Bold" />
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
@@ -92,12 +100,6 @@
                                     HorizontalOptions="End"
                                     Text="{Binding PrecioPublico}" TextColor="White" />
                             </HorizontalStackLayout>
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    NumberOfTapsRequired="1"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=CreateDetailFormViewModelCommand}"
-                                    CommandParameter="{Binding .}" />
-                            </Grid.GestureRecognizers>
                         </Grid>
                     </dx:DXButton>
                 </DataTemplate>
