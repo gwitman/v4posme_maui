@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using DevExpress.Maui.Core;
 using Posme.Maui.ViewModels;
 
 namespace Posme.Maui.Views
@@ -9,24 +10,11 @@ namespace Posme.Maui.Views
         public ItemsPage()
         {
             InitializeComponent();
-            BindingContext = ViewModel = new ItemsViewModel();
-        }
-
-       ItemsViewModel ViewModel { get; }
-
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-            ViewModel.OnAppearing(Navigation);
         }
 
         private void SearchBar_OnTextChanged(object? sender, EventArgs eventArgs)
         {
-            var textEdit = (DevExpress.Maui.Editors.TextEdit)sender!;
-            /*if (string.IsNullOrEmpty(searchBar.Text))
-            {
-                ViewModel.LoadItemsCommand.Execute(null);
-            }*/
+            
         }
     }
 }

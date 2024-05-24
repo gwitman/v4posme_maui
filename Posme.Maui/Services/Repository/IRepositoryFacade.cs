@@ -13,5 +13,7 @@ public interface IRepositoryFacade<T>
     
     Task<List<T>> PosMeFindAll();
 
+    Task<List<T>> PosMeFindStartAndTake(int start, int take);
+
     Task<int> PosMeCount();
 }

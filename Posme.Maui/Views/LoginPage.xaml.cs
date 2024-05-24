@@ -13,6 +13,7 @@ namespace Posme.Maui.Views
         private readonly IRepositoryTbUser? _tbUserRespository;
         private readonly RestApiCoreAcount _restServiceUser = new();
         private readonly LoginViewModel _viewModel;
+
         public LoginPage()
         {
             InitializeComponent();
@@ -33,59 +34,57 @@ namespace Posme.Maui.Views
         {
             await Navigation.PushModalAsync(new LoadingPage());
             VariablesGlobales.CompanyKey = _viewModel.Company.ToLower();
-            var taskPrincipal= Task.Run(async () =>
+            var findUserRemember =
+                await _tbUserRespository!.PosMeFindUserByNicknameAndPassword(_viewModel.UserName, _viewModel.Password);
+            if (ChkRemember.IsChecked!.Value)
             {
-                var findUserRemember =
-                    await _tbUserRespository!.PosMeFindUserByNicknameAndPassword(_viewModel.UserName, _viewModel.Password);
-                if (ChkRemember.IsChecked!.Value)
+                _viewModel.PopupShow = await _restServiceUser.LoginMobile(_viewModel.UserName, _viewModel.Password);
+                if (!_viewModel.PopupShow)
                 {
-                    _viewModel.PopupShow = await _restServiceUser.LoginMobile(_viewModel.UserName, _viewModel.Password);
-                    if (!_viewModel.PopupShow)
-                    {
-                        _viewModel.Mensaje = _viewModel.PopupShow ? "" : Mensajes.MensajeCredencialesInvalida;
-                        _viewModel.MensajeCommand.Execute(null);
-                        Popup.Show();
-                        await Navigation.PopModalAsync();
-                        return;
-                    }
+                    _viewModel.Mensaje = _viewModel.PopupShow ? "" : Mensajes.MensajeCredencialesInvalida;
+                    _viewModel.MensajeCommand.Execute(null);
+                    Popup.Show();
+                    await Navigation.PopModalAsync();
+                    return;
+                }
 
-                    await _tbUserRespository.PosMeOnRemember();
-                    if (findUserRemember is not null)
-                    {
-                        findUserRemember.Remember = true;
-                        findUserRemember.Company = _viewModel.Company;
-                        await _tbUserRespository.PosMeUpdate(findUserRemember);
-                    }
-                    else
-                    {
-                        VariablesGlobales.User!.Company = _viewModel.Company;
-                        VariablesGlobales.User.Remember = true;
-                        await _tbUserRespository.PosMeInsert(VariablesGlobales.User);
-                    }
+                await _tbUserRespository.PosMeOnRemember();
+                if (findUserRemember is not null)
+                {
+                    findUserRemember.Remember = true;
+                    findUserRemember.Company = _viewModel.Company;
+                    await _tbUserRespository.PosMeUpdate(findUserRemember);
                 }
                 else
                 {
-                    if (await _tbUserRespository.PosMeRowCount() <= 0)
-                    {
-                        _viewModel.Mensaje = Mensajes.MensajeSinDatosTabla;
-                        _viewModel.MensajeCommand.Execute(null);
-                        Popup.Show();
-                        await Navigation.PopModalAsync();
-                        return;
-                    }
-                    if (findUserRemember is null)
-                    {
-                        _viewModel.Mensaje = Mensajes.MensajeCredencialesInvalida;
-                        _viewModel.MensajeCommand.Execute(null);
-                        Popup.Show();
-                        await Navigation.PopModalAsync();
-                        return;
-                    }
-
-                    VariablesGlobales.User = findUserRemember;
+                    VariablesGlobales.User!.Company = _viewModel.Company;
+                    VariablesGlobales.User.Remember = true;
+                    await _tbUserRespository.PosMeInsert(VariablesGlobales.User);
                 }
-            });
-            await taskPrincipal;
+            }
+            else
+            {
+                if (await _tbUserRespository.PosMeRowCount() <= 0)
+                {
+                    _viewModel.Mensaje = Mensajes.MensajeSinDatosTabla;
+                    _viewModel.MensajeCommand.Execute(null);
+                    Popup.Show();
+                    await Navigation.PopModalAsync();
+                    return;
+                }
+
+                if (findUserRemember is null)
+                {
+                    _viewModel.Mensaje = Mensajes.MensajeCredencialesInvalida;
+                    _viewModel.MensajeCommand.Execute(null);
+                    Popup.Show();
+                    await Navigation.PopModalAsync();
+                    return;
+                }
+
+                VariablesGlobales.User = findUserRemember;
+            }
+
             Application.Current!.MainPage = new MainPage();
             await Navigation.PopModalAsync();
         }
