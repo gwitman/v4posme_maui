@@ -1,4 +1,5 @@
-﻿using Posme.Maui.ViewModels;
+﻿using System.Diagnostics;
+using Posme.Maui.ViewModels;
 
 namespace Posme.Maui.Views
 {
@@ -19,13 +20,13 @@ namespace Posme.Maui.Views
             ViewModel.OnAppearing(Navigation);
         }
 
-        private void SearchBar_OnTextChanged(object? sender, TextChangedEventArgs e)
+        private void SearchBar_OnTextChanged(object? sender, EventArgs eventArgs)
         {
-            var searchBar = (SearchBar)sender!;
-            if (string.IsNullOrEmpty(searchBar.Text))
+            var textEdit = (DevExpress.Maui.Editors.TextEdit)sender!;
+            /*if (string.IsNullOrEmpty(searchBar.Text))
             {
                 ViewModel.LoadItemsCommand.Execute(null);
-            }
+            }*/
         }
     }
 }

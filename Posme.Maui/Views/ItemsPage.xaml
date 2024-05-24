@@ -4,14 +4,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              xmlns:dxcn="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-             xmlns:dxe="http://schemas.devexpress.com/maui/2022/xaml"
+             xmlns:dx="http://schemas.devexpress.com/maui/2022/xaml"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
              xmlns:local="clr-namespace:Posme.Maui.ViewModels"
              xmlns:views="clr-namespace:Posme.Maui.Views"
              xmlns:models="clr-namespace:Posme.Maui.Models"
              Title="{Binding Title}"
              IconImageSource="browse"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-             xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+             xmlns:dxc="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              ios:Page.UseSafeArea="true"
              x:Class="Posme.Maui.Views.ItemsPage">
@@ -22,13 +23,16 @@
         <ToolbarItem IconImageSource="add"
                      Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailNewItemForm}" />
     </ContentPage.ToolbarItems>
-    <dx:DXStackLayout VerticalOptions="Start" HorizontalOptions="Center">
-        <SearchBar
+    <AbsoluteLayout>
+        <dxc:DXStackLayout VerticalOptions="Start" HorizontalOptions="Center">
+        <dxe:TextEdit
+            Margin="3"
+            StartIcon="search"
             x:Name="SearchBar"
             TextChanged="SearchBar_OnTextChanged"
-            Placeholder="Buscar por código..."
-            SearchCommand="{Binding SearchCommand}"
-            SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}" />
+            PlaceholderText="Buscar por código, nombre y código de barra..."
+            TextChangedCommand="{Binding SearchCommand}"
+            TextChangedCommandParameter="{Binding Text, Source={x:Reference SearchBar}}" />
         <dxcv:DXCollectionView x:Name="ItemsListView"
                                Orientation="Vertical"
                                Grid.Row="1"
@@ -41,7 +45,7 @@
                                IsRefreshing="{Binding IsBusy, Mode=OneTime}">
             <dxcv:DXCollectionView.ItemTemplate>
                 <DataTemplate>
-                    <dx:DXButton CornerRadius="5"
+                    <dxc:DXButton CornerRadius="5"
                                  HorizontalContentAlignment="Start"
                                  BackgroundColor="{StaticResource Primary}"
                                  Padding="0"
@@ -69,7 +73,7 @@
                                    Grid.Column="0"
                                    Grid.RowSpan="2"
                                    HeightRequest="50">
-                                <dx:DXImage WidthRequest="35"
+                                <dxc:DXImage WidthRequest="35"
                                             HeightRequest="35"
                                             Source="product_item.svg"
                                             Aspect="Fill" />
@@ -100,7 +104,7 @@
                                     Text="{Binding PrecioPublico}" TextColor="White" />
                             </HorizontalStackLayout>
                         </Grid>
-                    </dx:DXButton>
+                    </dxc:DXButton>
                 </DataTemplate>
             </dxcv:DXCollectionView.ItemTemplate>
         </dxcv:DXCollectionView>
@@ -110,9 +114,21 @@
                       VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
                       Margin="16" CornerRadius="16"
                       BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
-            <dx:DXStackLayout Orientation="Vertical" Padding="10">
+            <dxc:DXStackLayout Orientation="Vertical" Padding="10">
                 <ActivityIndicator IsRunning="{Binding IsBusy}" />
-            </dx:DXStackLayout>
+            </dxc:DXStackLayout>
         </dxcn:DXPopup>
-    </dx:DXStackLayout>
+    </dxc:DXStackLayout>
+        <Button Text="+"
+                BackgroundColor="DodgerBlue"
+                TextColor="White"
+                CornerRadius="28"
+                FontAttributes="Bold"
+                FontSize="30"
+                WidthRequest="56"
+                HeightRequest="56"
+                Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailNewItemForm}"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="0.95, 0.95, AutoSize, AutoSize"/>
+    </AbsoluteLayout>
 </ContentPage>

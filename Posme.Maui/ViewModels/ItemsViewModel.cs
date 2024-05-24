@@ -85,9 +85,11 @@ namespace Posme.Maui.ViewModels
 
         public async void OnAppearing(INavigation navigation)
         {
+            IsBusy = true;
             _navigationPage = navigation;
             SelectedItem = null;
             await ExecuteLoadItemsCommand();
+            IsBusy = false;
         }
 
         private async void OnSearchItems(object obj)
