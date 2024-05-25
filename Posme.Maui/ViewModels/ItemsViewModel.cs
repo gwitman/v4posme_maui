@@ -4,7 +4,6 @@ using DevExpress.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
-using Posme.Maui.Views;
 using Unity;
 using Debug = System.Diagnostics.Debug;
 
@@ -12,60 +11,104 @@ namespace Posme.Maui.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        
         private readonly IRepositoryItems _repositoryItems;
-        
-        private INavigation _navigationPage;
-        public ICommand LoadItemsCommand { get; }
-        public ICommand SearchCommand { get; }
 
-        public ICommand AddItemCommand { get; }
-        public ICommand ValidateAndSaveCommand { get; }
+        private ICommand _loadMoreCommand;
+        public ICommand LoadMoreCommand {
+            get => _loadMoreCommand;
+            set {
+                if (_loadMoreCommand != value) {
+                    _loadMoreCommand = value;
+                    OnPropertyChanged("LoadMoreCommand");
+                }
+            }
+        }
+
+        public ICommand SearchCommand { get; }
         public ICommand CreateDetailFormViewModelCommand { get; }
-        
+
+        private int _lastLoadedIndex = 0;
+        private readonly int _loadBatchSize = 8;
+        private int _sourceSize;
+        private bool _isLoading;
+
         public ItemsViewModel()
         {
+            Items = new List<AppMobileApiMGetDataDownloadItemsResponse>();
+            _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
+            ExecuteLoadItemsAsync();
+            Task.Run(async () =>
+            {
+                _sourceSize = await _repositoryItems.PosMeCount();
+            });
             Title = "Productos";
             CreateDetailFormViewModelCommand = new Command<CreateDetailFormViewModelEventArgs>(CreateDetailFormViewModel);
-            ValidateAndSaveCommand = new Command<ValidateItemEventArgs>(ValidateAndSave);
             SearchCommand = new Command(OnSearchItems);
-            LoadItemsCommand = new Command(ExecuteLoadItemsAsync);
-            _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
-            Items = new ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse>();
+            LoadMoreCommand = new Command(LoadMore);
         }
 
-        private async void ExecuteLoadItemsAsync()
+        private void LoadMore(object obj)
         {
-            IsBusy = true;
-            await ExecuteLoadItemsCommand();
-            IsBusy = false;
+            _lastLoadedIndex += _loadBatchSize;
+            ExecuteLoadItemsAsync();
         }
 
-        async void ValidateAndSave(ValidateItemEventArgs e)
+        public async void ExecuteLoadItemsAsync()
         {
+            try
+            {
+                IsLoading = true;
+                if (Items==null)
+                {
+                    Items = new List<AppMobileApiMGetDataDownloadItemsResponse>();
+                }
+
+                var findItems = await _repositoryItems.PosMeFindAll();
+                Items.AddRange(findItems);
+                IsLoading = false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         private void CreateDetailFormViewModel(CreateDetailFormViewModelEventArgs e)
         {
-            if (e.DetailFormType == DetailFormType.Edit) {
+            if (e.DetailFormType == DetailFormType.Edit)
+            {
                 var eItem = (AppMobileApiMGetDataDownloadItemsResponse)e.Item;
                 var editedContact = _repositoryItems.PosMeFindByItemNumber(eItem.ItemNumber);
-                e.Result = new DetailEditFormViewModel(editedContact, isNew: false, null);
+                e.Result = new DetailEditFormViewModel(editedContact, isNew: false);
             }
         }
 
-        private ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse> _items;
-        public ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse> Items
+        public bool IsLoading
         {
-            get => _items;
+            get => _isLoading;
             set
             {
-                SetProperty(ref _items, value);
+                _isLoading = value;
+                OnPropertyChanged("IsLoading");
                 RaisePropertyChanged();
             }
         }
 
+        private List<AppMobileApiMGetDataDownloadItemsResponse> _items;
+        public List<AppMobileApiMGetDataDownloadItemsResponse> Items
+        {
+            get => _items;
+            set
+            {
+                if (_items != value) {
+                    _items = value;
+                    OnPropertyChanged("Items");
+                }
+            }
+        }
+
         private string? _textSearch;
+
         public string? TextSearch
         {
             get => _textSearch;
@@ -73,6 +116,7 @@ namespace Posme.Maui.ViewModels
         }
 
         AppMobileApiMGetDataDownloadItemsResponse? _selectedItem;
+
         public AppMobileApiMGetDataDownloadItemsResponse? SelectedItem
         {
             get => _selectedItem;
@@ -83,38 +127,14 @@ namespace Posme.Maui.ViewModels
             }
         }
 
-        public async void OnAppearing(INavigation navigation)
-        {
-            IsBusy = true;
-            _navigationPage = navigation;
-            SelectedItem = null;
-            await ExecuteLoadItemsCommand();
-            IsBusy = false;
-        }
-
         private async void OnSearchItems(object obj)
         {
-            IsBusy = true;
+            IsLoading = true;
             TextSearch = obj.ToString();
-            Items.Clear();
+            Items = new List<AppMobileApiMGetDataDownloadItemsResponse>();
             var searchItems = await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(TextSearch);
-            Items = new ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse>(searchItems);
-            IsBusy = false;
-        }
-
-
-        private async Task ExecuteLoadItemsCommand()
-        {
-            try
-            {
-                Items.Clear();
-                var items = await _repositoryItems!.PosMeFindAll();
-                Items = new ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse>(items);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+            Items.AddRange(searchItems);
+            IsLoading = false;
         }
     }
 }
