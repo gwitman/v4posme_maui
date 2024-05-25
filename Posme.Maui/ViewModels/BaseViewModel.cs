@@ -8,7 +8,6 @@ namespace Posme.Maui.ViewModels
 {
     public class BaseViewModel : BindableBase, INotifyPropertyChanged
     {
-
         private bool _isBusy;
         private string _title = string.Empty;
 
@@ -38,17 +37,12 @@ namespace Posme.Maui.ViewModels
             return Task.CompletedTask;
         }
 
-        protected bool SetProperty<T>(ref T backingStore, T value,
-            [CallerMemberName] string propertyName = "",
-            Action onChanged = null)
+        protected void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "", Action? onChanged = null)
         {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
-
+            if (EqualityComparer<T>.Default.Equals(backingStore, value)) return;
             backingStore = value;
             onChanged?.Invoke();
             OnPropertyChanged(propertyName);
-            return true;
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")

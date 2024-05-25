@@ -16,6 +16,7 @@
     </ContentPage.BindingContext>
     <VerticalStackLayout Padding="15" VerticalOptions="Center">
         <dxco:DXPopup x:Name="Popup"
+                      IsOpen="{Binding PopupShow}"
                       AllowScrim="True"
                       BackgroundColor="Red"
                       VerticalAlignment="Bottom"
@@ -58,16 +59,16 @@
             HorizontalOptions="Start"
             Margin="0,10,0,10"
             Padding="3"
+            IsChecked="{Binding Remember}"
             x:Name="ChkRemember"
             Label="Recordar Usuario" />
 
         <dx:DXButton
             BackgroundColor="{StaticResource Secondary}"
-            Icon="login.svg"
+            Icon="login"
             Content="Iniciar Sesión"
             Command="{Binding LoginCommand}"
-            Margin="0,10,0,0"
-            Clicked="DXButtonBase_OnClicked" />
+            Margin="0,10,0,0" />
 
         <dxe:CheckEdit
             HorizontalOptions="Start"
