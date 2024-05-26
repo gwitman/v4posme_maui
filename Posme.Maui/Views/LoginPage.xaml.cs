@@ -15,7 +15,7 @@ namespace Posme.Maui.Views
             InitializeComponent();
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             ((LoginViewModel)BindingContext).OnAppearing(Navigation);
         }

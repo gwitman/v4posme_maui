@@ -109,16 +109,19 @@ namespace Posme.Maui.ViewModels
                 await _repositoryTbUser!.PosMeFindUserByNicknameAndPassword(UserName, Password);
             if (Remember)
             {
-                PopupShow = await _restServiceUser.LoginMobile(UserName, Password);
-                if (!PopupShow)
+                var response = await _restServiceUser.LoginMobile(UserName, Password);
+                if (!response)
                 {
-                    Mensaje = PopupShow ? "" : Mensajes.MensajeCredencialesInvalida;
-                    MensajeCommand.Execute(null);
+                    Mensaje = Mensajes.MensajeCredencialesInvalida;
                     PopupShow = true;
                     await _navigation.PopModalAsync();
                     return;
                 }
-
+                else
+                {
+                    PopupShow = false;
+                }
+            
                 await _repositoryTbUser.PosMeOnRemember();
                 if (findUserRemember is not null)
                 {
@@ -155,8 +158,6 @@ namespace Posme.Maui.ViewModels
 
                 VariablesGlobales.User = findUserRemember;
             }
-
-            PopupShow = false;
             Current!.MainPage = new MainPage();
             await _navigation.PopModalAsync();
         }

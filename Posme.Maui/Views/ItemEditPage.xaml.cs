@@ -33,7 +33,14 @@ public partial class ItemEditPage : ContentPage
         DataForm.Commit();
         ViewModel.Save();
         _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
-        await _repositoryItems.PosMeUpdate(_saveItem);
+        if (_saveItem.ItemPk==0)
+        {
+            await _repositoryItems.PosMeInsert(_saveItem);
+        }
+        else
+        {
+            await _repositoryItems.PosMeUpdate(_saveItem);    
+        }
     }
 
 
