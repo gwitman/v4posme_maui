@@ -8,24 +8,17 @@ namespace Posme.Maui.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemsPage : ContentPage
     {
+        private readonly ItemsViewModel _viewModel;
         public ItemsPage()
         {
             InitializeComponent();
+            _viewModel = (ItemsViewModel)BindingContext;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            ((ItemsViewModel)BindingContext).OnAppearing(Navigation);
-        }
-
-        private async void SimpleButton_OnClicked(object? sender, EventArgs e)
-        {
-            var barCodePage = new BarCodePage();
-            await Navigation.PushAsync(barCodePage);
-            if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
-            SearchBar.Text = VariablesGlobales.BarCode;
-            VariablesGlobales.BarCode = "";
+            _viewModel.OnAppearing(Navigation);
         }
     }
 }

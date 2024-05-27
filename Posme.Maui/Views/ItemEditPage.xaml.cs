@@ -70,7 +70,7 @@ public partial class ItemEditPage : ContentPage
     private async void SimpleButton_OnClicked(object? sender, EventArgs e)
     {
         var barCodePage = new BarCodePage();
-        await Navigation.PushAsync(barCodePage);
+        await Navigation.PushModalAsync(barCodePage);
         if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
         TxtBarCode.Text = VariablesGlobales.BarCode;
         VariablesGlobales.BarCode = "";

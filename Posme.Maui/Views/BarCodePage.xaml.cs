@@ -1,4 +1,5 @@
-﻿using Posme.Maui.Services.Helpers;
+﻿using System.Diagnostics;
+using Posme.Maui.Services.Helpers;
 using ZXing.Net.Maui;
 
 namespace Posme.Maui.Views;
@@ -18,14 +19,27 @@ public partial class BarCodePage : ContentPage
 
     private async void OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
     {
-        var barCode = e.Results.FirstOrDefault();
-        if (barCode is null)
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-          VariablesGlobales.BarCode = "";
-            return;
-        }
+            try
+            {
+                var barCode = e.Results.FirstOrDefault();
+                if (barCode is null)
+                {
+                    VariablesGlobales.BarCode = "";
+                    return;
+                }
 
-        VariablesGlobales.BarCode = barCode.Value;
-        await Navigation.PopAsync(true);
+                VariablesGlobales.BarCode = barCode.Value;
+                if (Navigation.ModalStack.Count > 0)
+                {
+                    Navigation.PopModalAsync();
+                }
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception);
+            }
+        });
     }
 }

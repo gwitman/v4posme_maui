@@ -25,13 +25,16 @@
                 <controls:SimpleButton
                     Grid.Column="0"
                     Icon="barcode_scan"
-                    Clicked="SimpleButton_OnClicked"
+                    Command="{Binding OnBarCode}"
                     IconColor="{StaticResource Secondary}"
                     BackgroundColor="Transparent" />
                 <dxe:TextEdit x:Name="SearchBar"
                               Grid.Column="1"
                               Margin="5"
                               StartIcon="search"
+                              Text="{Binding TextSearch}"
+                              StartIconCommand="{Binding SearchCommand}"
+                              ReturnCommand="{Binding SearchCommand}"
                               PlaceholderText="Buscar por código, código de barra y descripción"
                               TextChangedCommand="{Binding SearchCommand}"
                               TextChangedCommandParameter="{Binding Text, Source={x:Reference SearchBar}}" />
