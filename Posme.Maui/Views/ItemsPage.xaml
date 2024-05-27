@@ -16,7 +16,7 @@
     <ContentPage.BindingContext>
         <local:ItemsViewModel />
     </ContentPage.BindingContext>
-    <AbsoluteLayout>
+    <AbsoluteLayout Margin="0,5,0,0">
         <StackLayout VerticalOptions="Center">
             <Grid
                 RowDefinitions="50"
@@ -36,8 +36,6 @@
                                    DetailNewItemFormTemplate="{DataTemplate views:ItemEditPage}"
                                    ItemsSource="{Binding Items}"
                                    SelectedItem="{Binding SelectedItem}"
-                                   LoadMoreCommand="{Binding LoadMoreCommand}"
-                                   IsLoadMoreEnabled="True"
                                    SelectionMode="Single"
                                    TapCommand="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailForm}"
                                    IsRefreshing="{Binding  IsBusy, Mode=OneWay}">
@@ -61,14 +59,14 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="75" />
-                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="150" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
                                 <Frame WidthRequest="50"
                                        BackgroundColor="Transparent"
                                        Grid.Column="0"
-                                       Grid.RowSpan="2"
+                                       Grid.RowSpan="3"
                                        HeightRequest="50">
                                     <dxc:DXImage WidthRequest="35"
                                                  HeightRequest="35"
@@ -96,15 +94,21 @@
                                         HorizontalOptions="End"
                                         Text="{Binding PrecioPublico}" TextColor="White" />
                                 </HorizontalStackLayout>
-                                <HorizontalStackLayout Padding="25 ,2,0,2"
-                                                       Grid.Row="2" 
-                                                       Grid.Column="0"
-                                                       Grid.ColumnSpan="3" >
+                                <HorizontalStackLayout Grid.Row="2" 
+                                                       Grid.Column="1"
+                                                       Grid.ColumnSpan="2" >
                                     <Label TextColor="White"
+                                           TextTransform="Uppercase"
                                            Text="{Binding Name}" />
                                 </HorizontalStackLayout>
-                                
-                            </Grid>
+                                </Grid>
+                            <dxc:DXStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    NumberOfTapsRequired="1"
+                                    Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailForm}"
+                                    CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>
+                            </dxc:DXStackLayout.GestureRecognizers>
                         </dxc:DXStackLayout>
                     </DataTemplate>
                 </dxcv:DXCollectionView.ItemTemplate>

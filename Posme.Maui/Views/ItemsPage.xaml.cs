@@ -12,6 +12,12 @@ namespace Posme.Maui.Views
             InitializeComponent();
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            ((ItemsViewModel)BindingContext).OnAppearing(Navigation);
+        }
+
         private void SearchBar_OnTextChanged(object? sender, EventArgs eventArgs)
         {
             
