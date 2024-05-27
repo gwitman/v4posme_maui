@@ -16,10 +16,6 @@
     <ContentPage.BindingContext>
         <local:ItemsViewModel />
     </ContentPage.BindingContext>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="add"
-                     Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailNewItemForm}" />
-    </ContentPage.ToolbarItems>
     <AbsoluteLayout>
         <StackLayout VerticalOptions="Center">
             <Grid
@@ -35,29 +31,30 @@
                     TextChangedCommandParameter="{Binding Text, Source={x:Reference SearchBar}}" />
             </Grid>
             <dxcv:DXCollectionView x:Name="ItemsListView"
-                                   LoadMoreCommand="{Binding LoadMoreCommand}"
                                    DetailFormTemplate="{DataTemplate  views:ItemDetailPage}"
                                    DetailEditFormTemplate="{DataTemplate views:ItemEditPage}"
                                    DetailNewItemFormTemplate="{DataTemplate views:ItemEditPage}"
                                    ItemsSource="{Binding Items}"
                                    SelectedItem="{Binding SelectedItem}"
+                                   LoadMoreCommand="{Binding LoadMoreCommand}"
+                                   IsLoadMoreEnabled="True"
                                    SelectionMode="Single"
-                                   IsRefreshing="{Binding  IsLoading, Mode=TwoWay}">
+                                   TapCommand="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailForm}"
+                                   IsRefreshing="{Binding  IsBusy, Mode=OneWay}">
                 <dxcv:DXCollectionView.ItemTemplate>
                     <DataTemplate>
-                        <dxc:DXButton CornerRadius="5"
-                                      HorizontalContentAlignment="Start"
+                        <dxc:DXStackLayout CornerRadius="5"
+                                      HorizontalOptions="Center"
                                       BackgroundColor="{StaticResource Primary}"
                                       Padding="0"
-                                      Margin="5" PressedBackgroundColor="{StaticResource Secondary}"
-                                      Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailForm}"
-                                      CommandParameter="{Binding}">
+                                      Margin="5">
                             <Grid x:DataType="models:AppMobileApiMGetDataDownloadItemsResponse"
                                   Margin="5"
                                   MinimumWidthRequest="350"
                                   HorizontalOptions="Start"
                                   BackgroundColor="Transparent">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
@@ -89,10 +86,6 @@
                                             <FormattedString>
                                                 <Span Text="{Binding ItemNumber}"
                                                       TextColor="White" />
-                                                <Span Text=" - " TextColor="White" />
-                                                <Span Text="{Binding Name}"
-                                                      TextColor="White"
-                                                      FontAttributes="Bold" />
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
@@ -103,8 +96,16 @@
                                         HorizontalOptions="End"
                                         Text="{Binding PrecioPublico}" TextColor="White" />
                                 </HorizontalStackLayout>
+                                <HorizontalStackLayout Padding="25 ,2,0,2"
+                                                       Grid.Row="2" 
+                                                       Grid.Column="0"
+                                                       Grid.ColumnSpan="3" >
+                                    <Label TextColor="White"
+                                           Text="{Binding Name}" />
+                                </HorizontalStackLayout>
+                                
                             </Grid>
-                        </dxc:DXButton>
+                        </dxc:DXStackLayout>
                     </DataTemplate>
                 </dxcv:DXCollectionView.ItemTemplate>
             </dxcv:DXCollectionView>
