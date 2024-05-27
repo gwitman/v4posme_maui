@@ -69,7 +69,11 @@ namespace Posme.Maui.ViewModels
         public string? TextSearch
         {
             get => _textSearch;
-            set => SetProperty(ref _textSearch, value);
+            set
+            {
+                SetProperty(ref _textSearch, value);
+                RaisePropertyChanged();
+            }
         }
 
         AppMobileApiMGetDataDownloadItemsResponse? _selectedItem;

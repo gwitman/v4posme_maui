@@ -19,100 +19,100 @@
     <AbsoluteLayout Margin="0,5,0,0">
         <StackLayout VerticalOptions="Center">
             <Grid
-                RowDefinitions="50"
-                ColumnDefinitions="0.90*"
+                RowDefinitions="Auto,Auto"
                 HorizontalOptions="Center">
-                <dxe:TextEdit
-                    StartIcon="search"
-                    x:Name="SearchBar"
-                    TextChanged="SearchBar_OnTextChanged"
-                    PlaceholderText="Buscar por código, nombre y código de barra..."
-                    TextChangedCommand="{Binding SearchCommand}"
-                    TextChangedCommandParameter="{Binding Text, Source={x:Reference SearchBar}}" />
-            </Grid>
-            <dxcv:DXCollectionView x:Name="ItemsListView"
-                                   DetailFormTemplate="{DataTemplate  views:ItemDetailPage}"
-                                   DetailEditFormTemplate="{DataTemplate views:ItemEditPage}"
-                                   DetailNewItemFormTemplate="{DataTemplate views:ItemEditPage}"
-                                   ItemsSource="{Binding Items}"
-                                   SelectedItem="{Binding SelectedItem}"
-                                   SelectionMode="Single"
-                                   TapCommand="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailForm}"
-                                   IsRefreshing="{Binding  IsBusy, Mode=OneWay}">
-                <dxcv:DXCollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <dxc:DXStackLayout CornerRadius="5"
-                                      HorizontalOptions="Center"
-                                      BackgroundColor="{StaticResource Primary}"
-                                      Padding="0"
-                                      Margin="5">
-                            <Grid x:DataType="models:AppMobileApiMGetDataDownloadItemsResponse"
-                                  Margin="5"
-                                  MinimumWidthRequest="350"
-                                  HorizontalOptions="Start"
-                                  BackgroundColor="Transparent">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="75" />
-                                    <ColumnDefinition Width="150" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                <Grid ColumnDefinitions="0.85*" RowDefinitions="Auto" Grid.Row="0">
+                    <SearchBar x:Name="SearchBar"
+                               Placeholder="Buscar por código, código de barra y descripción"
+                               SearchCommand="{Binding SearchCommand}"
+                               SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}" />
+                </Grid>
+                <dxcv:DXCollectionView x:Name="ItemsListView"
+                                       Grid.Row="1"
+                                       DetailFormTemplate="{DataTemplate  views:ItemDetailPage}"
+                                       DetailEditFormTemplate="{DataTemplate views:ItemEditPage}"
+                                       DetailNewItemFormTemplate="{DataTemplate views:ItemEditPage}"
+                                       ItemsSource="{Binding Items}"
+                                       SelectedItem="{Binding SelectedItem}"
+                                       SelectionMode="Single"
+                                       TapCommand="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailForm}"
+                                       IsRefreshing="{Binding  IsBusy, Mode=OneWay}">
+                    <dxcv:DXCollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <dxc:DXStackLayout CornerRadius="5"
+                                               HorizontalOptions="Center"
+                                               BackgroundColor="{StaticResource Primary}"
+                                               Padding="0"
+                                               Margin="0,2,0,2">
+                                <Grid x:DataType="models:AppMobileApiMGetDataDownloadItemsResponse"
+                                      Margin="0"
+                                      MinimumWidthRequest="400"
+                                      HorizontalOptions="Start"
+                                      BackgroundColor="Transparent">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="45" />
+                                        <ColumnDefinition Width="200" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
 
-                                <Frame WidthRequest="50"
-                                       BackgroundColor="Transparent"
-                                       Grid.Column="0"
-                                       Grid.RowSpan="3"
-                                       HeightRequest="50">
-                                    <dxc:DXImage WidthRequest="35"
-                                                 HeightRequest="35"
-                                                 Source="product_item.svg"
-                                                 Aspect="Fill" />
-                                </Frame>
-                                <Label Grid.Column="1" Grid.Row="0" FontAttributes="Bold"
-                                       Grid.ColumnSpan="2"
-                                       TextColor="White"
-                                       Text="{Binding BarCode}" />
-                                <HorizontalStackLayout Grid.Column="1" Grid.Row="1">
-                                    <Label
-                                        HorizontalOptions="Start">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="{Binding ItemNumber}"
-                                                      TextColor="White" />
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-                                </HorizontalStackLayout>
-                                <HorizontalStackLayout Grid.Column="2" Grid.Row="1">
-                                    <Label Text="Precio: C$ " TextColor="White" />
-                                    <Label
-                                        HorizontalOptions="End"
-                                        Text="{Binding PrecioPublico}" TextColor="White" />
-                                </HorizontalStackLayout>
-                                <HorizontalStackLayout Grid.Row="2" 
-                                                       Grid.Column="1"
-                                                       Grid.ColumnSpan="2" >
-                                    <Label TextColor="White"
-                                           TextTransform="Uppercase"
-                                           Text="{Binding Name}" />
-                                </HorizontalStackLayout>
+                                    <Frame
+                                        WidthRequest="40"
+                                        HeightRequest="50"
+                                        BackgroundColor="Transparent"
+                                        Grid.Column="0"
+                                        Grid.RowSpan="3">
+                                        <dxc:DXImage WidthRequest="30"
+                                                     HeightRequest="30"
+                                                     Source="product_item"
+                                                     Aspect="Fill" />
+                                    </Frame>
+                                    <Label Grid.Column="1" Grid.Row="0" FontAttributes="Bold"
+                                           Grid.ColumnSpan="2"
+                                           TextColor="White"
+                                           Text="{Binding BarCode}" />
+                                    <HorizontalStackLayout Grid.Column="1" Grid.Row="1">
+                                        <Label
+                                            HorizontalOptions="Start">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding ItemNumber}"
+                                                          TextColor="White" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Grid.Column="2" Grid.Row="1">
+                                        <Label Text="Precio: C$ " TextColor="White" />
+                                        <Label
+                                            HorizontalOptions="End"
+                                            Text="{Binding PrecioPublico}" TextColor="White" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Grid.Row="2"
+                                                           Grid.Column="1"
+                                                           Grid.ColumnSpan="2">
+                                        <Label TextColor="White"
+                                               TextTransform="Uppercase"
+                                               Text="{Binding Name}" />
+                                    </HorizontalStackLayout>
                                 </Grid>
-                            <dxc:DXStackLayout.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    NumberOfTapsRequired="1"
-                                    Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailForm}"
-                                    CommandParameter="{Binding .}">
-                                </TapGestureRecognizer>
-                            </dxc:DXStackLayout.GestureRecognizers>
-                        </dxc:DXStackLayout>
-                    </DataTemplate>
-                </dxcv:DXCollectionView.ItemTemplate>
-            </dxcv:DXCollectionView>
+                                <dxc:DXStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        NumberOfTapsRequired="1"
+                                        Command="{Binding Source={x:Reference ItemsListView}, Path=Commands.ShowDetailForm}"
+                                        CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </dxc:DXStackLayout.GestureRecognizers>
+                            </dxc:DXStackLayout>
+                        </DataTemplate>
+                    </dxcv:DXCollectionView.ItemTemplate>
+                </dxcv:DXCollectionView>
+            </Grid>
         </StackLayout>
         <Button Text="+"
                 BackgroundColor="DodgerBlue"
