@@ -28,6 +28,7 @@ public partial class ItemEditPage : ContentPage
         DataForm.Commit();
         ViewModel.Save();
         _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
+        _saveItem.Modificado = true;
         if (_saveItem.ItemPk == 0)
         {
             await _repositoryItems.PosMeInsert(_saveItem);
@@ -36,6 +37,8 @@ public partial class ItemEditPage : ContentPage
         {
             await _repositoryItems.PosMeUpdate(_saveItem);
         }
+
+        VariablesGlobales.CantidadTransacciones++;
     }
 
 

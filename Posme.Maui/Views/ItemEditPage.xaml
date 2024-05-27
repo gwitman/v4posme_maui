@@ -103,7 +103,7 @@
                                 IconColor="#006E98"
                                 StartIcon="quantity"
                                 Text="{Binding CantidadEntradas}"
-                                LabelText="Cantidad" />
+                                LabelText="Cantidad a ingresar" />
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
@@ -111,7 +111,7 @@
                                 IconColor="#006E98"
                                 StartIcon="quantity"
                                 Text="{Binding CantidadSalidas}"
-                                LabelText="Cantidad" />
+                                LabelText="Cantidad a retirar" />
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
@@ -120,7 +120,7 @@
                                 IconColor="#006E98"
                                 StartIcon="quantity"
                                 Text="{Binding CantidadFinal}"
-                                LabelText="Cantidad" />
+                                LabelText="Existencia total" />
                         </dxdf:DataFormCustomItem>
                     </dxdf:DataFormView>
                     <dx:DXBorder.Triggers>
