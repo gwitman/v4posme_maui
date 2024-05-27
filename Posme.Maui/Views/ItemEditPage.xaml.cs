@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using DevExpress.Maui.Core;
 using DevExpress.Maui.DataForm;
 using Posme.Maui.Models;
@@ -19,7 +13,8 @@ public partial class ItemEditPage : ContentPage
     DetailEditFormViewModel ViewModel => (DetailEditFormViewModel)BindingContext;
     private readonly IRepositoryItems _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
     private AppMobileApiMGetDataDownloadItemsResponse _saveItem;
-    
+
+
     public ItemEditPage()
     {
         InitializeComponent();
@@ -33,20 +28,20 @@ public partial class ItemEditPage : ContentPage
         DataForm.Commit();
         ViewModel.Save();
         _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
-        if (_saveItem.ItemPk==0)
+        if (_saveItem.ItemPk == 0)
         {
             await _repositoryItems.PosMeInsert(_saveItem);
         }
         else
         {
-            await _repositoryItems.PosMeUpdate(_saveItem);    
+            await _repositoryItems.PosMeUpdate(_saveItem);
         }
     }
 
 
     private void dataForm_ValidateProperty(object sender, DataFormPropertyValidationEventArgs e)
     {
-        if (e.PropertyName=="BarCode" && e.NewValue != null)
+        if (e.PropertyName == "BarCode" && e.NewValue != null)
         {
             e.HasError = true;
             e.ErrorText = "Debe especifcar el código de barra";
@@ -65,9 +60,19 @@ public partial class ItemEditPage : ContentPage
         {
             e.HasErrors = true;
         }
+
         if (string.IsNullOrWhiteSpace(_saveItem.Name))
         {
             e.HasErrors = true;
         }
+    }
+
+    private async void SimpleButton_OnClicked(object? sender, EventArgs e)
+    {
+        var barCodePage = new BarCodePage();
+        await Navigation.PushAsync(barCodePage);
+        if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
+        TxtBarCode.Text = VariablesGlobales.BarCode;
+        VariablesGlobales.BarCode = "";
     }
 }

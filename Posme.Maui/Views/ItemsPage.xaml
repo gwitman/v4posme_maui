@@ -11,6 +11,7 @@
              IconImageSource="browse"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:dxc="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+             xmlns:controls="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              ios:Page.UseSafeArea="true"
              x:Class="Posme.Maui.Views.ItemsPage">
     <ContentPage.BindingContext>
@@ -20,8 +21,15 @@
         <Grid
             RowDefinitions="Auto,*"
             HorizontalOptions="Center">
-            <Grid ColumnDefinitions="0.2*">
+            <Grid ColumnDefinitions="Auto,0.2*">
+                <controls:SimpleButton
+                    Grid.Column="0"
+                    Icon="barcode_scan"
+                    Clicked="SimpleButton_OnClicked"
+                    IconColor="{StaticResource Secondary}"
+                    BackgroundColor="Transparent" />
                 <dxe:TextEdit x:Name="SearchBar"
+                              Grid.Column="1"
                               Margin="5"
                               StartIcon="search"
                               PlaceholderText="Buscar por código, código de barra y descripción"
@@ -96,7 +104,7 @@
                                                    Grid.Column="1"
                                                    Grid.ColumnSpan="2">
                                 <Label TextColor="White"
-                                       TextTransform="Uppercase"
+                                       FontAttributes="Bold"
                                        Text="{Binding Name}" />
                             </HorizontalStackLayout>
                             <Grid.GestureRecognizers>
@@ -113,7 +121,7 @@
             </dxcv:DXCollectionView>
         </Grid>
         <Button Text="+"
-                BackgroundColor="DodgerBlue"
+                BackgroundColor="OrangeRed"
                 TextColor="White"
                 CornerRadius="28"
                 FontAttributes="Bold"

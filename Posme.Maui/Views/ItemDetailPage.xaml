@@ -61,7 +61,9 @@
                     <Label Text="{Binding Item.PrecioPublico}" FontSize="18"  />
                 </dx:DXStackLayout>
             </dx:DXBorder>
-            <dxcn:DXPopup x:Name="popup" AllowScrim="True" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+            <dxcn:DXPopup x:Name="Popup" AllowScrim="True" 
+                          VerticalAlignment="Bottom" 
+                          HorizontalAlignment="Stretch"
                           Margin="16" CornerRadius="16"
                           BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
                 <dx:DXStackLayout Orientation="Vertical" Padding="10">

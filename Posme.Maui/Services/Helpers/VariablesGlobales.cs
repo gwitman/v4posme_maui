@@ -8,7 +8,8 @@ public static class VariablesGlobales
     public static string? CompanyKey;
     public static CoreAccountMLoginMobileObjUserResponse? User;
     public static int CantidadTransacciones = 0;
-    public static UnityContainer UnityContainer;
+    public static readonly UnityContainer UnityContainer;
+    public static string? BarCode;
 
     static VariablesGlobales()
     {

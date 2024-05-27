@@ -24,7 +24,7 @@ namespace Posme.Maui.Views
 
         private void DeleteItemClick(object? sender, EventArgs e)
         {
-            popup.IsOpen = true;
+            Popup.IsOpen = true;
         }
 
         private async void DeleteConfirmedClick(object? sender, EventArgs e)
@@ -51,7 +51,7 @@ namespace Posme.Maui.Views
 
         private void CancelDeleteClick(object? sender, EventArgs e)
         {
-            popup.IsOpen = false;
+            Popup.IsOpen = false;
         }
     }
 }

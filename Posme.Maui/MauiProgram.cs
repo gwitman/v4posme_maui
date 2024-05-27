@@ -8,6 +8,7 @@ using Posme.Maui.Services.Repository;
 using Posme.Maui.ViewModels;
 using Posme.Maui.Views;
 using Unity;
+using ZXing.Net.Maui.Controls;
 
 namespace Posme.Maui
 {
@@ -21,6 +22,7 @@ namespace Posme.Maui
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
                 .UseDevExpress(useLocalization: true)
+                .UseBarcodeReader()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

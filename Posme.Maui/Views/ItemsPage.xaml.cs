@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using DevExpress.Maui.Core;
+using Posme.Maui.Services.Helpers;
 using Posme.Maui.ViewModels;
 
 namespace Posme.Maui.Views
@@ -18,9 +19,13 @@ namespace Posme.Maui.Views
             ((ItemsViewModel)BindingContext).OnAppearing(Navigation);
         }
 
-        private void SearchBar_OnTextChanged(object? sender, EventArgs eventArgs)
+        private async void SimpleButton_OnClicked(object? sender, EventArgs e)
         {
-            
+            var barCodePage = new BarCodePage();
+            await Navigation.PushAsync(barCodePage);
+            if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
+            SearchBar.Text = VariablesGlobales.BarCode;
+            VariablesGlobales.BarCode = "";
         }
     }
 }

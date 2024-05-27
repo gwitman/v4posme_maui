@@ -145,6 +145,21 @@ public class AppMobileApiMGetDataDownloadItemsResponse : BindableBase
         get => GetValue<decimal>();
         set => SetValue(value);
     }
+
+    public decimal CantidadEntradas {
+        get => GetValue<decimal>();
+        set => SetValue(value);
+    }
+    public decimal CantidadSalidas {
+        get => GetValue<decimal>();
+        set => SetValue(value);
+    }
+    public decimal CantidadFinal {
+        get => GetValue<decimal>();
+        set => SetValue(value);
+    }
+
+    public bool Modificado { get; set; }
 }
 
 [Table("tb_parameters")]
