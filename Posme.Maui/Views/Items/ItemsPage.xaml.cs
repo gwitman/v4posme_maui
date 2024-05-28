@@ -1,18 +1,16 @@
-﻿using System.Diagnostics;
-using DevExpress.Maui.Core;
-using Posme.Maui.Services.Helpers;
-using Posme.Maui.ViewModels;
+﻿using Posme.Maui.ViewModels;
 
-namespace Posme.Maui.Views
+namespace Posme.Maui.Views.Items
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemsPage : ContentPage
     {
         private readonly ItemsViewModel _viewModel;
+
         public ItemsPage()
         {
             InitializeComponent();
-            _viewModel = (ItemsViewModel)BindingContext;
+            BindingContext = _viewModel = new ItemsViewModel();
         }
 
         protected override void OnAppearing()

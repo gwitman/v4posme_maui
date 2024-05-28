@@ -6,6 +6,8 @@
        ItemTemplate="{StaticResource ShellMenuItemTemplate}"
        MenuItemTemplate="{StaticResource ShellMenuItemTemplate}"
        xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+       xmlns:items="clr-namespace:Posme.Maui.Views.Items"
+       xmlns:clientes="clr-namespace:Posme.Maui.Views.Clientes"
        ios:Page.UseSafeArea="true"
        x:Class="Posme.Maui.Views.MainPage">
     
@@ -26,7 +28,7 @@
                       ContentTemplate="{DataTemplate local:SchedulerPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
-                      ContentTemplate="{DataTemplate local:ItemsPage}" />
+                      ContentTemplate="{DataTemplate items:ItemsPage}" />
 
     </FlyoutItem>
 
@@ -64,8 +66,8 @@
 
     <FlyoutItem Title="Clientes" Icon="person.svg">
 
-        <ShellContent Title="Inicio" Icon="basic_home.svg"
-                      ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Clientes" Icon="person"
+                      ContentTemplate="{DataTemplate clientes:ClientesPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
@@ -81,7 +83,7 @@
     <FlyoutItem Title="Productos" Icon="products.svg">
 
         <ShellContent Title="Productos" Icon="products.svg"
-                      ContentTemplate="{DataTemplate local:ItemsPage}" />
+                      ContentTemplate="{DataTemplate items:ItemsPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />

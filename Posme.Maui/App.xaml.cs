@@ -1,6 +1,7 @@
 ﻿using Posme.Maui.Services;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Views;
+using Posme.Maui.Views.Items;
 using Application = Microsoft.Maui.Controls.Application;
 
 namespace Posme.Maui

@@ -70,4 +70,18 @@
 	<ItemGroup>
 	  <Folder Include="ServicesLibrary\" />
 	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Compile Update="Views\Clientes\ClientesPage.xaml.cs">
+	    <DependentUpon>ClientesPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\Clientes\ClientesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
 </Project>

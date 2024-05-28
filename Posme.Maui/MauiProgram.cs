@@ -7,6 +7,7 @@ using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.ViewModels;
 using Posme.Maui.Views;
+using Posme.Maui.Views.Items;
 using Unity;
 using ZXing.Net.Maui.Controls;
 

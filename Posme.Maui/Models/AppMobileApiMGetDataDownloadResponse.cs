@@ -23,23 +23,26 @@ public class AppMobileApiMGetDataDownloadResponse
 }
 
 [Table("tb_customers")]
-public class AppMobileApiMGetDataDownloadCustomerResponse
+public class AppMobileApiMGetDataDownloadCustomerResponse : BindableBase
 {
-    [PrimaryKey, AutoIncrement] public int CustomerId { get; set; }
+    [PrimaryKey, AutoIncrement] [DataMember]public int CustomerId { get; set; }
 
-    public int ComapnyId { get; set; }
+    [DataMember]public int ComapnyId { get; set; }
 
-    public int BranchId { get; set; }
+    [DataMember]public int BranchId { get; set; }
 
-    public int EntityId { get; set; }
+    [DataMember]public int EntityId { get; set; }
 
-    public string? CustomerNumber { get; set; }
+    [DataMember]public string? CustomerNumber { get; set; }
 
-    public string? Identification { get; set; }
+    [DataMember]public string? Identification { get; set; }
 
-    public string? FirstName { get; set; }
+    [DataMember]public string? FirstName { get; set; }
 
-    public string? LastName { get; set; }
+    [DataMember]public string? LastName { get; set; }
+
+    [DataMember]public decimal Balance { get; set; }
+    public bool Modificado { get; set; }
 }
 
 [Table("tb_document_credit")]

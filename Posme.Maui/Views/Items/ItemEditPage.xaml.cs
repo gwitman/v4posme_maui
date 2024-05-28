@@ -5,7 +5,7 @@ using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Unity;
 
-namespace Posme.Maui.Views;
+namespace Posme.Maui.Views.Items;
 
 public partial class ItemEditPage : ContentPage
 {

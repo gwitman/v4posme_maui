@@ -13,6 +13,7 @@ namespace Posme.Maui.ViewModels
     {
         private readonly IRepositoryItems _repositoryItems;
         private INavigation? _navigation;
+
         public ItemsViewModel()
         {
             _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
@@ -23,14 +24,31 @@ namespace Posme.Maui.ViewModels
             OnBarCode = new Command(OnSearchBarCode);
         }
 
+
+        public ICommand OnBarCode { get; }
+        public ICommand SearchCommand { get; }
+        public ICommand CreateDetailFormViewModelCommand { get; }
+        public ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse> Items { get; set; }
+        
+
+        AppMobileApiMGetDataDownloadItemsResponse? _selectedItem;
+        public AppMobileApiMGetDataDownloadItemsResponse? SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                SetProperty(ref this._selectedItem, value);
+                RaisePropertyChanged();
+            }
+        }
         private async void OnSearchBarCode(object obj)
         {
             var barCodePage = new BarCodePage();
             await _navigation!.PushModalAsync(barCodePage);
             if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
-            TextSearch = VariablesGlobales.BarCode;
+            Search = VariablesGlobales.BarCode;
             VariablesGlobales.BarCode = "";
-            OnSearchItems(TextSearch);
+            OnSearchItems(Search);
         }
 
         private async void OnSearchItems(object? obj)
@@ -38,13 +56,12 @@ namespace Posme.Maui.ViewModels
             IsBusy = true;
             if (obj is not null)
             {
-                TextSearch = obj.ToString(); 
+                Search = obj.ToString()!; 
             }
-            Items.Clear();
-            var searchItems =
-                await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(TextSearch);
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
+                Items.Clear();
+                var searchItems = await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(Search);
                 foreach (var itemsResponse in searchItems)
                 {
                     Items.Add(itemsResponse);
@@ -52,13 +69,13 @@ namespace Posme.Maui.ViewModels
             });
             IsBusy = false;
         }
+
         private async void LoadMoreItems()
         {
             IsBusy = true;
-            Items.Clear();
-            var newItems = await _repositoryItems.PosMeFindAll();
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
+                var newItems = await _repositoryItems.PosMeFindAll();
                 foreach (var itemsResponse in newItems)
                 {
                     Items.Add(itemsResponse);
@@ -73,34 +90,6 @@ namespace Posme.Maui.ViewModels
                 var eItem = (AppMobileApiMGetDataDownloadItemsResponse)e.Item;
                 var editedContact = _repositoryItems.PosMeFindByItemNumber(eItem.ItemNumber);
                 e.Result = new DetailEditFormViewModel(editedContact, isNew: false);
-            }
-        }
-
-        public ICommand OnBarCode { get; }
-        public ICommand SearchCommand { get; }
-        public ICommand CreateDetailFormViewModelCommand { get; }
-        public ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse> Items { get; set; }
-
-        private string? _textSearch;
-
-        public string? TextSearch
-        {
-            get => _textSearch;
-            set
-            {
-                SetProperty(ref _textSearch, value);
-                RaisePropertyChanged();
-            }
-        }
-
-        AppMobileApiMGetDataDownloadItemsResponse? _selectedItem;
-        public AppMobileApiMGetDataDownloadItemsResponse? SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                SetProperty(ref this._selectedItem, value);
-                RaisePropertyChanged();
             }
         }
 

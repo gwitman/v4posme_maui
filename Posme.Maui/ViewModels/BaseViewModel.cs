@@ -6,11 +6,12 @@ using DevExpress.Maui.Core;
 
 namespace Posme.Maui.ViewModels
 {
-    public class BaseViewModel : BindableBase, INotifyPropertyChanged
+    public class BaseViewModel : BindableBase
     {
         private bool _isBusy;
         private string _title = string.Empty;
-        protected AppMobileApiMGetDataDownloadItemsResponse _selectedItem;
+        private string _search = string.Empty;
+
         public bool IsBusy
         {
             get => GetValue<bool>();
@@ -38,19 +39,18 @@ namespace Posme.Maui.ViewModels
             }
         }
 
-        public AppMobileApiMGetDataDownloadItemsResponse SelectedItem
+        public string Search
         {
-            get => GetValue<AppMobileApiMGetDataDownloadItemsResponse>();
+            get => GetValue<string>();
             set
             {
-                SetProperty(ref _selectedItem, value);
-                SetValue(value);
+                SetProperty(ref _search, value);
                 RaisePropertyChanged();
             }
         }
+
         public event PropertyChangedEventHandler? PropertyChanged;
-
-
+        
         public virtual Task InitializeAsync(object parameter)
         {
             return Task.CompletedTask;
