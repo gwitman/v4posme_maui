@@ -70,6 +70,7 @@
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
+                                x:Name="TextName"
                                 IconColor="#006E98"
                                 StartIcon="textbox"
                                 Text="{Binding Name}"
@@ -77,6 +78,7 @@
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
+                                x:Name="TextPrecioPublico"
                                 Keyboard="Numeric"
                                 IconColor="#006E98"
                                 StartIcon="price"

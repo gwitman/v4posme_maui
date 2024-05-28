@@ -85,12 +85,25 @@ public partial class ItemEditPage : ContentPage
     {
         _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
         _saveItem.CantidadFinal = decimal.Add(_saveItem.CantidadEntradas, _saveItem.Quantity) - _saveItem.CantidadSalidas;
-        TextCantidadFinal.Text = _saveItem.CantidadFinal.ToString("####.##");
+        TextCantidadFinal.Text = _saveItem.CantidadFinal.ToString("N");
     }
 
     protected override async void OnAppearing()
     {
         _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
+        _defaultItem = await _repositoryItems.PosMeFindByItemNumber(_saveItem.ItemNumber);
     }
 
+    protected override void OnDisappearing()
+    {
+        if (!ViewModel.IsSaved)
+        {
+            TxtBarCode.Text = _defaultItem.BarCode;
+            TextCantidadFinal.Text = _defaultItem.CantidadFinal.ToString("N");
+            TextCantidadEntrada.Text = _defaultItem.CantidadEntradas.ToString("N");
+            TextCantidadSalida.Text = _defaultItem.CantidadSalidas.ToString("N");
+            TextName.Text = _defaultItem.Name;
+            TextPrecioPublico.Text = _defaultItem.PrecioPublico.ToString("N");
+        }
+    }
 }
