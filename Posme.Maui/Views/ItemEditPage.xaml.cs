@@ -78,4 +78,11 @@ public partial class ItemEditPage : ContentPage
         TxtBarCode.Text = VariablesGlobales.BarCode;
         VariablesGlobales.BarCode = "";
     }
+
+    private void TextCantidadEntrada_OnTextChanged(object? sender, EventArgs e)
+    {
+        _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
+        _saveItem.CantidadFinal = decimal.Add(_saveItem.CantidadEntradas, _saveItem.Quantity) - _saveItem.CantidadSalidas;
+        TextCantidadFinal.Text = _saveItem.CantidadFinal.ToString("####.##");
+    }
 }

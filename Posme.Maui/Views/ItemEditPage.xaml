@@ -8,6 +8,7 @@
              xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             xmlns:models="clr-namespace:Posme.Maui.Models"
              Title="Editar Producto"
              Style="{StaticResource DetailPageStyle}">
     <ContentPage.Triggers>
@@ -18,6 +19,7 @@
         </DataTrigger>
     </ContentPage.Triggers>
     <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="barcode_scan" Clicked="SimpleButton_OnClicked" />
         <ToolbarItem IconImageSource="save" Clicked="SaveItemClick" />
     </ContentPage.ToolbarItems>
     <Grid>
@@ -51,19 +53,12 @@
                                        ValidateProperty="dataForm_ValidateProperty"
                                        Margin="0,10,0,0" Background="Transparent">
                         <dxdf:DataFormCustomItem>
-                            <HorizontalStackLayout>
-                                <dxco:SimpleButton
-                                    Icon="barcode_scan"
-                                    Clicked="SimpleButton_OnClicked"
-                                    IconColor="{StaticResource Secondary}"
-                                    BackgroundColor="Transparent" />
-                                <dxe:TextEdit
-                                    x:Name="TxtBarCode"
-                                    IconColor="#006E98"
-                                    StartIcon="barcode"
-                                    Text="{Binding BarCode}"
-                                    LabelText="Código de barra" />
-                            </HorizontalStackLayout>
+                            <dxe:TextEdit
+                                x:Name="TxtBarCode"
+                                IconColor="#006E98"
+                                StartIcon="barcode"
+                                Text="{Binding BarCode}"
+                                LabelText="Código de barra" />
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
@@ -90,15 +85,18 @@
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
+                                x:Name="TextCantidadFinal"
                                 Keyboard="Numeric"
-                                IconColor="#006E98"
                                 IsReadOnly="True"
+                                IconColor="#006E98"
                                 StartIcon="quantity"
-                                Text="{Binding Quantity}"
-                                LabelText="Cantidad" />
+                                Text="{Binding CantidadFinal}"
+                                LabelText="Existencia total" />
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
+                                TextChanged="TextCantidadEntrada_OnTextChanged"
+                                x:Name="TextCantidadEntrada"
                                 Keyboard="Numeric"
                                 IconColor="#006E98"
                                 StartIcon="quantity"
@@ -107,6 +105,8 @@
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
+                                TextChanged="TextCantidadEntrada_OnTextChanged"
+                                x:Name="TextCantidadSalida"
                                 Keyboard="Numeric"
                                 IconColor="#006E98"
                                 StartIcon="quantity"
@@ -116,11 +116,11 @@
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
                                 Keyboard="Numeric"
-                                IsReadOnly="True"
                                 IconColor="#006E98"
+                                IsReadOnly="True"
                                 StartIcon="quantity"
-                                Text="{Binding CantidadFinal}"
-                                LabelText="Existencia total" />
+                                Text="{Binding Quantity}"
+                                LabelText="Cantidad" />
                         </dxdf:DataFormCustomItem>
                     </dxdf:DataFormView>
                     <dx:DXBorder.Triggers>

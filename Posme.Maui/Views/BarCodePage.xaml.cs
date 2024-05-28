@@ -6,6 +6,11 @@ namespace Posme.Maui.Views;
 
 public partial class BarCodePage : ContentPage
 {
+    
+    private bool _isAnimating = true;
+    private const int StepSize = 100; 
+    private double _currentY = 0;
+    
     public BarCodePage()
     {
         InitializeComponent();
@@ -15,6 +20,7 @@ public partial class BarCodePage : ContentPage
             AutoRotate = true,
             Multiple = false
         };
+        StartScanAnimation();
     }
 
     private async void OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
@@ -31,10 +37,9 @@ public partial class BarCodePage : ContentPage
                 }
 
                 VariablesGlobales.BarCode = barCode.Value;
-                if (Navigation.ModalStack.Count > 0)
-                {
-                    Navigation.PopModalAsync();
-                }
+                if (Navigation.ModalStack.Count <= 0) return;
+                StopScanAnimation();
+                Navigation.PopModalAsync();
             }
             catch (Exception exception)
             {
@@ -42,4 +47,33 @@ public partial class BarCodePage : ContentPage
             }
         });
     }
+    
+    private async void StartScanAnimation()
+    {
+        _isAnimating = true;
+
+        while (_isAnimating)
+        {
+            _currentY += StepSize;
+            if (_currentY >= Height)
+            {
+                _currentY = 0;
+            }
+
+            await ScanLine.TranslateTo(0, _currentY, 250, Easing.CubicOut);
+        }
+    }
+
+    private void StopScanAnimation()
+    {
+        _isAnimating = false;
+        ScanLine.AbortAnimation("TranslateTo");
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        StopScanAnimation();
+    }
+    
 }

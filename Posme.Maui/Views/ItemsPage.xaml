@@ -17,17 +17,14 @@
     <ContentPage.BindingContext>
         <local:ItemsViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="barcode_scan" Command="{Binding OnBarCode}"/>
+    </ContentPage.ToolbarItems>
     <AbsoluteLayout>
         <Grid
             RowDefinitions="Auto,*"
             HorizontalOptions="Center">
-            <Grid ColumnDefinitions="Auto,0.2*">
-                <controls:SimpleButton
-                    Grid.Column="0"
-                    Icon="barcode_scan"
-                    Command="{Binding OnBarCode}"
-                    IconColor="{StaticResource Secondary}"
-                    BackgroundColor="Transparent" />
+            <Grid ColumnDefinitions="0.2*">
                 <dxe:TextEdit x:Name="SearchBar"
                               Grid.Column="1"
                               Margin="5"

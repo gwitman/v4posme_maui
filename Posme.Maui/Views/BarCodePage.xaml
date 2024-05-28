@@ -12,6 +12,12 @@
                                            IsTorchOn="False"
                                            HorizontalOptions="FillAndExpand"
                                            VerticalOptions="FillAndExpand" />
+            <BoxView x:Name="ScanLine"
+                     Color="{StaticResource Secondary}"
+                     HeightRequest="2"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="Start"
+                     Opacity="0.8" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

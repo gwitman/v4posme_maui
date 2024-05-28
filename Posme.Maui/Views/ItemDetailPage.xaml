@@ -57,8 +57,8 @@
             </dx:DXBorder>
             <dx:DXBorder Style="{StaticResource PropertyBorder}">
                 <dx:DXStackLayout Orientation="Vertical">
-                    <Label Text="Cantidad: " FontAttributes="Bold" FontSize="18" />
-                    <Label Text="{Binding Item.Quantity}" FontSize="18"  />
+                    <Label Text="Existencia final: " FontAttributes="Bold" FontSize="18" />
+                    <Label Text="{Binding Item.CantidadFinal}" FontSize="18"  />
                 </dx:DXStackLayout>
             </dx:DXBorder>
             <dx:DXBorder Style="{StaticResource PropertyBorder}">
@@ -75,8 +75,8 @@
             </dx:DXBorder>
             <dx:DXBorder Style="{StaticResource PropertyBorder}">
                 <dx:DXStackLayout Orientation="Vertical">
-                    <Label Text="Existencia final: " FontAttributes="Bold" FontSize="18" />
-                    <Label Text="{Binding Item.CantidadFinal}" FontSize="18"  />
+                    <Label Text="Cantidad: " FontAttributes="Bold" FontSize="18" />
+                    <Label Text="{Binding Item.Quantity}" FontSize="18"  />
                 </dx:DXStackLayout>
             </dx:DXBorder>
             <dxcn:DXPopup x:Name="Popup" AllowScrim="True" 
