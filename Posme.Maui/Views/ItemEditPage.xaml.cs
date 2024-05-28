@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using DevExpress.Maui.Core;
+﻿using DevExpress.Maui.Core;
 using DevExpress.Maui.DataForm;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
@@ -13,12 +12,15 @@ public partial class ItemEditPage : ContentPage
     DetailEditFormViewModel ViewModel => (DetailEditFormViewModel)BindingContext;
     private readonly IRepositoryItems _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
     private AppMobileApiMGetDataDownloadItemsResponse _saveItem;
+    private AppMobileApiMGetDataDownloadItemsResponse _defaultItem;
 
 
     public ItemEditPage()
     {
         InitializeComponent();
         _saveItem = new AppMobileApiMGetDataDownloadItemsResponse();
+        _defaultItem = new AppMobileApiMGetDataDownloadItemsResponse();
+        DataForm.CommitMode = CommitMode.Manually;
     }
 
     private async void SaveItemClick(object sender, EventArgs e)
@@ -85,4 +87,10 @@ public partial class ItemEditPage : ContentPage
         _saveItem.CantidadFinal = decimal.Add(_saveItem.CantidadEntradas, _saveItem.Quantity) - _saveItem.CantidadSalidas;
         TextCantidadFinal.Text = _saveItem.CantidadFinal.ToString("####.##");
     }
+
+    protected override async void OnAppearing()
+    {
+        _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
+    }
+
 }

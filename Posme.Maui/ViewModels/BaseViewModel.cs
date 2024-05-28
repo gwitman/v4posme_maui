@@ -10,7 +10,7 @@ namespace Posme.Maui.ViewModels
     {
         private bool _isBusy;
         private string _title = string.Empty;
-
+        protected AppMobileApiMGetDataDownloadItemsResponse _selectedItem;
         public bool IsBusy
         {
             get => GetValue<bool>();
@@ -33,6 +33,17 @@ namespace Posme.Maui.ViewModels
             get => GetValue<string>();
             set
             {
+                SetValue(value);
+                RaisePropertyChanged();
+            }
+        }
+
+        public AppMobileApiMGetDataDownloadItemsResponse SelectedItem
+        {
+            get => GetValue<AppMobileApiMGetDataDownloadItemsResponse>();
+            set
+            {
+                SetProperty(ref _selectedItem, value);
                 SetValue(value);
                 RaisePropertyChanged();
             }
