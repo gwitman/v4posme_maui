@@ -28,10 +28,11 @@ public class RepositoryItems(DataBase dataBase)
 
     public async Task<List<AppMobileApiMGetDataDownloadItemsResponse>> PosMeFilterdByItemNumberAndBarCodeAndName(string? textSearch)
     {
+        textSearch = textSearch!.ToLower();
         return await _dataBase.Database.Table<AppMobileApiMGetDataDownloadItemsResponse>()
-            .Where(response => response.ItemNumber!.Contains(textSearch!)
-                               || response.BarCode.Contains(textSearch!)
-                               || response.Name.Contains(textSearch!))
+            .Where(response => response.ItemNumber!.ToLower().Contains(textSearch)
+                               || response.BarCode.ToLower().Contains(textSearch)
+                               || response.Name.ToLower().Contains(textSearch))
             .ToListAsync();
     }
 }

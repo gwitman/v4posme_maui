@@ -51,17 +51,37 @@
             </dx:DXBorder>
             <dx:DXBorder Style="{StaticResource PropertyBorder}">
                 <dx:DXStackLayout Orientation="Vertical">
-                    <Label Text="Cantidad" FontAttributes="Bold" FontSize="18"/>
-                    <Label Text="{Binding Item.Quantity}" FontSize="18" />
-                </dx:DXStackLayout>
-            </dx:DXBorder>
-            <dx:DXBorder Style="{StaticResource PropertyBorder}">
-                <dx:DXStackLayout Orientation="Vertical">
                     <Label Text="Precio al publico: " FontAttributes="Bold" FontSize="18" />
                     <Label Text="{Binding Item.PrecioPublico}" FontSize="18"  />
                 </dx:DXStackLayout>
             </dx:DXBorder>
-            <dxcn:DXPopup x:Name="popup" AllowScrim="True" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+            <dx:DXBorder Style="{StaticResource PropertyBorder}">
+                <dx:DXStackLayout Orientation="Vertical">
+                    <Label Text="Cantidad: " FontAttributes="Bold" FontSize="18" />
+                    <Label Text="{Binding Item.Quantity}" FontSize="18"  />
+                </dx:DXStackLayout>
+            </dx:DXBorder>
+            <dx:DXBorder Style="{StaticResource PropertyBorder}">
+                <dx:DXStackLayout Orientation="Vertical">
+                    <Label Text="Cantidad ingresadas: " FontAttributes="Bold" FontSize="18" />
+                    <Label Text="{Binding Item.CantidadEntradas}" FontSize="18"  />
+                </dx:DXStackLayout>
+            </dx:DXBorder>
+            <dx:DXBorder Style="{StaticResource PropertyBorder}">
+                <dx:DXStackLayout Orientation="Vertical">
+                    <Label Text="Cantidad retirada: " FontAttributes="Bold" FontSize="18" />
+                    <Label Text="{Binding Item.CantidadSalidas}" FontSize="18"  />
+                </dx:DXStackLayout>
+            </dx:DXBorder>
+            <dx:DXBorder Style="{StaticResource PropertyBorder}">
+                <dx:DXStackLayout Orientation="Vertical">
+                    <Label Text="Existencia final: " FontAttributes="Bold" FontSize="18" />
+                    <Label Text="{Binding Item.CantidadFinal}" FontSize="18"  />
+                </dx:DXStackLayout>
+            </dx:DXBorder>
+            <dxcn:DXPopup x:Name="Popup" AllowScrim="True" 
+                          VerticalAlignment="Bottom" 
+                          HorizontalAlignment="Stretch"
                           Margin="16" CornerRadius="16"
                           BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
                 <dx:DXStackLayout Orientation="Vertical" Padding="10">

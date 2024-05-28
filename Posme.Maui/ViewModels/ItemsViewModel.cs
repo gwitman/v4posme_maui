@@ -4,6 +4,7 @@ using DevExpress.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
+using Posme.Maui.Views;
 using Unity;
 
 namespace Posme.Maui.ViewModels
@@ -11,7 +12,7 @@ namespace Posme.Maui.ViewModels
     public class ItemsViewModel : BaseViewModel
     {
         private readonly IRepositoryItems _repositoryItems;
-        
+        private INavigation? _navigation;
         public ItemsViewModel()
         {
             _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
@@ -19,11 +20,26 @@ namespace Posme.Maui.ViewModels
             Items=new ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse>();
             CreateDetailFormViewModelCommand = new Command<CreateDetailFormViewModelEventArgs>(CreateDetailFormViewModel);
             SearchCommand = new Command(OnSearchItems);
+            OnBarCode = new Command(OnSearchBarCode);
         }
-        private async void OnSearchItems(object obj)
+
+        private async void OnSearchBarCode(object obj)
+        {
+            var barCodePage = new BarCodePage();
+            await _navigation!.PushModalAsync(barCodePage);
+            if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
+            TextSearch = VariablesGlobales.BarCode;
+            VariablesGlobales.BarCode = "";
+            OnSearchItems(TextSearch);
+        }
+
+        private async void OnSearchItems(object? obj)
         {
             IsBusy = true;
-            TextSearch = obj.ToString();
+            if (obj is not null)
+            {
+                TextSearch = obj.ToString(); 
+            }
             Items.Clear();
             var searchItems =
                 await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(TextSearch);
@@ -60,6 +76,7 @@ namespace Posme.Maui.ViewModels
             }
         }
 
+        public ICommand OnBarCode { get; }
         public ICommand SearchCommand { get; }
         public ICommand CreateDetailFormViewModelCommand { get; }
         public ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse> Items { get; set; }
@@ -77,7 +94,6 @@ namespace Posme.Maui.ViewModels
         }
 
         AppMobileApiMGetDataDownloadItemsResponse? _selectedItem;
-
         public AppMobileApiMGetDataDownloadItemsResponse? SelectedItem
         {
             get => _selectedItem;
@@ -90,6 +106,7 @@ namespace Posme.Maui.ViewModels
 
         public void OnAppearing(INavigation navigation)
         {
+            _navigation = navigation;
             LoadMoreItems();
         }
     }

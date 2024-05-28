@@ -28,7 +28,15 @@ namespace Posme.Maui.ViewModels
             set => SetValue(value);
         }
 
-
+        public string BarCode
+        {
+            get => GetValue<string>();
+            set
+            {
+                SetValue(value);
+                RaisePropertyChanged();
+            }
+        }
         public event PropertyChangedEventHandler? PropertyChanged;
 
 

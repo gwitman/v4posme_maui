@@ -18,7 +18,6 @@ namespace Posme.Maui
             dataBase.InitDownloadTables();
             MainPage = new LoginPage();
             UserAppTheme = AppTheme.Light;
-            
         }
 
         protected override void OnStart()

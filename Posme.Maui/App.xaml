@@ -25,7 +25,7 @@
                     <dx:DXImage x:Name="Image" Source="{Binding Icon}" HorizontalOptions="Center" TintColor="{StaticResource Primary}"/>
                     <Label x:Name="FlyoutItemLabel" Text="{Binding Title}"
                         Grid.Column="1"
-                        FontSize="24"
+                        FontSize="18"
                         TextColor="{dx:ThemeColor OnSurface}"
                         Margin="0,0,0,0"
                         VerticalOptions="Center"
