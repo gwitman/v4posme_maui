@@ -5,7 +5,7 @@ using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Unity;
 
-namespace Posme.Maui.Views;
+namespace Posme.Maui.Views.Items;
 
 public partial class ItemEditPage : ContentPage
 {
@@ -31,7 +31,7 @@ public partial class ItemEditPage : ContentPage
         ViewModel.Save();
         _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
         _saveItem.Modificado = true;
-        if (_saveItem.ItemPk == 0)
+        if (ViewModel.IsNew)
         {
             await _repositoryItems.PosMeInsert(_saveItem);
         }

@@ -6,4 +6,5 @@ public interface IRepositoryTbCustomer : IRepositoryFacade<AppMobileApiMGetDataD
 {
     Task<AppMobileApiMGetDataDownloadCustomerResponse> PosMeFindCustomer(string customerNumber);
 
+    Task<List<AppMobileApiMGetDataDownloadCustomerResponse>> PosMeFilterBySearch(string search);
 }

@@ -13,4 +13,14 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<AppMobil
             .FirstOrDefaultAsync();
     }
 
+    public Task<List<AppMobileApiMGetDataDownloadCustomerResponse>> PosMeFilterBySearch(string search)
+    {
+        search = search.ToLower();
+        return dataBase.Database.Table<AppMobileApiMGetDataDownloadCustomerResponse>()
+            .Where(response => response.CustomerNumber!.ToLower().Contains(search)
+                               || response.Identification!.ToLower().Contains(search)
+                               || response.FirstName!.ToLower().Contains(search)
+                               || response.LastName!.ToLower().Contains(search))
+            .ToListAsync();
+    }
 }

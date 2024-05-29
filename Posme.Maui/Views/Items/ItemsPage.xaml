@@ -12,8 +12,9 @@
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:dxc="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:controls="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:items="clr-namespace:Posme.Maui.Views.Items"
              ios:Page.UseSafeArea="true"
-             x:Class="Posme.Maui.Views.ItemsPage">
+             x:Class="Posme.Maui.Views.Items.ItemsPage">
     <ContentPage.BindingContext>
         <local:ItemsViewModel />
     </ContentPage.BindingContext>
@@ -29,18 +30,17 @@
                               Grid.Column="1"
                               Margin="5"
                               StartIcon="search"
-                              Text="{Binding TextSearch}"
+                              Text="{Binding Search}"
                               StartIconCommand="{Binding SearchCommand}"
                               ReturnCommand="{Binding SearchCommand}"
                               PlaceholderText="Buscar por código, código de barra y descripción"
-                              TextChangedCommand="{Binding SearchCommand}"
-                              TextChangedCommandParameter="{Binding Text, Source={x:Reference SearchBar}}" />
+                              TextChangedCommand="{Binding SearchCommand}" />
             </Grid>
             <dxcv:DXCollectionView x:Name="ItemsListView"
                                    Grid.Row="1"
-                                   DetailFormTemplate="{DataTemplate  views:ItemDetailPage}"
-                                   DetailEditFormTemplate="{DataTemplate views:ItemEditPage}"
-                                   DetailNewItemFormTemplate="{DataTemplate views:ItemEditPage}"
+                                   DetailFormTemplate="{DataTemplate  items:ItemDetailPage}"
+                                   DetailEditFormTemplate="{DataTemplate items:ItemEditPage}"
+                                   DetailNewItemFormTemplate="{DataTemplate items:ItemEditPage}"
                                    ItemsSource="{Binding Items}"
                                    SelectedItem="{Binding SelectedItem}"
                                    SelectionMode="Single"
@@ -69,14 +69,14 @@
                             </Grid.ColumnDefinitions>
 
                             <Frame
-                                WidthRequest="40"
-                                HeightRequest="50"
+                                WidthRequest="60"
+                                HeightRequest="60"
                                 BackgroundColor="Transparent"
                                 Grid.Column="0"
                                 Grid.RowSpan="3">
-                                <dxc:DXImage WidthRequest="30"
-                                             HeightRequest="30"
-                                             Source="product_item"
+                                <dxc:DXImage WidthRequest="55"
+                                             HeightRequest="55"
+                                             Source="package_item.svg"
                                              Aspect="Fill" />
                             </Frame>
                             <Label Grid.Column="1" Grid.Row="0" FontAttributes="Bold"

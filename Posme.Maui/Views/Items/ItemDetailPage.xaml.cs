@@ -2,10 +2,9 @@
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
-using Posme.Maui.ViewModels;
 using Unity;
 
-namespace Posme.Maui.Views
+namespace Posme.Maui.Views.Items
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemDetailPage : ContentPage
