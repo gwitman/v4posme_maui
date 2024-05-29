@@ -9,7 +9,9 @@
             <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
 
              <DataTemplate x:Key="ShellMenuItemTemplate">            
-                <Grid ColumnDefinitions="51,*" ColumnSpacing="0" RowSpacing="0" Margin="0" Padding="0, 15, 0, 15" BackgroundColor="White">
+                <Grid ColumnDefinitions="51,*" ColumnSpacing="0" RowSpacing="0" 
+                      Padding="35,15,0,0" 
+                      BackgroundColor="White">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroupList>
                             <VisualStateGroup x:Name="CommonStates">
@@ -22,12 +24,15 @@
                             </VisualStateGroup>
                         </VisualStateGroupList>
                     </VisualStateManager.VisualStateGroups>
-                    <dx:DXImage x:Name="Image" Source="{Binding Icon}" HorizontalOptions="Center" TintColor="{StaticResource Primary}"/>
+                    <dx:DXImage x:Name="Image" 
+                                Width="24" Height="24"
+                                Source="{Binding Icon}" 
+                                HorizontalOptions="Center" 
+                                TintColor="{StaticResource Primary}"/>
                     <Label x:Name="FlyoutItemLabel" Text="{Binding Title}"
                         Grid.Column="1"
                         FontSize="18"
                         TextColor="{dx:ThemeColor OnSurface}"
-                        Margin="0,0,0,0"
                         VerticalOptions="Center"
                         FontFamily="Roboto"
                         HorizontalOptions="StartAndExpand">                            
