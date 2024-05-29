@@ -1,5 +1,7 @@
-﻿using Posme.Maui.Services.Helpers;
+﻿using CommunityToolkit.Maui.Views;
+using Posme.Maui.Services.Helpers;
 using Posme.Maui.Views;
+
 namespace Posme.Maui.ViewModels;
 
 public class DownloadViewModel : BaseViewModel
@@ -7,10 +9,13 @@ public class DownloadViewModel : BaseViewModel
     private bool _popUpShow;
     private bool _switch;
     private string _mensaje;
-    private Color _popupBackgroundColor = Colors.White; 
-    
+    private Color _popupBackgroundColor = Colors.White;
+    private readonly RestApiAppMobileApi _restApiDownload;
+
     public DownloadViewModel()
     {
+        _restApiDownload = new RestApiAppMobileApi();
+        _mensaje = string.Empty;
         DownloadCommand = new Command(OnDownloadClicked, ValidateDownload);
         PropertyChanged += (_, _) => DownloadCommand.ChangeCanExecute();
     }
@@ -22,31 +27,61 @@ public class DownloadViewModel : BaseViewModel
 
     private async void OnDownloadClicked()
     {
-        
+        await Navigation.PushModalAsync(new LoadingPage());
+
+        if (VariablesGlobales.CantidadTransacciones != 0)
+        {
+            Mensaje = Mensajes.MensajeDownloadCantidadTransacciones;
+            PopupBackgroundColor = Colors.Red;
+            PopUpShow = true;
+            await Navigation.PopModalAsync();
+            return;
+        }
+
+        var result = await _restApiDownload.GetDataDownload();
+        if (result)
+        {
+            PopupBackgroundColor = Colors.Green;
+            Mensaje = Mensajes.MensajeDownloadSuccess;
+        }
+        else
+        {
+            Mensaje = Mensajes.MensajeDownloadError;
+            PopupBackgroundColor = Colors.Red;
+        }
+
+        PopUpShow = true;
+        await Navigation.PopModalAsync();
     }
 
     public Color PopupBackgroundColor
     {
         get => _popupBackgroundColor;
-        set => SetProperty(ref _popupBackgroundColor, value);
+        set => SetValue(ref _popupBackgroundColor, value, () => RaisePropertyChanged(nameof(PopupBackgroundColor)));
     }
 
     public string Mensaje
     {
         get => _mensaje;
-        set => SetProperty(ref _mensaje, value);
+        set => SetValue(ref _mensaje, value, () => RaisePropertyChanged(nameof(Mensaje)));
     }
+
     public bool PopUpShow
     {
         get => _popUpShow;
-        set => SetProperty(ref _popUpShow, value);
+        set => SetValue(ref _popUpShow, value, () => RaisePropertyChanged(nameof(PopUpShow)));
     }
-    
+
     public bool Switch
     {
         get => _switch;
-        set => SetProperty(ref _switch, value);
+        set => SetValue(ref _switch, value, () => RaisePropertyChanged(nameof(Switch)));
     }
 
     public Command DownloadCommand { get; }
+
+    public void OnAppearing(INavigation navigation)
+    {
+        Navigation = navigation;
+    }
 }

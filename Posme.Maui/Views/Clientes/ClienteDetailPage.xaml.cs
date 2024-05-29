@@ -13,10 +13,11 @@ namespace Posme.Maui.Views.Clientes;
 
 public partial class ClienteDetailPage : ContentPage
 {
-    private IRepositoryTbCustomer _repositoryTbCustomer;
-    DetailFormViewModel ViewModel => (DetailFormViewModel)BindingContext;
+    private readonly IRepositoryTbCustomer _repositoryTbCustomer;
+    private DetailFormViewModel ViewModel => (DetailFormViewModel)BindingContext;
     private AppMobileApiMGetDataDownloadCustomerResponse SelectedItem => (AppMobileApiMGetDataDownloadCustomerResponse)ViewModel.Item;
     private bool _isDeleting;
+
     public ClienteDetailPage()
     {
         InitializeComponent();
@@ -36,16 +37,11 @@ public partial class ClienteDetailPage : ContentPage
 
         try
         {
-            if (ViewModel.Delete())
-            {
-                _isDeleting = await _repositoryTbCustomer.PosMeDelete(SelectedItem);
-                ViewModel.Close();
-            }
-            else
-            {
-                _isDeleting = false;
-            }
-        } catch (Exception ex) {
+            _isDeleting = await _repositoryTbCustomer.PosMeDelete(SelectedItem);
+            ViewModel.Close();
+        }
+        catch (Exception ex)
+        {
             _isDeleting = false;
             await DisplayAlert("Error", ex.Message, "OK");
         }

@@ -11,11 +11,12 @@ namespace Posme.Maui.Views.Items
         {
             InitializeComponent();
         }
-
+        
         protected override void OnAppearing()
         {
             base.OnAppearing();
             ((ItemsViewModel)BindingContext).OnAppearing(Navigation);
+            ((ItemsViewModel)BindingContext).LoadMoreItems();
         }
     }
 }

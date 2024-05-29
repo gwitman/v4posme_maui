@@ -10,22 +10,14 @@
        xmlns:clientes="clr-namespace:Posme.Maui.Views.Clientes"
        ios:Page.UseSafeArea="true"
        x:Class="Posme.Maui.Views.MainPage">
-    
+
     <Shell.FlyoutHeader>
-        <Grid RowDefinitions="Auto, Auto">
-            <Frame BackgroundColor="White">
-                <Image Source="pm_png_96px.png" />
-            </Frame>
-            <BoxView Grid.Row="1"
-                     Color="{StaticResource Gray500}"
-                     HeightRequest="2"
-                     HorizontalOptions="FillAndExpand"
-                     VerticalOptions="Start"
-                     Opacity="0.8" />
-        </Grid>
+        <Frame BackgroundColor="White">
+            <Image Source="pm_png_96px.png" />
+        </Frame>
     </Shell.FlyoutHeader>
     <FlyoutItem Title="Inicio" Icon="basic_home.svg">
-        <ShellContent Title="Inicio" 
+        <ShellContent Title="Inicio"
                       Icon="basic_home.svg"
                       ContentTemplate="{DataTemplate local:AboutPage}" />
 

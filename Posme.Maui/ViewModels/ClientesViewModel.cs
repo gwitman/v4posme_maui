@@ -12,21 +12,20 @@ namespace Posme.Maui.ViewModels;
 public class ClientesViewModel : BaseViewModel
 {
     private readonly IRepositoryTbCustomer _customerRepositoryTbCustomer;
-    private INavigation _navigation;
 
     public ClientesViewModel()
     {
         _customerRepositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
-        Customers = new DXObservableCollection<AppMobileApiMGetDataDownloadCustomerResponse>();
+        Customers = new ObservableCollection<AppMobileApiMGetDataDownloadCustomerResponse>();
         SearchCommand = new Command(OnSearchCommand);
         OnBarCode = new Command(OnBarCodeShow);
     }
 
     public ICommand OnBarCode { get; }
     public ICommand SearchCommand { get; }
-    public DXObservableCollection<AppMobileApiMGetDataDownloadCustomerResponse> Customers { get; }
+    public ObservableCollection<AppMobileApiMGetDataDownloadCustomerResponse> Customers { get; set; }
     public AppMobileApiMGetDataDownloadCustomerResponse SelectedCustomer { get; set; }
-    
+
     private async void OnSearchCommand(object obj)
     {
         IsBusy = true;
@@ -45,13 +44,13 @@ public class ClientesViewModel : BaseViewModel
     private async void OnBarCodeShow(object obj)
     {
         var barCodePage = new BarCodePage();
-        await _navigation!.PushModalAsync(barCodePage);
+        await Navigation!.PushModalAsync(barCodePage);
         if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
         Search = VariablesGlobales.BarCode;
         VariablesGlobales.BarCode = "";
         OnSearchCommand(Search);
     }
-    
+
     private async void LoadsClientes()
     {
         IsBusy = true;
@@ -59,16 +58,17 @@ public class ClientesViewModel : BaseViewModel
         {
             Customers.Clear();
             var findAll = await _customerRepositoryTbCustomer.PosMeFindAll();
-            foreach (var item in findAll)
+            foreach (var response in findAll)
             {
-                Customers.Add(item);
+                Customers.Add(response);
             }
         });
         IsBusy = false;
     }
+
     public void OnAppearing(INavigation navigation)
     {
-        _navigation = navigation;
+        Navigation = navigation;
         LoadsClientes();
     }
 }

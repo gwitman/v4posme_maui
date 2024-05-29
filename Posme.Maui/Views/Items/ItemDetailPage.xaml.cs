@@ -34,15 +34,11 @@ namespace Posme.Maui.Views.Items
 
             try
             {
-                if (ViewModel.Delete())
-                {
-                    _isDeleting = await _repositoryItems.PosMeDelete(SelectedItem);
-                }
-                else
-                {
-                    _isDeleting = false;
-                }
-            } catch (Exception ex) {
+                _isDeleting = await _repositoryItems.PosMeDelete(SelectedItem);
+                ViewModel.Close();
+            }
+            catch (Exception ex)
+            {
                 _isDeleting = false;
                 await DisplayAlert("Error", ex.Message, "OK");
             }

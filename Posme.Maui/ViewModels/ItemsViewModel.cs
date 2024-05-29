@@ -12,13 +12,12 @@ namespace Posme.Maui.ViewModels
     public class ItemsViewModel : BaseViewModel
     {
         private readonly IRepositoryItems _repositoryItems;
-        private INavigation? _navigation;
 
         public ItemsViewModel()
         {
             _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
             Title = "Productos";
-            Items=new ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse>();
+            Items = new ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse>();
             CreateDetailFormViewModelCommand = new Command<CreateDetailFormViewModelEventArgs>(CreateDetailFormViewModel);
             SearchCommand = new Command(OnSearchItems);
             OnBarCode = new Command(OnSearchBarCode);
@@ -29,22 +28,20 @@ namespace Posme.Maui.ViewModels
         public ICommand SearchCommand { get; }
         public ICommand CreateDetailFormViewModelCommand { get; }
         public ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse> Items { get; set; }
-        
 
-        AppMobileApiMGetDataDownloadItemsResponse? _selectedItem;
-        public AppMobileApiMGetDataDownloadItemsResponse? SelectedItem
+
+        AppMobileApiMGetDataDownloadItemsResponse _selectedItem;
+
+        public AppMobileApiMGetDataDownloadItemsResponse SelectedItem
         {
             get => _selectedItem;
-            set
-            {
-                SetProperty(ref this._selectedItem, value);
-                RaisePropertyChanged();
-            }
+            set => SetValue(ref this._selectedItem, value, () => RaisePropertyChanged(nameof(SelectedItem)));
         }
+
         private async void OnSearchBarCode(object obj)
         {
             var barCodePage = new BarCodePage();
-            await _navigation!.PushModalAsync(barCodePage);
+            await Navigation!.PushModalAsync(barCodePage);
             if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
             Search = VariablesGlobales.BarCode;
             VariablesGlobales.BarCode = "";
@@ -56,8 +53,9 @@ namespace Posme.Maui.ViewModels
             IsBusy = true;
             if (obj is not null)
             {
-                Search = obj.ToString()!; 
+                Search = obj.ToString()!;
             }
+
             await Task.Run(async () =>
             {
                 Items.Clear();
@@ -70,19 +68,21 @@ namespace Posme.Maui.ViewModels
             IsBusy = false;
         }
 
-        private async void LoadMoreItems()
+        public async void LoadMoreItems()
         {
             IsBusy = true;
             await Task.Run(async () =>
             {
+                Items.Clear();
                 var newItems = await _repositoryItems.PosMeFindAll();
-                foreach (var itemsResponse in newItems)
+                foreach (var item in newItems)
                 {
-                    Items.Add(itemsResponse);
+                    Items.Add(item);
                 }
             });
             IsBusy = false;
         }
+
         private void CreateDetailFormViewModel(CreateDetailFormViewModelEventArgs e)
         {
             if (e.DetailFormType == DetailFormType.Edit)
@@ -95,8 +95,7 @@ namespace Posme.Maui.ViewModels
 
         public void OnAppearing(INavigation navigation)
         {
-            _navigation = navigation;
-            LoadMoreItems();
+            Navigation = navigation;
         }
     }
 }

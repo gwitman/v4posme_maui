@@ -4,8 +4,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Posme.Maui.Views.DownloadPage"
              xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-             xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core">
-    
+             xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+             xmlns:viewModels="clr-namespace:Posme.Maui.ViewModels">
+    <ContentPage.BindingContext>
+        <viewModels:DownloadViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <VerticalStackLayout
             Padding="25"
@@ -33,7 +36,6 @@
             </dxco:DXPopup>
             <Label Text="Para actualizar la información local, descargue los datos desde la web, esto reemplazará los datos actuales" />
             <dx:DXButton Content="Descargar Datos" 
-                         Clicked="DXButtonBase_OnClicked"
                          Command="{Binding DownloadCommand}"/>
             <HorizontalStackLayout HeightRequest="20">
                 <Label

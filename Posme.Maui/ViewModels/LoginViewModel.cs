@@ -9,18 +9,19 @@ namespace Posme.Maui.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         private readonly RestApiCoreAcount _restServiceUser = new();
-        private IRepositoryTbUser _repositoryTbUser = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbUser>();
+        private readonly IRepositoryTbUser _repositoryTbUser;
         private string _userName;
         private string _password;
         private bool _opcionPagar;
         private string _company;
         private bool _popupShow;
-        private string _mensaje = string.Empty;
+        private string _mensaje;
         private bool _remember;
-        private INavigation _navigation;
+        private INavigation? _navigation;
 
         public LoginViewModel()
         {
+            _repositoryTbUser = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbUser>();
             LoginCommand = new Command(OnLoginClicked, ValidateLogin);
             MensajeCommand = new Command(OnMensaje, ValidateError);
             PropertyChanged += (_, __) => LoginCommand.ChangeCanExecute();
@@ -32,78 +33,48 @@ namespace Posme.Maui.ViewModels
         public string Mensaje
         {
             get => _mensaje;
-            set
-            {
-                SetProperty(ref _mensaje, value);
-                RaisePropertyChanged();
-            }
+            set => SetValue(ref _mensaje, value, () => RaisePropertyChanged());
         }
 
         public bool PopupShow
         {
             get => _popupShow;
-            set
-            {
-                SetProperty(ref _popupShow, value);
-                RaisePropertyChanged();
-            }
+            set => SetValue(ref _popupShow, value, () => RaisePropertyChanged(nameof(PopupShow)));
         }
 
         public string UserName
         {
             get => _userName;
-            set
-            {
-                SetProperty(ref this._userName, value);
-                RaisePropertyChanged();
-            }
+            set => SetValue(ref this._userName, value, () => RaisePropertyChanged());
         }
 
         public string Password
         {
             get => _password;
-            set
-            {
-                SetProperty(ref this._password, value);
-                RaisePropertyChanged();
-            }
+            set => SetValue(ref this._password, value, () => RaisePropertyChanged());
         }
 
         public string Company
         {
             get => _company;
-            set
-            {
-                SetProperty(ref _company, value);
-                RaisePropertyChanged();
-            }
+            set => SetValue(ref _company, value, () => RaisePropertyChanged());
         }
 
         public bool Remember
         {
             get => _remember;
-            set
-            {
-                _remember = value;
-                RaisePropertyChanged();
-                SetProperty(ref _remember, value);
-            }
+            set => SetValue(ref _remember, value, () => RaisePropertyChanged(nameof(Remember)));
         }
 
         public bool OpcionPagar
         {
             get => _opcionPagar;
-            set
-            {
-                _opcionPagar = value;
-                RaisePropertyChanged();
-                SetProperty(ref this._opcionPagar, value);
-            }
+            set => SetValue(ref this._opcionPagar, value, () => RaisePropertyChanged(nameof(OpcionPagar)));
         }
 
         private async void OnLoginClicked()
         {
-            await _navigation.PushModalAsync(new LoadingPage());
+            await _navigation!.PushModalAsync(new LoadingPage());
             VariablesGlobales.CompanyKey = Company.ToLower();
             var findUserRemember =
                 await _repositoryTbUser!.PosMeFindUserByNicknameAndPassword(UserName, Password);
@@ -121,7 +92,7 @@ namespace Posme.Maui.ViewModels
                 {
                     PopupShow = false;
                 }
-            
+
                 await _repositoryTbUser.PosMeOnRemember();
                 if (findUserRemember is not null)
                 {
@@ -158,6 +129,7 @@ namespace Posme.Maui.ViewModels
 
                 VariablesGlobales.User = findUserRemember;
             }
+
             Current!.MainPage = new MainPage();
             await _navigation.PopModalAsync();
         }

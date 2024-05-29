@@ -9,7 +9,8 @@ namespace Posme.Maui.Views.Clientes;
 
 public partial class ClientesPage : ContentPage
 {
-    private ClientesViewModel _clientesViewModel;
+    private ClientesViewModel? _clientesViewModel;
+    
     public ClientesPage()
     {
         InitializeComponent();
