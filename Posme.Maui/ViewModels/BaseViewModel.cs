@@ -44,7 +44,7 @@ namespace Posme.Maui.ViewModels
             get => GetValue<string>();
             set
             {
-                SetProperty(ref _search, value);
+                SetValue(value);
                 RaisePropertyChanged();
             }
         }

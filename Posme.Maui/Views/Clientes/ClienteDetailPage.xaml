@@ -58,7 +58,7 @@
                           Margin="16" CornerRadius="16"
                           BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
                 <dx:DXStackLayout Orientation="Vertical" Padding="10">
-                    <Label Text="¿Seguro quiere elimar este producto? Está acción no se puede revertir" 
+                    <Label Text="¿Seguro quiere elimar este cliente? Está acción no se puede revertir" 
                            Margin="0,20" 
                            HorizontalTextAlignment="Center"
                            FontAttributes="Bold" />

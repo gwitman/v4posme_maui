@@ -4,13 +4,16 @@ using DevExpress.Maui.Core.Internal;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
+using Posme.Maui.Views;
 using Unity;
 
 namespace Posme.Maui.ViewModels;
 
 public class ClientesViewModel : BaseViewModel
 {
-    private IRepositoryTbCustomer _customerRepositoryTbCustomer;
+    private readonly IRepositoryTbCustomer _customerRepositoryTbCustomer;
+    private INavigation _navigation;
+
     public ClientesViewModel()
     {
         _customerRepositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
@@ -19,16 +22,36 @@ public class ClientesViewModel : BaseViewModel
         OnBarCode = new Command(OnBarCodeShow);
     }
 
-    private void OnSearchCommand(object obj)
+    public ICommand OnBarCode { get; }
+    public ICommand SearchCommand { get; }
+    public DXObservableCollection<AppMobileApiMGetDataDownloadCustomerResponse> Customers { get; }
+    public AppMobileApiMGetDataDownloadCustomerResponse SelectedCustomer { get; set; }
+    
+    private async void OnSearchCommand(object obj)
     {
-        
+        IsBusy = true;
+        await Task.Run(async () =>
+        {
+            Customers.Clear();
+            var finds = await _customerRepositoryTbCustomer.PosMeFilterBySearch(Search);
+            foreach (var customer in finds)
+            {
+                Customers.Add(customer);
+            }
+        });
+        IsBusy = false;
     }
 
-    private void OnBarCodeShow(object obj)
+    private async void OnBarCodeShow(object obj)
     {
-        
+        var barCodePage = new BarCodePage();
+        await _navigation!.PushModalAsync(barCodePage);
+        if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
+        Search = VariablesGlobales.BarCode;
+        VariablesGlobales.BarCode = "";
+        OnSearchCommand(Search);
     }
-
+    
     private async void LoadsClientes()
     {
         IsBusy = true;
@@ -43,15 +66,9 @@ public class ClientesViewModel : BaseViewModel
         });
         IsBusy = false;
     }
-
-    public ICommand OnBarCode { get; }
-    public ICommand SearchCommand { get; }
-    public DXObservableCollection<AppMobileApiMGetDataDownloadCustomerResponse> Customers { get; }
-    public AppMobileApiMGetDataDownloadCustomerResponse SelectedCustomer { get; set; }
-
-
     public void OnAppearing(INavigation navigation)
     {
+        _navigation = navigation;
         LoadsClientes();
     }
 }

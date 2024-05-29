@@ -15,6 +15,9 @@
              xmlns:items="clr-namespace:Posme.Maui.Views.Items"
              ios:Page.UseSafeArea="true"
              x:Class="Posme.Maui.Views.Items.ItemsPage">
+    <ContentPage.BindingContext>
+        <local:ItemsViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="barcode_scan" Command="{Binding OnBarCode}"/>
     </ContentPage.ToolbarItems>

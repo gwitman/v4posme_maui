@@ -1,4 +1,5 @@
 ﻿using Posme.Maui.Services;
+using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Views;
 using Posme.Maui.Views.Items;
@@ -25,6 +26,7 @@ namespace Posme.Maui
         {
             DependencyService.Register<NavigationService>();
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
+            VariablesGlobales.BarCode = string.Empty;
         }
     }
 }

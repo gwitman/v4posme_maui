@@ -46,7 +46,6 @@ namespace Posme.Maui
             VariablesGlobales.UnityContainer.RegisterSingleton<ItemDetailPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<ItemsPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<ItemsViewModel>();
-            VariablesGlobales.UnityContainer.RegisterSingleton<ItemDetailViewModel>();
             DevExpress.Maui.Charts.Initializer.Init();
             DevExpress.Maui.CollectionView.Initializer.Init();
             DevExpress.Maui.Controls.Initializer.Init();
