@@ -10,7 +10,7 @@
              xmlns:models="clr-namespace:Posme.Maui.Models"
              Title="Editar Cliente"
              Style="{StaticResource DetailPageStyle}"
-             x:Class="Posme.Maui.Views.Clientes.ClienteEditPage">
+             x:Class="Posme.Maui.Views.Clientes.CustomerEditPage">
     <ContentPage.Triggers>
         <DataTrigger Binding="{Binding IsNew}" Value="True" TargetType="ContentPage">
             <Setter Property="Title" Value="Agregar Cliente" />

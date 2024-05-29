@@ -12,12 +12,12 @@ using Unity;
 
 namespace Posme.Maui.Views.Clientes;
 
-public partial class ClienteEditPage : ContentPage
+public partial class CustomerEditPage : ContentPage
 {
     private DetailEditFormViewModel ViewModel => (DetailEditFormViewModel)BindingContext;
     private static IRepositoryTbCustomer RepositoryTbCustomer => VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
     
-    public ClienteEditPage()
+    public CustomerEditPage()
     {
         InitializeComponent();
     }

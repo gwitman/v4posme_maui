@@ -5,7 +5,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:dxcn="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
-             x:Class="Posme.Maui.Views.Clientes.ClienteDetailPage"
+             x:Class="Posme.Maui.Views.Clientes.CustomerDetailPage"
              Style="{StaticResource DetailPageStyle}">
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior

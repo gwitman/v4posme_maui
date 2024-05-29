@@ -67,7 +67,7 @@
     <FlyoutItem Title="Clientes" Icon="person.svg">
 
         <ShellContent Title="Clientes" Icon="person"
-                      ContentTemplate="{DataTemplate clientes:ClientesPage}" />
+                      ContentTemplate="{DataTemplate clientes:CustomersPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />

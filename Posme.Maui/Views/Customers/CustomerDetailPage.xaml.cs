@@ -11,14 +11,14 @@ using Unity;
 
 namespace Posme.Maui.Views.Clientes;
 
-public partial class ClienteDetailPage : ContentPage
+public partial class CustomerDetailPage : ContentPage
 {
     private readonly IRepositoryTbCustomer _repositoryTbCustomer;
     private DetailFormViewModel ViewModel => (DetailFormViewModel)BindingContext;
     private AppMobileApiMGetDataDownloadCustomerResponse SelectedItem => (AppMobileApiMGetDataDownloadCustomerResponse)ViewModel.Item;
     private bool _isDeleting;
 
-    public ClienteDetailPage()
+    public CustomerDetailPage()
     {
         InitializeComponent();
         _repositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();

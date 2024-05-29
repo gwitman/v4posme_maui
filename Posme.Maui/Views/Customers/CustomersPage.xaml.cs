@@ -7,11 +7,11 @@ using Posme.Maui.ViewModels;
 
 namespace Posme.Maui.Views.Clientes;
 
-public partial class ClientesPage : ContentPage
+public partial class CustomersPage : ContentPage
 {
     private ClientesViewModel? _clientesViewModel;
     
-    public ClientesPage()
+    public CustomersPage()
     {
         InitializeComponent();
     }
