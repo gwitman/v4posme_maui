@@ -34,7 +34,13 @@ namespace Posme.Maui.Views.Items
 
             try
             {
+                var helper = VariablesGlobales.UnityContainer.Resolve<Helper>();
                 _isDeleting = await _repositoryItems.PosMeDelete(SelectedItem);
+                if (_isDeleting)
+                {
+                    await helper.PlusCounter();
+                }
+
                 ViewModel.Close();
             }
             catch (Exception ex)

@@ -10,13 +10,13 @@ namespace Posme.Maui.Views.Items
         public ItemsPage()
         {
             InitializeComponent();
+            Title = "Productos";
         }
         
         protected override void OnAppearing()
         {
             base.OnAppearing();
             ((ItemsViewModel)BindingContext).OnAppearing(Navigation);
-            ((ItemsViewModel)BindingContext).LoadMoreItems();
         }
     }
 }

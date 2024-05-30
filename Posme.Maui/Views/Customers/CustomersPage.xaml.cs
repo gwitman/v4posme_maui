@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Posme.Maui.ViewModels;
+﻿using Posme.Maui.ViewModels;
 
-namespace Posme.Maui.Views.Clientes;
+namespace Posme.Maui.Views.Customers;
 
 public partial class CustomersPage : ContentPage
 {
@@ -14,6 +9,7 @@ public partial class CustomersPage : ContentPage
     public CustomersPage()
     {
         InitializeComponent();
+        Title = "Listado de Clientes";
     }
 
     protected override void OnAppearing()

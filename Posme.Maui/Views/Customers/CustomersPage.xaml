@@ -11,8 +11,8 @@
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:dxc="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:controls="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-             xmlns:clientes="clr-namespace:Posme.Maui.Views.Clientes"
-             x:Class="Posme.Maui.Views.Clientes.CustomersPage">
+             xmlns:customers="clr-namespace:Posme.Maui.Views.Customers"
+             x:Class="Posme.Maui.Views.Customers.CustomersPage">
     <ContentPage.BindingContext>
         <local:ClientesViewModel />
     </ContentPage.BindingContext>
@@ -38,9 +38,9 @@
                 <dxcv:DXCollectionView x:Name="ClientesCollectionView"
                                        Grid.Row="1"
                                        ItemsSource="{Binding Customers}"
-                                       DetailFormTemplate="{DataTemplate  clientes:CustomerDetailPage}"
-                                       DetailEditFormTemplate="{DataTemplate clientes:CustomerEditPage}"
-                                       DetailNewItemFormTemplate="{DataTemplate clientes:CustomerEditPage}"
+                                       DetailFormTemplate="{DataTemplate  customers:CustomerDetailPage}"
+                                       DetailEditFormTemplate="{DataTemplate customers:CustomerEditPage}"
+                                       DetailNewItemFormTemplate="{DataTemplate customers:CustomerEditPage}"
                                        SelectedItem="{Binding SelectedCustomer}"
                                        SelectionMode="Single"
                                        TapCommand="{Binding Source={x:Reference ClientesCollectionView}, Path=Commands.ShowDetailForm}"

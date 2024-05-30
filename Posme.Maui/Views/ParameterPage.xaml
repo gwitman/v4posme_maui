@@ -19,7 +19,7 @@
                      IconImageSource="{AppThemeBinding Light=save, Dark=save}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        
+
         <ScrollView>
             <dx:DXStackLayout Orientation="Vertical"
                               Margin="15"
@@ -31,14 +31,14 @@
                               ScrimColor="#b3adb9ce"
                               IsOpen="{Binding PopUpShow}">
                     <StackLayout WidthRequest="250">
-                        <Label Text="{Binding Mensaje}" 
+                        <Label Text="{Binding Mensaje}"
                                FontAttributes="Bold"
                                FontSize="15"
                                TextColor="{StaticResource White}"
-                               Margin="20, 20"/>
-                        <Button Text="Aceptar" 
-                                Clicked="ClosePopup_Clicked" 
-                                BackgroundColor="{StaticResource Gray600}" 
+                               Margin="20, 20" />
+                        <Button Text="Aceptar"
+                                Clicked="ClosePopup_Clicked"
+                                BackgroundColor="{StaticResource Gray600}"
                                 FontSize="20"
                                 TextColor="White" />
                     </StackLayout>
@@ -73,6 +73,7 @@
                         ErrorText="Debe especificar un punto de acceso..."
                         IconColor="#006E98"
                         StartIcon="textbox"
+                        IsErrorIconVisible="True"
                         Text="{Binding PuntoAcceso}"
                         LabelText="Punto de acceso" />
                 </dx:DXBorder>
@@ -83,6 +84,7 @@
                         x:Name="TextPrinter"
                         HasError="{Binding PrinterHasError}"
                         ErrorText="Debe especificar un Nombre de impresora..."
+                        IsErrorIconVisible="True"
                         IconColor="#006E98"
                         StartIcon="textbox"
                         Text="{Binding Printer}"
@@ -92,15 +94,15 @@
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="ImageTapped" />
                     </Grid.GestureRecognizers>
-                    <Label TextColor="{StaticResource Primary}" 
-                           Text="Seleccionar logo" 
-                           VerticalOptions="Start" 
+                    <Label TextColor="{StaticResource Primary}"
+                           Text="Seleccionar logo"
+                           VerticalOptions="Start"
                            HorizontalOptions="Center" />
-                    <dx:DXBorder CornerRadius="10" 
+                    <dx:DXBorder CornerRadius="10"
                                  WidthRequest="140"
                                  HeightRequest="140">
-                        <Image x:Name="Preview" 
-                               Source="{Binding ShowImage}"  
+                        <Image x:Name="Preview"
+                               Source="{Binding ShowImage}"
                                x:FieldModifier="protected" />
                     </dx:DXBorder>
                     <dx:DXBorder x:Name="EditControl" BorderColor="White" BorderThickness="2" BackgroundColor="#FF8900"
@@ -110,15 +112,24 @@
                     </dx:DXBorder>
                 </Grid>
                 <dxco:BottomSheet x:Name="BottomSheet" HalfExpandedRatio="0.3" AllowedState="HalfExpanded">
-                    <dx:DXStackLayout>
-                        <dx:DXButton Style="{StaticResource ButtonDefault}" Icon="delete" Content="Eliminar logo" Tap="DeletePhotoClicked" />
-                        <dx:DXBorder HeightRequest="1" BorderThickness="1" BorderColor="#303A343D" />
-                        <dx:DXButton Style="{StaticResource ButtonDefault}" Icon="take_photo" Content="Hacer foto" Tap="TakePhotoClicked" />
-                        <dx:DXBorder HeightRequest="1" BorderThickness="1" BorderColor="#303A343D" />
-                        <dx:DXButton Style="{StaticResource ButtonDefault}" Icon="gallery" Content="Selecciona desde la galeria" Tap="SelectPhotoClicked" />
-                    </dx:DXStackLayout>
+                    <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="5">
+                        <dx:DXButton Style="{StaticResource ButtonDefault}" 
+                                     Icon="delete" 
+                                     Content="Eliminar logo"
+                                     Tap="DeletePhotoClicked" />
+                        <dx:DXButton Grid.Row="1" 
+                                     Style="{StaticResource ButtonDefault}" 
+                                     Icon="take_photo" 
+                                     Content="Hacer foto"
+                                     Tap="TakePhotoClicked" />
+                        <dx:DXButton Grid.Row="2" 
+                                     Style="{StaticResource ButtonDefault}" 
+                                     Icon="gallery"
+                                     Content="Selecciona desde la galeria" 
+                                     Tap="SelectPhotoClicked" />
+                    </Grid>
                 </dxco:BottomSheet>
-               
+
             </dx:DXStackLayout>
         </ScrollView>
     </ContentPage.Content>

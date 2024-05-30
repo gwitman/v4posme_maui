@@ -130,7 +130,7 @@ public class AppMobileApiMGetDataDownloadItemsResponse : BindableBase
         set => SetValue(value);
     }
     [DataMember]
-    [Required(ErrorMessage = "Required")]
+    [Required(ErrorMessage = "Debe especificar una descripción del producto")]
     public string Name
     {
         get => GetValue<string>();

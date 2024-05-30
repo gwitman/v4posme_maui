@@ -22,12 +22,18 @@ public partial class ItemEditPage : ContentPage
         _defaultItem = new AppMobileApiMGetDataDownloadItemsResponse();
         _helperContador = VariablesGlobales.UnityContainer.Resolve<Helper>();
         DataForm.CommitMode = CommitMode.Manually;
+        Title = "Editar Producto";
     }
 
     private async void SaveItemClick(object sender, EventArgs e)
     {
         if (!DataForm.Validate())
+        {
+            TxtMensaje.Text = "Todos los campos son requeridos, intente nuevamente.";
+            Popup.IsOpen = true;
             return;
+        }
+
         DataForm.Commit();
         ViewModel.Save();
         _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
@@ -44,32 +50,47 @@ public partial class ItemEditPage : ContentPage
         await _helperContador.PlusCounter();
     }
 
-
-    private void dataForm_ValidateProperty(object sender, DataFormPropertyValidationEventArgs e)
-    {
-        if (e.PropertyName == "BarCode" && e.NewValue != null)
-        {
-            e.HasError = true;
-            e.ErrorText = "Debe especifcar el código de barra";
-        }
-    }
-
     private void DataForm_OnValidateForm(object sender, DataFormValidationEventArgs e)
     {
         _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)e.DataObject;
         if (string.IsNullOrWhiteSpace(_saveItem.ItemNumber))
         {
             e.HasErrors = true;
+            TextItemNumber.HasError = true;
+        }
+        else
+        {
+            TextItemNumber.HasError = false;
         }
 
         if (string.IsNullOrWhiteSpace(_saveItem.BarCode))
         {
             e.HasErrors = true;
+            TxtBarCode.HasError = true;
+        }
+        else
+        {
+            TxtBarCode.HasError = false;
         }
 
         if (string.IsNullOrWhiteSpace(_saveItem.Name))
         {
             e.HasErrors = true;
+            TextName.HasError = true;
+        }
+        else
+        {
+            TextName.HasError = false;
+        }
+
+        if (string.IsNullOrWhiteSpace(TextPrecioPublico.Text))
+        {
+            e.HasErrors = true;
+            TextPrecioPublico.HasError = true;
+        }
+        else
+        {
+            TextPrecioPublico.HasError = false;
         }
     }
 
@@ -93,6 +114,7 @@ public partial class ItemEditPage : ContentPage
     {
         _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
         _defaultItem = await _repositoryItems.PosMeFindByItemNumber(_saveItem.ItemNumber);
+        DataForm.CommitMode = CommitMode.LostFocus;
     }
 
     protected override void OnDisappearing()
@@ -104,7 +126,14 @@ public partial class ItemEditPage : ContentPage
             TextCantidadEntrada.Text = _defaultItem.CantidadEntradas.ToString("N");
             TextCantidadSalida.Text = _defaultItem.CantidadSalidas.ToString("N");
             TextName.Text = _defaultItem.Name;
+            TextItemNumber.Text = _defaultItem.ItemNumber;
             TextPrecioPublico.Text = _defaultItem.PrecioPublico.ToString("N");
+            DataForm.DataObject = _defaultItem;
         }
+    }
+
+    private void ClosePopup_Clicked(object? sender, EventArgs e)
+    {
+        Popup.IsOpen = false;
     }
 }

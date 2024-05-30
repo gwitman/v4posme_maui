@@ -10,82 +10,76 @@ namespace Posme.Maui.ViewModels
     {
         private readonly RestApiCoreAcount _restServiceUser = new();
         private readonly IRepositoryTbUser _repositoryTbUser;
-        private string _userName;
-        private string _password;
+        private string? _userName;
+        private string? _password;
         private bool _opcionPagar;
-        private string _company;
+        private string? _company;
         private bool _popupShow;
-        private string _mensaje;
         private bool _remember;
-        private INavigation? _navigation;
 
         public LoginViewModel()
         {
             _repositoryTbUser = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbUser>();
             LoginCommand = new Command(OnLoginClicked, ValidateLogin);
             MensajeCommand = new Command(OnMensaje, ValidateError);
-            PropertyChanged += (_, __) => LoginCommand.ChangeCanExecute();
+            PropertyChanged += (_, _) => LoginCommand.ChangeCanExecute();
         }
 
         public Command LoginCommand { get; }
-        public Command MensajeCommand { get; }
+        private Command MensajeCommand { get; }
 
-        public string Mensaje
-        {
-            get => _mensaje;
-            set => SetValue(ref _mensaje, value, () => RaisePropertyChanged());
-        }
+        
 
         public bool PopupShow
         {
             get => _popupShow;
-            set => SetValue(ref _popupShow, value, () => RaisePropertyChanged(nameof(PopupShow)));
+            set => SetProperty(ref _popupShow, value);
         }
 
-        public string UserName
+        public string? UserName
         {
             get => _userName;
-            set => SetValue(ref this._userName, value, () => RaisePropertyChanged());
+            set => SetProperty(ref this._userName, value);
         }
 
-        public string Password
+        public string? Password
         {
             get => _password;
-            set => SetValue(ref this._password, value, () => RaisePropertyChanged());
+            set => SetProperty(ref this._password, value);
         }
 
-        public string Company
+        public string? Company
         {
             get => _company;
-            set => SetValue(ref _company, value, () => RaisePropertyChanged());
+            set => SetProperty(ref _company, value);
         }
 
         public bool Remember
         {
             get => _remember;
-            set => SetValue(ref _remember, value, () => RaisePropertyChanged(nameof(Remember)));
+            set => SetProperty(ref _remember, value);
         }
 
         public bool OpcionPagar
         {
             get => _opcionPagar;
-            set => SetValue(ref this._opcionPagar, value, () => RaisePropertyChanged(nameof(OpcionPagar)));
+            set => SetProperty(ref this._opcionPagar, value);
         }
 
         private async void OnLoginClicked()
         {
-            await _navigation!.PushModalAsync(new LoadingPage());
-            VariablesGlobales.CompanyKey = Company.ToLower();
+            await Navigation!.PushModalAsync(new LoadingPage());
+            VariablesGlobales.CompanyKey = Company!.ToLower();
             var findUserRemember =
-                await _repositoryTbUser!.PosMeFindUserByNicknameAndPassword(UserName, Password);
+                await _repositoryTbUser.PosMeFindUserByNicknameAndPassword(UserName!, Password!);
             if (Remember)
             {
-                var response = await _restServiceUser.LoginMobile(UserName, Password);
+                var response = await _restServiceUser.LoginMobile(UserName!, Password!);
                 if (!response)
                 {
                     Mensaje = Mensajes.MensajeCredencialesInvalida;
                     PopupShow = true;
-                    await _navigation.PopModalAsync();
+                    await Navigation.PopModalAsync();
                     return;
                 }
                 else
@@ -114,7 +108,7 @@ namespace Posme.Maui.ViewModels
                     Mensaje = Mensajes.MensajeSinDatosTabla;
                     MensajeCommand.Execute(null);
                     PopupShow = true;
-                    await _navigation.PopModalAsync();
+                    await Navigation.PopModalAsync();
                     return;
                 }
 
@@ -123,7 +117,7 @@ namespace Posme.Maui.ViewModels
                     Mensaje = Mensajes.MensajeCredencialesInvalida;
                     MensajeCommand.Execute(null);
                     PopupShow = true;
-                    await _navigation.PopModalAsync();
+                    await Navigation.PopModalAsync();
                     return;
                 }
 
@@ -131,7 +125,7 @@ namespace Posme.Maui.ViewModels
             }
 
             Current!.MainPage = new MainPage();
-            await _navigation.PopModalAsync();
+            await Navigation.PopModalAsync();
         }
 
         private void OnMensaje()
@@ -153,10 +147,10 @@ namespace Posme.Maui.ViewModels
                    && Company.Length > 3;
         }
 
-        public override async void OnAppearing(INavigation navigation)
+        public async void OnAppearing(INavigation navigation)
         {
-            _navigation = navigation;
-            var findUserRemember = await _repositoryTbUser!.PosmeFindUserRemember();
+            Navigation = navigation;
+            var findUserRemember = await _repositoryTbUser.PosmeFindUserRemember();
             if (findUserRemember is null) return;
             UserName = findUserRemember.Nickname!;
             Password = findUserRemember.Password!;

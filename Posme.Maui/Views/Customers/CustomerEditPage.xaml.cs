@@ -1,26 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevExpress.Maui.Core;
+﻿using DevExpress.Maui.Core;
 using DevExpress.Maui.DataForm;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Unity;
 
-namespace Posme.Maui.Views.Clientes;
+namespace Posme.Maui.Views.Customers;
 
 public partial class CustomerEditPage : ContentPage
 {
     private DetailEditFormViewModel ViewModel => (DetailEditFormViewModel)BindingContext;
     private static IRepositoryTbCustomer RepositoryTbCustomer => VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
     private readonly Helper _helperContador;
+    private AppMobileApiMGetDataDownloadCustomerResponse _saveItem;
+    private AppMobileApiMGetDataDownloadCustomerResponse _defaultItem;
+
     public CustomerEditPage()
     {
         InitializeComponent();
         _helperContador = VariablesGlobales.UnityContainer.Resolve<Helper>();
+        _saveItem = new AppMobileApiMGetDataDownloadCustomerResponse();
+        _defaultItem = new AppMobileApiMGetDataDownloadCustomerResponse();
+        Title = "Editar Cliente";
     }
 
     private async void BarCodeOnClicked(object? sender, EventArgs e)
@@ -36,7 +37,7 @@ public partial class CustomerEditPage : ContentPage
     {
         if (!DataForm.Validate())
             return;
-        
+
         var saveCustomer = (AppMobileApiMGetDataDownloadCustomerResponse)DataForm.DataObject;
         saveCustomer.Modificado = true;
         if (ViewModel.IsNew)
@@ -55,12 +56,54 @@ public partial class CustomerEditPage : ContentPage
 
     private void DataForm_OnValidateForm(object sender, DataFormValidationEventArgs e)
     {
-        var saveCustomer = (AppMobileApiMGetDataDownloadCustomerResponse)e.DataObject;
-        if (string.IsNullOrWhiteSpace(saveCustomer.Identification)
-            || string.IsNullOrWhiteSpace(saveCustomer.FirstName)
-            || string.IsNullOrWhiteSpace(saveCustomer.LastName))
+        if (string.IsNullOrWhiteSpace(TxtBarCode.Text))
         {
             e.HasErrors = true;
+            TxtBarCode.HasError = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(TextCustomerNumber.Text))
+        {
+            e.HasErrors = true;
+            TextCustomerNumber.HasError = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(TextFirstName.Text))
+        {
+            e.HasErrors = true;
+            TextFirstName.HasError = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(TextLastName.Text))
+        {
+            e.HasErrors = true;
+            TextLastName.HasError = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(TextBalance.Text))
+        {
+            e.HasErrors = true;
+            TextBalance.HasError = true;
+        }
+    }
+
+    protected override async void OnAppearing()
+    {
+        _saveItem = (AppMobileApiMGetDataDownloadCustomerResponse)DataForm.DataObject;
+        _defaultItem = await RepositoryTbCustomer.PosMeFindCustomer(_saveItem.CustomerNumber!);
+        DataForm.CommitMode = CommitMode.LostFocus;
+    }
+
+    protected override void OnDisappearing()
+    {
+        if (!ViewModel.IsSaved)
+        {
+            TxtBarCode.Text = _defaultItem.Identification;
+            TextCustomerNumber.Text = _defaultItem.CustomerNumber;
+            TextFirstName.Text = _defaultItem.FirstName;
+            TextLastName.Text = _defaultItem.LastName;
+            TextBalance.Text = _defaultItem.Balance.ToString("N");
+            DataForm.DataObject = _defaultItem;
         }
     }
 }

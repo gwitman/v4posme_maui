@@ -25,6 +25,24 @@
     <Grid>
         <ScrollView>
             <dx:DXStackLayout Orientation="Vertical">
+                <dxco:DXPopup x:Name="Popup"
+                              AllowScrim="True"
+                              BackgroundColor="Red"
+                              VerticalAlignment="Bottom"
+                              ScrimColor="#b3adb9ce">
+                    <StackLayout WidthRequest="250">
+                        <Label x:Name="TxtMensaje"
+                               FontAttributes="Bold"
+                               FontSize="15"
+                               TextColor="{StaticResource White}"
+                               Margin="20, 20"/>
+                        <Button Text="Aceptar" 
+                                Clicked="ClosePopup_Clicked" 
+                                BackgroundColor="{StaticResource Gray600}" 
+                                FontSize="20"
+                                TextColor="White" />
+                    </StackLayout>
+                </dxco:DXPopup>
                 <dx:DXStackLayout Orientation="Vertical">
                     <dx:DXStackLayout.Triggers>
                         <DataTrigger Binding="{Binding IsNew}" Value="True" TargetType="dx:DXStackLayout">
@@ -50,18 +68,20 @@
                                        IsAutoGenerationEnabled="False"
                                        ValidationMode="LostFocus"
                                        ValidateForm="DataForm_OnValidateForm"
-                                       ValidateProperty="dataForm_ValidateProperty"
                                        Margin="0,10,0,0" Background="Transparent">
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
                                 x:Name="TxtBarCode"
                                 IconColor="#006E98"
                                 StartIcon="barcode"
+                                IsErrorIconVisible="True"
                                 Text="{Binding BarCode}"
+                                ErrorText="No puede estar vacío"
                                 LabelText="Código de barra" />
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
+                                x:Name="TextItemNumber"
                                 IconColor="#006E98"
                                 StartIcon="quantity"
                                 Text="{Binding ItemNumber}"
@@ -74,6 +94,7 @@
                                 IconColor="#006E98"
                                 StartIcon="textbox"
                                 Text="{Binding Name}"
+                                ErrorText="No puede estar vacío"
                                 LabelText="Descripción del producto" />
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>
@@ -82,6 +103,7 @@
                                 Keyboard="Numeric"
                                 IconColor="#006E98"
                                 StartIcon="price"
+                                ErrorText="No puede estar vacío"
                                 Text="{Binding PrecioPublico}"
                                 LabelText="Precio al publico" />
                         </dxdf:DataFormCustomItem>

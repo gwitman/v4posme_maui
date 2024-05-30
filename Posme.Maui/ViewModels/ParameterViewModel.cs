@@ -28,7 +28,7 @@ public class ParameterViewModel : BaseViewModel
         LoadValuesDefault();
     }
 
-    public override void OnAppearing(INavigation navigation)
+    public void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
     }
@@ -64,17 +64,26 @@ public class ParameterViewModel : BaseViewModel
 
     private bool Validate()
     {
-        LogoHasError = string.IsNullOrWhiteSpace(Logo);
         PuntoAccesoHasError = string.IsNullOrWhiteSpace(PuntoAcceso);
         PrinterHasError = string.IsNullOrWhiteSpace(Printer);
-        return !(LogoHasError || PuntoAccesoHasError || PrinterHasError);
+        return !(PuntoAccesoHasError || PrinterHasError);
     }
 
-    public bool PrinterHasError { get; set; }
+    private bool _printerhasError;
 
-    public bool PuntoAccesoHasError { get; set; }
+    public bool PrinterHasError
+    {
+        get => _printerhasError;
+        set => SetProperty(ref _printerhasError, value);
+    }
 
-    public bool LogoHasError { get; set; }
+    private bool _puntoAccesoHasError;
+
+    public bool PuntoAccesoHasError
+    {
+        get => _puntoAccesoHasError;
+        set => SetProperty(ref _puntoAccesoHasError, value);
+    }
 
     private void OnSaveParameters(object obj)
     {
@@ -119,7 +128,7 @@ public class ParameterViewModel : BaseViewModel
     public int Contador
     {
         get => _contador;
-        set => SetValue(ref _contador, value, () => RaisePropertyChanged(nameof(Contador)));
+        set => SetProperty(ref _contador, value);
     }
 
     private string? _logo;
@@ -127,7 +136,7 @@ public class ParameterViewModel : BaseViewModel
     public string? Logo
     {
         get => _logo;
-        set => SetValue(ref _logo, value, () => RaisePropertyChanged(nameof(Logo)));
+        set => SetProperty(ref _logo, value);
     }
 
     private string? _puntoAcceso;
@@ -135,7 +144,7 @@ public class ParameterViewModel : BaseViewModel
     public string? PuntoAcceso
     {
         get => _puntoAcceso;
-        set => SetValue(ref _puntoAcceso, value, () => RaisePropertyChanged(nameof(PuntoAcceso)));
+        set => SetProperty(ref _puntoAcceso, value);
     }
 
     private ImageSource? _showImage;
@@ -143,7 +152,7 @@ public class ParameterViewModel : BaseViewModel
     public ImageSource? ShowImage
     {
         get => _showImage;
-        set => SetValue(ref _showImage, value, () => RaisePropertyChanged(nameof(ShowImage)));
+        set => SetProperty(ref _showImage, value);
     }
 
     private bool _popUpShow;
@@ -151,23 +160,15 @@ public class ParameterViewModel : BaseViewModel
     public bool PopUpShow
     {
         get => _popUpShow;
-        set => SetValue(ref _popUpShow, value, () => RaisePropertyChanged(nameof(PopUpShow)));
+        set => SetProperty(ref _popUpShow, value);
     }
 
-    private string? _mensaje;
-
-    public string? Mensaje
-    {
-        get => _mensaje;
-        set => SetValue(ref _mensaje, value, () => RaisePropertyChanged(nameof(Mensaje)));
-    }
-
-    private Color _popupBackgroundColor = Colors.White;
+    private Color _popupBackgroundColor = Colors.Green;
 
     public Color PopupBackgroundColor
     {
         get => _popupBackgroundColor;
-        set => SetValue(ref _popupBackgroundColor, value, () => RaisePropertyChanged(nameof(PopupBackgroundColor)));
+        set => SetProperty(ref _popupBackgroundColor, value);
     }
 
     private string? _printer;
@@ -175,6 +176,6 @@ public class ParameterViewModel : BaseViewModel
     public string? Printer
     {
         get => _printer;
-        set => SetValue(ref _printer, value, () => RaisePropertyChanged(nameof(Printer)));
+        set => SetProperty(ref _printer, value);
     }
 }

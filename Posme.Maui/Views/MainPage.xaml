@@ -7,7 +7,7 @@
        MenuItemTemplate="{StaticResource ShellMenuItemTemplate}"
        xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
        xmlns:items="clr-namespace:Posme.Maui.Views.Items"
-       xmlns:clientes="clr-namespace:Posme.Maui.Views.Clientes"
+       xmlns:customers="clr-namespace:Posme.Maui.Views.Customers"
        ios:Page.UseSafeArea="true"
        x:Class="Posme.Maui.Views.MainPage">
 
@@ -67,7 +67,7 @@
     <FlyoutItem Title="Clientes" Icon="person.svg">
 
         <ShellContent Title="Clientes" Icon="person"
-                      ContentTemplate="{DataTemplate clientes:CustomersPage}" />
+                      ContentTemplate="{DataTemplate customers:CustomersPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />

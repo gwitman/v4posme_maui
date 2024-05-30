@@ -1,8 +1,9 @@
-﻿using DevExpress.Maui.Core;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Posme.Maui.ViewModels
 {
-    public abstract class BaseViewModel : BindableBase
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
         private bool _isBusy;
         private string _title = string.Empty;
@@ -12,37 +13,60 @@ namespace Posme.Maui.ViewModels
         public bool IsBusy
         {
             get => _isBusy;
-            set => SetValue(ref _isBusy, value, () => RaisePropertyChanged(nameof(IsBusy)));
+            protected set => SetProperty(ref _isBusy, value);
         }
 
         public string Title
         {
-            get => GetValue<string>();
-            set => SetValue(ref _title, value, () => RaisePropertyChanged());
+            get => _title;
+            set => SetProperty(ref _title, value);
         }
 
         public string? BarCode
         {
             get => _barCode;
-            set => SetValue(ref _barCode, value, () => RaisePropertyChanged(nameof(BarCode)));
+            set => SetProperty(ref _barCode, value);
         }
 
         public string Search
         {
             get => _search;
-            set => SetValue(ref _search, value, () => RaisePropertyChanged());
+            set => SetProperty(ref _search, value);
+        }
+
+        private string? _mensaje;
+
+        public string? Mensaje
+        {
+            get => _mensaje;
+            set => SetProperty(ref _mensaje, value);
         }
 
         private INavigation? _navigation;
 
-        public INavigation? Navigation
+        protected INavigation? Navigation
         {
             get => _navigation;
-            set => SetValue(ref _navigation, value, () => RaisePropertyChanged(nameof(Navigation)));
+            set => SetProperty(ref _navigation, value);
         }
-        public virtual void OnAppearing(INavigation navigation)
+
+        public new event PropertyChangedEventHandler? PropertyChanged;
+
+        protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "", Action? onChanged = null)
         {
-            Navigation = navigation;
+            if (EqualityComparer<T>.Default.Equals(backingStore, value))
+                return false;
+
+            backingStore = value;
+            onChanged?.Invoke();
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            var changed = PropertyChanged;
+            changed?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

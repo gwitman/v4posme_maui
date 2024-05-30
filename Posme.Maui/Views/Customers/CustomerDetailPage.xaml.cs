@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DevExpress.Maui.Core;
+﻿using DevExpress.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Unity;
 
-namespace Posme.Maui.Views.Clientes;
+namespace Posme.Maui.Views.Customers;
 
 public partial class CustomerDetailPage : ContentPage
 {
@@ -21,6 +16,7 @@ public partial class CustomerDetailPage : ContentPage
     public CustomerDetailPage()
     {
         InitializeComponent();
+        Title = "Datos de Cliente";
         _repositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
     }
 
@@ -37,7 +33,12 @@ public partial class CustomerDetailPage : ContentPage
 
         try
         {
+            var helper = VariablesGlobales.UnityContainer.Resolve<Helper>();
             _isDeleting = await _repositoryTbCustomer.PosMeDelete(SelectedItem);
+            if (_isDeleting)
+            {
+                await helper.PlusCounter();
+            }
             ViewModel.Close();
         }
         catch (Exception ex)

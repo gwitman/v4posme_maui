@@ -10,7 +10,7 @@
              xmlns:models="clr-namespace:Posme.Maui.Models"
              Title="Editar Cliente"
              Style="{StaticResource DetailPageStyle}"
-             x:Class="Posme.Maui.Views.Clientes.CustomerEditPage">
+             x:Class="Posme.Maui.Views.Customers.CustomerEditPage">
     <ContentPage.Triggers>
         <DataTrigger Binding="{Binding IsNew}" Value="True" TargetType="ContentPage">
             <Setter Property="Title" Value="Agregar Cliente" />
@@ -49,13 +49,18 @@
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
                                 x:Name="TxtBarCode"
+                                ErrorText="No puede estar vacío"
                                 IconColor="#006E98"
+                                IsErrorIconVisible="True"
                                 StartIcon="identificacion"
                                 Text="{Binding Identification}"
                                 LabelText="No de Identificación" />
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
+                                x:Name="TextCustomerNumber"
+                                ErrorText="No puede estar vacío"
+                                IsErrorIconVisible="True"
                                 IconColor="#006E98"
                                 StartIcon="identificacion"
                                 Text="{Binding CustomerNumber}"
@@ -64,6 +69,8 @@
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
                                 x:Name="TextFirstName"
+                                ErrorText="No puede estar vacío"
+                                IsErrorIconVisible="True"
                                 IconColor="#006E98"
                                 StartIcon="textbox"
                                 Text="{Binding FirstName}"
@@ -73,6 +80,8 @@
                             <dxe:TextEdit
                                 x:Name="TextLastName"
                                 IconColor="#006E98"
+                                ErrorText="No puede estar vacío"
+                                IsErrorIconVisible="True"
                                 StartIcon="textbox"
                                 Text="{Binding LastName}"
                                 LabelText="Apellidos:" />
@@ -80,7 +89,9 @@
                         <dxdf:DataFormCustomItem>
                             <dxe:TextEdit
                                 x:Name="TextBalance"
+                                IsErrorIconVisible="True"
                                 Keyboard="Numeric"
+                                ErrorText="No puede estar vacío"
                                 IsReadOnly="True"
                                 IconColor="#006E98"
                                 StartIcon="quantity"

@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Views;
-using Posme.Maui.Services.Helpers;
+﻿using Posme.Maui.Services.Helpers;
 using Posme.Maui.Views;
 using Unity;
 
@@ -9,7 +8,6 @@ public class DownloadViewModel : BaseViewModel
 {
     private bool _popUpShow;
     private bool _switch;
-    private string _mensaje;
     private Color _popupBackgroundColor = Colors.White;
     private readonly RestApiAppMobileApi _restApiDownload;
     private readonly Helper _helperContador;
@@ -18,7 +16,6 @@ public class DownloadViewModel : BaseViewModel
     {
         _helperContador = VariablesGlobales.UnityContainer.Resolve<Helper>();
         _restApiDownload = new RestApiAppMobileApi();
-        _mensaje = string.Empty;
         DownloadCommand = new Command(OnDownloadClicked, ValidateDownload);
         PropertyChanged += (_, _) => DownloadCommand.ChangeCanExecute();
     }
@@ -60,26 +57,25 @@ public class DownloadViewModel : BaseViewModel
     public Color PopupBackgroundColor
     {
         get => _popupBackgroundColor;
-        set => SetValue(ref _popupBackgroundColor, value, () => RaisePropertyChanged(nameof(PopupBackgroundColor)));
-    }
-
-    public string Mensaje
-    {
-        get => _mensaje;
-        set => SetValue(ref _mensaje, value, () => RaisePropertyChanged(nameof(Mensaje)));
+        set => SetProperty(ref _popupBackgroundColor, value);
     }
 
     public bool PopUpShow
     {
         get => _popUpShow;
-        set => SetValue(ref _popUpShow, value, () => RaisePropertyChanged(nameof(PopUpShow)));
+        set => SetProperty(ref _popUpShow, value);
     }
 
     public bool Switch
     {
         get => _switch;
-        set => SetValue(ref _switch, value, () => RaisePropertyChanged(nameof(Switch)));
+        set => SetProperty(ref _switch, value);
     }
 
     public Command DownloadCommand { get; }
+
+    public void OnAppearing(INavigation navigation)
+    {
+        Navigation = navigation;
+    }
 }

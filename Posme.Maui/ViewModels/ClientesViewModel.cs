@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using DevExpress.Maui.Core.Internal;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
@@ -24,7 +23,13 @@ public class ClientesViewModel : BaseViewModel
     public ICommand OnBarCode { get; }
     public ICommand SearchCommand { get; }
     public ObservableCollection<AppMobileApiMGetDataDownloadCustomerResponse> Customers { get; set; }
-    public AppMobileApiMGetDataDownloadCustomerResponse SelectedCustomer { get; set; }
+    private AppMobileApiMGetDataDownloadCustomerResponse? _selectedCustomer;
+
+    public AppMobileApiMGetDataDownloadCustomerResponse? SelectedCustomer
+    {
+        get => _selectedCustomer;
+        set => SetProperty(ref _selectedCustomer, value);
+    }
 
     private async void OnSearchCommand(object obj)
     {
@@ -66,7 +71,7 @@ public class ClientesViewModel : BaseViewModel
         IsBusy = false;
     }
 
-    public override void OnAppearing(INavigation navigation)
+    public void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
         LoadsClientes();

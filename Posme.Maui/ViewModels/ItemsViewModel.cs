@@ -31,12 +31,12 @@ namespace Posme.Maui.ViewModels
         public ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse> Items { get; set; }
 
 
-        AppMobileApiMGetDataDownloadItemsResponse _selectedItem;
+        private AppMobileApiMGetDataDownloadItemsResponse? _selectedItem;
 
-        public AppMobileApiMGetDataDownloadItemsResponse SelectedItem
+        public AppMobileApiMGetDataDownloadItemsResponse? SelectedItem
         {
             get => _selectedItem;
-            set => SetValue(ref this._selectedItem, value, () => RaisePropertyChanged(nameof(SelectedItem)));
+            set => SetProperty(ref _selectedItem, value);
         }
 
         private async void OnSearchBarCode(object obj)
@@ -69,7 +69,7 @@ namespace Posme.Maui.ViewModels
             IsBusy = false;
         }
 
-        public async void LoadMoreItems()
+        private async void LoadMoreItems()
         {
             try
             {
@@ -94,12 +94,16 @@ namespace Posme.Maui.ViewModels
 
         private void CreateDetailFormViewModel(CreateDetailFormViewModelEventArgs e)
         {
-            if (e.DetailFormType == DetailFormType.Edit)
-            {
-                var eItem = (AppMobileApiMGetDataDownloadItemsResponse)e.Item;
-                var editedContact = _repositoryItems.PosMeFindByItemNumber(eItem.ItemNumber);
-                e.Result = new DetailEditFormViewModel(editedContact, isNew: false);
-            }
+            if (e.DetailFormType != DetailFormType.Edit) return;
+            var eItem = (AppMobileApiMGetDataDownloadItemsResponse)e.Item;
+            var editedContact = _repositoryItems.PosMeFindByItemNumber(eItem.ItemNumber);
+            e.Result = new DetailEditFormViewModel(editedContact, isNew: false);
+        }
+
+        public void OnAppearing(INavigation navigation)
+        {
+            Navigation = navigation;
+            LoadMoreItems();
         }
     }
 }
