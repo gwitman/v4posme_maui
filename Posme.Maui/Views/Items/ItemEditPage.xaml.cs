@@ -13,14 +13,14 @@ public partial class ItemEditPage : ContentPage
     private readonly IRepositoryItems _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
     private AppMobileApiMGetDataDownloadItemsResponse _saveItem;
     private AppMobileApiMGetDataDownloadItemsResponse _defaultItem;
-    private readonly HelperContador _helperContador;
+    private readonly Helper _helperContador;
 
     public ItemEditPage()
     {
         InitializeComponent();
         _saveItem = new AppMobileApiMGetDataDownloadItemsResponse();
         _defaultItem = new AppMobileApiMGetDataDownloadItemsResponse();
-        _helperContador = VariablesGlobales.UnityContainer.Resolve<HelperContador>();
+        _helperContador = VariablesGlobales.UnityContainer.Resolve<Helper>();
         DataForm.CommitMode = CommitMode.Manually;
     }
 

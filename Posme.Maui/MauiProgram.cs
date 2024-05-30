@@ -43,7 +43,7 @@ namespace Posme.Maui
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryParameters, RepositoryParameters>();
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryTbParameterSystem, RepositoryTbParameterSystem>();
             VariablesGlobales.UnityContainer.RegisterSingleton<DataBase>();
-            VariablesGlobales.UnityContainer.RegisterSingleton<HelperContador>();
+            VariablesGlobales.UnityContainer.RegisterSingleton<Helper>();
             VariablesGlobales.UnityContainer.RegisterSingleton<DownloadPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<SchedulerPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<ItemDetailPage>();

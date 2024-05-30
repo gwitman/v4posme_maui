@@ -12,11 +12,11 @@ public class DownloadViewModel : BaseViewModel
     private string _mensaje;
     private Color _popupBackgroundColor = Colors.White;
     private readonly RestApiAppMobileApi _restApiDownload;
-    private readonly HelperContador _helperContador;
+    private readonly Helper _helperContador;
 
     public DownloadViewModel()
     {
-        _helperContador = VariablesGlobales.UnityContainer.Resolve<HelperContador>();
+        _helperContador = VariablesGlobales.UnityContainer.Resolve<Helper>();
         _restApiDownload = new RestApiAppMobileApi();
         _mensaje = string.Empty;
         DownloadCommand = new Command(OnDownloadClicked, ValidateDownload);

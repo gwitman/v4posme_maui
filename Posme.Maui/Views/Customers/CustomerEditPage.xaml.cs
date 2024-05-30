@@ -16,11 +16,11 @@ public partial class CustomerEditPage : ContentPage
 {
     private DetailEditFormViewModel ViewModel => (DetailEditFormViewModel)BindingContext;
     private static IRepositoryTbCustomer RepositoryTbCustomer => VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
-    private readonly HelperContador _helperContador;
+    private readonly Helper _helperContador;
     public CustomerEditPage()
     {
         InitializeComponent();
-        _helperContador = VariablesGlobales.UnityContainer.Resolve<HelperContador>();
+        _helperContador = VariablesGlobales.UnityContainer.Resolve<Helper>();
     }
 
     private async void BarCodeOnClicked(object? sender, EventArgs e)

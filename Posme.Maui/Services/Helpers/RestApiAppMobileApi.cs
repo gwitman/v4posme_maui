@@ -8,6 +8,8 @@ namespace Posme.Maui.Services.Helpers;
 
 public class RestApiAppMobileApi
 {
+    
+
     private readonly HttpClient _httpClient = new();
 
     private readonly IRepositoryTbCustomer? _repositoryTbCustomer =
@@ -26,8 +28,10 @@ public class RestApiAppMobileApi
 
     public async Task<bool> GetDataDownload()
     {
-        Constantes.UrlRequestDownload =
-            Constantes.UrlRequestDownload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
+        var _helper = VariablesGlobales.UnityContainer.Resolve<Helper>();
+        Constantes.UrlRequestDownload = Constantes.UrlRequestDownload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
+        Constantes.UrlRequestDownload = await _helper.ParseUrl(Constantes.UrlRequestDownload);
+
         if (VariablesGlobales.User is null)
         {
             return false;
