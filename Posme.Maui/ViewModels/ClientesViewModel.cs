@@ -66,7 +66,7 @@ public class ClientesViewModel : BaseViewModel
         IsBusy = false;
     }
 
-    public void OnAppearing(INavigation navigation)
+    public override void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
         LoadsClientes();

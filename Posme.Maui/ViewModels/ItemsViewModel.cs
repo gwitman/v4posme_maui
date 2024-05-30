@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using DevExpress.Maui.Core;
 using Posme.Maui.Models;
@@ -70,17 +71,25 @@ namespace Posme.Maui.ViewModels
 
         public async void LoadMoreItems()
         {
-            IsBusy = true;
-            await Task.Run(async () =>
+            try
             {
+                IsBusy = true;
                 Items.Clear();
                 var newItems = await _repositoryItems.PosMeFindAll();
-                foreach (var item in newItems)
+                await Task.Run(() =>
                 {
-                    Items.Add(item);
-                }
-            });
-            IsBusy = false;
+                    foreach (var item in newItems)
+                    {
+                        Items.Add(item);
+                    }
+                });
+
+                IsBusy = false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         private void CreateDetailFormViewModel(CreateDetailFormViewModelEventArgs e)
@@ -91,11 +100,6 @@ namespace Posme.Maui.ViewModels
                 var editedContact = _repositoryItems.PosMeFindByItemNumber(eItem.ItemNumber);
                 e.Result = new DetailEditFormViewModel(editedContact, isNew: false);
             }
-        }
-
-        public void OnAppearing(INavigation navigation)
-        {
-            Navigation = navigation;
         }
     }
 }

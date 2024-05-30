@@ -153,7 +153,7 @@ namespace Posme.Maui.ViewModels
                    && Company.Length > 3;
         }
 
-        public async void OnAppearing(INavigation navigation)
+        public override async void OnAppearing(INavigation navigation)
         {
             _navigation = navigation;
             var findUserRemember = await _repositoryTbUser!.PosmeFindUserRemember();

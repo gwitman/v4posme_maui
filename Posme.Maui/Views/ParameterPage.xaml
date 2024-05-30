@@ -43,9 +43,12 @@
                                 TextColor="White" />
                     </StackLayout>
                 </dxco:DXPopup>
-                <Frame>
+                <dx:DXBorder Margin="15"
+                             WidthRequest="100"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
+                             BorderThickness="0" CornerRadius="10">
                     <Image Source="settings" WidthRequest="75" Aspect="Fill" />
-                </Frame>
+                </dx:DXBorder>
                 <dx:DXBorder
                     Margin="15"
                     BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
@@ -71,6 +74,18 @@
                         StartIcon="textbox"
                         Text="{Binding PuntoAcceso}"
                         LabelText="Punto de acceso" />
+                </dx:DXBorder>
+                <dx:DXBorder Margin="15"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
+                             BorderThickness="0" CornerRadius="10">
+                    <dxe:TextEdit
+                        x:Name="TextPrinter"
+                        HasError="{Binding PrinterHasError}"
+                        ErrorText="Debe especificar un Nombre de impresora..."
+                        IconColor="#006E98"
+                        StartIcon="textbox"
+                        Text="{Binding Printer}"
+                        LabelText="Nombre de impresora" />
                 </dx:DXBorder>
                 <Grid HeightRequest="140" WidthRequest="140" Margin="0,30,0,10">
                     <Grid.GestureRecognizers>

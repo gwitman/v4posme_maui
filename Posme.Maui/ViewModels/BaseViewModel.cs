@@ -40,5 +40,9 @@ namespace Posme.Maui.ViewModels
             get => _navigation;
             set => SetValue(ref _navigation, value, () => RaisePropertyChanged(nameof(Navigation)));
         }
+        public virtual void OnAppearing(INavigation navigation)
+        {
+            Navigation = navigation;
+        }
     }
 }

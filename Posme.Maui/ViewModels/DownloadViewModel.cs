@@ -79,9 +79,4 @@ public class DownloadViewModel : BaseViewModel
     }
 
     public Command DownloadCommand { get; }
-
-    public void OnAppearing(INavigation navigation)
-    {
-        Navigation = navigation;
-    }
 }

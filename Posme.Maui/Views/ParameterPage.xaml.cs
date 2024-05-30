@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text;
 using DevExpress.Maui.Controls;
-using DevExpress.Maui.Core;
 using Posme.Maui.ViewModels;
 
 namespace Posme.Maui.Views;
@@ -13,11 +12,17 @@ public partial class ParameterPage : ContentPage
         InitializeComponent();
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        ((ParameterViewModel)BindingContext).OnAppearing(Navigation);
+    }
+
     private void ClosePopup_Clicked(object? sender, EventArgs e)
     {
         Popup.IsOpen = false;
     }
-
+    
     private void ImageTapped(object sender, EventArgs e)
     {
         BottomSheet.State = BottomSheetState.HalfExpanded;
@@ -66,13 +71,13 @@ public partial class ParameterPage : ContentPage
         }
         else
         {
-                var encoding = Encoding.UTF8;
-                await using var stream = await result.OpenReadAsync();
-                var streamReader = new StreamReader(stream, encoding);
-                imageSource = ImageSource.FromStream(() => streamReader.BaseStream);
-                ((ParameterViewModel)BindingContext).Logo = await streamReader.ReadToEndAsync();
+            var encoding = Encoding.UTF8;
+            await using var stream = await result.OpenReadAsync();
+            var streamReader = new StreamReader(stream, encoding);
+            imageSource = ImageSource.FromStream(() => streamReader.BaseStream);
+            ((ParameterViewModel)BindingContext).Logo = await streamReader.ReadToEndAsync();
         }
-        
+
         var editorPage = new ImageEditView(imageSource);
         await Navigation.PushAsync(editorPage);
         var cropResult = await editorPage.WaitForResultAsync();
@@ -82,6 +87,7 @@ public partial class ParameterPage : ContentPage
             {
                 ((ParameterViewModel)BindingContext).Logo = editorPage.Imagen;
             }
+
             Preview.Source = cropResult;
         }
 
