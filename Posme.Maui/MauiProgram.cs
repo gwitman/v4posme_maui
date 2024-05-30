@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using DevExpress.Maui;
+using DevExpress.Maui.Charts;
 using DevExpress.Maui.Core;
-using Microsoft.Maui.Controls.Compatibility.Hosting;
+using Posme.Maui.Models;
 using Posme.Maui.Services;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
@@ -33,20 +34,21 @@ namespace Posme.Maui
                     fonts.AddFont("univia-pro-regular.ttf", "Univia-Pro");
                     fonts.AddFont("univia-pro-medium.ttf", "Univia-Pro Medium");
                 });
-            
+
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryTbUser, RepositoryTbUser>();
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryTbCustomer, RepositoryTbCustomer>();
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryDocumentCreditAmortization, RepositoryDocumentCreditAmortization>();
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryDocumentCredit, RepositoryDocumentCredit>();
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryItems, RepositoryItems>();
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryParameters, RepositoryParameters>();
+            VariablesGlobales.UnityContainer.RegisterType<IRepositoryTbParameterSystem, RepositoryTbParameterSystem>();
             VariablesGlobales.UnityContainer.RegisterSingleton<DataBase>();
             VariablesGlobales.UnityContainer.RegisterSingleton<DownloadPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<SchedulerPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<ItemDetailPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<ItemsPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<ItemsViewModel>();
-            DevExpress.Maui.Charts.Initializer.Init();
+            Initializer.Init();
             DevExpress.Maui.CollectionView.Initializer.Init();
             DevExpress.Maui.Controls.Initializer.Init();
             DevExpress.Maui.Editors.Initializer.Init();

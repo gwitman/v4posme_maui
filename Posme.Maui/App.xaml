@@ -2,12 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:helpers="clr-namespace:Posme.Maui.Services.Helpers"
              x:Class="Posme.Maui.App">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
             <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-
+            <helpers:Base64ToImageConverter x:Key="Base64ToImageConverter" />
              <DataTemplate x:Key="ShellMenuItemTemplate">            
                 <Grid ColumnDefinitions="51,*" ColumnSpacing="0" RowSpacing="0" 
                       Padding="35,15,0,0" 

@@ -12,4 +12,5 @@ public static class Mensajes
     public const string MensajeDownloadError = "No fue posible descargar los datos, revise su conexion a internet e intente nuevamente.";
     public const string MensajeDownloadSuccess = "Se han descargado los datos de forma correcta.";
     public const string MensajeDownloadCantidadTransacciones = "No puede realizar la descarga sin antes subir la información pendiente.";
+    public const string MensajeParametrosGuardar = "Se han guardado los parametros de forma correcta";
 }

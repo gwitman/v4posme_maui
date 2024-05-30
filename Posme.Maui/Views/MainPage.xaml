@@ -28,7 +28,7 @@
                       ContentTemplate="{DataTemplate local:SchedulerPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
-                      ContentTemplate="{DataTemplate items:ItemsPage}" />
+                      ContentTemplate="{DataTemplate local:ParameterPage}" />
 
     </FlyoutItem>
 
@@ -96,7 +96,7 @@
 
     </FlyoutItem>
 
-    <FlyoutItem Title="Impresora" Icon="printer.svg">
+    <FlyoutItem Title="Impresiones" Icon="printer.svg">
 
         <ShellContent Title="Inicio" Icon="basic_home.svg"
                       ContentTemplate="{DataTemplate local:AboutPage}" />

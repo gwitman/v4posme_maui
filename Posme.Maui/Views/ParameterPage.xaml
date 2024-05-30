@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+             xmlns:viewModels="clr-namespace:Posme.Maui.ViewModels"
+             x:Class="Posme.Maui.Views.ParameterPage">
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Resources/Styles/Colors.xaml" />
+        <ResourceDictionary Source="../Resources/Styles/Styles.xaml" />
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewModels:ParameterViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SaveCommand}" Text="Save"
+                     IconImageSource="{AppThemeBinding Light=save, Dark=save}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        
+        <ScrollView>
+            <dx:DXStackLayout Orientation="Vertical"
+                              Margin="15"
+                              Padding="15">
+                <dxco:DXPopup x:Name="Popup"
+                              AllowScrim="True"
+                              BackgroundColor="{Binding PopupBackgroundColor}"
+                              VerticalAlignment="Bottom"
+                              ScrimColor="#b3adb9ce"
+                              IsOpen="{Binding PopUpShow}">
+                    <StackLayout WidthRequest="250">
+                        <Label Text="{Binding Mensaje}" 
+                               FontAttributes="Bold"
+                               FontSize="15"
+                               TextColor="{StaticResource White}"
+                               Margin="20, 20"/>
+                        <Button Text="Aceptar" 
+                                Clicked="ClosePopup_Clicked" 
+                                BackgroundColor="{StaticResource Gray600}" 
+                                FontSize="20"
+                                TextColor="White" />
+                    </StackLayout>
+                </dxco:DXPopup>
+                <Frame>
+                    <Image Source="settings" WidthRequest="150" Aspect="Fill" />
+                </Frame>
+                <dx:DXBorder
+                    Margin="15"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
+                    BorderThickness="0" CornerRadius="10">
+                    <dxe:NumericEdit
+                        x:Name="TextContador"
+                        MinValue="0"
+                        IconColor="#006E98"
+                        StartIcon="quantity"
+                        Value="{Binding Contador}"
+                        LabelText="Contador de Transacciones" />
+                </dx:DXBorder>
+                <dx:DXBorder>
+                    <dxe:TextEdit
+                        x:Name="TextName"
+                        HasError="{Binding PuntoAccesoHasError}"
+                        ErrorText="Debe especificar un punto de acceso..."
+                        IconColor="#006E98"
+                        StartIcon="textbox"
+                        Text="{Binding PuntoAcceso}"
+                        LabelText="Punto de acceso" />
+                </dx:DXBorder>
+                <Grid HeightRequest="140" WidthRequest="140" Margin="0,30,0,10">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ImageTapped" />
+                    </Grid.GestureRecognizers>
+                    <Label TextColor="#6750a4" Text="Seleccionar logo" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <dx:DXBorder CornerRadius="10">
+                        <Image x:Name="Preview" Source="{Binding ShowImage}" WidthRequest="140"
+                               HeightRequest="140" x:FieldModifier="protected" />
+                    </dx:DXBorder>
+                    <dx:DXBorder x:Name="EditControl" BorderColor="White" BorderThickness="2" BackgroundColor="#e8def8"
+                                 WidthRequest="48" HeightRequest="48" CornerRadius="70" HorizontalOptions="End"
+                                 VerticalOptions="End">
+                        <Image Source="pencil" WidthRequest="24" HeightRequest="24" />
+                    </dx:DXBorder>
+                </Grid>
+                <dxco:BottomSheet x:Name="BottomSheet" HalfExpandedRatio="0.3" AllowedState="HalfExpanded">
+                    <dx:DXStackLayout>
+                        <dx:DXButton Style="{StaticResource ButtonDefault}" Icon="delete" Content="Eliminar logo" Tap="DeletePhotoClicked" />
+                        <dx:DXBorder HeightRequest="1" BorderThickness="1" BorderColor="#303A343D" />
+                        <dx:DXButton Style="{StaticResource ButtonDefault}" Icon="take_photo" Content="Hacer foto" Tap="TakePhotoClicked" />
+                        <dx:DXBorder HeightRequest="1" BorderThickness="1" BorderColor="#303A343D" />
+                        <dx:DXButton Style="{StaticResource ButtonDefault}" Icon="gallery" Content="Selecciona desde la galeria" Tap="SelectPhotoClicked" />
+                    </dx:DXStackLayout>
+                </dxco:BottomSheet>
+               
+            </dx:DXStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

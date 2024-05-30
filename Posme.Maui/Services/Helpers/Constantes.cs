@@ -8,6 +8,10 @@ namespace Posme.Maui.Services.Helpers;
 
 public static class Constantes
 {
+    public static string ParametroCounter = "COUNTER";
+    public static string ParametroLogo = "LOGO";
+    public static string ParametroAccesPoint = "ACCESS_POINT";
+    public static string ParametroPrinter = "PRINTER";
     public static int CompanyId = 2;
     public const string UrlBase = "https://posme.net";
     public static string UrlRequestLogin = UrlBase + "/v4posme/{CompanyKey}/public/core_acount/loginMobile";
