@@ -44,7 +44,7 @@
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate local:ParameterPage}" />
 
     </FlyoutItem>
 
@@ -60,7 +60,7 @@
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate local:ParameterPage}" />
 
     </FlyoutItem>
 
@@ -76,7 +76,7 @@
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate local:ParameterPage}" />
 
     </FlyoutItem>
 
@@ -92,7 +92,7 @@
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate local:ParameterPage}" />
 
     </FlyoutItem>
 
@@ -108,7 +108,7 @@
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate local:ParameterPage}" />
 
     </FlyoutItem>
 

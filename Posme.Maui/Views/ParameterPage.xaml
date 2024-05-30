@@ -44,7 +44,7 @@
                     </StackLayout>
                 </dxco:DXPopup>
                 <Frame>
-                    <Image Source="settings" WidthRequest="150" Aspect="Fill" />
+                    <Image Source="settings" WidthRequest="75" Aspect="Fill" />
                 </Frame>
                 <dx:DXBorder
                     Margin="15"
@@ -53,12 +53,16 @@
                     <dxe:NumericEdit
                         x:Name="TextContador"
                         MinValue="0"
+                        IsUpDownIconVisible="True"
+                        TextHorizontalAlignment="Start"
                         IconColor="#006E98"
                         StartIcon="quantity"
                         Value="{Binding Contador}"
                         LabelText="Contador de Transacciones" />
                 </dx:DXBorder>
-                <dx:DXBorder>
+                <dx:DXBorder Margin="15"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
+                             BorderThickness="0" CornerRadius="10">
                     <dxe:TextEdit
                         x:Name="TextName"
                         HasError="{Binding PuntoAccesoHasError}"
