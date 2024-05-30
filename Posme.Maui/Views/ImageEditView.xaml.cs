@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using DevExpress.Maui.Editors;
 using ImageFormat = DevExpress.Maui.Editors.ImageFormat;
 
@@ -7,7 +8,7 @@ namespace Posme.Maui.Views;
 public partial class ImageEditView : ContentPage
 {
     private TaskCompletionSource<ImageSource> pageResultCompletionSource;
-    public string Imagen=string.Empty;
+    public string Imagen = string.Empty;
 
     public ImageEditView()
     {
@@ -34,9 +35,16 @@ public partial class ImageEditView : ContentPage
 
     private async void CropPressed(object sender, EventArgs e)
     {
-        Imagen =editor.SaveAsBase64(ImageFormat.Jpeg);
-        pageResultCompletionSource.SetResult(editor.SaveAsImageSource(ImageFormat.Jpeg));
-        await Navigation.PopAsync();
+        try
+        {
+            Imagen = editor.SaveAsBase64(ImageFormat.Jpeg);
+            pageResultCompletionSource.SetResult(editor.SaveAsImageSource(ImageFormat.Jpeg));
+            await Navigation.PopAsync();
+        }
+        catch (Exception exception)
+        {
+            Debug.WriteLine(exception);
+        }
     }
 }
 

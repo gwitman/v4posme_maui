@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using DevExpress.Maui.Controls;
 using DevExpress.Maui.Core;
 using Posme.Maui.ViewModels;
@@ -65,14 +66,13 @@ public partial class ParameterPage : ContentPage
         }
         else
         {
-            var stream = await result.OpenReadAsync();
-            imageSource = ImageSource.FromStream(() => stream);
-            var encoding = Encoding.UTF8;
-            using (StreamReader streamReader = new StreamReader(stream, encoding))
-            {
+                var encoding = Encoding.UTF8;
+                await using var stream = await result.OpenReadAsync();
+                var streamReader = new StreamReader(stream, encoding);
+                imageSource = ImageSource.FromStream(() => streamReader.BaseStream);
                 ((ParameterViewModel)BindingContext).Logo = await streamReader.ReadToEndAsync();
-            }
         }
+        
         var editorPage = new ImageEditView(imageSource);
         await Navigation.PushAsync(editorPage);
         var cropResult = await editorPage.WaitForResultAsync();
@@ -85,6 +85,6 @@ public partial class ParameterPage : ContentPage
             Preview.Source = cropResult;
         }
 
-        editorPage.Handler.DisconnectHandler();
+        editorPage.Handler!.DisconnectHandler();
     }
 }

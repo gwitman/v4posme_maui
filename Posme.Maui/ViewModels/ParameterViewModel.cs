@@ -25,39 +25,10 @@ public class ParameterViewModel : BaseViewModel
             Debug.WriteLine(test);
         });
         SaveCommand = new Command(OnSaveParameters);
-        FindImage = new Command(OnFindLogo);
         LoadValueContadorImagen();
     }
 
-    private async void OnFindLogo(object obj)
-    {
-        try
-        {
-            var result = await MediaPicker.PickPhotoAsync();
-            if (result != null)
-            {
-                var sourceStream = await result.OpenReadAsync();
-                Logo = result.FullPath;
-                Debug.WriteLine(Logo);
-                ShowImage = ImageSource.FromStream(() => sourceStream);
-            }
-        }
-        catch (FeatureNotSupportedException fnsEx)
-        {
-            Debug.WriteLine(fnsEx);
-        }
-        catch (PermissionException pEx)
-        {
-            Debug.WriteLine(pEx);
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex);
-        }
-    }
-
-
-    private async void LoadValueContadorImagen()
+   private async void LoadValueContadorImagen()
     {
         _posMeFindCounter = await _repositoryTbParameterSystem.PosMeFindCounter();
         if (_posMeFindCounter != null)
@@ -66,7 +37,7 @@ public class ParameterViewModel : BaseViewModel
         }
 
         _posMeFindLogo = await _repositoryTbParameterSystem.PosMeFindLogo();
-        if (_posMeFindLogo != null)
+        if (_posMeFindLogo != null && !string.IsNullOrWhiteSpace(_posMeFindLogo.Value))
         {
             var imageBytes = Convert.FromBase64String(_posMeFindLogo.Value!);
             ShowImage= ImageSource.FromStream(() => new MemoryStream(imageBytes));
