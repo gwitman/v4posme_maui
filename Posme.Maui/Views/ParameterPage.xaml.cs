@@ -14,7 +14,6 @@ public partial class ParameterPage : ContentPage
     {
         InitializeComponent();
         BindingContext = _viewModel = new ParameterViewModel();
-        _viewModel.LoadValuesDefault();
     }
 
     protected override void OnAppearing()
