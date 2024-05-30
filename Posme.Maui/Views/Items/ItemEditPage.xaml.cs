@@ -13,13 +13,14 @@ public partial class ItemEditPage : ContentPage
     private readonly IRepositoryItems _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
     private AppMobileApiMGetDataDownloadItemsResponse _saveItem;
     private AppMobileApiMGetDataDownloadItemsResponse _defaultItem;
-
+    private readonly HelperContador _helperContador;
 
     public ItemEditPage()
     {
         InitializeComponent();
         _saveItem = new AppMobileApiMGetDataDownloadItemsResponse();
         _defaultItem = new AppMobileApiMGetDataDownloadItemsResponse();
+        _helperContador = VariablesGlobales.UnityContainer.Resolve<HelperContador>();
         DataForm.CommitMode = CommitMode.Manually;
     }
 
@@ -40,7 +41,7 @@ public partial class ItemEditPage : ContentPage
             await _repositoryItems.PosMeUpdate(_saveItem);
         }
 
-        VariablesGlobales.CantidadTransacciones++;
+        await _helperContador.PlusCounter();
     }
 
 

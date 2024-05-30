@@ -7,13 +7,13 @@
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:viewModels="clr-namespace:Posme.Maui.ViewModels"
              x:Class="Posme.Maui.Views.ParameterPage">
+    <ContentPage.BindingContext>
+        <viewModels:ParameterViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary Source="../Resources/Styles/Colors.xaml" />
         <ResourceDictionary Source="../Resources/Styles/Styles.xaml" />
     </ContentPage.Resources>
-    <ContentPage.BindingContext>
-        <viewModels:ParameterViewModel />
-    </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding SaveCommand}" Text="Save"
                      IconImageSource="{AppThemeBinding Light=save, Dark=save}" />
@@ -56,9 +56,10 @@
                     <dxe:NumericEdit
                         x:Name="TextContador"
                         MinValue="0"
+                        LabelColor="{StaticResource Primary}"
                         IsUpDownIconVisible="True"
                         TextHorizontalAlignment="Start"
-                        IconColor="#006E98"
+                        IconColor="{StaticResource Primary}"
                         StartIcon="quantity"
                         Value="{Binding Contador}"
                         LabelText="Contador de Transacciones" />
@@ -87,16 +88,22 @@
                         Text="{Binding Printer}"
                         LabelText="Nombre de impresora" />
                 </dx:DXBorder>
-                <Grid HeightRequest="140" WidthRequest="140" Margin="0,30,0,10">
+                <Grid HeightRequest="180" WidthRequest="160" Margin="0,30,0,10">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="ImageTapped" />
                     </Grid.GestureRecognizers>
-                    <Label TextColor="#6750a4" Text="Seleccionar logo" VerticalOptions="Center" HorizontalOptions="Center" />
-                    <dx:DXBorder CornerRadius="10">
-                        <Image x:Name="Preview" Source="{Binding ShowImage}" WidthRequest="140"
-                               HeightRequest="140" x:FieldModifier="protected" />
+                    <Label TextColor="{StaticResource Primary}" 
+                           Text="Seleccionar logo" 
+                           VerticalOptions="Start" 
+                           HorizontalOptions="Center" />
+                    <dx:DXBorder CornerRadius="10" 
+                                 WidthRequest="140"
+                                 HeightRequest="140">
+                        <Image x:Name="Preview" 
+                               Source="{Binding ShowImage}"  
+                               x:FieldModifier="protected" />
                     </dx:DXBorder>
-                    <dx:DXBorder x:Name="EditControl" BorderColor="White" BorderThickness="2" BackgroundColor="#e8def8"
+                    <dx:DXBorder x:Name="EditControl" BorderColor="White" BorderThickness="2" BackgroundColor="#FF8900"
                                  WidthRequest="48" HeightRequest="48" CornerRadius="70" HorizontalOptions="End"
                                  VerticalOptions="End">
                         <Image Source="pencil" WidthRequest="24" HeightRequest="24" />

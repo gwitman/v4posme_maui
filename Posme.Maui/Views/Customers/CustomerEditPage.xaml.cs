@@ -16,10 +16,11 @@ public partial class CustomerEditPage : ContentPage
 {
     private DetailEditFormViewModel ViewModel => (DetailEditFormViewModel)BindingContext;
     private static IRepositoryTbCustomer RepositoryTbCustomer => VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
-    
+    private readonly HelperContador _helperContador;
     public CustomerEditPage()
     {
         InitializeComponent();
+        _helperContador = VariablesGlobales.UnityContainer.Resolve<HelperContador>();
     }
 
     private async void BarCodeOnClicked(object? sender, EventArgs e)
@@ -31,7 +32,7 @@ public partial class CustomerEditPage : ContentPage
         VariablesGlobales.BarCode = "";
     }
 
-    private void SaveItemClick(object? sender, EventArgs e)
+    private async void SaveItemClick(object? sender, EventArgs e)
     {
         if (!DataForm.Validate())
             return;
@@ -40,14 +41,14 @@ public partial class CustomerEditPage : ContentPage
         saveCustomer.Modificado = true;
         if (ViewModel.IsNew)
         {
-            RepositoryTbCustomer.PosMeInsert(saveCustomer);
+            await RepositoryTbCustomer.PosMeInsert(saveCustomer);
         }
         else
         {
-            RepositoryTbCustomer.PosMeUpdate(saveCustomer);
+            await RepositoryTbCustomer.PosMeUpdate(saveCustomer);
         }
 
-        VariablesGlobales.CantidadTransacciones++;
+        await _helperContador.PlusCounter();
         DataForm.Commit();
         ViewModel.Save();
     }

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Views;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Views;
+using Unity;
 
 namespace Posme.Maui.ViewModels;
 
@@ -11,9 +12,11 @@ public class DownloadViewModel : BaseViewModel
     private string _mensaje;
     private Color _popupBackgroundColor = Colors.White;
     private readonly RestApiAppMobileApi _restApiDownload;
+    private readonly HelperContador _helperContador;
 
     public DownloadViewModel()
     {
+        _helperContador = VariablesGlobales.UnityContainer.Resolve<HelperContador>();
         _restApiDownload = new RestApiAppMobileApi();
         _mensaje = string.Empty;
         DownloadCommand = new Command(OnDownloadClicked, ValidateDownload);
@@ -27,9 +30,9 @@ public class DownloadViewModel : BaseViewModel
 
     private async void OnDownloadClicked()
     {
-        await Navigation.PushModalAsync(new LoadingPage());
-
-        if (VariablesGlobales.CantidadTransacciones != 0)
+        await Navigation!.PushModalAsync(new LoadingPage());
+        var counter = await _helperContador.GetCounter();
+        if (counter != 0)
         {
             Mensaje = Mensajes.MensajeDownloadCantidadTransacciones;
             PopupBackgroundColor = Colors.Red;

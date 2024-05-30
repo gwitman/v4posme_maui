@@ -8,7 +8,6 @@
         <ResourceDictionary>
             <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
             <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-            <helpers:Base64ToImageConverter x:Key="Base64ToImageConverter" />
              <DataTemplate x:Key="ShellMenuItemTemplate">            
                 <Grid ColumnDefinitions="51,*" ColumnSpacing="0" RowSpacing="0" 
                       Padding="35,15,0,0" 

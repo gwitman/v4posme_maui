@@ -1,28 +1,36 @@
 ﻿using System.Diagnostics;
 using System.Text;
 using DevExpress.Maui.Controls;
+using Posme.Maui.Services.Helpers;
 using Posme.Maui.ViewModels;
 
 namespace Posme.Maui.Views;
 
 public partial class ParameterPage : ContentPage
 {
+    private readonly ParameterViewModel _viewModel;
+
     public ParameterPage()
     {
         InitializeComponent();
+        BindingContext = _viewModel = new ParameterViewModel();
+        _viewModel.LoadValuesDefault();
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        ((ParameterViewModel)BindingContext).OnAppearing(Navigation);
+
+        _viewModel!.OnAppearing(Navigation);
+        _viewModel.LoadValuesDefault();
+        Preview.Source = _viewModel.ShowImage;
     }
 
     private void ClosePopup_Clicked(object? sender, EventArgs e)
     {
         Popup.IsOpen = false;
     }
-    
+
     private void ImageTapped(object sender, EventArgs e)
     {
         BottomSheet.State = BottomSheetState.HalfExpanded;
@@ -59,7 +67,6 @@ public partial class ParameterPage : ContentPage
     {
         await Dispatcher.DispatchAsync(() => { BottomSheet.State = BottomSheetState.Hidden; });
 
-
         if (result == null)
             return;
 
@@ -67,7 +74,6 @@ public partial class ParameterPage : ContentPage
         if (Path.IsPathRooted(result.FullPath))
         {
             imageSource = ImageSource.FromFile(result.FullPath);
-            ((ParameterViewModel)BindingContext).Logo = result.FullPath;
         }
         else
         {
@@ -75,7 +81,6 @@ public partial class ParameterPage : ContentPage
             await using var stream = await result.OpenReadAsync();
             var streamReader = new StreamReader(stream, encoding);
             imageSource = ImageSource.FromStream(() => streamReader.BaseStream);
-            ((ParameterViewModel)BindingContext).Logo = await streamReader.ReadToEndAsync();
         }
 
         var editorPage = new ImageEditView(imageSource);
@@ -83,11 +88,6 @@ public partial class ParameterPage : ContentPage
         var cropResult = await editorPage.WaitForResultAsync();
         if (cropResult != null)
         {
-            if (!string.IsNullOrEmpty(editorPage.Imagen))
-            {
-                ((ParameterViewModel)BindingContext).Logo = editorPage.Imagen;
-            }
-
             Preview.Source = cropResult;
         }
 

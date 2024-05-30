@@ -3,7 +3,6 @@ using System.Windows.Input;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
-using Posme.Maui.Views;
 using Unity;
 
 namespace Posme.Maui.ViewModels;
@@ -26,45 +25,41 @@ public class ParameterViewModel : BaseViewModel
             Debug.WriteLine(test);
         });
         SaveCommand = new Command(OnSaveParameters);
-        LoadValueContadorImagen();
+        LoadValuesDefault();
     }
 
     public override void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
-        LoadValueContadorImagen();
     }
 
-    private async void LoadValueContadorImagen()
+    public async void LoadValuesDefault()
     {
-        await Task.Run(async () =>
+        _posMeFindCounter = await _repositoryTbParameterSystem.PosMeFindCounter();
+        if (!string.IsNullOrWhiteSpace(_posMeFindCounter.Value))
         {
-            _posMeFindCounter = await _repositoryTbParameterSystem.PosMeFindCounter();
-            if (!string.IsNullOrWhiteSpace(_posMeFindCounter.Value))
-            {
-                Contador = Convert.ToInt32(_posMeFindCounter.Value);
-            }
+            Contador = Convert.ToInt32(_posMeFindCounter.Value);
+        }
 
-            _posMeFindLogo = await _repositoryTbParameterSystem.PosMeFindLogo();
-            if (!string.IsNullOrWhiteSpace(_posMeFindLogo.Value))
-            {
-                Logo = _posMeFindLogo.Value!;
-                var imageBytes = Convert.FromBase64String(_posMeFindLogo.Value!);
-                ShowImage = ImageSource.FromStream(() => new MemoryStream(imageBytes));
-            }
+        _posMeFindLogo = await _repositoryTbParameterSystem.PosMeFindLogo();
+        if (!string.IsNullOrWhiteSpace(_posMeFindLogo.Value))
+        {
+            Logo = _posMeFindLogo.Value!;
+            var imageBytes = Convert.FromBase64String(_posMeFindLogo.Value!);
+            ShowImage = ImageSource.FromStream(() => new MemoryStream(imageBytes));
+        }
 
-            _posMeFindAccessPoint = await _repositoryTbParameterSystem.PosMeFindAccessPoint();
-            if (!string.IsNullOrWhiteSpace(_posMeFindAccessPoint.Value))
-            {
-                PuntoAcceso = _posMeFindAccessPoint.Value;
-            }
+        _posMeFindAccessPoint = await _repositoryTbParameterSystem.PosMeFindAccessPoint();
+        if (!string.IsNullOrWhiteSpace(_posMeFindAccessPoint.Value))
+        {
+            PuntoAcceso = _posMeFindAccessPoint.Value;
+        }
 
-            _posmeFindPrinter = await _repositoryTbParameterSystem.PosMeFindPrinter();
-            if (!string.IsNullOrWhiteSpace(_posmeFindPrinter.Value))
-            {
-                Printer = _posmeFindPrinter.Value;
-            }
-        });
+        _posmeFindPrinter = await _repositoryTbParameterSystem.PosMeFindPrinter();
+        if (!string.IsNullOrWhiteSpace(_posmeFindPrinter.Value))
+        {
+            Printer = _posmeFindPrinter.Value;
+        }
     }
 
     private bool Validate()
@@ -87,8 +82,12 @@ public class ParameterViewModel : BaseViewModel
         {
             if (Validate())
             {
-                _posMeFindLogo.Value = Logo;
-                _repositoryTbParameterSystem.PosMeUpdate(_posMeFindLogo);
+                if (!string.IsNullOrWhiteSpace(VariablesGlobales.LogoTemp))
+                {
+                    _posMeFindLogo.Value = VariablesGlobales.LogoTemp;
+                    _repositoryTbParameterSystem.PosMeUpdate(_posMeFindLogo);
+                }
+
                 _posMeFindCounter.Value = Contador.ToString();
                 _repositoryTbParameterSystem.PosMeUpdate(_posMeFindCounter);
                 _posMeFindAccessPoint.Value = PuntoAcceso;
@@ -97,6 +96,7 @@ public class ParameterViewModel : BaseViewModel
                 _repositoryTbParameterSystem.PosMeUpdate(_posmeFindPrinter);
                 Mensaje = Mensajes.MensajeParametrosGuardar;
                 PopupBackgroundColor = Colors.Green;
+                LoadValuesDefault();
             }
             else
             {

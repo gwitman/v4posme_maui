@@ -19,6 +19,7 @@
     <Style TargetType="dx:DXButton" x:Key="ButtonDefault">
         <Setter Property="TextColor" Value="{StaticResource Black}" />
         <Setter Property="BackgroundColor" Value="{StaticResource White}" />
+        <Setter Property="CornerRadius" Value="0"/>
     </Style>
     <Style TargetType="dx:DXButton">
         <Setter Property="TextColor" Value="{StaticResource White}" />

@@ -7,9 +7,9 @@ public static class VariablesGlobales
 {
     public static string? CompanyKey;
     public static CoreAccountMLoginMobileObjUserResponse? User;
-    public static int CantidadTransacciones = 0;
     public static readonly UnityContainer UnityContainer;
     public static string? BarCode;
+    public static string? LogoTemp;
 
     static VariablesGlobales()
     {

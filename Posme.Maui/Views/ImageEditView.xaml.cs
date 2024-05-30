@@ -1,35 +1,37 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using DevExpress.Maui.Editors;
+using Posme.Maui.Services.Helpers;
 using ImageFormat = DevExpress.Maui.Editors.ImageFormat;
 
 namespace Posme.Maui.Views;
 
 public partial class ImageEditView : ContentPage
 {
-    private TaskCompletionSource<ImageSource> pageResultCompletionSource;
+    private readonly TaskCompletionSource<ImageSource?> _pageResultCompletionSource;
     public string Imagen = string.Empty;
 
     public ImageEditView()
     {
         InitializeComponent();
+        _pageResultCompletionSource = new TaskCompletionSource<ImageSource?>();
     }
 
     public ImageEditView(ImageSource imageSource)
     {
         InitializeComponent();
-        pageResultCompletionSource = new TaskCompletionSource<ImageSource>();
+        _pageResultCompletionSource = new TaskCompletionSource<ImageSource?>();
         editor.Source = imageSource;
     }
 
-    public Task<ImageSource> WaitForResultAsync()
+    public Task<ImageSource?> WaitForResultAsync()
     {
-        return pageResultCompletionSource.Task;
+        return _pageResultCompletionSource.Task;
     }
 
     private async void BackPressed(object sender, EventArgs e)
     {
-        pageResultCompletionSource.SetResult(null);
+        _pageResultCompletionSource.SetResult(null);
         await Navigation.PopAsync();
     }
 
@@ -37,8 +39,8 @@ public partial class ImageEditView : ContentPage
     {
         try
         {
-            Imagen = editor.SaveAsBase64(ImageFormat.Jpeg);
-            pageResultCompletionSource.SetResult(editor.SaveAsImageSource(ImageFormat.Jpeg));
+            VariablesGlobales.LogoTemp = editor.SaveAsBase64();
+            _pageResultCompletionSource.SetResult(editor.SaveAsImageSource());
             await Navigation.PopAsync();
         }
         catch (Exception exception)
