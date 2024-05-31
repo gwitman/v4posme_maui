@@ -8,11 +8,11 @@ using Unity;
 
 namespace Posme.Maui.ViewModels;
 
-public class ClientesViewModel : BaseViewModel
+public class CustomerViewModel : BaseViewModel
 {
     private readonly IRepositoryTbCustomer _customerRepositoryTbCustomer;
 
-    public ClientesViewModel()
+    public CustomerViewModel()
     {
         _customerRepositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
         Customers = new ObservableCollection<AppMobileApiMGetDataDownloadCustomerResponse>();

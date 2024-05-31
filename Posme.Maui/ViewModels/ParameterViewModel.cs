@@ -14,6 +14,7 @@ public class ParameterViewModel : BaseViewModel
     private TbParameterSystem _posMeFindLogo = new();
     private TbParameterSystem _posMeFindAccessPoint = new();
     private TbParameterSystem _posmeFindPrinter = new();
+    public ICommand RefreshCommand { get; }
     public ICommand SaveCommand { get; }
 
     public ParameterViewModel()
@@ -25,7 +26,14 @@ public class ParameterViewModel : BaseViewModel
             Debug.WriteLine(test);
         });
         SaveCommand = new Command(OnSaveParameters);
+        RefreshCommand = new Command(OnRefreshPage);
         LoadValuesDefault();
+    }
+
+    private void OnRefreshPage(object obj)
+    {
+        LoadValuesDefault();
+        IsRefreshing = false;
     }
 
     public void OnAppearing(INavigation navigation)
@@ -152,7 +160,11 @@ public class ParameterViewModel : BaseViewModel
     public ImageSource? ShowImage
     {
         get => _showImage;
-        set => SetProperty(ref _showImage, value);
+        set
+        {
+            _showImage = value;
+            SetProperty(ref _showImage, value);
+        }
     }
 
     private bool _popUpShow;
@@ -177,5 +189,13 @@ public class ParameterViewModel : BaseViewModel
     {
         get => _printer;
         set => SetProperty(ref _printer, value);
+    }
+
+    private bool _isRefreshing;
+
+    public bool IsRefreshing
+    {
+        get => _isRefreshing;
+        set => SetProperty(ref _isRefreshing, value);
     }
 }

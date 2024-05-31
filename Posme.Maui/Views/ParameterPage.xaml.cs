@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using System.Text;
+﻿using System.Text;
 using DevExpress.Maui.Controls;
-using Posme.Maui.Services.Helpers;
 using Posme.Maui.ViewModels;
+using Debug = System.Diagnostics.Debug;
 
 namespace Posme.Maui.Views;
 
@@ -19,10 +18,8 @@ public partial class ParameterPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
-        _viewModel!.OnAppearing(Navigation);
+        _viewModel.OnAppearing(Navigation);
         _viewModel.LoadValuesDefault();
-        Preview.Source = _viewModel.ShowImage;
     }
 
     private void ClosePopup_Clicked(object? sender, EventArgs e)
@@ -91,5 +88,12 @@ public partial class ParameterPage : ContentPage
         }
 
         editorPage.Handler!.DisconnectHandler();
+    }
+
+    private void RefreshView_OnRefreshing(object? sender, EventArgs e)
+    {
+        OnAppearing();
+        Preview.Source = _viewModel.ShowImage;
+        Debug.WriteLine(Preview);
     }
 }

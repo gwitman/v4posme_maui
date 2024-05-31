@@ -14,7 +14,7 @@
              xmlns:customers="clr-namespace:Posme.Maui.Views.Customers"
              x:Class="Posme.Maui.Views.Customers.CustomersPage">
     <ContentPage.BindingContext>
-        <local:ClientesViewModel />
+        <local:CustomerViewModel />
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="barcode_scan" Command="{Binding OnBarCode}" />
