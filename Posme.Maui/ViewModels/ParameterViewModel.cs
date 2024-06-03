@@ -39,9 +39,10 @@ public class ParameterViewModel : BaseViewModel
     public void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
+        LoadValuesDefault();
     }
 
-    public async void LoadValuesDefault()
+    private async void LoadValuesDefault()
     {
         _posMeFindCounter = await _repositoryTbParameterSystem.PosMeFindCounter();
         if (!string.IsNullOrWhiteSpace(_posMeFindCounter.Value))

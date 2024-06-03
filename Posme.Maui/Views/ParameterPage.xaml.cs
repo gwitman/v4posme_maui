@@ -19,7 +19,6 @@ public partial class ParameterPage : ContentPage
     {
         base.OnAppearing();
         _viewModel.OnAppearing(Navigation);
-        _viewModel.LoadValuesDefault();
     }
 
     private void ClosePopup_Clicked(object? sender, EventArgs e)
@@ -94,6 +93,5 @@ public partial class ParameterPage : ContentPage
     {
         OnAppearing();
         Preview.Source = _viewModel.ShowImage;
-        Debug.WriteLine(Preview);
     }
 }
