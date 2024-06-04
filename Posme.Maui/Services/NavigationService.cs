@@ -29,10 +29,10 @@ namespace Posme.Maui.Services
             await Shell.Current.GoToAsync("..");
         }
 
-        async Task InternalNavigateToAsync(Type viewModelType, object parameter, bool isAbsoluteRoute = false)
+        async Task InternalNavigateToAsync(Type viewModelType, object? parameter, bool isAbsoluteRoute = false)
         {
             var viewName = viewModelType.FullName.Replace("ViewModels", "Views").Replace("ViewModel", "Page");
-            string absolutePrefix = isAbsoluteRoute ? "///" : String.Empty;
+            string absolutePrefix = isAbsoluteRoute ? "///" : string.Empty;
             if (parameter != null)
             {
                 await Shell.Current.GoToAsync(

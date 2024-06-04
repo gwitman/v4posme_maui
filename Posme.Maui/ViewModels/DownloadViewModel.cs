@@ -6,9 +6,7 @@ namespace Posme.Maui.ViewModels;
 
 public class DownloadViewModel : BaseViewModel
 {
-    private bool _popUpShow;
     private bool _switch;
-    private Color _popupBackgroundColor = Colors.White;
     private readonly RestApiAppMobileApi _restApiDownload;
     private readonly Helper _helperContador;
 
@@ -52,18 +50,6 @@ public class DownloadViewModel : BaseViewModel
 
         PopUpShow = true;
         await Navigation.PopModalAsync();
-    }
-
-    public Color PopupBackgroundColor
-    {
-        get => _popupBackgroundColor;
-        set => SetProperty(ref _popupBackgroundColor, value);
-    }
-
-    public bool PopUpShow
-    {
-        get => _popUpShow;
-        set => SetProperty(ref _popUpShow, value);
     }
 
     public bool Switch

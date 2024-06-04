@@ -168,22 +168,6 @@ public class ParameterViewModel : BaseViewModel
         }
     }
 
-    private bool _popUpShow;
-
-    public bool PopUpShow
-    {
-        get => _popUpShow;
-        set => SetProperty(ref _popUpShow, value);
-    }
-
-    private Color _popupBackgroundColor = Colors.Green;
-
-    public Color PopupBackgroundColor
-    {
-        get => _popupBackgroundColor;
-        set => SetProperty(ref _popupBackgroundColor, value);
-    }
-
     private string? _printer;
 
     public string? Printer

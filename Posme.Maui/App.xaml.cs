@@ -2,6 +2,7 @@
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Views;
+using Posme.Maui.Views.Abonos;
 using Posme.Maui.Views.Items;
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -26,6 +27,8 @@ namespace Posme.Maui
         {
             DependencyService.Register<NavigationService>();
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
+            Routing.RegisterRoute(typeof(CustomerDetailInvoicePage).FullName, typeof(CustomerDetailInvoicePage));
+            Routing.RegisterRoute(typeof(AbonosPage).FullName, typeof(AbonosPage));
             VariablesGlobales.BarCode = string.Empty;
         }
     }

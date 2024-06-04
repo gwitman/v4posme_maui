@@ -1,21 +1,49 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using Posme.Maui.Services;
 
 namespace Posme.Maui.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
         private bool _isBusy;
+        private Color _popupBackgroundColor = Colors.White;
         private string _title = string.Empty;
         private string _search = string.Empty;
+        private bool _popUpShow;
         private string? _barCode;
+        protected INavigationService NavigationService => DependencyService.Get<INavigationService>();
 
+        public async void ShowToast(string mensaje, ToastDuration duration, double fontSize)
+        {
+            var cancellationTokenSource = new CancellationTokenSource();
+            var toast = Toast.Make(mensaje, duration, fontSize);
+            await toast.Show(cancellationTokenSource.Token);
+        }
         public bool IsBusy
         {
             get => _isBusy;
             protected set => SetProperty(ref _isBusy, value);
         }
 
+        public Color PopupBackgroundColor
+        {
+            get => _popupBackgroundColor;
+            set => SetProperty(ref _popupBackgroundColor, value);
+        }
+
+        public bool PopUpShow
+        {
+            get => _popUpShow;
+            set
+            {
+                SetProperty(ref _popUpShow, value);
+                OnPropertyChanged();
+            }
+        }
+        
         public string Title
         {
             get => _title;
@@ -48,6 +76,11 @@ namespace Posme.Maui.ViewModels
         {
             get => _navigation;
             set => SetProperty(ref _navigation, value);
+        }
+
+        public virtual Task InitializeAsync(object parameter)
+        {
+            return Task.CompletedTask;
         }
 
         public new event PropertyChangedEventHandler? PropertyChanged;

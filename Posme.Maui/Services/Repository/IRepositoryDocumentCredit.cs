@@ -4,5 +4,5 @@ namespace Posme.Maui.Services.Repository;
 
 public interface IRepositoryDocumentCredit : IRepositoryFacade<AppMobileApiMGetDataDownloadDocumentCreditResponse>
 {
-    
+    Task<List<AppMobileApiMGetDataDownloadDocumentCreditResponse>> PosMeFindByEntityId(int entityId);
 }
