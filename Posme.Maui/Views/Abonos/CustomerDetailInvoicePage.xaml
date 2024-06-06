@@ -7,7 +7,7 @@
              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
              xmlns:models="clr-namespace:Posme.Maui.Models"
              xmlns:abonos="clr-namespace:Posme.Maui.ViewModels.Abonos"
-             Title="Facturas"
+             Title="{Binding Title}"
              x:Class="Posme.Maui.Views.Abonos.CustomerDetailInvoicePage">
     <ContentPage.BindingContext>
         <abonos:CustomerDetailInvoiceViewModel />
@@ -72,7 +72,7 @@
                                        TextColor="White"
                                        Text="{Binding DocumentNumber}" />
                                 <HorizontalStackLayout Grid.Column="1" Grid.Row="1">
-                                    <Label Text="{Binding Remaingin}"
+                                    <Label Text="{Binding Remaingin,StringFormat='{0:N0}'}"
                                            TextColor="White"
                                            HorizontalOptions="Start" />
                                 </HorizontalStackLayout>
@@ -81,7 +81,7 @@
                                         HorizontalOptions="End">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="{Binding DateApply,StringFormat='{0:d/M/yyyy}'}"
+                                                <Span Text="{Binding DateApply,StringFormat='{0:yyyy-MM-dd}'}"
                                                       TextColor="White" />
                                             </FormattedString>
                                         </Label.FormattedText>
@@ -90,12 +90,12 @@
                                 <HorizontalStackLayout Grid.Row="2"
                                                        Grid.Column="1"
                                                        Grid.ColumnSpan="2">
-                                    <Label Text="{Binding CurrencyId}" TextColor="White" />
+                                    <Label Text="{Binding CurrencyName}" TextColor="White" />
                                 </HorizontalStackLayout>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer
                                         NumberOfTapsRequired="1"
-                                        Command="{Binding Source={x:Reference InvoicesCollectionView}, Path=Commands.ShowDetailForm}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type abonos:CustomerDetailInvoiceViewModel}}, Path=ItemTapped}"
                                         CommandParameter="{Binding .}" />
                                 </Grid.GestureRecognizers>
                             </Grid>

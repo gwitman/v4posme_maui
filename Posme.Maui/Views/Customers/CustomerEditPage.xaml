@@ -4,10 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxdf="clr-namespace:DevExpress.Maui.DataForm;assembly=DevExpress.Maui.Editors"
              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
-             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
-             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
-             xmlns:models="clr-namespace:Posme.Maui.Models"
              Title="Editar Cliente"
              Style="{StaticResource DetailPageStyle}"
              x:Class="Posme.Maui.Views.Customers.CustomerEditPage">
@@ -33,7 +30,7 @@
                     </dx:DXStackLayout.Triggers>
                     <dx:DXBorder HeightRequest="1" BorderThickness="1"
                                  BackgroundColor="{AppThemeBinding Light={StaticResource SeparatorColor}, Dark={StaticResource SeparatorColorDark}}" />
-                    <dx:DXImage Source="person_charge" WidthRequest="150" HeightRequest="150"/>
+                    <dx:DXImage Source="person_charge" WidthRequest="150" HeightRequest="150" />
                 </dx:DXStackLayout>
                 <dx:DXBorder
                     Margin="15"

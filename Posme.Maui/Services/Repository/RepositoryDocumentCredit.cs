@@ -10,4 +10,18 @@ public class RepositoryDocumentCredit(DataBase dataBase) : RepositoryFacade<AppM
             .Where(response => response.EntityId == entityId)
             .ToListAsync();
     }
+
+    public async Task<List<AppMobileApiMGetDataDownloadDocumentCreditResponse>> PosMeFilterDocumentNumber(string filter)
+    {
+        return await dataBase.Database.Table<AppMobileApiMGetDataDownloadDocumentCreditResponse>()
+            .Where(response => response.DocumentNumber!.Contains(filter))
+            .ToListAsync();
+    }
+
+    public async Task<AppMobileApiMGetDataDownloadDocumentCreditResponse> PosMeFindDocumentNumber(string filter)
+    {
+        return await dataBase.Database.Table<AppMobileApiMGetDataDownloadDocumentCreditResponse>()
+            .Where(response => response.DocumentNumber==filter)
+            .FirstOrDefaultAsync();
+    }
 }

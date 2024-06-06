@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using DevExpress.Maui.Core;
 using SQLite;
 
@@ -15,33 +13,31 @@ public class AppMobileApiMGetDataDownloadResponse
     public List<AppMobileApiMGetDataDownloadParametersResponse> ListParameter { get; set; } = [];
     public List<AppMobileApiMGetDataDownloadDocumentCreditResponse> ListDocumentCredit { get; set; } = [];
 
-    public List<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse> ListDocumentCreditAmortization
-    {
-        get;
-        set;
-    } = [];
+    public List<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse> ListDocumentCreditAmortization { get; set; } = [];
 }
 
 [Table("tb_customers")]
 public class AppMobileApiMGetDataDownloadCustomerResponse : BindableBase
 {
-    [PrimaryKey, AutoIncrement] [DataMember]public int CustomerId { get; set; }
+    [PrimaryKey, AutoIncrement]
+    [DataMember]
+    public int CustomerId { get; set; }
 
-    [DataMember]public int ComapnyId { get; set; }
+    [DataMember] public int ComapnyId { get; set; }
 
-    [DataMember]public int BranchId { get; set; }
+    [DataMember] public int BranchId { get; set; }
 
-    [DataMember]public int EntityId { get; set; }
+    [DataMember] public int EntityId { get; set; }
 
-    [DataMember]public string? CustomerNumber { get; set; }
+    [DataMember] public string? CustomerNumber { get; set; }
 
-    [DataMember]public string? Identification { get; set; }
+    [DataMember] public string? Identification { get; set; }
 
-    [DataMember]public string? FirstName { get; set; }
+    [DataMember] public string? FirstName { get; set; }
 
-    [DataMember]public string? LastName { get; set; }
+    [DataMember] public string? LastName { get; set; }
 
-    [DataMember]public decimal Balance { get; set; }
+    [DataMember] public decimal Balance { get; set; }
     public bool Modificado { get; set; }
 }
 
@@ -57,6 +53,8 @@ public class AppMobileApiMGetDataDownloadDocumentCreditResponse
     public string? DocumentNumber { get; set; }
 
     public decimal BalanceDocument { get; set; }
+
+    public string? CurrencyName { get; set; }
 
     public int CurrencyId { get; set; }
 
@@ -88,6 +86,8 @@ public class AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse
 
     public string? DocumentNumber { get; set; }
 
+    public string? CurrencyName { get; set; }
+
     public int CurrencyId { get; set; }
 
     public string? ReportSinRiesgo { get; set; }
@@ -99,7 +99,7 @@ public class AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse
     public decimal ShareCapital { get; set; }
 }
 
-[Table("tb_items")]
+[SQLite.Table("tb_items")]
 public class AppMobileApiMGetDataDownloadItemsResponse : BindableBase
 {
     [PrimaryKey, AutoIncrement]
@@ -109,39 +109,42 @@ public class AppMobileApiMGetDataDownloadItemsResponse : BindableBase
         get => GetValue<int>();
         set => SetValue(value);
     }
+
     [DataMember]
     public int ItemId
     {
         get => GetValue<int>();
         set => SetValue(value);
     }
+
     [DataMember]
-    [Required(ErrorMessage = "Required")]
     public string BarCode
     {
         get => GetValue<string>();
         set => SetValue(value);
     }
+
     [DataMember]
-    [Required(ErrorMessage = "Required")]
     public string? ItemNumber
     {
         get => GetValue<string>();
         set => SetValue(value);
     }
+
     [DataMember]
-    [Required(ErrorMessage = "Debe especificar una descripción del producto")]
     public string Name
     {
         get => GetValue<string>();
         set => SetValue(value);
     }
+
     [DataMember]
     public decimal Quantity
     {
         get => GetValue<decimal>();
         set => SetValue(value);
     }
+
     [DataMember]
     public decimal PrecioPublico
     {
@@ -149,15 +152,20 @@ public class AppMobileApiMGetDataDownloadItemsResponse : BindableBase
         set => SetValue(value);
     }
 
-    public decimal CantidadEntradas {
+    public decimal CantidadEntradas
+    {
         get => GetValue<decimal>();
         set => SetValue(value);
     }
-    public decimal CantidadSalidas {
+
+    public decimal CantidadSalidas
+    {
         get => GetValue<decimal>();
         set => SetValue(value);
     }
-    public decimal CantidadFinal {
+
+    public decimal CantidadFinal
+    {
         get => GetValue<decimal>();
         set => SetValue(value);
     }
@@ -165,7 +173,7 @@ public class AppMobileApiMGetDataDownloadItemsResponse : BindableBase
     public bool Modificado { get; set; }
 }
 
-[Table("tb_parameters")]
+[SQLite.Table("tb_parameters")]
 public class AppMobileApiMGetDataDownloadParametersResponse
 {
     [PrimaryKey, AutoIncrement] public int ParametersPk { get; set; }

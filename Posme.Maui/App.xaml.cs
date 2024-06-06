@@ -1,6 +1,7 @@
 ﻿using Posme.Maui.Services;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
+using Posme.Maui.ViewModels.Abonos;
 using Posme.Maui.Views;
 using Posme.Maui.Views.Abonos;
 using Posme.Maui.Views.Items;
@@ -29,6 +30,9 @@ namespace Posme.Maui
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             Routing.RegisterRoute(typeof(CustomerDetailInvoicePage).FullName, typeof(CustomerDetailInvoicePage));
             Routing.RegisterRoute(typeof(AbonosPage).FullName, typeof(AbonosPage));
+            Routing.RegisterRoute(typeof(CreditDetailInvoicePage).FullName, typeof(CreditDetailInvoicePage));
+            Routing.RegisterRoute(typeof(AplicarAbonoPage).FullName, typeof(AplicarAbonoPage));
+            Routing.RegisterRoute(typeof(ValidarAbonoPage).FullName, typeof(ValidarAbonoPage));
             VariablesGlobales.BarCode = string.Empty;
         }
     }

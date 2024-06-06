@@ -8,7 +8,6 @@ namespace Posme.Maui.Services
 {
     public class NavigationService : INavigationService
     {
-
         public async Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel
         {
             await InternalNavigateToAsync(typeof(TViewModel), null, false);
@@ -35,8 +34,7 @@ namespace Posme.Maui.Services
             string absolutePrefix = isAbsoluteRoute ? "///" : string.Empty;
             if (parameter != null)
             {
-                await Shell.Current.GoToAsync(
-                    $"{absolutePrefix}{viewName}?id={HttpUtility.UrlEncode(parameter.ToString())}");
+                await Shell.Current.GoToAsync($"{absolutePrefix}{viewName}?id={HttpUtility.UrlEncode(parameter.ToString())}");
             }
             else
             {

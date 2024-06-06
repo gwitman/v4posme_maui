@@ -9,7 +9,8 @@
              xmlns:models="clr-namespace:Posme.Maui.Models"
              xmlns:abonos="clr-namespace:Posme.Maui.ViewModels.Abonos"
              xmlns:controls="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-             x:Class="Posme.Maui.Views.Abonos.AbonosPage">
+             x:Class="Posme.Maui.Views.Abonos.AbonosPage"
+             Title="{Binding Title}">
     <ContentPage.BindingContext>
         <abonos:AbonosViewModel />
     </ContentPage.BindingContext>

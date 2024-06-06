@@ -79,12 +79,26 @@
         <Compile Update="Views\Clientes\ClientesPage.xaml.cs">
             <DependentUpon>ClientesPage.xaml</DependentUpon>
         </Compile>
+        <Compile Update="Views\Abonos\AplicarAbonoPage.xaml.cs">
+          <DependentUpon>AplicarAbonoPage.xaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Views\Abonos\ValidarAbonoPage.xaml.cs">
+          <DependentUpon>ValidarAbonoPage.xaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 
 
     <ItemGroup>
         <MauiXaml Update="Views\Clientes\ClientesPage.xaml">
             <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="Views\Abonos\AplicarAbonoPage.xaml">
+          <SubType>Designer</SubType>
+        </MauiXaml>
+        <MauiXaml Update="Views\Abonos\ValidarAbonoPage.xaml">
+          <SubType>Designer</SubType>
         </MauiXaml>
     </ItemGroup>
 </Project>

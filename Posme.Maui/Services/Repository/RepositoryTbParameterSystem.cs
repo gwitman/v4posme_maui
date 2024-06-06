@@ -32,4 +32,11 @@ public class RepositoryTbParameterSystem(DataBase dataBase) : RepositoryFacade<T
             .Where(system => system.Name == Constantes.ParametroPrinter)
             .FirstOrDefaultAsync();
     }
+
+    public Task<TbParameterSystem> PosMeFindCodigoAbono()
+    {
+        return dataBase.Database.Table<TbParameterSystem>()
+            .Where(system => system.Name == Constantes.ParametroCodigoAbono)
+            .FirstOrDefaultAsync();
+    }
 }

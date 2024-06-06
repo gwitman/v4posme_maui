@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+             xmlns:abonos="clr-namespace:Posme.Maui.ViewModels.Abonos"
+             Title="{Binding Title}"
+             x:Class="Posme.Maui.Views.Abonos.ValidarAbonoPage"
+             Style="{StaticResource DetailPageStyle}">
+    <ContentPage.BindingContext>
+        <abonos:ValidarAbonoViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Aplicar E Imprimir" Order="Secondary" />
+        <ToolbarItem Text="Aplicar Abono" Order="Secondary" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+            <dx:DXStackLayout Orientation="Vertical" Padding="0, 10, 0, 0">
+                <dx:DXStackLayout Orientation="Vertical"
+                                  Padding="25"
+                                  HorizontalOptions="Center">
+                    <Label Text="Comprobante de Abono a Factura"
+                           FontSize="24"
+                           HorizontalTextAlignment="Center"
+                           FontAttributes="Bold" />
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Le informamos que: "/>
+                                <Span Text="{Binding Item.FirstName}"/>
+                                <Span Text=" "/>
+                                <Span Text="{Binding Item.LastName}"/>
+                                <Span Text=" creó un código para abono de factura con los siguientes datos"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </dx:DXStackLayout>
+                <dx:DXBorder Style="{StaticResource PropertyBorder}">
+                    <dx:DXStackLayout Orientation="Horizontal">
+                        <Label Text="Código de abono: " FontAttributes="Bold" FontSize="18" />
+                        <Label Text="{Binding Item.CodigoAbono}" FontSize="18" />
+                    </dx:DXStackLayout>
+                </dx:DXBorder>
+                <dx:DXBorder Style="{StaticResource PropertyBorder}">
+                    <StackLayout Spacing="25">
+                        <dx:DXStackLayout Orientation="Horizontal">
+                            <Label Text="Nombres: " FontAttributes="Bold" FontSize="18" />
+                            <Label Text="{Binding Item.FirstName}" FontSize="18" />
+                        </dx:DXStackLayout>
+                        <dx:DXStackLayout Orientation="Horizontal">
+                            <Label Text="Apellidos: " FontAttributes="Bold" FontSize="18" />
+                            <Label Text="{Binding Item.LastName}" FontSize="18" />
+                        </dx:DXStackLayout>
+                        <dx:DXStackLayout Orientation="Horizontal">
+                            <Label Text="Fecha: " FontAttributes="Bold" FontSize="18" />
+                            <Label Text="{Binding Item.Fecha, StringFormat='{0:yyyy-MM-dd}'}" FontSize="18" />
+                        </dx:DXStackLayout>
+                        <dx:DXStackLayout Orientation="Horizontal">
+                            <Label Text="Saldo Inicial: " FontAttributes="Bold" FontSize="18" />
+                            <Label Text="{Binding Item.SaldoInicial}" FontSize="18" />
+                        </dx:DXStackLayout>
+                        <dx:DXStackLayout Orientation="Horizontal">
+                            <Label Text="Monto Aplicar: " FontAttributes="Bold" FontSize="18" />
+                            <Label Text="{Binding Item.MontoAplicar}" FontSize="18" />
+                        </dx:DXStackLayout>
+                        <dx:DXStackLayout Orientation="Horizontal">
+                            <Label Text="Saldo final: " FontAttributes="Bold" FontSize="18" />
+                            <Label Text="{Binding Item.SaldoFinal}" FontSize="18" />
+                        </dx:DXStackLayout>
+                        <dx:DXStackLayout Orientation="Horizontal">
+                            <Label Text="Comentarios: " FontAttributes="Bold" FontSize="18" />
+                            <Label Text="{Binding Item.Description}" FontSize="18" />
+                        </dx:DXStackLayout>
+                    </StackLayout>
+                </dx:DXBorder>
+            </dx:DXStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

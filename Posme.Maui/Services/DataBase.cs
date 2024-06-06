@@ -24,7 +24,8 @@ public class DataBase
                 new() { Name = "COUNTER", Description = "Contador Global", Value = "0" },
                 new() { Name = "LOGO", Description = "Logo de la aplicación", Value = "" },
                 new() { Name = "ACCESS_POINT", Description = "Punto de acceso", Value = "https://posme.net/v4posme/" },
-                new() { Name = "PRINTER", Description = "Impresora", Value = "Printer" }
+                new() { Name = "PRINTER", Description = "Impresora", Value = "Printer" },
+                new() { Name = "TRANSACTION_SHARE", Description = "Número de abono", Value = "ABO-00001" }
             };
             await Database.InsertAllAsync(parametrosDefault);
         }

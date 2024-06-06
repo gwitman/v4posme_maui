@@ -1,26 +1,58 @@
 ﻿using System.Collections.ObjectModel;
 using System.Web;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
+using Posme.Maui.Views.Abonos;
 using Unity;
 
 namespace Posme.Maui.ViewModels.Abonos;
 
 public class CustomerDetailInvoiceViewModel : BaseViewModel, IQueryAttributable
 {
-    private IRepositoryDocumentCredit _repositoryDocumentCredit;
-
+    private readonly IRepositoryDocumentCredit _repositoryDocumentCredit;
+    private readonly IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization;
     public CustomerDetailInvoiceViewModel()
     {
+        Title = "Selecciona Factura 2/5";
         _repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
+        _repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
         Invoices = new();
         SearchCommand = new Command(OnSearchCommand);
+        ItemTapped = new Command<AppMobileApiMGetDataDownloadDocumentCreditResponse>(OnTappedItem);
     }
 
-    private void OnSearchCommand(object obj)
+    private async void OnTappedItem(AppMobileApiMGetDataDownloadDocumentCreditResponse? item)
     {
+        
+        if (item is null)
+        {
+            return;
+        }
+
+        var count = await _repositoryDocumentCreditAmortization.PosMeCountByDocumentNumber(item.DocumentNumber!);
+        if (count == 0)
+        {
+            ShowToast(Mensajes.MensajeDocumentCreditAmortizationVacio, ToastDuration.Short, 14);
+            return;
+        }
+
+        await NavigationService.NavigateToAsync<CreditDetailInvoiceViewModel>(item.DocumentNumber!);
+    }
+
+    private async void OnSearchCommand(object obj)
+    {
+        IsBusy = true;
+        var finder = await _repositoryDocumentCredit.PosMeFilterDocumentNumber(Search);
+        Invoices.Clear();
+        foreach (var item in finder)
+        {
+            Invoices.Add(item);
+        }
+
+        IsBusy = false;
     }
 
     public ObservableCollection<AppMobileApiMGetDataDownloadDocumentCreditResponse> Invoices { get; }
@@ -37,6 +69,8 @@ public class CustomerDetailInvoiceViewModel : BaseViewModel, IQueryAttributable
             OnPropertyChanged();
         }
     }
+
+    public Command<AppMobileApiMGetDataDownloadDocumentCreditResponse> ItemTapped { get; }
 
     private async Task LoadInvoices(string? param)
     {

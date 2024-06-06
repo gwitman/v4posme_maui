@@ -12,6 +12,7 @@ public static class Constantes
     public static string ParametroLogo = "LOGO";
     public static string ParametroAccesPoint = "ACCESS_POINT";
     public static string ParametroPrinter = "PRINTER";
+    public static string ParametroCodigoAbono = "TRANSACTION_SHARE";
     public static int CompanyId = 2;
     public const string UrlBase = "https://posme.net/v4posme/";
     public static string UrlRequestLogin = UrlBase + "{CompanyKey}/public/core_acount/loginMobile";

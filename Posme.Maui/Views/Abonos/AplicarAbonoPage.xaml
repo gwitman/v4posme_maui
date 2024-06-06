@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:abonos="clr-namespace:Posme.Maui.ViewModels.Abonos"
+             Title="{Binding Title}"
+             Style="{StaticResource DetailPageStyle}"
+             x:Class="Posme.Maui.Views.Abonos.AplicarAbonoPage">
+    <ContentPage.BindingContext>
+        <abonos:AplicarAbonoViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <dx:DXStackLayout Orientation="Vertical">
+                <dx:DXStackLayout Orientation="Vertical">
+                    <dx:DXBorder HeightRequest="1" BorderThickness="1"
+                                 BackgroundColor="{AppThemeBinding Light={StaticResource SeparatorColor}, Dark={StaticResource SeparatorColorDark}}" />
+                    <dx:DXImage Source="invoice_green" WidthRequest="150" HeightRequest="150" />
+                </dx:DXStackLayout>
+                <dx:DXBorder
+                    Margin="15"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
+                    BorderThickness="0" CornerRadius="10">
+                    <Grid RowSpacing="15" Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <dxe:TextEdit Grid.Row="0"
+                                      IconColor="{StaticResource Primary}"
+                                      StartIcon="identificacion"
+                                      x:Name="TxtCurrencyName"
+                                      IsReadOnly="True"
+                                      Text="{Binding CurrencyName}" />
+                        <dxe:TextEdit Grid.Row="1"
+                                      IconColor="{StaticResource Primary}"
+                                      StartIcon="identificacion"
+                                      x:Name="TxtDescription"
+                                      TextChanged="TxtDescription_OnTextChanged"
+                                      Text="{Binding Description}" />
+                        <dxe:TextEdit Grid.Row="2"
+                                      x:Name="TxtSaldoInicial"
+                                      IconColor="{StaticResource Primary}"
+                                      StartIcon="quantity"
+                                      IsReadOnly="True"
+                                      Text="{Binding SaldoInicial}" />
+                        <dxe:TextEdit Grid.Row="3"
+                                      x:Name="TxtMonto"
+                                      IconColor="{StaticResource Primary}"
+                                      StartIcon="identificacion"
+                                      Keyboard="Numeric"
+                                      TextChanged="TxtMonto_OnTextChanged"
+                                      Text="{Binding Monto}" />
+                        <dxe:TextEdit Grid.Row="4"
+                                      IconColor="{StaticResource Primary}"
+                                      StartIcon="identificacion"
+                                      IsReadOnly="True"
+                                      Text="{Binding SaldoFinal}" />
+                        <dx:DXButton Grid.Row="5"
+                                     PressedBackgroundColor="{StaticResource Secondary}"
+                                     Command="{Binding AplicarAbonoCommand}"
+                                     Margin="10"
+                                     TextColor="White"
+                                     Icon="ok_circle"
+                                     IconColor="White"
+                                     Content="Validar Información"
+                                     ButtonType="Outlined" />
+                    </Grid>
+                </dx:DXBorder>
+            </dx:DXStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -17,6 +17,7 @@ public class AbonosViewModel : BaseViewModel
 
     public AbonosViewModel()
     {
+        Title = "Selección de cliente 1/5";
         _customerRepositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
         _repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
         Customers = new();
@@ -45,9 +46,6 @@ public class AbonosViewModel : BaseViewModel
         var invoices = await _repositoryDocumentCredit.PosMeFindByEntityId(item.EntityId);
         if (invoices.Count == 0)
         {
-            /*Mensaje = Mensajes.MensajeDocumentCreditCustomerVacio;
-            PopupBackgroundColor = Colors.Red;
-            PopUpShow = true;*/
             ShowToast(Mensajes.MensajeDocumentCreditCustomerVacio, ToastDuration.Short, 14);
             return;
         }
