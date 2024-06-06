@@ -73,18 +73,24 @@
 
 
     <ItemGroup>
-        <Compile Update="Views\Abonos\AbonosPage.xaml.cs">
-          <DependentUpon>AbonosPage.xaml</DependentUpon>
+        <Compile Update="Views\Abonos\01AbonosPage.xaml.cs">
+          <DependentUpon>01AbonosPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Abonos\02CustomerDetailInvoicePage.xaml.cs">
+          <DependentUpon>02CustomerDetailInvoicePage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Abonos\03CreditDetailInvoicePage.xaml.cs">
+          <DependentUpon>03CreditDetailInvoicePage.xaml</DependentUpon>
         </Compile>
         <Compile Update="Views\Clientes\ClientesPage.xaml.cs">
             <DependentUpon>ClientesPage.xaml</DependentUpon>
         </Compile>
-        <Compile Update="Views\Abonos\AplicarAbonoPage.xaml.cs">
-          <DependentUpon>AplicarAbonoPage.xaml</DependentUpon>
+        <Compile Update="Views\Abonos\04AplicarAbonoPage.xaml.cs">
+          <DependentUpon>04AplicarAbonoPage.xaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
-        <Compile Update="Views\Abonos\ValidarAbonoPage.xaml.cs">
-          <DependentUpon>ValidarAbonoPage.xaml</DependentUpon>
+        <Compile Update="Views\Abonos\05ValidarAbonoPage.xaml.cs">
+          <DependentUpon>05ValidarAbonoPage.xaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
     </ItemGroup>
@@ -94,10 +100,10 @@
         <MauiXaml Update="Views\Clientes\ClientesPage.xaml">
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
-        <MauiXaml Update="Views\Abonos\AplicarAbonoPage.xaml">
+        <MauiXaml Update="Views\Abonos\04AplicarAbonoPage.xaml">
           <SubType>Designer</SubType>
         </MauiXaml>
-        <MauiXaml Update="Views\Abonos\ValidarAbonoPage.xaml">
+        <MauiXaml Update="Views\Abonos\05ValidarAbonoPage.xaml">
           <SubType>Designer</SubType>
         </MauiXaml>
     </ItemGroup>

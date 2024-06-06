@@ -17,7 +17,7 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
         Item = VariablesGlobales.DtoAplicarAbono;
     }
 
-    public DtoAbono Item { get; private set; }
+    public ViewTempDtoAbono Item { get; private set; }
     private ImageSource _logoSource;
 
     public ImageSource LogoSource

@@ -3,8 +3,8 @@
   <PropertyGroup>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <!--<ActiveDebugFramework>net8.0-android</ActiveDebugFramework>-->
-    <ActiveDebugProfile>Medium Phone API 33 (Android 13.0 - API 33)</ActiveDebugProfile>
-    <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
+    <ActiveDebugProfile>INFINIX X6516 (Android 12.0 - API 31)</ActiveDebugProfile>
+    <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
     <DefaultDevice>Medium_Phone_API_33</DefaultDevice>
     <ActiveDebugFramework>net8.0-android</ActiveDebugFramework>
   </PropertyGroup>

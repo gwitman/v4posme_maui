@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Posme.Maui.Models;
 
-public class CoreAcountMLoginMobileResponse
+public class ApiCoreAcount_LoginMobileResponse
 {
     public bool Error { get; set; }
     public string? Message { get; set; }

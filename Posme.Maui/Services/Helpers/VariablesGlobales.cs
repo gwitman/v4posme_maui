@@ -10,7 +10,7 @@ public static class VariablesGlobales
     public static readonly UnityContainer UnityContainer;
     public static string? BarCode;
     public static string? LogoTemp;
-    public static DtoAbono DtoAplicarAbono;
+    public static ViewTempDtoAbono DtoAplicarAbono;
 
     static VariablesGlobales()
     {

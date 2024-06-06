@@ -39,7 +39,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
 
         var codigoAbono = await _helper.GetCodigoAbono();
         _customerResponse = await _repositoryTbCustomer.PosMeFindCustomer(DocumentCreditAmortizationResponse.CustomerNumber!);
-        VariablesGlobales.DtoAplicarAbono = new DtoAbono(
+        VariablesGlobales.DtoAplicarAbono = new ViewTempDtoAbono(
             codigoAbono,
             _customerResponse.CustomerNumber!,
             _customerResponse.FirstName!,

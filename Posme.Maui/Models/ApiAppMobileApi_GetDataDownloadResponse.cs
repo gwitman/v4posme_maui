@@ -4,7 +4,7 @@ using SQLite;
 
 namespace Posme.Maui.Models;
 
-public class AppMobileApiMGetDataDownloadResponse
+public class ApiAppMobileApi_GetDataDownloadResponse
 {
     public bool Error { get; set; }
     public string? Message { get; set; }

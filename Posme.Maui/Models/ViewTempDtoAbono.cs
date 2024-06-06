@@ -1,6 +1,6 @@
 ﻿namespace Posme.Maui.Models;
 
-public record DtoAbono(
+public record ViewTempDtoAbono(
     string CodigoAbono,
     string CustomerNumber,
     string FirstName,
