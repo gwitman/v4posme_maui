@@ -9,9 +9,10 @@ public partial class ValidarAbonoPage : ContentPage
         InitializeComponent();
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        ((ValidarAbonoViewModel)BindingContext).OnAppearing();
+        await ((ValidarAbonoViewModel)BindingContext).OnAppearing();
+        Logo.Source = ((ValidarAbonoViewModel)BindingContext).LogoSource;
     }
 }

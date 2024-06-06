@@ -44,31 +44,34 @@ public class ParameterViewModel : BaseViewModel
 
     private async void LoadValuesDefault()
     {
-        _posMeFindCounter = await _repositoryTbParameterSystem.PosMeFindCounter();
-        if (!string.IsNullOrWhiteSpace(_posMeFindCounter.Value))
+        await Task.Run(async () =>
         {
-            Contador = Convert.ToInt32(_posMeFindCounter.Value);
-        }
+            _posMeFindCounter = await _repositoryTbParameterSystem.PosMeFindCounter();
+            if (!string.IsNullOrWhiteSpace(_posMeFindCounter.Value))
+            {
+                Contador = Convert.ToInt32(_posMeFindCounter.Value);
+            }
 
-        _posMeFindLogo = await _repositoryTbParameterSystem.PosMeFindLogo();
-        if (!string.IsNullOrWhiteSpace(_posMeFindLogo.Value))
-        {
-            Logo = _posMeFindLogo.Value!;
-            var imageBytes = Convert.FromBase64String(_posMeFindLogo.Value!);
-            ShowImage = ImageSource.FromStream(() => new MemoryStream(imageBytes));
-        }
+            _posMeFindLogo = await _repositoryTbParameterSystem.PosMeFindLogo();
+            if (!string.IsNullOrWhiteSpace(_posMeFindLogo.Value))
+            {
+                Logo = _posMeFindLogo.Value!;
+                var imageBytes = Convert.FromBase64String(_posMeFindLogo.Value!);
+                ShowImage = ImageSource.FromStream(() => new MemoryStream(imageBytes));
+            }
 
-        _posMeFindAccessPoint = await _repositoryTbParameterSystem.PosMeFindAccessPoint();
-        if (!string.IsNullOrWhiteSpace(_posMeFindAccessPoint.Value))
-        {
-            PuntoAcceso = _posMeFindAccessPoint.Value;
-        }
+            _posMeFindAccessPoint = await _repositoryTbParameterSystem.PosMeFindAccessPoint();
+            if (!string.IsNullOrWhiteSpace(_posMeFindAccessPoint.Value))
+            {
+                PuntoAcceso = _posMeFindAccessPoint.Value;
+            }
 
-        _posmeFindPrinter = await _repositoryTbParameterSystem.PosMeFindPrinter();
-        if (!string.IsNullOrWhiteSpace(_posmeFindPrinter.Value))
-        {
-            Printer = _posmeFindPrinter.Value;
-        }
+            _posmeFindPrinter = await _repositoryTbParameterSystem.PosMeFindPrinter();
+            if (!string.IsNullOrWhiteSpace(_posmeFindPrinter.Value))
+            {
+                Printer = _posmeFindPrinter.Value;
+            }
+        });
     }
 
     private bool Validate()
