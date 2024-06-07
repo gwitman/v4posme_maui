@@ -54,7 +54,7 @@ public class RestApiAppMobileApi
             var response = await _httpClient.SendAsync(req);
             if (!response.IsSuccessStatusCode) return false;
             var responseBody = await response.Content.ReadAsStringAsync();
-            var apiResponse = JsonConvert.DeserializeObject<ApiAppMobileApi_GetDataDownloadResponse>(responseBody);
+            var apiResponse = JsonConvert.DeserializeObject<Api_AppMobileApi_GetDataDownloadResponse>(responseBody);
             if (apiResponse is null || apiResponse.Error) return false;
             var customerDeleteAll = _repositoryTbCustomer!.PosMeDeleteAll();
             var itemsDeleteAll = _repositoryItems!.PosMeDeleteAll();

@@ -15,17 +15,17 @@ public class CustomerViewModel : BaseViewModel
     public CustomerViewModel()
     {
         _customerRepositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
-        Customers = new ObservableCollection<AppMobileApiMGetDataDownloadCustomerResponse>();
+        Customers = new ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse>();
         SearchCommand = new Command(OnSearchCommand);
         OnBarCode = new Command(OnBarCodeShow);
     }
 
     public ICommand OnBarCode { get; }
     public ICommand SearchCommand { get; }
-    public ObservableCollection<AppMobileApiMGetDataDownloadCustomerResponse> Customers { get; set; }
-    private AppMobileApiMGetDataDownloadCustomerResponse? _selectedCustomer;
+    public ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> Customers { get; set; }
+    private Api_AppMobileApi_GetDataDownloadCustomerResponse? _selectedCustomer;
 
-    public AppMobileApiMGetDataDownloadCustomerResponse? SelectedCustomer
+    public Api_AppMobileApi_GetDataDownloadCustomerResponse? SelectedCustomer
     {
         get => _selectedCustomer;
         set => SetProperty(ref _selectedCustomer, value);

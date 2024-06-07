@@ -2,10 +2,10 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public interface IRepositoryItems : IRepositoryFacade<AppMobileApiMGetDataDownloadItemsResponse>
+public interface IRepositoryItems : IRepositoryFacade<Api_AppMobileApi_GetDataDownloadItemsResponse>
 {
-    Task<AppMobileApiMGetDataDownloadItemsResponse?> PosMeFindByBarCode(string barCode);
-    Task<AppMobileApiMGetDataDownloadItemsResponse> PosMeFindByItemNumber(string? itemNumber);
-    Task<List<AppMobileApiMGetDataDownloadItemsResponse>> PosMeFilterdByItemNumber(string? textSearch);
-    Task<List<AppMobileApiMGetDataDownloadItemsResponse>> PosMeFilterdByItemNumberAndBarCodeAndName(string? textSearch);
+    Task<Api_AppMobileApi_GetDataDownloadItemsResponse?> PosMeFindByBarCode(string barCode);
+    Task<Api_AppMobileApi_GetDataDownloadItemsResponse> PosMeFindByItemNumber(string? itemNumber);
+    Task<List<Api_AppMobileApi_GetDataDownloadItemsResponse>> PosMeFilterdByItemNumber(string? textSearch);
+    Task<List<Api_AppMobileApi_GetDataDownloadItemsResponse>> PosMeFilterdByItemNumberAndBarCodeAndName(string? textSearch);
 }

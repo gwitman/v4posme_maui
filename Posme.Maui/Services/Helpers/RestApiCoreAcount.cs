@@ -25,7 +25,7 @@ public class RestApiCoreAcount
             var response = await _httpClient.SendAsync(req);
             if (!response.IsSuccessStatusCode) return false;
             var responseBody = await response.Content.ReadAsStringAsync();
-            var apiResponse = JsonConvert.DeserializeObject<ApiCoreAcount_LoginMobileResponse>(responseBody);
+            var apiResponse = JsonConvert.DeserializeObject<Api_CoreAcount_LoginMobileResponse>(responseBody);
             if (apiResponse is null || apiResponse.Error) return false;
             VariablesGlobales.User = apiResponse.ObjUser;
             return true;

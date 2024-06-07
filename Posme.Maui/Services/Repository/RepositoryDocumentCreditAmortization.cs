@@ -2,25 +2,25 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public class RepositoryDocumentCreditAmortization(DataBase dataBase) : RepositoryFacade<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>(dataBase), IRepositoryDocumentCreditAmortization
+public class RepositoryDocumentCreditAmortization(DataBase dataBase) : RepositoryFacade<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>(dataBase), IRepositoryDocumentCreditAmortization
 {
     private readonly DataBase _dataBase = dataBase;
 
     public async Task<int> PosMeCountByDocumentNumber(string document)
     {
-        return await _dataBase.Database.Table<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>()
+        return await _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>()
             .CountAsync(response => response.DocumentNumber!.Contains(document));
     }
 
-    public async Task<List<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>> PosMeFilterByCustomerNumber(string filter)
+    public async Task<List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>> PosMeFilterByCustomerNumber(string filter)
     {
-        return await _dataBase.Database.Table<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>()
+        return await _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>()
             .Where(response => response.CustomerNumber == filter && response.Remaining > decimal.Zero)
             .OrderBy(response => response.DateApply)
             .ToListAsync();
     }
 
-    public async Task<List<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>> PosMeFilterByDocumentNumber(string document)
+    public async Task<List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>> PosMeFilterByDocumentNumber(string document)
     {
         var query = """
                     select tdc.CurrencyName,
@@ -40,12 +40,12 @@ public class RepositoryDocumentCreditAmortization(DataBase dataBase) : Repositor
                              join main.tb_document_credit tdc on dca.DocumentNumber = tdc.DocumentNumber
                     where dca.DocumentNumber = ?
                     """;
-        return await _dataBase.Database.QueryAsync<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>(query, document);
+        return await _dataBase.Database.QueryAsync<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>(query, document);
     }
 
-    public async Task<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse> PosMeFindByDocumentNumber(string document)
+    public async Task<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse> PosMeFindByDocumentNumber(string document)
     {
-        return await _dataBase.Database.Table<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>()
+        return await _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>()
             .FirstOrDefaultAsync(response => response.DocumentNumber == document);
     }
 }

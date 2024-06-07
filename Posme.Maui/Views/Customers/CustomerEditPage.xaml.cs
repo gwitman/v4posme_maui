@@ -12,15 +12,15 @@ public partial class CustomerEditPage : ContentPage
     private DetailEditFormViewModel ViewModel => (DetailEditFormViewModel)BindingContext;
     private static IRepositoryTbCustomer RepositoryTbCustomer => VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
     private readonly Helper _helperContador;
-    private AppMobileApiMGetDataDownloadCustomerResponse _saveItem;
-    private AppMobileApiMGetDataDownloadCustomerResponse _defaultItem;
+    private Api_AppMobileApi_GetDataDownloadCustomerResponse _saveItem;
+    private Api_AppMobileApi_GetDataDownloadCustomerResponse _defaultItem;
 
     public CustomerEditPage()
     {
         InitializeComponent();
         _helperContador = VariablesGlobales.UnityContainer.Resolve<Helper>();
-        _saveItem = new AppMobileApiMGetDataDownloadCustomerResponse();
-        _defaultItem = new AppMobileApiMGetDataDownloadCustomerResponse();
+        _saveItem = new Api_AppMobileApi_GetDataDownloadCustomerResponse();
+        _defaultItem = new Api_AppMobileApi_GetDataDownloadCustomerResponse();
         Title = "Editar Cliente";
     }
 
@@ -38,7 +38,7 @@ public partial class CustomerEditPage : ContentPage
         if (!DataForm.Validate())
             return;
 
-        var saveCustomer = (AppMobileApiMGetDataDownloadCustomerResponse)DataForm.DataObject;
+        var saveCustomer = (Api_AppMobileApi_GetDataDownloadCustomerResponse)DataForm.DataObject;
         saveCustomer.Modificado = true;
         if (ViewModel.IsNew)
         {
@@ -89,7 +89,7 @@ public partial class CustomerEditPage : ContentPage
 
     protected override async void OnAppearing()
     {
-        _saveItem = (AppMobileApiMGetDataDownloadCustomerResponse)DataForm.DataObject;
+        _saveItem = (Api_AppMobileApi_GetDataDownloadCustomerResponse)DataForm.DataObject;
         _defaultItem = await RepositoryTbCustomer.PosMeFindCustomer(_saveItem.CustomerNumber!);
         DataForm.CommitMode = CommitMode.LostFocus;
     }

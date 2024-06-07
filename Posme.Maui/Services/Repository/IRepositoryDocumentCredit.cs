@@ -2,10 +2,10 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public interface IRepositoryDocumentCredit : IRepositoryFacade<AppMobileApiMGetDataDownloadDocumentCreditResponse>
+public interface IRepositoryDocumentCredit : IRepositoryFacade<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse>
 {
-    Task<List<AppMobileApiMGetDataDownloadDocumentCreditResponse>> PosMeFindByEntityId(int entityId);
+    Task<List<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse>> PosMeFindByEntityId(int entityId);
 
-    Task<List<AppMobileApiMGetDataDownloadDocumentCreditResponse>> PosMeFilterDocumentNumber(string filter);
-    Task<AppMobileApiMGetDataDownloadDocumentCreditResponse> PosMeFindDocumentNumber(string filter);
+    Task<List<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse>> PosMeFilterDocumentNumber(string filter);
+    Task<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse> PosMeFindDocumentNumber(string filter);
 }

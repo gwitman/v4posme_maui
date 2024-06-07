@@ -11,15 +11,15 @@ namespace Posme.Maui.ViewModels
         public SchedulerViewModel(IServiceProvider serviceProvider)
         {
             Title = "Scheduler";
-            Items = new ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse>();
+            Items = new ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse>();
             _repositoryItems = serviceProvider.GetService<IRepositoryItems>();
         }
 
-        public ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse> Items { get; private set; }
+        public ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> Items { get; private set; }
 
         async public void OnAppearing()
         {
-            IEnumerable<AppMobileApiMGetDataDownloadItemsResponse> items = await _repositoryItems.PosMeFindAll();
+            IEnumerable<Api_AppMobileApi_GetDataDownloadItemsResponse> items = await _repositoryItems.PosMeFindAll();
             Items.Clear();
             foreach (var item in items)
             {

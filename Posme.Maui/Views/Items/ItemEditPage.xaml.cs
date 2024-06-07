@@ -11,15 +11,15 @@ public partial class ItemEditPage : ContentPage
 {
     DetailEditFormViewModel ViewModel => (DetailEditFormViewModel)BindingContext;
     private readonly IRepositoryItems _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
-    private AppMobileApiMGetDataDownloadItemsResponse _saveItem;
-    private AppMobileApiMGetDataDownloadItemsResponse _defaultItem;
+    private Api_AppMobileApi_GetDataDownloadItemsResponse _saveItem;
+    private Api_AppMobileApi_GetDataDownloadItemsResponse _defaultItem;
     private readonly Helper _helperContador;
 
     public ItemEditPage()
     {
         InitializeComponent();
-        _saveItem = new AppMobileApiMGetDataDownloadItemsResponse();
-        _defaultItem = new AppMobileApiMGetDataDownloadItemsResponse();
+        _saveItem = new Api_AppMobileApi_GetDataDownloadItemsResponse();
+        _defaultItem = new Api_AppMobileApi_GetDataDownloadItemsResponse();
         _helperContador = VariablesGlobales.UnityContainer.Resolve<Helper>();
         DataForm.CommitMode = CommitMode.Manually;
         Title = "Editar Producto";
@@ -36,7 +36,7 @@ public partial class ItemEditPage : ContentPage
 
         DataForm.Commit();
         ViewModel.Save();
-        _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
+        _saveItem = (Api_AppMobileApi_GetDataDownloadItemsResponse)DataForm.DataObject;
         _saveItem.Modificado = true;
         if (ViewModel.IsNew)
         {
@@ -52,7 +52,7 @@ public partial class ItemEditPage : ContentPage
 
     private void DataForm_OnValidateForm(object sender, DataFormValidationEventArgs e)
     {
-        _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)e.DataObject;
+        _saveItem = (Api_AppMobileApi_GetDataDownloadItemsResponse)e.DataObject;
         if (string.IsNullOrWhiteSpace(_saveItem.ItemNumber))
         {
             e.HasErrors = true;
@@ -105,14 +105,14 @@ public partial class ItemEditPage : ContentPage
 
     private void TextCantidadEntrada_OnTextChanged(object? sender, EventArgs e)
     {
-        _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
+        _saveItem = (Api_AppMobileApi_GetDataDownloadItemsResponse)DataForm.DataObject;
         _saveItem.CantidadFinal = decimal.Add(_saveItem.CantidadEntradas, _saveItem.Quantity) - _saveItem.CantidadSalidas;
         TextCantidadFinal.Text = _saveItem.CantidadFinal.ToString("N");
     }
 
     protected override async void OnAppearing()
     {
-        _saveItem = (AppMobileApiMGetDataDownloadItemsResponse)DataForm.DataObject;
+        _saveItem = (Api_AppMobileApi_GetDataDownloadItemsResponse)DataForm.DataObject;
         _defaultItem = await _repositoryItems.PosMeFindByItemNumber(_saveItem.ItemNumber);
         DataForm.CommitMode = CommitMode.LostFocus;
     }

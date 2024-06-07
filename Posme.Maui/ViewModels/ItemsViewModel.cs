@@ -18,7 +18,7 @@ namespace Posme.Maui.ViewModels
         {
             _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
             Title = "Productos";
-            Items = new ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse>();
+            Items = new ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse>();
             CreateDetailFormViewModelCommand = new Command<CreateDetailFormViewModelEventArgs>(CreateDetailFormViewModel);
             SearchCommand = new Command(OnSearchItems);
             OnBarCode = new Command(OnSearchBarCode);
@@ -28,12 +28,12 @@ namespace Posme.Maui.ViewModels
         public ICommand OnBarCode { get; }
         public ICommand SearchCommand { get; }
         public ICommand CreateDetailFormViewModelCommand { get; }
-        public ObservableCollection<AppMobileApiMGetDataDownloadItemsResponse> Items { get; set; }
+        public ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> Items { get; set; }
 
 
-        private AppMobileApiMGetDataDownloadItemsResponse? _selectedItem;
+        private Api_AppMobileApi_GetDataDownloadItemsResponse? _selectedItem;
 
-        public AppMobileApiMGetDataDownloadItemsResponse? SelectedItem
+        public Api_AppMobileApi_GetDataDownloadItemsResponse? SelectedItem
         {
             get => _selectedItem;
             set => SetProperty(ref _selectedItem, value);
@@ -95,7 +95,7 @@ namespace Posme.Maui.ViewModels
         private void CreateDetailFormViewModel(CreateDetailFormViewModelEventArgs e)
         {
             if (e.DetailFormType != DetailFormType.Edit) return;
-            var eItem = (AppMobileApiMGetDataDownloadItemsResponse)e.Item;
+            var eItem = (Api_AppMobileApi_GetDataDownloadItemsResponse)e.Item;
             var editedContact = _repositoryItems.PosMeFindByItemNumber(eItem.ItemNumber);
             e.Result = new DetailEditFormViewModel(editedContact, isNew: false);
         }

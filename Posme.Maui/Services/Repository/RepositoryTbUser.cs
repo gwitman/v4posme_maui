@@ -3,12 +3,12 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public class RepositoryTbUser(DataBase dataBase) : RepositoryFacade<CoreAccountMLoginMobileObjUserResponse>(dataBase),IRepositoryTbUser
+public class RepositoryTbUser(DataBase dataBase) : RepositoryFacade<Api_CoreAccount_LoginMobileObjUserResponse>(dataBase),IRepositoryTbUser
 {
 
     public async Task PosMeOnRemember()
     {
-        var listAsync = await dataBase.Database.Table<CoreAccountMLoginMobileObjUserResponse>().ToListAsync();
+        var listAsync = await dataBase.Database.Table<Api_CoreAccount_LoginMobileObjUserResponse>().ToListAsync();
         if (listAsync.Count <= 0)
         {
             return;
@@ -22,23 +22,23 @@ public class RepositoryTbUser(DataBase dataBase) : RepositoryFacade<CoreAccountM
         await dataBase.Database.UpdateAllAsync(listAsync);
     }
 
-    public async Task<CoreAccountMLoginMobileObjUserResponse?> PosmeFindUserRemember()
+    public async Task<Api_CoreAccount_LoginMobileObjUserResponse?> PosmeFindUserRemember()
     {
-        return await dataBase.Database.Table<CoreAccountMLoginMobileObjUserResponse>()
+        return await dataBase.Database.Table<Api_CoreAccount_LoginMobileObjUserResponse>()
             .Where(user => user.Remember)
             .FirstOrDefaultAsync();
     }
 
-    public async Task<CoreAccountMLoginMobileObjUserResponse?> PosMeFindUserByNicknameAndPassword(string nickname,
+    public async Task<Api_CoreAccount_LoginMobileObjUserResponse?> PosMeFindUserByNicknameAndPassword(string nickname,
         string password)
     {
-        return await dataBase.Database.Table<CoreAccountMLoginMobileObjUserResponse>()
+        return await dataBase.Database.Table<Api_CoreAccount_LoginMobileObjUserResponse>()
             .Where(user => user.Nickname == nickname && user.Password == password)
             .FirstOrDefaultAsync();
     }
 
     public async Task<int> PosMeRowCount()
     {
-        return await dataBase.Database.Table<CoreAccountMLoginMobileObjUserResponse>().CountAsync();
+        return await dataBase.Database.Table<Api_CoreAccount_LoginMobileObjUserResponse>().CountAsync();
     }
 }

@@ -23,7 +23,7 @@ public class AbonosViewModel : BaseViewModel
         Customers = new();
         SearchCommand = new Command(OnSearchCommand);
         OnBarCode = new Command(OnBarCodeShow);
-        ItemTapped = new Command<AppMobileApiMGetDataDownloadCustomerResponse>(OnItemSelected);
+        ItemTapped = new Command<Api_AppMobileApi_GetDataDownloadCustomerResponse>(OnItemSelected);
     }
 
     private async void OnBarCodeShow(object obj)
@@ -36,7 +36,7 @@ public class AbonosViewModel : BaseViewModel
         OnSearchCommand(Search);
     }
 
-    private async void OnItemSelected(AppMobileApiMGetDataDownloadCustomerResponse? item)
+    private async void OnItemSelected(Api_AppMobileApi_GetDataDownloadCustomerResponse? item)
     {
         if (item is null)
         {
@@ -71,11 +71,11 @@ public class AbonosViewModel : BaseViewModel
     }
 
     public ICommand SearchCommand { get; }
-    public ObservableCollection<AppMobileApiMGetDataDownloadCustomerResponse> Customers { get; }
+    public ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> Customers { get; }
 
-    private AppMobileApiMGetDataDownloadCustomerResponse? _selectedCustomer;
+    private Api_AppMobileApi_GetDataDownloadCustomerResponse? _selectedCustomer;
 
-    public AppMobileApiMGetDataDownloadCustomerResponse? SelectedCustomer
+    public Api_AppMobileApi_GetDataDownloadCustomerResponse? SelectedCustomer
     {
         get => _selectedCustomer;
         set
@@ -86,7 +86,7 @@ public class AbonosViewModel : BaseViewModel
         }
     }
 
-    public Command<AppMobileApiMGetDataDownloadCustomerResponse> ItemTapped { get; }
+    public Command<Api_AppMobileApi_GetDataDownloadCustomerResponse> ItemTapped { get; }
     public ICommand OnBarCode { get; }
 
     private async void LoadsClientes()

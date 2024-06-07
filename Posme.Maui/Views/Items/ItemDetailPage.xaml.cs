@@ -12,7 +12,7 @@ namespace Posme.Maui.Views.Items
         DetailFormViewModel ViewModel => ((DetailFormViewModel)BindingContext);
         private readonly IRepositoryItems _repositoryItems;
         private bool _isDeleting;
-        private AppMobileApiMGetDataDownloadItemsResponse SelectedItem => (AppMobileApiMGetDataDownloadItemsResponse)ViewModel.Item;
+        private Api_AppMobileApi_GetDataDownloadItemsResponse SelectedItem => (Api_AppMobileApi_GetDataDownloadItemsResponse)ViewModel.Item;
 
         public ItemDetailPage()
         {

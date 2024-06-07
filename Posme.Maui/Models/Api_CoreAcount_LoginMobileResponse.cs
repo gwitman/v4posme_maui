@@ -6,15 +6,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Posme.Maui.Models;
 
-public class ApiCoreAcount_LoginMobileResponse
+public class Api_CoreAcount_LoginMobileResponse
 {
     public bool Error { get; set; }
     public string? Message { get; set; }
-    public CoreAccountMLoginMobileObjUserResponse? ObjUser { get; set; }
+    public Api_CoreAccount_LoginMobileObjUserResponse? ObjUser { get; set; }
 }
 
 [Table("tb_user")]
-public class CoreAccountMLoginMobileObjUserResponse
+public class Api_CoreAccount_LoginMobileObjUserResponse
 {
     public int? CompanyId { get; set; }
 

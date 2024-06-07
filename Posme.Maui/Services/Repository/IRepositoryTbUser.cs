@@ -2,14 +2,14 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public interface IRepositoryTbUser : IRepositoryFacade<CoreAccountMLoginMobileObjUserResponse>
+public interface IRepositoryTbUser : IRepositoryFacade<Api_CoreAccount_LoginMobileObjUserResponse>
 {
 
     Task PosMeOnRemember();
 
-    Task<CoreAccountMLoginMobileObjUserResponse?> PosmeFindUserRemember();
+    Task<Api_CoreAccount_LoginMobileObjUserResponse?> PosmeFindUserRemember();
 
-    Task<CoreAccountMLoginMobileObjUserResponse?> PosMeFindUserByNicknameAndPassword(string nickname,
+    Task<Api_CoreAccount_LoginMobileObjUserResponse?> PosMeFindUserByNicknameAndPassword(string nickname,
         string password);
 
     Task<int> PosMeRowCount();

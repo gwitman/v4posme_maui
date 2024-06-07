@@ -13,9 +13,9 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
     private readonly IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization;
     private readonly IRepositoryTbCustomer _repositoryTbCustomer;
     private readonly Helper _helper;
-    private AppMobileApiMGetDataDownloadDocumentCreditResponse _documentCreditResponse;
-    private AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse _documentCreditAmortization;
-    private AppMobileApiMGetDataDownloadCustomerResponse _customerResponse;
+    private Api_AppMobileApi_GetDataDownloadDocumentCreditResponse _documentCreditResponse;
+    private Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse _documentCreditAmortization;
+    private Api_AppMobileApi_GetDataDownloadCustomerResponse _customerResponse;
 
     public AplicarAbonoViewModel()
     {
@@ -68,7 +68,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         };
         _customerResponse.Balance = decimal.Compare(_customerResponse.Balance, Monto)>0 ? decimal.Subtract(_customerResponse.Balance, Monto) : decimal.Zero;
         var documentCredits = await _repositoryDocumentCreditAmortization.PosMeFilterByCustomerNumber(_customerResponse.CustomerNumber!);
-        var tmpListaSave = new List<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>();
+        var tmpListaSave = new List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
         foreach (var documentCreditAmortization in documentCredits)
         {
             if (decimal.Compare(tmpMonto, decimal.Zero)<=0)
@@ -114,13 +114,13 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         return false;
     }
 
-    public AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse DocumentCreditAmortizationResponse
+    public Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse DocumentCreditAmortizationResponse
     {
         get => _documentCreditAmortization;
         set => SetProperty(ref _documentCreditAmortization, value);
     }
 
-    public AppMobileApiMGetDataDownloadDocumentCreditResponse DocumentCreditResponse
+    public Api_AppMobileApi_GetDataDownloadDocumentCreditResponse DocumentCreditResponse
     {
         get => _documentCreditResponse;
         set => SetProperty(ref _documentCreditResponse, value);

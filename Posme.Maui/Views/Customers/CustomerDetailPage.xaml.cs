@@ -10,7 +10,7 @@ public partial class CustomerDetailPage : ContentPage
 {
     private readonly IRepositoryTbCustomer _repositoryTbCustomer;
     private DetailFormViewModel ViewModel => (DetailFormViewModel)BindingContext;
-    private AppMobileApiMGetDataDownloadCustomerResponse SelectedItem => (AppMobileApiMGetDataDownloadCustomerResponse)ViewModel.Item;
+    private Api_AppMobileApi_GetDataDownloadCustomerResponse SelectedItem => (Api_AppMobileApi_GetDataDownloadCustomerResponse)ViewModel.Item;
     private bool _isDeleting;
 
     public CustomerDetailPage()

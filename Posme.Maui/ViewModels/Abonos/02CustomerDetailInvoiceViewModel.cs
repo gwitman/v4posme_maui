@@ -21,10 +21,10 @@ public class CustomerDetailInvoiceViewModel : BaseViewModel, IQueryAttributable
         _repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
         Invoices = new();
         SearchCommand = new Command(OnSearchCommand);
-        ItemTapped = new Command<AppMobileApiMGetDataDownloadDocumentCreditResponse>(OnTappedItem);
+        ItemTapped = new Command<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse>(OnTappedItem);
     }
 
-    private async void OnTappedItem(AppMobileApiMGetDataDownloadDocumentCreditResponse? item)
+    private async void OnTappedItem(Api_AppMobileApi_GetDataDownloadDocumentCreditResponse? item)
     {
         if (item is null)
         {
@@ -56,12 +56,12 @@ public class CustomerDetailInvoiceViewModel : BaseViewModel, IQueryAttributable
         IsBusy = false;
     }
 
-    public ObservableCollection<AppMobileApiMGetDataDownloadDocumentCreditResponse> Invoices { get; }
+    public ObservableCollection<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse> Invoices { get; }
     public ICommand SearchCommand { get; }
 
-    private AppMobileApiMGetDataDownloadDocumentCreditResponse? _selectedInvoice;
+    private Api_AppMobileApi_GetDataDownloadDocumentCreditResponse? _selectedInvoice;
 
-    public AppMobileApiMGetDataDownloadDocumentCreditResponse? SelectedInvoice
+    public Api_AppMobileApi_GetDataDownloadDocumentCreditResponse? SelectedInvoice
     {
         get => _selectedInvoice;
         set
@@ -71,7 +71,7 @@ public class CustomerDetailInvoiceViewModel : BaseViewModel, IQueryAttributable
         }
     }
 
-    public Command<AppMobileApiMGetDataDownloadDocumentCreditResponse> ItemTapped { get; }
+    public Command<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse> ItemTapped { get; }
 
     private async Task LoadInvoices(string? param)
     {

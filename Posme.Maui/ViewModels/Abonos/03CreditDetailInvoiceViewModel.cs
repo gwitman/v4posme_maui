@@ -13,8 +13,8 @@ public class CreditDetailInvoiceViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IRepositoryDocumentCredit _repositoryDocumentCredit;
     private readonly IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization;
-    public ObservableCollection<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse> Items { get; }
-    public Command<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse> SwipeCommand { get; }
+    public ObservableCollection<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse> Items { get; }
+    public Command<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse> SwipeCommand { get; }
 
     public CreditDetailInvoiceViewModel()
     {
@@ -22,10 +22,10 @@ public class CreditDetailInvoiceViewModel : BaseViewModel, IQueryAttributable
         _repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
         _repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
         Items = new();
-        SwipeCommand = new Command<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>(OnSwipeCommand);
+        SwipeCommand = new Command<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>(OnSwipeCommand);
     }
 
-    private async void OnSwipeCommand(AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse? item)
+    private async void OnSwipeCommand(Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse? item)
     {
         if (item is null)
         {

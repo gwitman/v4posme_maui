@@ -14,7 +14,7 @@ public class DataBase
 
     public async void Init()
     {
-        await Database.CreateTableAsync<CoreAccountMLoginMobileObjUserResponse>();
+        await Database.CreateTableAsync<Api_CoreAccount_LoginMobileObjUserResponse>();
         await Database.CreateTableAsync<TbParameterSystem>();
         var countParameters = await Database.Table<TbParameterSystem>().CountAsync();
         if (countParameters==0)
@@ -33,10 +33,10 @@ public class DataBase
 
     public async void InitDownloadTables()
     {
-        await Database.CreateTableAsync<AppMobileApiMGetDataDownloadCustomerResponse>();
-        await Database.CreateTableAsync<AppMobileApiMGetDataDownloadItemsResponse>();
-        await Database.CreateTableAsync<AppMobileApiMGetDataDownloadParametersResponse>();
-        await Database.CreateTableAsync<AppMobileApiMGetDataDownloadDocumentCreditResponse>();
-        await Database.CreateTableAsync<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>();
+        await Database.CreateTableAsync<Api_AppMobileApi_GetDataDownloadCustomerResponse>();
+        await Database.CreateTableAsync<Api_AppMobileApi_GetDataDownloadItemsResponse>();
+        await Database.CreateTableAsync<Api_AppMobileApi_GetDataDownloadParametersResponse>();
+        await Database.CreateTableAsync<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse>();
+        await Database.CreateTableAsync<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
     }
 }

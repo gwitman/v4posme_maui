@@ -2,7 +2,7 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public interface IRepositoryParameters : IRepositoryFacade<AppMobileApiMGetDataDownloadParametersResponse>
+public interface IRepositoryParameters : IRepositoryFacade<Api_AppMobileApi_GetDataDownloadParametersResponse>
 {
     
 }

@@ -4,20 +4,20 @@ using SQLite;
 
 namespace Posme.Maui.Models;
 
-public class ApiAppMobileApi_GetDataDownloadResponse
+public class Api_AppMobileApi_GetDataDownloadResponse
 {
     public bool Error { get; set; }
     public string? Message { get; set; }
-    public List<AppMobileApiMGetDataDownloadItemsResponse> ListItem { get; set; } = [];
-    public List<AppMobileApiMGetDataDownloadCustomerResponse> ListCustomer { get; set; } = [];
-    public List<AppMobileApiMGetDataDownloadParametersResponse> ListParameter { get; set; } = [];
-    public List<AppMobileApiMGetDataDownloadDocumentCreditResponse> ListDocumentCredit { get; set; } = [];
+    public List<Api_AppMobileApi_GetDataDownloadItemsResponse> ListItem { get; set; } = [];
+    public List<Api_AppMobileApi_GetDataDownloadCustomerResponse> ListCustomer { get; set; } = [];
+    public List<Api_AppMobileApi_GetDataDownloadParametersResponse> ListParameter { get; set; } = [];
+    public List<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse> ListDocumentCredit { get; set; } = [];
 
-    public List<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse> ListDocumentCreditAmortization { get; set; } = [];
+    public List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse> ListDocumentCreditAmortization { get; set; } = [];
 }
 
 [Table("tb_customers")]
-public class AppMobileApiMGetDataDownloadCustomerResponse : BindableBase
+public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
 {
     [PrimaryKey, AutoIncrement]
     [DataMember]
@@ -42,7 +42,7 @@ public class AppMobileApiMGetDataDownloadCustomerResponse : BindableBase
 }
 
 [Table("tb_document_credit")]
-public class AppMobileApiMGetDataDownloadDocumentCreditResponse
+public class Api_AppMobileApi_GetDataDownloadDocumentCreditResponse
 {
     [PrimaryKey, AutoIncrement] public int DocumentCreditPk { get; set; }
 
@@ -74,7 +74,7 @@ public class AppMobileApiMGetDataDownloadDocumentCreditResponse
 }
 
 [Table("document_credit_amortization")]
-public class AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse
+public class Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse
 {
     [PrimaryKey] public int DocumentCreditAmortizationId { get; set; }
 
@@ -102,7 +102,7 @@ public class AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse
 }
 
 [SQLite.Table("tb_items")]
-public class AppMobileApiMGetDataDownloadItemsResponse : BindableBase
+public class Api_AppMobileApi_GetDataDownloadItemsResponse : BindableBase
 {
     [PrimaryKey, AutoIncrement]
     [DataMember]
@@ -176,7 +176,7 @@ public class AppMobileApiMGetDataDownloadItemsResponse : BindableBase
 }
 
 [SQLite.Table("tb_parameters")]
-public class AppMobileApiMGetDataDownloadParametersResponse
+public class Api_AppMobileApi_GetDataDownloadParametersResponse
 {
     [PrimaryKey, AutoIncrement] public int ParametersPk { get; set; }
 
