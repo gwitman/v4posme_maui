@@ -49,6 +49,8 @@ public class AppMobileApiMGetDataDownloadDocumentCreditResponse
     public int EntityId { get; set; }
 
     public int CustomerCreditDocumentId { get; set; }
+    
+    public int CustomerCreditLineId { get; set; }
 
     public string? DocumentNumber { get; set; }
 
@@ -64,7 +66,7 @@ public class AppMobileApiMGetDataDownloadDocumentCreditResponse
 
     public DateTime DateApply { get; set; }
 
-    public decimal Remaingin { get; set; }
+    public decimal Remaining { get; set; }
 
     public int StatusAmortization { get; set; }
 
@@ -74,7 +76,7 @@ public class AppMobileApiMGetDataDownloadDocumentCreditResponse
 [Table("document_credit_amortization")]
 public class AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse
 {
-    [PrimaryKey, AutoIncrement] public int DocumentCreditAmortizationPk { get; set; }
+    [PrimaryKey] public int DocumentCreditAmortizationId { get; set; }
 
     public string? CustomerNumber { get; set; }
 

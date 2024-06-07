@@ -66,6 +66,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
             EntitySecondaryId = _customerResponse.CustomerNumber,
             EntityId = _customerResponse.EntityId
         };
+        _customerResponse.Balance = decimal.Compare(_customerResponse.Balance, Monto)>0 ? decimal.Subtract(_customerResponse.Balance, Monto) : decimal.Zero;
         var documentCredits = await _repositoryDocumentCreditAmortization.PosMeFilterByCustomerNumber(_customerResponse.CustomerNumber!);
         var tmpListaSave = new List<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>();
         foreach (var documentCreditAmortization in documentCredits)
@@ -87,11 +88,12 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
             }
             
             tmpListaSave.Add(documentCreditAmortization);
-            transactionMaster.Reference1 = $"{transactionMaster.Reference1},{documentCreditAmortization.DocumentCreditAmortizationPk}";
+            transactionMaster.Reference1 = $"{transactionMaster.Reference1},{documentCreditAmortization.DocumentCreditAmortizationId}";
         }
-
-        await _repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
-        await _repositoryDocumentCredit.PosMeUpdate(DocumentCreditResponse);
+        var taskAmortization= _repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
+        var taskDocument= _repositoryDocumentCredit.PosMeUpdate(DocumentCreditResponse);
+        var taskCustomer= _repositoryTbCustomer.PosMeUpdate(_customerResponse);
+        Task.WaitAll([taskAmortization, taskDocument, taskCustomer]);
         await NavigationService.NavigateToAsync<ValidarAbonoViewModel>(DocumentCreditResponse.DocumentNumber!);
     }
 

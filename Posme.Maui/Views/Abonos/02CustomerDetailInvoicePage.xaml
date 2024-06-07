@@ -74,7 +74,7 @@
                                            TextColor="White"
                                            Text="{Binding DocumentNumber}" />
                                     <HorizontalStackLayout Grid.Column="1" Grid.Row="1">
-                                        <Label Text="{Binding Remaingin,StringFormat='{0:N0}'}"
+                                        <Label Text="{Binding Remaining,StringFormat='{0:N0}'}"
                                                TextColor="White"
                                                HorizontalOptions="Start" />
                                     </HorizontalStackLayout>

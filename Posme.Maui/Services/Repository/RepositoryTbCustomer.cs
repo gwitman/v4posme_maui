@@ -3,9 +3,8 @@ using SQLite;
 
 namespace Posme.Maui.Services.Repository;
 
-public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<AppMobileApiMGetDataDownloadCustomerResponse>(dataBase),IRepositoryTbCustomer
+public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<AppMobileApiMGetDataDownloadCustomerResponse>(dataBase), IRepositoryTbCustomer
 {
-
     public Task<AppMobileApiMGetDataDownloadCustomerResponse> PosMeFindCustomer(string customerNumber)
     {
         return dataBase.Database.Table<AppMobileApiMGetDataDownloadCustomerResponse>()
@@ -26,7 +25,11 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<AppMobil
 
     public async Task<List<AppMobileApiMGetDataDownloadCustomerResponse>> PosMeFilterByInvoice()
     {
-        var query = "select distinct tbc.* from tb_customers tbc join tb_document_credit tdc on tbc.EntityId = tdc.EntityId";
+        var query = """
+                    select distinct tbc.CustomerId, ComapnyId, BranchId, tbc.EntityId, CustomerNumber, Identification, 
+                                    FirstName, LastName, Balance, Modificado 
+                    from tb_customers tbc join tb_document_credit tdc on tbc.EntityId = tdc.EntityId
+                    """;
         return await dataBase.Database.QueryAsync<AppMobileApiMGetDataDownloadCustomerResponse>(query);
     }
 }
