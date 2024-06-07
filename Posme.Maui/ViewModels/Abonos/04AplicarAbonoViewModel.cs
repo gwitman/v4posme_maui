@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Diagnostics;
+using System.Web;
 using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
@@ -37,64 +38,72 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
             return;
         }
 
-        var codigoAbono = await _helper.GetCodigoAbono();
-        _customerResponse = await _repositoryTbCustomer.PosMeFindCustomer(DocumentCreditAmortizationResponse.CustomerNumber!);
-        DocumentCreditResponse.BalanceDocument = decimal.Subtract(DocumentCreditResponse.BalanceDocument, Monto);
-        VariablesGlobales.DtoAplicarAbono = new ViewTempDtoAbono(
-            codigoAbono,
-            _customerResponse.CustomerNumber!,
-            _customerResponse.FirstName!,
-            _customerResponse.LastName!,
-            _customerResponse.Identification!,
-            DateTime.Now,
-            DocumentCreditAmortizationResponse.DocumentNumber!,
-            CurrencyName!,
-            Monto,
-            SaldoInicial,
-            SaldoFinal,
-            Description!);
-        var tmpMonto = Monto;
-        var transactionMaster = new TbTransactionMaster
+        try
         {
-            TransactionId = TypeTransaction.TransactionShare,
-            SubAmount = Monto,
-            Discount = SaldoInicial,
-            Amount = SaldoFinal,
-            Comment = Description,
-            TransactionNumber = codigoAbono,
-            TransactionOn = DateTime.Now,
-            EntitySecondaryId = _customerResponse.CustomerNumber,
-            EntityId = _customerResponse.EntityId
-        };
-        _customerResponse.Balance = decimal.Compare(_customerResponse.Balance, Monto)>0 ? decimal.Subtract(_customerResponse.Balance, Monto) : decimal.Zero;
-        var documentCredits = await _repositoryDocumentCreditAmortization.PosMeFilterByCustomerNumber(_customerResponse.CustomerNumber!);
-        var tmpListaSave = new List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
-        foreach (var documentCreditAmortization in documentCredits)
-        {
-            if (decimal.Compare(tmpMonto, decimal.Zero)<=0)
+            var codigoAbono = await _helper.GetCodigoAbono();
+            _customerResponse = await _repositoryTbCustomer.PosMeFindCustomer(DocumentCreditAmortizationResponse.CustomerNumber!);
+            DocumentCreditResponse.BalanceDocument = decimal.Subtract(DocumentCreditResponse.BalanceDocument, Monto);
+            VariablesGlobales.DtoAplicarAbono = new ViewTempDtoAbono(
+                codigoAbono,
+                _customerResponse.CustomerNumber!,
+                _customerResponse.FirstName!,
+                _customerResponse.LastName!,
+                _customerResponse.Identification!,
+                DateTime.Now,
+                DocumentCreditAmortizationResponse.DocumentNumber!,
+                CurrencyName!,
+                Monto,
+                SaldoInicial,
+                SaldoFinal,
+                Description!);
+            var tmpMonto = Monto;
+            var transactionMaster = new TbTransactionMaster
             {
-                break;
+                TransactionId = TypeTransaction.TransactionShare,
+                SubAmount = Monto,
+                Discount = SaldoInicial,
+                Amount = SaldoFinal,
+                Comment = Description,
+                TransactionNumber = codigoAbono,
+                TransactionOn = DateTime.Now,
+                EntitySecondaryId = _customerResponse.CustomerNumber,
+                EntityId = _customerResponse.EntityId
+            };
+            _customerResponse.Balance = decimal.Compare(_customerResponse.Balance, Monto) > 0 ? decimal.Subtract(_customerResponse.Balance, Monto) : decimal.Zero;
+            var documentCredits = await _repositoryDocumentCreditAmortization.PosMeFilterByCustomerNumber(_customerResponse.CustomerNumber!);
+            var tmpListaSave = new List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
+            foreach (var documentCreditAmortization in documentCredits)
+            {
+                if (decimal.Compare(tmpMonto, decimal.Zero) <= 0)
+                {
+                    break;
+                }
+
+                if (decimal.Compare(documentCreditAmortization.Remaining, tmpMonto) <= 0)
+                {
+                    tmpMonto = decimal.Subtract(tmpMonto, documentCreditAmortization.Remaining);
+                    documentCreditAmortization.Remaining = decimal.Zero;
+                }
+                else
+                {
+                    documentCreditAmortization.Remaining = tmpMonto;
+                    tmpMonto = decimal.Zero;
+                }
+
+                tmpListaSave.Add(documentCreditAmortization);
+                transactionMaster.Reference1 = $"{transactionMaster.Reference1},{documentCreditAmortization.DocumentCreditAmortizationId}";
             }
 
-            if (decimal.Compare(documentCreditAmortization.Remaining, tmpMonto)<=0)
-            {
-                tmpMonto = decimal.Subtract(tmpMonto, documentCreditAmortization.Remaining);
-                documentCreditAmortization.Remaining=decimal.Zero;
-            }
-            else
-            {
-                documentCreditAmortization.Remaining = tmpMonto;
-                tmpMonto = decimal.Zero;
-            }
-            
-            tmpListaSave.Add(documentCreditAmortization);
-            transactionMaster.Reference1 = $"{transactionMaster.Reference1},{documentCreditAmortization.DocumentCreditAmortizationId}";
+            var taskAmortization = _repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
+            var taskDocument = _repositoryDocumentCredit.PosMeUpdate(DocumentCreditResponse);
+            var taskCustomer = _repositoryTbCustomer.PosMeUpdate(_customerResponse);
+            Task.WaitAll([taskAmortization, taskDocument, taskCustomer]);
+            await NavigationService.NavigateToAsync<ValidarAbonoViewModel>(DocumentCreditResponse.DocumentNumber!);
         }
-        var taskAmortization= _repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
-        var taskDocument= _repositoryDocumentCredit.PosMeUpdate(DocumentCreditResponse);
-        var taskCustomer= _repositoryTbCustomer.PosMeUpdate(_customerResponse);
-        Task.WaitAll([taskAmortization, taskDocument, taskCustomer]);
-        await NavigationService.NavigateToAsync<ValidarAbonoViewModel>(DocumentCreditResponse.DocumentNumber!);
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
+        }
     }
 
     private bool Validate()

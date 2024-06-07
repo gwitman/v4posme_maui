@@ -76,7 +76,8 @@ public class Api_AppMobileApi_GetDataDownloadDocumentCreditResponse
 [Table("document_credit_amortization")]
 public class Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse
 {
-    [PrimaryKey] public int DocumentCreditAmortizationId { get; set; }
+    [PrimaryKey,AutoIncrement] public int DocumentCreditAmortizationPk { get; set; }
+    public int DocumentCreditAmortizationId { get; set; }
 
     public string? CustomerNumber { get; set; }
 

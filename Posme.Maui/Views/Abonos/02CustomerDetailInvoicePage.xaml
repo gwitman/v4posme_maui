@@ -42,7 +42,7 @@
                             <dxc:DXStackLayout
                                 CornerRadius="15"
                                 Margin="10">
-                                <Grid x:DataType="models:AppMobileApiMGetDataDownloadDocumentCreditResponse"
+                                <Grid x:DataType="models:Api_AppMobileApi_GetDataDownloadDocumentCreditResponse"
                                       HorizontalOptions="Fill"
                                       Padding="10"
                                       VerticalOptions="Fill"
