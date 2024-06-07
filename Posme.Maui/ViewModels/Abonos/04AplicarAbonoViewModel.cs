@@ -94,10 +94,11 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
                 transactionMaster.Reference1 = $"{transactionMaster.Reference1},{documentCreditAmortization.DocumentCreditAmortizationId}";
             }
 
+            var taskPlus=_helper.PlusCounter();
             var taskAmortization = _repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
             var taskDocument = _repositoryDocumentCredit.PosMeUpdate(DocumentCreditResponse);
             var taskCustomer = _repositoryTbCustomer.PosMeUpdate(_customerResponse);
-            Task.WaitAll([taskAmortization, taskDocument, taskCustomer]);
+            await Task.WhenAll([taskAmortization, taskDocument, taskCustomer,taskPlus]);
             await NavigationService.NavigateToAsync<ValidarAbonoViewModel>(DocumentCreditResponse.DocumentNumber!);
         }
         catch (Exception e)

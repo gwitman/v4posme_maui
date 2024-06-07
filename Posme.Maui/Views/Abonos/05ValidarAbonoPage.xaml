@@ -17,7 +17,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="shared" />
         <ToolbarItem Text="Imprimir" Order="Secondary" />
-        <ToolbarItem Text="Aplicar Otro" Order="Secondary" />
+        <ToolbarItem Text="Aplicar Otro" Order="Secondary" Command="{Binding AplicarOtroCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>

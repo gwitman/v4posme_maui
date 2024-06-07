@@ -1,4 +1,5 @@
 ﻿using System.Web;
+using System.Windows.Input;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
@@ -15,6 +16,12 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
         Title = "Aplicar Abono 5/5";
         _parameterSystem = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
         Item = VariablesGlobales.DtoAplicarAbono;
+        AplicarOtroCommand = new Command(OnAplicarOtroCommand);
+    }
+
+    private async void OnAplicarOtroCommand()
+    {
+        await Shell.Current.GoToAsync("//AbonoPage", true);
     }
 
     public ViewTempDtoAbono Item { get; private set; }
@@ -25,6 +32,8 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
         get => _logoSource;
         set => SetProperty(ref _logoSource, value);
     }
+
+    public ICommand AplicarOtroCommand { get; }
 
     public override async Task InitializeAsync(object parameter)
     {
