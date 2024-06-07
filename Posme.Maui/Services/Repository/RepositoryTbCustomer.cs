@@ -23,4 +23,10 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<AppMobil
                                || response.LastName!.ToLower().Contains(search))
             .ToListAsync();
     }
+
+    public async Task<List<AppMobileApiMGetDataDownloadCustomerResponse>> PosMeFilterByInvoice()
+    {
+        var query = "select distinct tbc.* from tb_customers tbc join tb_document_credit tdc on tbc.EntityId = tdc.EntityId";
+        return await dataBase.Database.QueryAsync<AppMobileApiMGetDataDownloadCustomerResponse>(query);
+    }
 }

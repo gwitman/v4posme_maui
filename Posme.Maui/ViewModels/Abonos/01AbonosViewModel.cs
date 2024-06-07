@@ -43,6 +43,7 @@ public class AbonosViewModel : BaseViewModel
             return;
         }
 
+        IsBusy = true;
         var invoices = await _repositoryDocumentCredit.PosMeFindByEntityId(item.EntityId);
         if (invoices.Count == 0)
         {
@@ -51,6 +52,7 @@ public class AbonosViewModel : BaseViewModel
         }
 
         await NavigationService.NavigateToAsync<CustomerDetailInvoiceViewModel>(item.EntityId);
+        IsBusy = false;
     }
 
     private async void OnSearchCommand(object obj)
@@ -93,7 +95,7 @@ public class AbonosViewModel : BaseViewModel
         await Task.Run(async () =>
         {
             Customers.Clear();
-            var findAll = await _customerRepositoryTbCustomer.PosMeFindAll();
+            var findAll = await _customerRepositoryTbCustomer.PosMeFilterByInvoice();
             foreach (var response in findAll)
             {
                 Customers.Add(response);

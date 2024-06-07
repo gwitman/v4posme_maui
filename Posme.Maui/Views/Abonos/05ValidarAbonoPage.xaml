@@ -7,12 +7,17 @@
              Title="{Binding Title}"
              x:Class="Posme.Maui.Views.Abonos.ValidarAbonoPage"
              Style="{StaticResource DetailPageStyle}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+    <Shell.PresentationMode>Animated</Shell.PresentationMode>
     <ContentPage.BindingContext>
         <abonos:ValidarAbonoViewModel />
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Aplicar E Imprimir" Order="Secondary" />
-        <ToolbarItem Text="Aplicar Abono" Order="Secondary" />
+        <ToolbarItem IconImageSource="shared" />
+        <ToolbarItem Text="Imprimir" Order="Secondary" />
+        <ToolbarItem Text="Aplicar Otro" Order="Secondary" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>

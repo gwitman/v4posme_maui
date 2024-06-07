@@ -11,7 +11,7 @@ public partial class AplicarAbonoPage : ContentPage
     {
         InitializeComponent();
     }
-
+    
     private void TxtMonto_OnTextChanged(object? sender, EventArgs e)
     {
         var text = sender as TextEdit;

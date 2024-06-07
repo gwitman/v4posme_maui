@@ -5,7 +5,6 @@ using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
-using Posme.Maui.Views.Abonos;
 using Unity;
 
 namespace Posme.Maui.ViewModels.Abonos;
@@ -14,6 +13,7 @@ public class CustomerDetailInvoiceViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IRepositoryDocumentCredit _repositoryDocumentCredit;
     private readonly IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization;
+
     public CustomerDetailInvoiceViewModel()
     {
         Title = "Selecciona Factura 2/5";
@@ -26,12 +26,12 @@ public class CustomerDetailInvoiceViewModel : BaseViewModel, IQueryAttributable
 
     private async void OnTappedItem(AppMobileApiMGetDataDownloadDocumentCreditResponse? item)
     {
-        
         if (item is null)
         {
             return;
         }
 
+        IsBusy = true;
         var count = await _repositoryDocumentCreditAmortization.PosMeCountByDocumentNumber(item.DocumentNumber!);
         if (count == 0)
         {
@@ -40,6 +40,7 @@ public class CustomerDetailInvoiceViewModel : BaseViewModel, IQueryAttributable
         }
 
         await NavigationService.NavigateToAsync<CreditDetailInvoiceViewModel>(item.DocumentNumber!);
+        IsBusy = false;
     }
 
     private async void OnSearchCommand(object obj)

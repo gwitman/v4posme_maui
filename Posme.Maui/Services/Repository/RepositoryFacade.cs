@@ -17,6 +17,11 @@ public abstract class RepositoryFacade<T>(DataBase dataBase) : IRepositoryFacade
         await dataBase.Database.UpdateAsync(model);
     }
 
+    public async Task PosMeUpdateAll(List<T> list)
+    {
+        await dataBase.Database.UpdateAllAsync(list);
+    }
+
     public async Task<bool> PosMeDelete(T model)
     {
         return await dataBase.Database.DeleteAsync(model)>0;

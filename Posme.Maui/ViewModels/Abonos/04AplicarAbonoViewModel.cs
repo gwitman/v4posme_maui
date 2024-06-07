@@ -39,6 +39,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
 
         var codigoAbono = await _helper.GetCodigoAbono();
         _customerResponse = await _repositoryTbCustomer.PosMeFindCustomer(DocumentCreditAmortizationResponse.CustomerNumber!);
+        DocumentCreditResponse.BalanceDocument = decimal.Subtract(DocumentCreditResponse.BalanceDocument, Monto);
         VariablesGlobales.DtoAplicarAbono = new ViewTempDtoAbono(
             codigoAbono,
             _customerResponse.CustomerNumber!,
@@ -52,7 +53,46 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
             SaldoInicial,
             SaldoFinal,
             Description!);
-        await NavigationService.NavigateToAsync<ValidarAbonoViewModel>("");
+        var tmpMonto = Monto;
+        var transactionMaster = new TbTransactionMaster
+        {
+            TransactionId = TypeTransaction.TransactionShare,
+            SubAmount = Monto,
+            Discount = SaldoInicial,
+            Amount = SaldoFinal,
+            Comment = Description,
+            TransactionNumber = codigoAbono,
+            TransactionOn = DateTime.Now,
+            EntitySecondaryId = _customerResponse.CustomerNumber,
+            EntityId = _customerResponse.EntityId
+        };
+        var documentCredits = await _repositoryDocumentCreditAmortization.PosMeFilterByCustomerNumber(_customerResponse.CustomerNumber!);
+        var tmpListaSave = new List<AppMobileApiMGetDataDownloadDocumentCreditAmortizationResponse>();
+        foreach (var documentCreditAmortization in documentCredits)
+        {
+            if (decimal.Compare(tmpMonto, decimal.Zero)<=0)
+            {
+                break;
+            }
+
+            if (decimal.Compare(documentCreditAmortization.Remaining, tmpMonto)<=0)
+            {
+                tmpMonto = decimal.Subtract(tmpMonto, documentCreditAmortization.Remaining);
+                documentCreditAmortization.Remaining=decimal.Zero;
+            }
+            else
+            {
+                documentCreditAmortization.Remaining = tmpMonto;
+                tmpMonto = decimal.Zero;
+            }
+            
+            tmpListaSave.Add(documentCreditAmortization);
+            transactionMaster.Reference1 = $"{transactionMaster.Reference1},{documentCreditAmortization.DocumentCreditAmortizationPk}";
+        }
+
+        await _repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
+        await _repositoryDocumentCredit.PosMeUpdate(DocumentCreditResponse);
+        await NavigationService.NavigateToAsync<ValidarAbonoViewModel>(DocumentCreditResponse.DocumentNumber!);
     }
 
     private bool Validate()

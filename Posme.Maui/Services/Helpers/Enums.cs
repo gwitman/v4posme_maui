@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace Posme.Maui.Services.Helpers
 {
-   
-    enum typeTransaction
+    public enum TypeTransaction
     {
-        transactionInvoiceBilling = 19,
-        transactionShare = 25
+        TransactionInvoiceBilling = 19,
+        TransactionShare = 25
     }
 
-    enum typeCurrency
+    public enum TypeCurrency
     {
-        cordoba = 1,
-        dolar = 2,
+        Cordoba = 1,
+        Dolar = 2,
     }
 }

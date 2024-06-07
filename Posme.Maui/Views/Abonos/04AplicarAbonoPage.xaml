@@ -14,10 +14,27 @@
     <ContentPage.Content>
         <ScrollView>
             <dx:DXStackLayout Orientation="Vertical">
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}" />
                 <dx:DXStackLayout Orientation="Vertical">
                     <dx:DXBorder HeightRequest="1" BorderThickness="1"
                                  BackgroundColor="{AppThemeBinding Light={StaticResource SeparatorColor}, Dark={StaticResource SeparatorColorDark}}" />
                     <dx:DXImage Source="invoice_green" WidthRequest="150" HeightRequest="150" />
+                    <Label Text="{Binding DocumentCreditAmortizationResponse.CustomerNumber}"
+                           FontSize="16"
+                           HorizontalTextAlignment="Center"
+                           FontAttributes="Bold" />
+                    <Label HorizontalTextAlignment="Center"
+                           FontSize="16"
+                           FontAttributes="Bold">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding DocumentCreditAmortizationResponse.FirstName}" />
+                                <Span Text=" " />
+                                <Span Text="{Binding DocumentCreditAmortizationResponse.LastName}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </dx:DXStackLayout>
                 <dx:DXBorder
                     Margin="15"
@@ -69,7 +86,7 @@
                                      TextColor="White"
                                      Icon="ok_circle"
                                      IconColor="White"
-                                     Content="Validar Información"
+                                     Content="Aplicar Abono"
                                      ButtonType="Outlined" />
                     </Grid>
                 </dx:DXBorder>

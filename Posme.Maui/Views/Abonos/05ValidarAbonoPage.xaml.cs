@@ -9,6 +9,11 @@ public partial class ValidarAbonoPage : ContentPage
         InitializeComponent();
     }
 
+    protected override bool OnBackButtonPressed()
+    {
+        return base.OnBackButtonPressed();
+    }
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
