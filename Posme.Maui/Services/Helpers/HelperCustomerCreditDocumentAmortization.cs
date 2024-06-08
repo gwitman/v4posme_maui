@@ -26,7 +26,10 @@ class HelperCustomerCreditDocumentAmortization
         var objCustomerResponse             = await _repositoryTbCustomer.PosMeFindEntityID(entityId);
 
 
-        var tmpListaSave = new List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
+        var tmpListaSave        = new List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
+        var amountApplyBackup   = amountApply; 
+
+        //Actualiar Tabla de Amortiation
         foreach (var documentCreditAmortization in objCustomDocumentAmortization)
         {
             if (decimal.Compare(amountApply, decimal.Zero) <= 0)
@@ -47,7 +50,27 @@ class HelperCustomerCreditDocumentAmortization
             tmpListaSave.Add(documentCreditAmortization);
         }
 
-        
+        //Actualizar Documento
+        objCustomerDocument.BalanceDocument = objCustomerDocument.BalanceDocument - amountApplyBackup;
+
+
+        //Actulizar Saldo del Cliente 
+        if (objCustomerResponse.CustomerId == objCustomerDocument.CurrencyId)
+        {
+            objCustomerResponse.Balance = objCustomerResponse.Balance - amountApplyBackup;
+        }
+        //Actualiar Saldo del cliente Linea de Credito en Dolares y Documento esta en cordoba
+        else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Cordoba)
+        {
+            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup / Convert.ToDecimal(0.0222));
+        }
+        //Actualiar Saldo del cliente Linea de Credito en Cordoba y Documento esta en Dolares
+        else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Dolar)
+        {
+            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup * Convert.ToDecimal( 0.0222));
+        }
+
+
         var taskAmortization = _repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
         var taskDocument = _repositoryDocumentCredit.PosMeUpdate(objCustomerDocument);
         var taskCustomer = _repositoryTbCustomer.PosMeUpdate(objCustomerResponse);
