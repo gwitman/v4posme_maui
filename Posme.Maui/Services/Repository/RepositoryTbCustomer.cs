@@ -12,6 +12,13 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<Api_AppM
             .FirstOrDefaultAsync();
     }
 
+    public Task<Api_AppMobileApi_GetDataDownloadCustomerResponse> PosMeFindEntityID(int entityID)
+    {
+        return dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadCustomerResponse>()
+            .Where(customers => customers.EntityId == entityID)
+            .FirstOrDefaultAsync();
+    }
+
     public Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilterBySearch(string search)
     {
         search = search.ToLower();

@@ -14,6 +14,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
     private readonly IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization;
     private readonly IRepositoryTbCustomer _repositoryTbCustomer;
     private readonly Helper _helper;
+    private readonly HelperCustomerCreditDocumentAmortization _helperCustomerCreditDocumentAmortization;
     private Api_AppMobileApi_GetDataDownloadDocumentCreditResponse _documentCreditResponse;
     private Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse _documentCreditAmortization;
     private Api_AppMobileApi_GetDataDownloadCustomerResponse _customerResponse;
@@ -24,6 +25,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         _documentCreditAmortization = new();
         _customerResponse = new();
         _helper = VariablesGlobales.UnityContainer.Resolve<Helper>();
+        _helperCustomerCreditDocumentAmortization = VariablesGlobales.UnityContainer.Resolve<HelperCustomerCreditDocumentAmortization>();
         Title = "Completar Abono 4/5";
         _repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
         _repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
@@ -41,8 +43,8 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         try
         {
             var codigoAbono = await _helper.GetCodigoAbono();
-            _customerResponse = await _repositoryTbCustomer.PosMeFindCustomer(DocumentCreditAmortizationResponse.CustomerNumber!);
-            DocumentCreditResponse.BalanceDocument = decimal.Subtract(DocumentCreditResponse.BalanceDocument, Monto);
+            //Obtener Cliente
+            _customerResponse = await _repositoryTbCustomer.PosMeFindCustomer(DocumentCreditAmortizationResponse.CustomerNumber!);            
             VariablesGlobales.DtoAplicarAbono = new ViewTempDtoAbono(
                 codigoAbono,
                 _customerResponse.CustomerNumber!,
@@ -55,7 +57,13 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
                 Monto,
                 SaldoInicial,
                 SaldoFinal,
-                Description!);
+                Description!
+            );
+
+            //Aplicar Abono
+            string reference = await _helperCustomerCreditDocumentAmortization.ApplyShare(_customerResponse.EntityId, DocumentCreditResponse.DocumentNumber!, Monto);
+
+            //Ingrear Abono 
             var tmpMonto = Monto;
             var transactionMaster = new TbTransactionMaster
             {
@@ -67,38 +75,14 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
                 TransactionNumber = codigoAbono,
                 TransactionOn = DateTime.Now,
                 EntitySecondaryId = _customerResponse.CustomerNumber,
-                EntityId = _customerResponse.EntityId
+                EntityId = _customerResponse.EntityId,
+                Reference1 = reference
             };
-            _customerResponse.Balance = decimal.Compare(_customerResponse.Balance, Monto) > 0 ? decimal.Subtract(_customerResponse.Balance, Monto) : decimal.Zero;
-            var documentCredits = await _repositoryDocumentCreditAmortization.PosMeFilterByCustomerNumber(_customerResponse.CustomerNumber!);
-            var tmpListaSave = new List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
-            foreach (var documentCreditAmortization in documentCredits)
-            {
-                if (decimal.Compare(tmpMonto, decimal.Zero) <= 0)
-                {
-                    break;
-                }
 
-                if (decimal.Compare(documentCreditAmortization.Remaining, tmpMonto) <= 0)
-                {
-                    tmpMonto = decimal.Subtract(tmpMonto, documentCreditAmortization.Remaining);
-                    documentCreditAmortization.Remaining = decimal.Zero;
-                }
-                else
-                {
-                    documentCreditAmortization.Remaining = tmpMonto;
-                    tmpMonto = decimal.Zero;
-                }
 
-                tmpListaSave.Add(documentCreditAmortization);
-                transactionMaster.Reference1 = $"{transactionMaster.Reference1},{documentCreditAmortization.DocumentCreditAmortizationId}";
-            }
+            var taskPlus = _helper.PlusCounter();
+            await Task.WhenAll([taskPlus]);
 
-            var taskPlus=_helper.PlusCounter();
-            var taskAmortization = _repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
-            var taskDocument = _repositoryDocumentCredit.PosMeUpdate(DocumentCreditResponse);
-            var taskCustomer = _repositoryTbCustomer.PosMeUpdate(_customerResponse);
-            await Task.WhenAll([taskAmortization, taskDocument, taskCustomer,taskPlus]);
             await NavigationService.NavigateToAsync<ValidarAbonoViewModel>(DocumentCreditResponse.DocumentNumber!);
         }
         catch (Exception e)
