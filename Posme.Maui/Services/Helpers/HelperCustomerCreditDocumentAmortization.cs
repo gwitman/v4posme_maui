@@ -39,30 +39,30 @@ class HelperCustomerCreditDocumentAmortization
             }
             else
             {
-                documentCreditAmortization.Remaining = amountApply;
+                documentCreditAmortization.Remaining = decimal.Subtract(documentCreditAmortization.Remaining, amountApply);
                 amountApply = decimal.Zero;
             }
             tmpListaSave.Add(documentCreditAmortization);
         }
 
         //Actualizar Documento
-        objCustomerDocument.Balance = objCustomerDocument.Balance - amountApplyBackup;
+        objCustomerDocument.Balance -= amountApplyBackup;
 
 
         //Actulizar Saldo del Cliente 
         if (objCustomerResponse.CustomerId == objCustomerDocument.CurrencyId)
         {
-            objCustomerResponse.Balance = objCustomerResponse.Balance - amountApplyBackup;
+            objCustomerResponse.Balance -= amountApplyBackup;
         }
         //Actualiar Saldo del cliente Linea de Credito en Dolares y Documento esta en cordoba
         else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Cordoba)
         {
-            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup * objCustomerDocument.ExchangeRate);
+            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup / objCustomerDocument.ExchangeRate);
         }
         //Actualiar Saldo del cliente Linea de Credito en Cordoba y Documento esta en Dolares
         else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Dolar)
         {
-            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup / objCustomerDocument.ExchangeRate );
+            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup * objCustomerDocument.ExchangeRate );
         }
 
 

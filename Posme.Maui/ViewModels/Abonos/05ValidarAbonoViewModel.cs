@@ -13,7 +13,7 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
 
     public ValidarAbonoViewModel()
     {
-        Title = "Aplicar Abono 5/5";
+        Title = "Comprobanto de Abono 5/5";
         _parameterSystem = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
         Item = VariablesGlobales.DtoAplicarAbono;
         AplicarOtroCommand = new Command(OnAplicarOtroCommand);
