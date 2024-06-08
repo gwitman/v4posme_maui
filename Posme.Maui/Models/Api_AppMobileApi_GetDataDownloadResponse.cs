@@ -44,12 +44,10 @@ public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
 [Table("tb_document_credit")]
 public class Api_AppMobileApi_GetDataDownloadDocumentCreditResponse
 {
-    [PrimaryKey, AutoIncrement] public int DocumentCreditPk { get; set; }
+    [PrimaryKey, AutoIncrement] public int CustomerCreditDocumentId { get; set; }
 
     public int EntityId { get; set; }
 
-    public int CustomerCreditDocumentId { get; set; }
-    
     public int CustomerCreditLineId { get; set; }
 
     public string? DocumentNumber { get; set; }
@@ -69,16 +67,14 @@ public class Api_AppMobileApi_GetDataDownloadDocumentCreditResponse
     public decimal Remaining { get; set; }
 
     public int StatusAmortization { get; set; }
-
     public string? StatusAmortizationName { get; set; }
+    public decimal ExchangeRate { get; set; }
 }
 
 [Table("document_credit_amortization")]
 public class Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse
 {
-    [PrimaryKey,AutoIncrement] public int DocumentCreditAmortizationPk { get; set; }
-    public int DocumentCreditAmortizationId { get; set; }
-
+    [PrimaryKey,AutoIncrement] public int CreditAmortizationID { get; set; }    
     public string? CustomerNumber { get; set; }
 
     public string? FirstName { get; set; }
@@ -99,7 +95,7 @@ public class Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse
 
     public decimal Remaining { get; set; }
 
-    public decimal ShareCapital { get; set; }
+    public decimal Balance { get; set; }
 }
 
 [SQLite.Table("tb_items")]
