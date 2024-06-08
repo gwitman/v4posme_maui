@@ -39,7 +39,7 @@
                       ContentTemplate="{DataTemplate local:DownloadPage}"/>
 
         <ShellContent Title="Abono" Icon="coin.svg"
-                      ContentTemplate="{DataTemplate abonos:AbonosPage}" Route="AbonoPage" />
+                      ContentTemplate="{DataTemplate abonos:AbonosPage}" />
 
         <ShellContent Title="Factura" Icon="invoice.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
@@ -55,7 +55,7 @@
                       ContentTemplate="{DataTemplate local:AboutPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
-                      ContentTemplate="{DataTemplate abonos:AbonosPage}" Route="AbonoPage"/>
+                      ContentTemplate="{DataTemplate abonos:AbonosPage}" />
 
         <ShellContent Title="Factura" Icon="invoice.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
@@ -71,7 +71,7 @@
                       ContentTemplate="{DataTemplate customers:CustomersPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
-                      ContentTemplate="{DataTemplate abonos:AbonosPage}" Route="AbonoPage"/>
+                      ContentTemplate="{DataTemplate abonos:AbonosPage}" />
 
         <ShellContent Title="Factura" Icon="invoice.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
@@ -87,7 +87,7 @@
                       ContentTemplate="{DataTemplate items:ItemsPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
-                      ContentTemplate="{DataTemplate abonos:AbonosPage}" Route="AbonoPage"/>
+                      ContentTemplate="{DataTemplate abonos:AbonosPage}"/>
 
         <ShellContent Title="Factura" Icon="invoice.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />
@@ -103,7 +103,7 @@
                       ContentTemplate="{DataTemplate local:AboutPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
-                      ContentTemplate="{DataTemplate abonos:AbonosPage}" Route="AbonoPage"/>
+                      ContentTemplate="{DataTemplate abonos:AbonosPage}" />
 
         <ShellContent Title="Factura" Icon="invoice.svg"
                       ContentTemplate="{DataTemplate local:ChartsPage}" />

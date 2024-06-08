@@ -18,7 +18,7 @@ class HelperCustomerCreditDocumentAmortization
         
         var objCustomDocumentAmortization   = await repositoryDocumentCreditAmortization.PosMeFilterByDocumentNumber(invoiceNumber);
         var objCustomerDocument             = await repositoryDocumentCredit.PosMeFindDocumentNumber(invoiceNumber);
-        var objCustomerResponse             = await repositoryTbCustomer.PosMeFindEntityID(entityId);
+        var objCustomerResponse             = await repositoryTbCustomer.PosMeFindEntityId(entityId);
 
 
         var tmpListaSave        = new List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
@@ -57,12 +57,12 @@ class HelperCustomerCreditDocumentAmortization
         //Actualiar Saldo del cliente Linea de Credito en Dolares y Documento esta en cordoba
         else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Cordoba)
         {
-            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup / objCustomerDocument.ExchangeRate);
+            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup * objCustomerDocument.ExchangeRate);
         }
         //Actualiar Saldo del cliente Linea de Credito en Cordoba y Documento esta en Dolares
         else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Dolar)
         {
-            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup * objCustomerDocument.ExchangeRate );
+            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup / objCustomerDocument.ExchangeRate );
         }
 
 

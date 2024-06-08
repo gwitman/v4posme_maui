@@ -61,7 +61,7 @@ public class AbonosViewModel : BaseViewModel
         await Task.Run(async () =>
         {
             Customers.Clear();
-            var finds = await _customerRepositoryTbCustomer.PosMeFilterBySearch(Search);
+            var finds = await _customerRepositoryTbCustomer.PosMeFilterByCustomerInvoice(Search);
             foreach (var customer in finds)
             {
                 Customers.Add(customer);

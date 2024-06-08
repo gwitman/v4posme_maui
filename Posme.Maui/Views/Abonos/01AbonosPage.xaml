@@ -90,7 +90,7 @@
                                                     <Span Text="Balance"
                                                           TextColor="White" />
                                                     <Span Text=" " />
-                                                    <Span Text="{Binding Balance}"
+                                                    <Span Text="{Binding Balance,StringFormat='{0:N2}'}"
                                                           TextColor="White" />
                                                 </FormattedString>
                                             </Label.FormattedText>
