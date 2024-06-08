@@ -38,6 +38,7 @@ public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
     [DataMember] public string? LastName { get; set; }
 
     [DataMember] public decimal Balance { get; set; }
+    
     public int CurrencyId { get; set; }
     public bool Modificado { get; set; }
 }

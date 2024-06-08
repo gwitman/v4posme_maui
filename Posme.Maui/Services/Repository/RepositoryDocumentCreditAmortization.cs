@@ -24,7 +24,7 @@ public class RepositoryDocumentCreditAmortization(DataBase dataBase) : Repositor
     {
         var query = """
                     select tdc.CurrencyName,
-                           dca.documentcreditamortizationpk,
+                           dca.CreditAmortizationID,
                            dca.customernumber,
                            dca.firstname,
                            dca.lastname,
@@ -34,8 +34,7 @@ public class RepositoryDocumentCreditAmortization(DataBase dataBase) : Repositor
                            dca.reportsinriesgo,
                            dca.dateapply,
                            dca.remaining,
-                           dca.sharecapital,
-                           dca.currencyname
+                           tdc.currencyname
                     from document_credit_amortization dca
                              join main.tb_document_credit tdc on dca.DocumentNumber = tdc.DocumentNumber
                     where dca.DocumentNumber = ?

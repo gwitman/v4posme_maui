@@ -9,21 +9,16 @@ class HelperCustomerCreditDocumentAmortization
 {
     public async Task<string> ApplyShare(int entityId,string invoiceNumber,decimal amountApply)
     {
-
-        IRepositoryDocumentCredit _repositoryDocumentCredit;
-        IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization;
-        IRepositoryTbCustomer _repositoryTbCustomer;
-
-        _repositoryDocumentCredit               = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
-        _repositoryDocumentCreditAmortization   = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
-        _repositoryTbCustomer                   = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
+        var repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
+        var repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
+        var repositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
 
 
         string resultado = "";
         
-        var objCustomDocumentAmortization   = await _repositoryDocumentCreditAmortization.PosMeFilterByDocumentNumber(invoiceNumber);
-        var objCustomerDocument             = await _repositoryDocumentCredit.PosMeFindDocumentNumber(invoiceNumber);
-        var objCustomerResponse             = await _repositoryTbCustomer.PosMeFindEntityID(entityId);
+        var objCustomDocumentAmortization   = await repositoryDocumentCreditAmortization.PosMeFilterByDocumentNumber(invoiceNumber);
+        var objCustomerDocument             = await repositoryDocumentCredit.PosMeFindDocumentNumber(invoiceNumber);
+        var objCustomerResponse             = await repositoryTbCustomer.PosMeFindEntityID(entityId);
 
 
         var tmpListaSave        = new List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
@@ -71,9 +66,9 @@ class HelperCustomerCreditDocumentAmortization
         }
 
 
-        var taskAmortization = _repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
-        var taskDocument = _repositoryDocumentCredit.PosMeUpdate(objCustomerDocument);
-        var taskCustomer = _repositoryTbCustomer.PosMeUpdate(objCustomerResponse);
+        var taskAmortization = repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
+        var taskDocument = repositoryDocumentCredit.PosMeUpdate(objCustomerDocument);
+        var taskCustomer = repositoryTbCustomer.PosMeUpdate(objCustomerResponse);
         await Task.WhenAll([taskAmortization, taskDocument, taskCustomer]);
 
         return resultado;

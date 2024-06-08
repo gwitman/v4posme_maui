@@ -13,6 +13,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
     private readonly IRepositoryDocumentCredit _repositoryDocumentCredit;
     private readonly IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization;
     private readonly IRepositoryTbCustomer _repositoryTbCustomer;
+    private readonly IRepositoryTransactionMaster _repositoryTransactionMaster;
     private readonly Helper _helper;
     private readonly HelperCustomerCreditDocumentAmortization _helperCustomerCreditDocumentAmortization;
     private Api_AppMobileApi_GetDataDownloadDocumentCreditResponse _documentCreditResponse;
@@ -30,6 +31,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         _repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
         _repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
         _repositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
+        _repositoryTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTransactionMaster>();
         AplicarAbonoCommand = new Command(OnAplicarAbono);
     }
 
@@ -44,7 +46,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         {
             var codigoAbono = await _helper.GetCodigoAbono();
             //Obtener Cliente
-            _customerResponse = await _repositoryTbCustomer.PosMeFindCustomer(DocumentCreditAmortizationResponse.CustomerNumber!);            
+            _customerResponse = await _repositoryTbCustomer.PosMeFindCustomer(DocumentCreditAmortizationResponse.CustomerNumber!);
             VariablesGlobales.DtoAplicarAbono = new ViewTempDtoAbono(
                 codigoAbono,
                 _customerResponse.CustomerNumber!,
@@ -78,10 +80,9 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
                 EntityId = _customerResponse.EntityId,
                 Reference1 = reference
             };
-
-
+            var taskTransactionMaster = _repositoryTransactionMaster.PosMeInsert(transactionMaster);
             var taskPlus = _helper.PlusCounter();
-            await Task.WhenAll([taskPlus]);
+            await Task.WhenAll([taskPlus, taskTransactionMaster]);
 
             await NavigationService.NavigateToAsync<ValidarAbonoViewModel>(DocumentCreditResponse.DocumentNumber!);
         }
