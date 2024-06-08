@@ -51,7 +51,7 @@ class HelperCustomerCreditDocumentAmortization
         }
 
         //Actualizar Documento
-        objCustomerDocument.BalanceDocument = objCustomerDocument.BalanceDocument - amountApplyBackup;
+        objCustomerDocument.Balance = objCustomerDocument.Balance - amountApplyBackup;
 
 
         //Actulizar Saldo del Cliente 

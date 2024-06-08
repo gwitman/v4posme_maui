@@ -38,6 +38,7 @@ public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
     [DataMember] public string? LastName { get; set; }
 
     [DataMember] public decimal Balance { get; set; }
+    public int CurrencyId { get; set; }
     public bool Modificado { get; set; }
 }
 
@@ -45,29 +46,18 @@ public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
 public class Api_AppMobileApi_GetDataDownloadDocumentCreditResponse
 {
     [PrimaryKey, AutoIncrement] public int CustomerCreditDocumentId { get; set; }
-
     public int EntityId { get; set; }
-
     public int CustomerCreditLineId { get; set; }
-
     public string? DocumentNumber { get; set; }
-
-    public decimal BalanceDocument { get; set; }
-
     public string? CurrencyName { get; set; }
-
     public int CurrencyId { get; set; }
-
     public int StatusDocument { get; set; }
-
     public int CreditAmortizationId { get; set; }
-
     public DateTime DateApply { get; set; }
-
     public decimal Remaining { get; set; }
-
     public int StatusAmortization { get; set; }
     public string? StatusAmortizationName { get; set; }
+    public decimal Balance { get; set; }
     public decimal ExchangeRate { get; set; }
 }
 
@@ -84,8 +74,6 @@ public class Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse
     public DateTime BirthDate { get; set; }
 
     public string? DocumentNumber { get; set; }
-
-    public string? CurrencyName { get; set; }
 
     public int CurrencyId { get; set; }
 

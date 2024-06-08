@@ -187,7 +187,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         DocumentCreditResponse = await _repositoryDocumentCredit.PosMeFindDocumentNumber(parameter);
         DocumentCreditAmortizationResponse = await _repositoryDocumentCreditAmortization.PosMeFindByDocumentNumber(parameter);
         CurrencyName = DocumentCreditResponse.CurrencyName!;
-        SaldoInicial = DocumentCreditResponse.BalanceDocument;
+        SaldoInicial = DocumentCreditResponse.Balance;
         IsBusy = false;
     }
 

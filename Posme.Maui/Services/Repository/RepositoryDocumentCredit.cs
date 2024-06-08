@@ -7,7 +7,7 @@ public class RepositoryDocumentCredit(DataBase dataBase) : RepositoryFacade<Api_
     public async Task<List<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse>> PosMeFindByEntityId(int entityId)
     {
         return await dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse>()
-            .Where(response => response.EntityId == entityId && response.BalanceDocument > decimal.Zero)
+            .Where(response => response.EntityId == entityId && response.Balance > decimal.Zero)
             .ToListAsync();
     }
 
