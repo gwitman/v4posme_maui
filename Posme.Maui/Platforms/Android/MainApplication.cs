@@ -8,6 +8,15 @@ using System;
 [assembly: UsesPermission(Android.Manifest.Permission.ReadMediaAudio)]
 [assembly: UsesPermission(Android.Manifest.Permission.ReadMediaImages)]
 [assembly: UsesPermission(Android.Manifest.Permission.ReadMediaVideo)]
+
+[assembly: UsesPermission(Android.Manifest.Permission.Bluetooth)]
+[assembly: UsesPermission(Android.Manifest.Permission.BluetoothAdmin)]
+[assembly: UsesPermission(Android.Manifest.Permission.BluetoothAdvertise)]
+[assembly: UsesPermission(Android.Manifest.Permission.BluetoothConnect)]
+[assembly: UsesPermission(Android.Manifest.Permission.BluetoothPrivileged)]
+[assembly: UsesPermission(Android.Manifest.Permission.BluetoothScan)]
+[assembly: UsesPermission(Android.Manifest.Permission.AccessFineLocation)]
+
 [assembly: UsesPermission(Android.Manifest.Permission.Camera)]
 [assembly: UsesPermission(Android.Manifest.Permission.WriteExternalStorage, MaxSdkVersion = 32)]
 [assembly: UsesFeature("android.hardware.camera", Required = true)]

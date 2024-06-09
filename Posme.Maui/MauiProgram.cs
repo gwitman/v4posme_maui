@@ -9,6 +9,7 @@ using Posme.Maui.Services.Repository;
 using Posme.Maui.ViewModels;
 using Posme.Maui.Views;
 using Posme.Maui.Views.Items;
+using System.Text;
 using Unity;
 using ZXing.Net.Maui.Controls;
 
@@ -56,6 +57,8 @@ namespace Posme.Maui
             DevExpress.Maui.Editors.Initializer.Init();
             DevExpress.Maui.DataGrid.Initializer.Init();
             DevExpress.Maui.Scheduler.Initializer.Init();
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             return builder.Build();
         }
     }

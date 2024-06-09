@@ -1,5 +1,6 @@
 ﻿using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
+using Plugin.BLE.Abstractions.Extensions;
 using Posme.Maui.Services.Repository;
 using Unity;
 
@@ -25,7 +26,8 @@ public class BluetoothPrinterService
             return false;
         }
 
-        var connectedDevices = _adapter.GetSystemConnectedOrPairedDevices();
+        //var connectedDevices = _adapter.GetSystemConnectedOrPairedDevices();
+        var connectedDevices = _adapter.ConnectedDevices;
 
         var printerParameter = await _repositoryTbParameterSystem.PosMeFindPrinter();
         PrinterName = printerParameter.Value!;
