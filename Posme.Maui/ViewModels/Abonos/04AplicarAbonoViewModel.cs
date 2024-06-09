@@ -51,7 +51,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
 
         try
         {
-            await Navigation.PushModalAsync(new LoadingPage(),true);
+            IsBusy = true;
             var codigoAbono = await _helper.GetCodigoAbono();
             //Obtener Cliente
             _customerResponse = await _repositoryTbCustomer.PosMeFindCustomer(DocumentCreditAmortizationResponse.CustomerNumber!);
@@ -91,7 +91,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
             var taskTransactionMaster = _repositoryTransactionMaster.PosMeInsert(transactionMaster);
             var taskPlus = _helper.PlusCounter();
             await Task.WhenAll([taskPlus, taskTransactionMaster]);
-            await Navigation.PopModalAsync(true);
+            IsBusy = false;
             await NavigationService.NavigateToAsync<ValidarAbonoViewModel>(DocumentCreditResponse.DocumentNumber!);
         }
         catch (Exception e)

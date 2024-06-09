@@ -50,19 +50,19 @@ class HelperCustomerCreditDocumentAmortization
 
 
         //Actulizar Saldo del Cliente 
-        if (objCustomerResponse.CustomerId == objCustomerDocument.CurrencyId)
+        if (objCustomerResponse.CurrencyId == objCustomerDocument.CurrencyId)
         {
             objCustomerResponse.Balance -= amountApplyBackup;
         }
         //Actualiar Saldo del cliente Linea de Credito en Dolares y Documento esta en cordoba
-        else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Cordoba)
+        else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Cordoba && objCustomerDocument.CurrencyId==(int)TypeCurrency.Dolar)
         {
-            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup / objCustomerDocument.ExchangeRate);
+            objCustomerResponse.Balance -= decimal.Round(amountApplyBackup / objCustomerDocument.ExchangeRate,2);
         }
         //Actualiar Saldo del cliente Linea de Credito en Cordoba y Documento esta en Dolares
-        else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Dolar)
+        else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Dolar && objCustomerDocument.CurrencyId == (int)TypeCurrency.Cordoba)
         {
-            objCustomerResponse.Balance = objCustomerResponse.Balance - (amountApplyBackup * objCustomerDocument.ExchangeRate );
+            objCustomerResponse.Balance -= decimal.Round(amountApplyBackup * objCustomerDocument.ExchangeRate,2);
         }
 
 

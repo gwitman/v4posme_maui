@@ -23,7 +23,8 @@
                       ContentTemplate="{DataTemplate local:AboutPage}"/>
 
         <ShellContent Title="Abono" Icon="coin.svg"
-                      ContentTemplate="{DataTemplate abonos:AbonosPage}" Route="AbonoPage"/>
+                      ContentTemplate="{DataTemplate abonos:AbonosPage}" 
+                      Route="AbonoPage"/>
 
         <ShellContent Title="Factura" Icon="invoice.svg"
                       ContentTemplate="{DataTemplate local:SchedulerPage}" />
