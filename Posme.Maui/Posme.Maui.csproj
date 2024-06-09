@@ -39,6 +39,14 @@
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
+    <ItemGroup>
+      <AndroidResource Remove="ServicesLibrary\**" />
+      <Compile Remove="ServicesLibrary\**" />
+      <EmbeddedResource Remove="ServicesLibrary\**" />
+      <MauiCss Remove="ServicesLibrary\**" />
+      <MauiXaml Remove="ServicesLibrary\**" />
+      <None Remove="ServicesLibrary\**" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
@@ -66,11 +74,6 @@
         <PackageReference Include="DevExpress.Maui.DataGrid" Version="23.2.6" />
         <PackageReference Include="DevExpress.Maui.Scheduler" Version="23.2.6" />
         <TrimmableAssembly Include="DevExpress.Data.v23.2" />
-    </ItemGroup>
-
-
-    <ItemGroup>
-        <Folder Include="ServicesLibrary\" />
     </ItemGroup>
 
 
