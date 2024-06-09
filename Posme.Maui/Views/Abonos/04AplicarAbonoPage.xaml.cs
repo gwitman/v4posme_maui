@@ -11,7 +11,13 @@ public partial class AplicarAbonoPage : ContentPage
     {
         InitializeComponent();
     }
-    
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        ((AplicarAbonoViewModel)BindingContext).OnAppearing(Navigation);
+    }
+
     private void TxtMonto_OnTextChanged(object? sender, EventArgs e)
     {
         var text = sender as TextEdit;

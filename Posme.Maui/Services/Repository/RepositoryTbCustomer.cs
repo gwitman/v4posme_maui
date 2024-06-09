@@ -14,7 +14,7 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<Api_AppM
             .FirstOrDefaultAsync();
     }
 
-    public Task<Api_AppMobileApi_GetDataDownloadCustomerResponse> PosMeFindEntityID(int entityID)
+    public Task<Api_AppMobileApi_GetDataDownloadCustomerResponse> PosMeFindEntityId(int entityID)
     {
         return _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadCustomerResponse>()
             .Where(customers => customers.EntityId == entityID)
@@ -40,5 +40,18 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<Api_AppM
                     from tb_customers tbc join tb_document_credit tdc on tbc.EntityId = tdc.EntityId
                     """;
         return await _dataBase.Database.QueryAsync<Api_AppMobileApi_GetDataDownloadCustomerResponse>(query);
+    }
+
+    public async Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilterByCustomerInvoice(string search)
+    {
+        var query = """
+                    select distinct tbc.CustomerId, ComapnyId, BranchId, tbc.EntityId, CustomerNumber, Identification, 
+                                    FirstName, LastName, tbc.Balance, Modificado 
+                    from tb_customers tbc join tb_document_credit tdc on tbc.EntityId = tdc.EntityId
+                    where tbc.CustomerNumber like '%' || ? || '%' 
+                       or tbc.FirstName like '%' ||  ? || '%'
+                       or tbc.Identification like '%' || ?  || '%'  
+                    """;
+        return await _dataBase.Database.QueryAsync<Api_AppMobileApi_GetDataDownloadCustomerResponse>(query, search);
     }
 }

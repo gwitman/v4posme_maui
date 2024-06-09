@@ -4,6 +4,7 @@ using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
+using Posme.Maui.Views;
 using Unity;
 
 namespace Posme.Maui.ViewModels.Abonos;
@@ -32,7 +33,13 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         _repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
         _repositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
         _repositoryTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTransactionMaster>();
-        AplicarAbonoCommand = new Command(OnAplicarAbono);
+        AplicarAbonoCommand = new Command(OnAplicarAbono,OnValidateMonto);
+        PropertyChanged += (_, _) => AplicarAbonoCommand.ChangeCanExecute();
+    }
+
+    private bool OnValidateMonto(object arg)
+    {
+        return !Validate();
     }
 
     private async void OnAplicarAbono(object obj)
@@ -44,6 +51,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
 
         try
         {
+            IsBusy = true;
             var codigoAbono = await _helper.GetCodigoAbono();
             //Obtener Cliente
             _customerResponse = await _repositoryTbCustomer.PosMeFindCustomer(DocumentCreditAmortizationResponse.CustomerNumber!);
@@ -83,7 +91,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
             var taskTransactionMaster = _repositoryTransactionMaster.PosMeInsert(transactionMaster);
             var taskPlus = _helper.PlusCounter();
             await Task.WhenAll([taskPlus, taskTransactionMaster]);
-
+            IsBusy = false;
             await NavigationService.NavigateToAsync<ValidarAbonoViewModel>(DocumentCreditResponse.DocumentNumber!);
         }
         catch (Exception e)
@@ -96,16 +104,21 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
     {
         if (string.IsNullOrWhiteSpace(Description))
         {
-            ShowToast("Especifique una descripción del abono", ToastDuration.Long, 16);
+            //ShowToast("Especifique una descripción del abono", ToastDuration.Long, 16);
             return true;
         }
 
         if (decimal.Compare(Monto, decimal.Zero) <= 0)
         {
-            ShowToast("Especifique un monto del abono", ToastDuration.Long, 16);
+            //ShowToast("Especifique un monto del abono", ToastDuration.Long, 16);
             return true;
         }
 
+        if (decimal.Compare(SaldoFinal, decimal.Zero)<0)
+        {
+            ShowToast("No se puede ingresar un saldo negativo", ToastDuration.Long, 16);
+            return true;
+        }
         return false;
     }
 
@@ -196,5 +209,10 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
     {
         var id = HttpUtility.UrlDecode(query["id"] as string);
         await LoadInvoices(id);
+    }
+
+    public void OnAppearing(INavigation navigation)
+    {
+        Navigation = navigation;
     }
 }

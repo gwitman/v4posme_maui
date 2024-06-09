@@ -6,9 +6,10 @@ public interface IRepositoryTbCustomer : IRepositoryFacade<Api_AppMobileApi_GetD
 {
     Task<Api_AppMobileApi_GetDataDownloadCustomerResponse> PosMeFindCustomer(string customerNumber);
 
-    Task<Api_AppMobileApi_GetDataDownloadCustomerResponse> PosMeFindEntityID(int entityID);
+    Task<Api_AppMobileApi_GetDataDownloadCustomerResponse> PosMeFindEntityId(int entityId);
 
     Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilterBySearch(string search);
 
     Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilterByInvoice();
+    Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilterByCustomerInvoice(string search);
 }

@@ -37,7 +37,7 @@ public class RepositoryDocumentCreditAmortization(DataBase dataBase) : Repositor
                            tdc.currencyname
                     from document_credit_amortization dca
                              join main.tb_document_credit tdc on dca.DocumentNumber = tdc.DocumentNumber
-                    where dca.DocumentNumber = ?
+                    where dca.DocumentNumber = ? and dca.Remaining>0
                     """;
         return await _dataBase.Database.QueryAsync<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>(query, document);
     }

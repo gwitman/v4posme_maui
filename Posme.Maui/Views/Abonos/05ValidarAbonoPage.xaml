@@ -15,13 +15,17 @@
         <abonos:ValidarAbonoViewModel />
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="shared" />
-        <ToolbarItem Text="Imprimir" Order="Secondary" />
+        <ToolbarItem IconImageSource="shared" Clicked="MenuItem_OnClicked" />
+        <ToolbarItem Text="Imprimir" Order="Secondary" x:Name="ItemPrint" Clicked="ItemPrint_OnClicked" />
         <ToolbarItem Text="Aplicar Otro" Order="Secondary" Command="{Binding AplicarOtroCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>
-            <dx:DXStackLayout Orientation="Vertical" Padding="0, 10, 0, 0">
+            <dx:DXStackLayout 
+                BackgroundColor="White"
+                x:Name="DxStackLayout"
+                Orientation="Vertical" 
+                              Padding="0, 10, 0, 0">
                 <dx:DXStackLayout Orientation="Vertical"
                                   Padding="25"
                                   HorizontalOptions="Center">
