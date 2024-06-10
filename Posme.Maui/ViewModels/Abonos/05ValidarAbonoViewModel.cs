@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
+using Posme.Maui.Views.Abonos;
 using Unity;
 
 namespace Posme.Maui.ViewModels.Abonos;
@@ -17,6 +18,23 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
         _parameterSystem = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
         Item = VariablesGlobales.DtoAplicarAbono;
         AplicarOtroCommand = new Command(OnAplicarOtroCommand);
+        PrintCommand = new Command(OnPrintCommand);
+    }
+
+    private async void OnPrintCommand(object obj)
+    {
+        var dateTime = DateTime.Now;
+        var result = $"{dateTime.Year}{dateTime.Month}{dateTime.Day}{dateTime.Hour}{dateTime.Minute}{dateTime.Second}";
+        var filePath = GetFilePath($"{result}.pdf");
+        var printerService = new PrinterServices();
+        await printerService.SavePdf(filePath);
+        VariablesGlobales.FilePdf = filePath;
+#if ANDROID
+        var helper = new Helpers.PrintHelper();
+        var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        await helper.PrintAsync(stream, filePath);
+#endif
+        await Navigation!.PushAsync(new PrintViewPage(), true);
     }
 
     private async void OnAplicarOtroCommand()
@@ -38,20 +56,22 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
     }
 
     public ICommand AplicarOtroCommand { get; }
+    public ICommand PrintCommand { get; }
 
     public override async Task InitializeAsync(object parameter)
     {
-        await OnAppearing();
+        await OnAppearing(Navigation);
     }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         var id = HttpUtility.UrlDecode(query["id"] as string);
-        await OnAppearing();
+        await OnAppearing(Navigation);
     }
 
-    public async Task OnAppearing()
+    public async Task OnAppearing(INavigation navigation)
     {
+        Navigation = navigation;
         await Task.Run(async () =>
         {
             var paramter = await _parameterSystem.PosMeFindLogo();
@@ -59,5 +79,15 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
             LogoSource = ImageSource.FromStream(() => new MemoryStream(imageBytes));
             Item = VariablesGlobales.DtoAplicarAbono;
         });
+    }
+
+
+    private string GetFilePath(string filename)
+    {
+        var folderPath = Environment.GetFolderPath(DeviceInfo.Platform == DevicePlatform.Android
+            ? Environment.SpecialFolder.LocalApplicationData
+            : Environment.SpecialFolder.MyDocuments);
+
+        return Path.Combine(folderPath, filename);
     }
 }

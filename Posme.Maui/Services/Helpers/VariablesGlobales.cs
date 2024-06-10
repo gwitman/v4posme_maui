@@ -12,6 +12,7 @@ public static class VariablesGlobales
     public static string? LogoTemp;
     public static ViewTempDtoAbono DtoAplicarAbono;
     public static string? PagePrincipalNavegacion=string.Empty;
+    public static string FilePdf;
 
     static VariablesGlobales()
     {

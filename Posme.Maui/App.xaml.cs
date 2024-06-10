@@ -1,7 +1,5 @@
 ﻿using Posme.Maui.Services;
 using Posme.Maui.Services.Helpers;
-using Posme.Maui.Services.Repository;
-using Posme.Maui.ViewModels.Abonos;
 using Posme.Maui.Views;
 using Posme.Maui.Views.Abonos;
 using Posme.Maui.Views.Items;
@@ -27,6 +25,7 @@ namespace Posme.Maui
         protected override void OnStart()
         {
             DependencyService.Register<NavigationService>();
+            DependencyService.Register<IPrintService>();
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             Routing.RegisterRoute(typeof(CustomerDetailInvoicePage).FullName, typeof(CustomerDetailInvoicePage));
             Routing.RegisterRoute(typeof(AbonosPage).FullName, typeof(AbonosPage));

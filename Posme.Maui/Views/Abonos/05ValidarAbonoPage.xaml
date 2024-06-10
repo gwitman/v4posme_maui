@@ -16,7 +16,7 @@
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="shared" Clicked="MenuItem_OnClicked" />
-        <ToolbarItem Text="Imprimir" Order="Secondary" x:Name="ItemPrint" Clicked="ItemPrint_OnClicked" />
+        <ToolbarItem Text="Imprimir" Order="Secondary" x:Name="ItemPrint" Command="{Binding PrintCommand}" />
         <ToolbarItem Text="Aplicar Otro" Order="Secondary" Command="{Binding AplicarOtroCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>

@@ -9,6 +9,7 @@ using Posme.Maui.Services.Repository;
 using Posme.Maui.ViewModels;
 using Posme.Maui.Views;
 using Posme.Maui.Views.Items;
+using Syncfusion.Maui.Core.Hosting;
 using System.Text;
 using Unity;
 using ZXing.Net.Maui.Controls;
@@ -23,6 +24,7 @@ namespace Posme.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .ConfigureSyncfusionCore()
                 .UseMauiCommunityToolkit()
                 .UseDevExpress(useLocalization: true)
                 .UseBarcodeReader()

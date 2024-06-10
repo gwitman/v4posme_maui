@@ -46,10 +46,14 @@
       <MauiCss Remove="ServicesLibrary\**" />
       <MauiXaml Remove="ServicesLibrary\**" />
       <None Remove="ServicesLibrary\**" />
+      <Compile Update="Platforms\Android\PrintService.cs">
+        <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
+        <PackageReference Include="BouncyCastle.Cryptography" Version="2.4.0" />
+        <PackageReference Include="CommunityToolkit.Maui" Version="9.0.1" />
         <PackageReference Include="ESC-POS-USB-NET" Version="1.1.3" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0-preview.3.24172.9" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-preview.3.24172.9" />
@@ -59,10 +63,13 @@
         <PackageReference Include="Plugin.BLE" Version="3.1.0" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
         <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
+        <PackageReference Include="Syncfusion.Maui.PdfViewer" Version="25.1.35" />
         <PackageReference Include="System.Text.Json" Version="9.0.0-preview.3.24172.9" />
         <PackageReference Include="Unity" Version="5.11.10" />
         <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
         <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
+        <PackageReference Include="itext7" Version="8.0.4" />
+        <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.4" />
     </ItemGroup>
 
     <ItemGroup>
@@ -87,6 +94,9 @@
         <Compile Update="Views\Abonos\03CreditDetailInvoicePage.xaml.cs">
           <DependentUpon>03CreditDetailInvoicePage.xaml</DependentUpon>
         </Compile>
+        <Compile Update="Views\Abonos\PrintViewPage.xaml.cs">
+          <DependentUpon>PrintViewPage.xaml</DependentUpon>
+        </Compile>
         <Compile Update="Views\Clientes\ClientesPage.xaml.cs">
             <DependentUpon>ClientesPage.xaml</DependentUpon>
         </Compile>
@@ -102,6 +112,9 @@
 
 
     <ItemGroup>
+        <MauiXaml Update="Views\Abonos\PrintViewPage.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
         <MauiXaml Update="Views\Clientes\ClientesPage.xaml">
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
@@ -111,5 +124,12 @@
         <MauiXaml Update="Views\Abonos\05ValidarAbonoPage.xaml">
           <SubType>Designer</SubType>
         </MauiXaml>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Reference Include="Mono.Android">
+        <HintPath>C:\Program Files\dotnet\packs\Microsoft.Android.Ref.34\34.0.52\ref\net8.0\Mono.Android.dll</HintPath>
+      </Reference>
     </ItemGroup>
 </Project>
