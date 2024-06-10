@@ -15,4 +15,10 @@ public partial class PrintViewPage : ContentPage
         base.OnAppearing();
         ((PrintViewViewModel)BindingContext).OnAppearing();
     }
+
+    private void MenuItem_OnClicked(object? sender, EventArgs e)
+    {
+        PdfViewer.PrintDocument();
+        PdfViewer.PrintDocument();
+    }
 }

@@ -22,10 +22,12 @@ namespace Posme.Maui
             UserAppTheme = AppTheme.Light;
         }
 
+        
         protected override void OnStart()
         {
             DependencyService.Register<NavigationService>();
             DependencyService.Register<IPrintService>();
+            DependencyService.Register<IBluetoothPrintService>();
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             Routing.RegisterRoute(typeof(CustomerDetailInvoicePage).FullName, typeof(CustomerDetailInvoicePage));
             Routing.RegisterRoute(typeof(AbonosPage).FullName, typeof(AbonosPage));
@@ -33,6 +35,7 @@ namespace Posme.Maui
             Routing.RegisterRoute(typeof(AplicarAbonoPage).FullName, typeof(AplicarAbonoPage));
             Routing.RegisterRoute(typeof(ValidarAbonoPage).FullName, typeof(ValidarAbonoPage));
             VariablesGlobales.BarCode = string.Empty;
+            
         }
     }
 }

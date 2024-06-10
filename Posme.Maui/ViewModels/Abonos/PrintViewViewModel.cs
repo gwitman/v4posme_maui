@@ -6,7 +6,7 @@ public class PrintViewViewModel :BaseViewModel
 {
     public PrintViewViewModel()
     {
-        
+        Title = "Imprimir Archivo";
     }
 
     public void OnAppearing()

@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using System.Windows.Input;
 using Posme.Maui.Models;
+using Posme.Maui.Services;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Views.Abonos;
@@ -23,18 +24,13 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
 
     private async void OnPrintCommand(object obj)
     {
-        var dateTime = DateTime.Now;
-        var result = $"{dateTime.Year}{dateTime.Month}{dateTime.Day}{dateTime.Hour}{dateTime.Minute}{dateTime.Second}";
-        var filePath = GetFilePath($"{result}.pdf");
-        var printerService = new PrinterServices();
-        await printerService.SavePdf(filePath);
-        VariablesGlobales.FilePdf = filePath;
+        var parametroPrinter = await _parameterSystem.PosMeFindPrinter();
 #if ANDROID
-        var helper = new Helpers.PrintHelper();
-        var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        await helper.PrintAsync(stream, filePath);
+        var printService = new PrintByBluetooth();
+        printService.Connect(parametroPrinter.Value!);
+        printService.Print("Este es un recibo de prueba.");
+        printService.Disconnect();
 #endif
-        await Navigation!.PushAsync(new PrintViewPage(), true);
     }
 
     private async void OnAplicarOtroCommand()

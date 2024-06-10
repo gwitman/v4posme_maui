@@ -4,17 +4,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Posme.Maui.Views.Abonos.PrintViewPage"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.PdfViewer;assembly=Syncfusion.Maui.PdfViewer"
-             xmlns:abonos="clr-namespace:Posme.Maui.ViewModels.Abonos">
+             xmlns:abonos="clr-namespace:Posme.Maui.ViewModels.Abonos"
+             Title="{Binding Title}">
     <ContentPage.BindingContext>
         <abonos:PrintViewViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="printer" Clicked="MenuItem_OnClicked" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
             <syncfusion:SfPdfViewer
                 x:Name="PdfViewer"
-                DocumentSource="{Binding DocumentStream}">
-                <Button Text="Print" 
-                        Command="{Binding Source={x:Reference PdfViewer},Path=PrintDocumentCommand}"/>
-            </syncfusion:SfPdfViewer>
-            
+                DocumentSource="{Binding DocumentStream}"/>
     </ContentPage.Content>
 </ContentPage>
