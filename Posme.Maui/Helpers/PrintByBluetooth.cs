@@ -52,8 +52,9 @@ public class PrintByBluetooth
                 if (!string.IsNullOrWhiteSpace(logo.Value))
                 {
                     var logoByte = Convert.FromBase64String(logo.Value!);
+                    var bitmap = new Bitmap(new MemoryStream(logoByte));
                     printer.AlignCenter();
-                    printer.Image(logoByte);
+                    printer.Image(bitmap);
                 }
 
                 printer.AlignLeft();
