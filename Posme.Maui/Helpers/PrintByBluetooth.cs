@@ -1,14 +1,13 @@
 ﻿#if ANDROID
 using System.Diagnostics;
-using System.Drawing;
 using System.Text;
 using Android.Bluetooth;
+using Android.Graphics;
 using ESC_POS_USB_NET.Printer;
 using Java.Util;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Unity;
-using Image = System.Drawing.Image;
 
 namespace Posme.Maui;
 
@@ -37,6 +36,45 @@ public class PrintByBluetooth
         _socket = _device.CreateRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805F9B34FB"));
         _socket!.Connect();
     }
+    public byte[] convertBitmapToPOSFormat(Bitmap bitmap) {
+        // Opcionalmente, puedes redimensionar el Bitmap si es necesario
+        Bitmap scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, 384, bitmap.Height, false);
+    
+        int width = scaledBitmap.Width;
+        int height = scaledBitmap.Height;
+    
+        byte[] data = new byte[(width / 8) * height + 8];
+    
+        data[0] = 0x1D;
+        data[1] = 0x76;
+        data[2] = 0x30;
+        data[3] = 0x00;
+        data[4] = (byte) (width / 8);
+        data[5] = 0x00;
+        data[6] = (byte) (height % 256);
+        data[7] = (byte) (height / 256);
+    
+        int k = 8;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j += 8) {
+                byte b = 0;
+                for (int n = 0; n < 8; n++) {
+                    if (j + n < width) {
+                        int pixel = scaledBitmap.GetPixel(j + n, i);
+                        int r = (pixel >> 16) & 0xff;
+                        int g = (pixel >> 8) & 0xff;
+                        int b_ = pixel & 0xff;
+                        int luminance = (r + g + b_) / 3;
+                        /*if (luminance < 128) {
+                            b |= 1 << (7 - n);
+                        }*/
+                    }
+                }
+                data[k++] = b;
+            }
+        }
+        return data;
+    }
 
     public void Print()
     {
@@ -52,9 +90,11 @@ public class PrintByBluetooth
                 if (!string.IsNullOrWhiteSpace(logo.Value))
                 {
                     var logoByte = Convert.FromBase64String(logo.Value!);
-                    var bitmap = new Bitmap(new MemoryStream(logoByte));
+                    var bitmap = BitmapFactory.DecodeByteArray(logoByte,0, logoByte.Length);
+                    byte[] posData = convertBitmapToPOSFormat(bitmap!);
                     printer.AlignCenter();
-                    printer.Image(bitmap);
+                    var outputStream = _socket.OutputStream;
+                    outputStream!.Write(posData, 0, posData.Length);
                 }
 
                 printer.AlignLeft();
