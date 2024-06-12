@@ -314,6 +314,11 @@ namespace ESC_POS_USB_NET.Printer
         {
             Append(_command.LineHeight.SetLineHeight(height));
         }
+
+        public void Image(byte[] logoByte)
+        {
+            Append(logoByte);
+        }
     }
 }
 
