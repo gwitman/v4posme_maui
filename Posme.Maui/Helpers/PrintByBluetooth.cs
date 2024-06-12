@@ -49,7 +49,7 @@ public class PrintByBluetooth
                 outputStream!.Write(_buffer, 0, _buffer.Length);
                 outputStream.Flush();*/
                 var printer = new Printer();
-                if (string.IsNullOrWhiteSpace(logo.Value))
+                if (!string.IsNullOrWhiteSpace(logo.Value))
                 {
                     var logoByte = Convert.FromBase64String(logo.Value!);
                     printer.AlignCenter();
