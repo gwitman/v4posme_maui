@@ -1,4 +1,5 @@
 ﻿#if ANDROID
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using Android.Bluetooth;
@@ -43,18 +44,18 @@ public class PrintByBluetooth
         {
             try
             {
-                //var logo = await ParameterSystem.PosMeFindLogo();
-                /*
-                var outputStream = _socket.OutputStream;
+                var logo = ParameterSystem.PosMeFindLogo().Result;
+                /*var outputStream = _socket.OutputStream;
                 outputStream!.Write(_buffer, 0, _buffer.Length);
-                outputStream.Flush();
-                */
+                outputStream.Flush();*/
                 var printer = new Printer();
-            
-                //var logoByte = Convert.FromBase64String(logo.Value!);
-                //printer.AlignCenter();
-                //printer.Image(logoByte);
-            
+                if (string.IsNullOrWhiteSpace(logo.Value))
+                {
+                    var logoByte = Convert.FromBase64String(logo.Value!);
+                    printer.AlignCenter();
+                    printer.Image(logoByte);
+                }
+
                 printer.AlignLeft();
                 printer.Append($"Le informamos que: Nombre: {VariablesGlobales.DtoAplicarAbono.FirstName} {VariablesGlobales.DtoAplicarAbono.LastName} creó un código para abono de factura con los siguientes datos");
                 printer.Append($"Código de abono: {VariablesGlobales.DtoAplicarAbono.CodigoAbono}");
@@ -63,26 +64,20 @@ public class PrintByBluetooth
                 printer.Append($"Saldo inicial: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.SaldoInicial.ToString("N2")}");
                 printer.Append($"Monto a aplicar: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.MontoAplicar.ToString("N2")}");
                 printer.Append($"Saldo Final: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.SaldoFinal.ToString("N2")}");
-                printer.Append($"Comentarios: {VariablesGlobales.DtoAplicarAbono.Description}");                
+                printer.Append($"Comentarios: {VariablesGlobales.DtoAplicarAbono.Description}");
                 printer.Print(_socket);
-
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                var i = 0;
+                throw new Exception(e.Message);
             }
-
-
-
-
         }
     }
 
-  
+
     public void Disconnect()
     {
         _socket!.Close();
     }
-
 }
 #endif

@@ -42,6 +42,13 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<Api_AppM
         return await _dataBase.Database.QueryAsync<Api_AppMobileApi_GetDataDownloadCustomerResponse>(query);
     }
 
+    public Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilter10()
+    {
+        return _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadCustomerResponse>()
+            .Take(10)
+            .ToListAsync();
+    }
+
     public async Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilterByCustomerInvoice(string search)
     {
         var query = """

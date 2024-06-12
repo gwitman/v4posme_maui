@@ -9,6 +9,7 @@
        xmlns:items="clr-namespace:Posme.Maui.Views.Items"
        xmlns:customers="clr-namespace:Posme.Maui.Views.Customers"
        xmlns:abonos="clr-namespace:Posme.Maui.Views.Abonos"
+       xmlns:invoices="clr-namespace:Posme.Maui.Views.Invoices"
        ios:Page.UseSafeArea="true"
        x:Class="Posme.Maui.Views.MainPage">
 
@@ -43,7 +44,7 @@
                       ContentTemplate="{DataTemplate abonos:AbonosPage}" />
 
         <ShellContent Title="Factura" Icon="invoice.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate invoices:InvoicesPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
                       ContentTemplate="{DataTemplate local:ParameterPage}" />
