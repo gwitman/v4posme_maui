@@ -37,15 +37,16 @@ public class PrintByBluetooth
         _socket!.Connect();
     }
 
-    public byte[] convertBitmapToPOSFormat(Bitmap bitmap)
+    private static byte[] ConvertBitmapToPosFormat(Bitmap bitmap)
     {
         // Opcionalmente, puedes redimensionar el Bitmap si es necesario
-        Bitmap scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, 384, bitmap.Height, false);
+        //Bitmap scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, 384, bitmap.Height, false);
+        var scaledBitmap = bitmap;
 
-        int width = scaledBitmap.Width;
-        int height = scaledBitmap.Height;
+        var width = scaledBitmap.Width;
+        var height = scaledBitmap.Height;
 
-        byte[] data = new byte[(width / 8) * height + 8];
+        var data = new byte[(width / 8) * height + 8];
 
         data[0] = 0x1D;
         data[1] = 0x76;
@@ -56,24 +57,24 @@ public class PrintByBluetooth
         data[6] = (byte)(height % 256);
         data[7] = (byte)(height / 256);
 
-        int k = 8;
-        for (int i = 0; i < height; i++)
+        var k = 8;
+        for (var i = 0; i < height; i++)
         {
-            for (int j = 0; j < width; j += 8)
+            for (var j = 0; j < width; j += 8)
             {
                 byte b = 0;
-                for (int n = 0; n < 8; n++)
+                for (var n = 0; n < 8; n++)
                 {
                     if (j + n < width)
                     {
-                        int pixel = scaledBitmap.GetPixel(j + n, i);
-                        int r = (pixel >> 16) & 0xff;
-                        int g = (pixel >> 8) & 0xff;
-                        int b_ = pixel & 0xff;
-                        int luminance = (r + g + b_) / 3;
-                        /*if (luminance < 128) {
-                            b |= 1 << (7 - n);
-                        }*/
+                        var pixel = scaledBitmap.GetPixel(j + n, i);
+                        var r = (pixel >> 16) & 0xff;
+                        var g = (pixel >> 8) & 0xff00;
+                        var b1 = pixel & 0xff;
+                        var luminance = (r + g + b1) / 3;
+                        if (luminance < 128) {
+                            b |= (byte)(1 << (7 - n));
+                        }
                     }
                 }
 
@@ -99,7 +100,7 @@ public class PrintByBluetooth
                 {
                     var logoByte = Convert.FromBase64String(logo.Value!);
                     var bitmap = BitmapFactory.DecodeByteArray(logoByte, 0, logoByte.Length);
-                    byte[] posData = convertBitmapToPOSFormat(bitmap!);
+                    var posData = ConvertBitmapToPosFormat(bitmap!);
                     printer.AlignCenter();
                     var outputStream = _socket.OutputStream;
                     outputStream!.Write(posData, 0, posData.Length);

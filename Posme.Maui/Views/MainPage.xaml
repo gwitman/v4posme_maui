@@ -28,7 +28,7 @@
                       Route="AbonoPage"/>
 
         <ShellContent Title="Factura" Icon="invoice.svg"
-                      ContentTemplate="{DataTemplate local:SchedulerPage}" />
+                      ContentTemplate="{DataTemplate invoices:InvoicesPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
                       ContentTemplate="{DataTemplate local:ParameterPage}" />
@@ -60,7 +60,7 @@
                       ContentTemplate="{DataTemplate abonos:AbonosPage}" />
 
         <ShellContent Title="Factura" Icon="invoice.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate invoices:InvoicesPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
                       ContentTemplate="{DataTemplate local:ParameterPage}" />
@@ -76,7 +76,7 @@
                       ContentTemplate="{DataTemplate abonos:AbonosPage}" />
 
         <ShellContent Title="Factura" Icon="invoice.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate invoices:InvoicesPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
                       ContentTemplate="{DataTemplate local:ParameterPage}" />
@@ -92,7 +92,7 @@
                       ContentTemplate="{DataTemplate abonos:AbonosPage}"/>
 
         <ShellContent Title="Factura" Icon="invoice.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate invoices:InvoicesPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
                       ContentTemplate="{DataTemplate local:ParameterPage}" />
@@ -108,7 +108,7 @@
                       ContentTemplate="{DataTemplate abonos:AbonosPage}" />
 
         <ShellContent Title="Factura" Icon="invoice.svg"
-                      ContentTemplate="{DataTemplate local:ChartsPage}" />
+                      ContentTemplate="{DataTemplate invoices:InvoicesPage}" />
 
         <ShellContent Title="Parametros" Icon="parameters.svg"
                       ContentTemplate="{DataTemplate local:ParameterPage}" />
