@@ -6,6 +6,7 @@ using ESC_POS_USB_NET.EpsonCommands;
 using ESC_POS_USB_NET.Helper;
 using ESC_POS_USB_NET.Interfaces.Command;
 using ESC_POS_USB_NET.Interfaces.Printer;
+using SkiaSharp;
 
 namespace ESC_POS_USB_NET.Printer
 {
@@ -301,7 +302,7 @@ namespace ESC_POS_USB_NET.Printer
             RawPrinterHelper.SendBytesToPrinter(_printerName, _command.InitializePrint.Initialize());
         }
 
-        public void Image(Bitmap image)
+        public void Image(SKBitmap image)
         {
             Append(_command.Image.Print(image));
         }

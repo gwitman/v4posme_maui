@@ -7,6 +7,7 @@ using ESC_POS_USB_NET.Printer;
 using Java.Util;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
+using SkiaSharp;
 using Unity;
 
 namespace Posme.Maui;
@@ -90,11 +91,10 @@ public class PrintByBluetooth
                 if (!string.IsNullOrWhiteSpace(logo.Value))
                 {
                     var logoByte = Convert.FromBase64String(logo.Value!);
-                    var bitmap = BitmapFactory.DecodeByteArray(logoByte,0, logoByte.Length);
-                    byte[] posData = convertBitmapToPOSFormat(bitmap!);
+                    // Step 2: Crear un SKBitmap a partir de los datos binarios
+                    var skBitmap = SKBitmap.Decode(logoByte);
                     printer.AlignCenter();
-                    var outputStream = _socket.OutputStream;
-                    outputStream!.Write(posData, 0, posData.Length);
+                    printer.Image(skBitmap);
                 }
 
                 printer.AlignLeft();

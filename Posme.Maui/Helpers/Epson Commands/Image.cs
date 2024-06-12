@@ -3,18 +3,19 @@ using System;
 using System.Drawing;
 using System.IO;
 using ESC_POS_USB_NET.Interfaces.Command;
+using SkiaSharp;
 
 namespace ESC_POS_USB_NET.EpsonCommands
 {
     public class Image : ESC_POS_USB_NET.Interfaces.Command.IImage
     {
-        private static BitmapData GetBitmapData(Bitmap bmp)
+        private static BitmapData GetBitmapData(SKBitmap bmp)
         {
   
                 var threshold = 127;
                 var index = 0;
                 double multiplier = 576; // this depends on your printer model.
-                double scale = (double)(multiplier / (double)bmp.Width);
+                double scale = multiplier / bmp.Width;
                 int xheight = (int)(bmp.Height * scale);
                 int xwidth = (int)(bmp.Width * scale);
                 var dimensions = xwidth * xheight;
@@ -27,7 +28,7 @@ namespace ESC_POS_USB_NET.EpsonCommands
                         var _x = (int)(x / scale);
                         var _y = (int)(y / scale);
                         var color = bmp.GetPixel(_x, _y);
-                        var luminance = (int)(color.R * 0.3 + color.G * 0.59 + color.B * 0.11);
+                        var luminance = (int)(color.Red * 0.3 + color.Green * 0.59 + color.Blue * 0.11);
                         dots[index] = (luminance < threshold);
                         index++;
                     }
@@ -42,7 +43,7 @@ namespace ESC_POS_USB_NET.EpsonCommands
        
         }
 
-        public byte[] Print(Bitmap image)
+        public byte[] Print(SKBitmap image)
         {
             var data = GetBitmapData(image);
             BitArray dots = data.Dots;
@@ -106,6 +107,7 @@ namespace ESC_POS_USB_NET.EpsonCommands
         }
     }
 
+    
     public class BitmapData
     {
         public BitArray Dots { get; set; }

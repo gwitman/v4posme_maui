@@ -11,6 +11,7 @@ using Posme.Maui.Views;
 using Posme.Maui.Views.Items;
 using Syncfusion.Maui.Core.Hosting;
 using System.Text;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using Unity;
 using ZXing.Net.Maui.Controls;
 
@@ -24,6 +25,7 @@ namespace Posme.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseSkiaSharp()
                 .ConfigureSyncfusionCore()
                 .UseMauiCommunityToolkit()
                 .UseDevExpress(useLocalization: true)
