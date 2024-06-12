@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services;
 using Posme.Maui.Services.Helpers;
@@ -26,10 +27,17 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
     {
         var parametroPrinter = await _parameterSystem.PosMeFindPrinter();
 #if ANDROID
-        var printService = new PrintByBluetooth();
-        printService.Connect(parametroPrinter.Value!);
-        printService.Print();
-        printService.Disconnect();
+        try
+        {
+            var printService = new PrintByBluetooth();
+            printService.Connect(parametroPrinter.Value!);
+            printService.Print();
+            printService.Disconnect();
+        }
+        catch (Exception)
+        {
+            ShowToast("Revisar conexión Bluetooth o logo q este correcto", ToastDuration.Long, 18);
+        }
 #endif
     }
 

@@ -8,6 +8,7 @@ public class RepositoryDocumentCredit(DataBase dataBase) : RepositoryFacade<Api_
     {
         return await dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse>()
             .Where(response => response.EntityId == entityId && response.Balance > decimal.Zero)
+            .Take(10)
             .ToListAsync();
     }
 

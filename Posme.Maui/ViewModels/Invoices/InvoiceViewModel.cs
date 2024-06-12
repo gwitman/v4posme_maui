@@ -6,44 +6,25 @@ using Posme.Maui.Services.Repository;
 using Posme.Maui.Views;
 using Unity;
 
-namespace Posme.Maui.ViewModels;
+namespace Posme.Maui.ViewModels.Invoices;
 
-public class CustomerViewModel : BaseViewModel
+public class InvoiceViewModel : BaseViewModel
 {
     private readonly IRepositoryTbCustomer _customerRepositoryTbCustomer;
+    public ICommand ItemTapped { get; }
+    public ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> Customers { get; }
+    public ICommand SearchCommand { get; }
+    public ICommand OnBarCode { get; }
+    public Api_AppMobileApi_GetDataDownloadCustomerResponse SelectedCustomer { get; set; }
 
-    public CustomerViewModel()
+    public InvoiceViewModel()
     {
+        Title = "Selección de cliente 1/5";
         _customerRepositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
-        Customers = new ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse>();
+        ItemTapped = new Command<Api_AppMobileApi_GetDataDownloadCustomerResponse>(OnItemTapped);
         SearchCommand = new Command(OnSearchCommand);
         OnBarCode = new Command(OnBarCodeShow);
-    }
-
-    public ICommand OnBarCode { get; }
-    public ICommand SearchCommand { get; }
-    public ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> Customers { get; set; }
-    private Api_AppMobileApi_GetDataDownloadCustomerResponse? _selectedCustomer;
-
-    public Api_AppMobileApi_GetDataDownloadCustomerResponse? SelectedCustomer
-    {
-        get => _selectedCustomer;
-        set => SetProperty(ref _selectedCustomer, value);
-    }
-
-    private async void OnSearchCommand(object obj)
-    {
-        IsBusy = true;
-        await Task.Run(async () =>
-        {
-            Customers.Clear();
-            var finds = await _customerRepositoryTbCustomer.PosMeFilterBySearch(Search);
-            foreach (var customer in finds)
-            {
-                Customers.Add(customer);
-            }
-        });
-        IsBusy = false;
+        Customers = new();
     }
 
     private async void OnBarCodeShow(object obj)
@@ -54,6 +35,33 @@ public class CustomerViewModel : BaseViewModel
         Search = VariablesGlobales.BarCode;
         VariablesGlobales.BarCode = "";
         OnSearchCommand(Search);
+    }
+
+    private void OnItemTapped(Api_AppMobileApi_GetDataDownloadCustomerResponse? item)
+    {
+        if (item is null)
+        {
+            return;
+        }
+
+        IsBusy = true;
+
+        IsBusy = false;
+    }
+
+    private async void OnSearchCommand(object obj)
+    {
+        IsBusy = true;
+        await Task.Run(async () =>
+        {
+            Customers.Clear();
+            var finds = await _customerRepositoryTbCustomer.PosMeFilterByCustomerInvoice(Search);
+            foreach (var customer in finds)
+            {
+                Customers.Add(customer);
+            }
+        });
+        IsBusy = false;
     }
 
     private async void LoadsClientes()
