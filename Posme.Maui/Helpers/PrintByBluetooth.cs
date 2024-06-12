@@ -7,7 +7,6 @@ using ESC_POS_USB_NET.Printer;
 using Java.Util;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
-using SkiaSharp;
 using Unity;
 
 namespace Posme.Maui;
@@ -37,30 +36,36 @@ public class PrintByBluetooth
         _socket = _device.CreateRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805F9B34FB"));
         _socket!.Connect();
     }
-    public byte[] convertBitmapToPOSFormat(Bitmap bitmap) {
+
+    public byte[] convertBitmapToPOSFormat(Bitmap bitmap)
+    {
         // Opcionalmente, puedes redimensionar el Bitmap si es necesario
         Bitmap scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, 384, bitmap.Height, false);
-    
+
         int width = scaledBitmap.Width;
         int height = scaledBitmap.Height;
-    
+
         byte[] data = new byte[(width / 8) * height + 8];
-    
+
         data[0] = 0x1D;
         data[1] = 0x76;
         data[2] = 0x30;
         data[3] = 0x00;
-        data[4] = (byte) (width / 8);
+        data[4] = (byte)(width / 8);
         data[5] = 0x00;
-        data[6] = (byte) (height % 256);
-        data[7] = (byte) (height / 256);
-    
+        data[6] = (byte)(height % 256);
+        data[7] = (byte)(height / 256);
+
         int k = 8;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j += 8) {
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width; j += 8)
+            {
                 byte b = 0;
-                for (int n = 0; n < 8; n++) {
-                    if (j + n < width) {
+                for (int n = 0; n < 8; n++)
+                {
+                    if (j + n < width)
+                    {
                         int pixel = scaledBitmap.GetPixel(j + n, i);
                         int r = (pixel >> 16) & 0xff;
                         int g = (pixel >> 8) & 0xff;
@@ -71,9 +76,11 @@ public class PrintByBluetooth
                         }*/
                     }
                 }
+
                 data[k++] = b;
             }
         }
+
         return data;
     }
 
@@ -91,10 +98,11 @@ public class PrintByBluetooth
                 if (!string.IsNullOrWhiteSpace(logo.Value))
                 {
                     var logoByte = Convert.FromBase64String(logo.Value!);
-                    // Step 2: Crear un SKBitmap a partir de los datos binarios
-                    var skBitmap = SKBitmap.Decode(logoByte);
+                    var bitmap = BitmapFactory.DecodeByteArray(logoByte, 0, logoByte.Length);
+                    byte[] posData = convertBitmapToPOSFormat(bitmap!);
                     printer.AlignCenter();
-                    printer.Image(skBitmap);
+                    var outputStream = _socket.OutputStream;
+                    outputStream!.Write(posData, 0, posData.Length);
                 }
 
                 printer.AlignLeft();
