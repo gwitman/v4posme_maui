@@ -1,16 +1,16 @@
 ﻿#if ANDROID
 using System.Text;
 using Android.Bluetooth;
+using ESC_POS_USB_NET.Printer;
 using Java.Util;
-
 
 namespace Posme.Maui;
 
-public class PrintByBluetooth 
+public class PrintByBluetooth
 {
     private BluetoothDevice? _device;
     private BluetoothSocket? _socket;
-    
+
     public void Connect(string deviceName)
     {
         var adapter = BluetoothAdapter.DefaultAdapter;
@@ -28,23 +28,27 @@ public class PrintByBluetooth
         }
 
         _socket = _device.CreateRfcommSocketToServiceRecord(UUID.FromString("00001101-0000-1000-8000-00805F9B34FB"));
-        _socket.Connect();
+        _socket!.Connect();
     }
 
-    public void Print(string text)
+    public void Print()
     {
-        if (_socket.IsConnected)
+        if (_socket is not null && _socket.IsConnected)
         {
-            var outputStream = _socket.OutputStream;
-            byte[] buffer = Encoding.UTF8.GetBytes(text);
-            outputStream.Write(buffer, 0, buffer.Length);
-            outputStream.Flush();
+            /*var outputStream = _socket.OutputStream;
+            outputStream!.Write(_buffer, 0, _buffer.Length);
+            outputStream.Flush();*/
+            var printer = new Printer();
+            printer.Append("Test Printer");
+            printer.Print(_socket);
         }
     }
 
+  
     public void Disconnect()
     {
-        _socket.Close();
+        _socket!.Close();
     }
+
 }
 #endif

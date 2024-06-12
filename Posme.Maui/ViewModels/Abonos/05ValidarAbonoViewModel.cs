@@ -28,7 +28,7 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
 #if ANDROID
         var printService = new PrintByBluetooth();
         printService.Connect(parametroPrinter.Value!);
-        printService.Print("Este es un recibo de prueba.");
+        printService.Print();
         printService.Disconnect();
 #endif
     }
