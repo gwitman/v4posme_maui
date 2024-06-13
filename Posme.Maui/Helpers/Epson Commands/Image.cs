@@ -46,12 +46,12 @@ namespace ESC_POS_USB_NET.EpsonCommands
         public byte[] Print(SKBitmap image)
         {
             var data = GetBitmapData(image);
-            BitArray dots = data.Dots;
-            byte[] width = BitConverter.GetBytes(data.Width);
+            var dots = data.Dots;
+            var width = BitConverter.GetBytes(data.Width);
 
             int offset = 0;
-            MemoryStream stream = new MemoryStream();
-            BinaryWriter bw = new BinaryWriter(stream);
+            var stream = new MemoryStream();
+            var bw = new BinaryWriter(stream);
 
             bw.Write((char)0x1B);
             bw.Write('@');

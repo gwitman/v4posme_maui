@@ -1,12 +1,12 @@
 ﻿#if ANDROID
-using System.Diagnostics;
-using System.Text;
 using Android.Bluetooth;
+using Android.Content;
 using Android.Graphics;
 using ESC_POS_USB_NET.Printer;
 using Java.Util;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
+using SkiaSharp;
 using Unity;
 
 namespace Posme.Maui;
@@ -15,11 +15,14 @@ public class PrintByBluetooth
 {
     private BluetoothDevice? _device;
     private BluetoothSocket? _socket;
-    private IRepositoryTbParameterSystem ParameterSystem => VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
+    private static IRepositoryTbParameterSystem ParameterSystem => VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
 
     public void Connect(string deviceName)
     {
-        var adapter = BluetoothAdapter.DefaultAdapter;
+        var applicationContext = Platform.CurrentActivity!.ApplicationContext!;
+        var bluetoothManager = (BluetoothManager)applicationContext.GetSystemService(Context.BluetoothService)!;
+        var adapter = bluetoothManager.Adapter;
+        //var adapter = BluetoothAdapter.DefaultAdapter;
         if (adapter == null || !adapter.IsEnabled)
         {
             throw new Exception("Bluetooth no está disponible o no está habilitado.");
@@ -72,7 +75,8 @@ public class PrintByBluetooth
                         var g = (pixel >> 8) & 0xff00;
                         var b1 = pixel & 0xff;
                         var luminance = (r + g + b1) / 3;
-                        if (luminance < 128) {
+                        if (luminance < 128)
+                        {
                             b |= (byte)(1 << (7 - n));
                         }
                     }
@@ -80,8 +84,8 @@ public class PrintByBluetooth
 
                 data[k++] = b;
             }
+            i += 24;
         }
-
         return data;
     }
 
@@ -100,20 +104,20 @@ public class PrintByBluetooth
                 {
                     var logoByte = Convert.FromBase64String(logo.Value!);
                     var bitmap = BitmapFactory.DecodeByteArray(logoByte, 0, logoByte.Length);
-                    var posData = ConvertBitmapToPosFormat(bitmap!);
                     printer.AlignCenter();
                     var outputStream = _socket.OutputStream;
+                    var posData = ConvertBitmapToPosFormat(bitmap!);
                     outputStream!.Write(posData, 0, posData.Length);
                 }
 
                 printer.AlignLeft();
-                printer.Append($"Le informamos que: Nombre: {VariablesGlobales.DtoAplicarAbono.FirstName} {VariablesGlobales.DtoAplicarAbono.LastName} creó un código para abono de factura con los siguientes datos");
+                printer.Append($"Le informamos que: {VariablesGlobales.DtoAplicarAbono.FirstName} {VariablesGlobales.DtoAplicarAbono.LastName} creó un código para abono de factura con los siguientes datos");
                 printer.Append($"Código de abono: {VariablesGlobales.DtoAplicarAbono.CodigoAbono}");
                 printer.Append($"N°. Cedula: {VariablesGlobales.DtoAplicarAbono.Identification}");
-                printer.Append($"Fecha: {VariablesGlobales.DtoAplicarAbono.Fecha.ToString("yyyy-M-d")}");
-                printer.Append($"Saldo inicial: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.SaldoInicial.ToString("N2")}");
-                printer.Append($"Monto a aplicar: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.MontoAplicar.ToString("N2")}");
-                printer.Append($"Saldo Final: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.SaldoFinal.ToString("N2")}");
+                printer.Append($"Fecha: {VariablesGlobales.DtoAplicarAbono.Fecha:yyyy-M-d}");
+                printer.Append($"Saldo inicial: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.SaldoInicial:N2}");
+                printer.Append($"Monto a aplicar: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.MontoAplicar:N2}");
+                printer.Append($"Saldo Final: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.SaldoFinal:N2}");
                 printer.Append($"Comentarios: {VariablesGlobales.DtoAplicarAbono.Description}");
                 printer.Print(_socket);
             }

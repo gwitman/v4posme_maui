@@ -39,7 +39,7 @@ public partial class ImageEditView : ContentPage
     {
         try
         {
-            VariablesGlobales.LogoTemp = editor.SaveAsBase64();
+            VariablesGlobales.LogoTemp = editor.SaveAsBase64(ImageFormat.Jpeg);
             _pageResultCompletionSource.SetResult(editor.SaveAsImageSource());
             await Navigation.PopAsync();
         }
