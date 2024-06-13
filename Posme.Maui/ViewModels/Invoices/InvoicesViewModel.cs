@@ -8,16 +8,16 @@ using Unity;
 
 namespace Posme.Maui.ViewModels.Invoices;
 
-public class InvoiceViewModel : BaseViewModel
+public class InvoicesViewModel : BaseViewModel
 {
     private readonly IRepositoryTbCustomer _customerRepositoryTbCustomer;
     public ICommand ItemTapped { get; }
     public ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> Customers { get; }
     public ICommand SearchCommand { get; }
     public ICommand OnBarCode { get; }
-    public Api_AppMobileApi_GetDataDownloadCustomerResponse SelectedCustomer { get; set; }
+    public Api_AppMobileApi_GetDataDownloadCustomerResponse? SelectedCustomer { get; set; }
 
-    public InvoiceViewModel()
+    public InvoicesViewModel()
     {
         Title = "Selección de cliente 1/5";
         _customerRepositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
@@ -37,7 +37,7 @@ public class InvoiceViewModel : BaseViewModel
         OnSearchCommand(Search);
     }
 
-    private void OnItemTapped(Api_AppMobileApi_GetDataDownloadCustomerResponse? item)
+    private async void OnItemTapped(Api_AppMobileApi_GetDataDownloadCustomerResponse? item)
     {
         if (item is null)
         {
@@ -45,7 +45,8 @@ public class InvoiceViewModel : BaseViewModel
         }
 
         IsBusy = true;
-
+        VariablesGlobales.DtoInvoice.SelectedCustomer = item;
+        await NavigationService.NavigateToAsync<DataInvoicesViewModel>(item.CustomerNumber!);
         IsBusy = false;
     }
 

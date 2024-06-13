@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:invoices="clr-namespace:Posme.Maui.ViewModels.Invoices"
+             xmlns:core="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+             x:Class="Posme.Maui.Views.Invoices.DataInvoicesPage">
+    <ContentPage.BindingContext>
+        <invoices:DataInvoicesViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <ScrollView>
+            <core:DXStackLayout>
+                
+            </core:DXStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

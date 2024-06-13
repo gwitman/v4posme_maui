@@ -10,12 +10,14 @@ public static class VariablesGlobales
     public static readonly UnityContainer UnityContainer;
     public static string? BarCode;
     public static string? LogoTemp;
-    public static ViewTempDtoAbono DtoAplicarAbono;
-    public static string? PagePrincipalNavegacion=string.Empty;
-    public static string FilePdf;
+    public static ViewTempDtoAbono? DtoAplicarAbono;
+    public static string? PagePrincipalNavegacion = string.Empty;
+    public static string? FilePdf;
+    public static DtoInvoice DtoInvoice;
 
     static VariablesGlobales()
     {
         UnityContainer = new UnityContainer();
+        DtoInvoice = new();
     }
 }

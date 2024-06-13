@@ -9,7 +9,7 @@
              xmlns:invoices="clr-namespace:Posme.Maui.ViewModels.Invoices"
              x:Class="Posme.Maui.Views.Invoices.InvoicesPage">
     <ContentPage.BindingContext>
-        <invoices:InvoiceViewModel/>
+        <invoices:InvoicesViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <dxc:DXStackLayout Orientation="Vertical">
@@ -100,7 +100,7 @@
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer
                                             NumberOfTapsRequired="1"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type invoices:InvoiceViewModel}}, Path=ItemTapped}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type invoices:InvoicesViewModel}}, Path=ItemTapped}"
                                             CommandParameter="{Binding .}">
                                         </TapGestureRecognizer>
                                     </Grid.GestureRecognizers>
