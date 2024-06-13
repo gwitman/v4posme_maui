@@ -42,34 +42,33 @@ public class PrintByBluetooth
 
     private byte[] ConvertirImagen(SKBitmap imagen)
     {
-        int ancho = imagen.Width;
-        int alto = imagen.Height;
+        var ancho = imagen.Width;
+        var alto = imagen.Height;
 
-        List<byte> bytes = new List<byte>();
-
-        // Comando para iniciar la impresión de la imagen
-        bytes.Add(0x1B); // Carácter de escape
-        bytes.Add(0x2A); // Comando *
-
-        // Modo 8-dot single-density (densidad simple de 8 puntos)
-        bytes.Add(0x00);
-
-        // Ancho de la imagen (bajo y alto)
-        bytes.Add((byte)(ancho % 256));
-        bytes.Add((byte)(ancho / 256));
-
-        for (int y = 0; y < alto; y++)
+        var bytes = new List<byte>
         {
-            for (int x = 0; x < ancho; x++)
+            // Comando para iniciar la impresión de la imagen
+            0x1B, // Carácter de escape
+            0x2A, // Comando *
+            // Modo 8-dot single-density (densidad simple de 8 puntos)
+            0x00,
+            // Ancho de la imagen (bajo y alto)
+            (byte)(ancho % 256),
+            (byte)(ancho / 256)
+        };
+
+        for (var y = 0; y < alto; y++)
+        {
+            for (var x = 0; x < ancho; x++)
             {
                 // Obtén el pixel en las coordenadas x, y
                 var pixel = imagen.GetPixel(x, y);
 
                 // Convierte el pixel a escala de grises
-                byte gris = (byte)(0.3 * pixel.Red + 0.59 * pixel.Green + 0.11 * pixel.Blue);
+                var gris = (byte)(0.3 * pixel.Red + 0.59 * pixel.Green + 0.11 * pixel.Blue);
 
                 // Convierte el pixel gris a blanco y negro
-                byte bw = (byte)(gris > 128 ? 0 : 1);
+                var bw = (byte)(gris > 128 ? 0 : 1);
 
                 // Añade el pixel a los bytes de la imagen
                 bytes.Add(bw);
@@ -96,8 +95,9 @@ public class PrintByBluetooth
                     var logoByte = Convert.FromBase64String(logo.Value!);
                     var bitmap = SKBitmap.Decode(logoByte);
                     printer.AlignCenter();
+                    printer.Image(bitmap);
                     var outputStream = _socket.OutputStream;
-                    var posData = ConvertirImagen(bitmap!);
+                    var posData = ConvertirImagen(bitmap);
                     outputStream!.Write(posData, 0, posData.Length);
                 }
 

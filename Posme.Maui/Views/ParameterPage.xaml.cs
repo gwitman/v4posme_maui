@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using DevExpress.Maui.Controls;
+using Posme.Maui.Services.Helpers;
 using Posme.Maui.ViewModels;
 using Debug = System.Diagnostics.Debug;
 
@@ -76,9 +77,14 @@ public partial class ParameterPage : ContentPage
             await using var stream = await result.OpenReadAsync();
             var streamReader = new StreamReader(stream, encoding);
             imageSource = ImageSource.FromStream(() => streamReader.BaseStream);
+            using var memoryStream = new MemoryStream();
+            await streamReader.BaseStream.CopyToAsync(memoryStream);
+            var imageBytes = memoryStream.ToArray();
+            // Convertir el array de bytes a una cadena Base64
+            VariablesGlobales.LogoTemp = Convert.ToBase64String(imageBytes);
         }
-
-        var editorPage = new ImageEditView(imageSource);
+        Preview.Source = imageSource;
+        /*var editorPage = new ImageEditView(imageSource);
         await Navigation.PushAsync(editorPage);
         var cropResult = await editorPage.WaitForResultAsync();
         if (cropResult != null)
@@ -86,7 +92,7 @@ public partial class ParameterPage : ContentPage
             Preview.Source = cropResult;
         }
 
-        editorPage.Handler!.DisconnectHandler();
+        editorPage.Handler!.DisconnectHandler();*/
     }
 
     private void RefreshView_OnRefreshing(object? sender, EventArgs e)

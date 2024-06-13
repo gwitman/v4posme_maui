@@ -12,11 +12,11 @@
     BackgroundColor="{dx:ThemeNeutralColor Light=10, Dark=10}">
 
     <ContentPage.Resources>
-        <views:FrameTypeToImageStringConverter x:Key="frameToImage" />
+        <views:FrameTypeToImageStringConverter x:Key="FrameToImage" />
     </ContentPage.Resources>
 
     <Grid>
-        <dxe:ImageEdit x:Name="editor"
+        <dxe:ImageEdit x:Name="Editor"
             MaxScaleFactor="3"
             CropAreaBorderThickness="1"
             CropAreaRatioX="1"
@@ -32,7 +32,7 @@
             </dx:DXImage>
             <Label Text="Reset" TextColor="{dx:ThemeNeutralColor Light=80, Dark=80}" FontSize="16" VerticalOptions="Center" Margin="16,0" HorizontalOptions="End" Grid.Column="1">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Source={x:Reference editor}, Path=Commands.Reset}"/>
+                    <TapGestureRecognizer Command="{Binding Source={x:Reference Editor}, Path=Commands.Reset}"/>
                 </Label.GestureRecognizers>
             </Label>
             <dx:DXImage Source="ic_check" Grid.Column="2" Margin="8" TintColor="{dx:ThemeNeutralColor Light=80, Dark=80}">
@@ -43,11 +43,11 @@
         </Grid>
 
         <dxc:DXToolbar VerticalOptions="End" ItemAlignment="Fill" BackgroundColor="{dx:ThemeNeutralColor Light=10, Dark=10}">
-            <dxc:ToolbarButton Icon="ic_rotate_left" IconColor="{dx:ThemeNeutralColor Light=90, Dark=90}" Command="{Binding Source={x:Reference editor}, Path=Commands.RotateLeft}" IconWidth="40" IconHeight="40"/>
-            <dxc:ToolbarButton Icon="ic_rotate_right" IconColor="{dx:ThemeNeutralColor Light=90, Dark=90}" Command="{Binding Source={x:Reference editor}, Path=Commands.RotateRight}" IconWidth="40" IconHeight="40"/>
-            <dxc:ToolbarButton Icon="{Binding Source={x:Reference editor}, Path=CropAreaShape, Converter={StaticResource frameToImage}}"  IconColor="{dx:ThemeNeutralColor Light=90, Dark=90}" Command="{Binding Source={x:Reference editor}, Path=Commands.SwitchCropAreaShape}" IconWidth="40" IconHeight="40"/>
-            <dxc:ToolbarButton Icon="ic_mirror_v" IconColor="{dx:ThemeNeutralColor Light=90, Dark=90}" Command="{Binding Source={x:Reference editor}, Path=Commands.FlipHorizontal}" IconWidth="40" IconHeight="40"/>
-            <dxc:ToolbarButton Icon="ic_mirror_h" IconColor="{dx:ThemeNeutralColor Light=90, Dark=90}" Command="{Binding Source={x:Reference editor}, Path=Commands.FlipVertical}" IconWidth="40" IconHeight="40"/>
+            <dxc:ToolbarButton Icon="ic_rotate_left" IconColor="{dx:ThemeNeutralColor Light=90, Dark=90}" Command="{Binding Source={x:Reference Editor}, Path=Commands.RotateLeft}" IconWidth="40" IconHeight="40"/>
+            <dxc:ToolbarButton Icon="ic_rotate_right" IconColor="{dx:ThemeNeutralColor Light=90, Dark=90}" Command="{Binding Source={x:Reference Editor}, Path=Commands.RotateRight}" IconWidth="40" IconHeight="40"/>
+            <dxc:ToolbarButton Icon="{Binding Source={x:Reference Editor}, Path=CropAreaShape, Converter={StaticResource FrameToImage}}"  IconColor="{dx:ThemeNeutralColor Light=90, Dark=90}" Command="{Binding Source={x:Reference Editor}, Path=Commands.SwitchCropAreaShape}" IconWidth="40" IconHeight="40"/>
+            <dxc:ToolbarButton Icon="ic_mirror_v" IconColor="{dx:ThemeNeutralColor Light=90, Dark=90}" Command="{Binding Source={x:Reference Editor}, Path=Commands.FlipHorizontal}" IconWidth="40" IconHeight="40"/>
+            <dxc:ToolbarButton Icon="ic_mirror_h" IconColor="{dx:ThemeNeutralColor Light=90, Dark=90}" Command="{Binding Source={x:Reference Editor}, Path=Commands.FlipVertical}" IconWidth="40" IconHeight="40"/>
         </dxc:DXToolbar>
     </Grid>
 

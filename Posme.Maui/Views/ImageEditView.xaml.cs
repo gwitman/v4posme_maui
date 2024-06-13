@@ -21,7 +21,7 @@ public partial class ImageEditView : ContentPage
     {
         InitializeComponent();
         _pageResultCompletionSource = new TaskCompletionSource<ImageSource?>();
-        editor.Source = imageSource;
+        Editor.Source = imageSource;
     }
 
     public Task<ImageSource?> WaitForResultAsync()
@@ -39,8 +39,8 @@ public partial class ImageEditView : ContentPage
     {
         try
         {
-            VariablesGlobales.LogoTemp = editor.SaveAsBase64(ImageFormat.Jpeg);
-            _pageResultCompletionSource.SetResult(editor.SaveAsImageSource());
+            VariablesGlobales.LogoTemp = Editor.SaveAsBase64(ImageFormat.Jpeg);
+            _pageResultCompletionSource.SetResult(Editor.SaveAsImageSource());
             await Navigation.PopAsync();
         }
         catch (Exception exception)
