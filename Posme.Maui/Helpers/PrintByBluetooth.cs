@@ -40,54 +40,45 @@ public class PrintByBluetooth
         _socket!.Connect();
     }
 
-    private static byte[] ConvertBitmapToPosFormat(Bitmap bitmap)
+    private byte[] ConvertirImagen(SKBitmap imagen)
     {
-        // Opcionalmente, puedes redimensionar el Bitmap si es necesario
-        //Bitmap scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, 384, bitmap.Height, false);
-        var scaledBitmap = bitmap;
+        int ancho = imagen.Width;
+        int alto = imagen.Height;
 
-        var width = scaledBitmap.Width;
-        var height = scaledBitmap.Height;
+        List<byte> bytes = new List<byte>();
 
-        var data = new byte[(width / 8) * height + 8];
+        // Comando para iniciar la impresión de la imagen
+        bytes.Add(0x1B); // Carácter de escape
+        bytes.Add(0x2A); // Comando *
 
-        data[0] = 0x1D;
-        data[1] = 0x76;
-        data[2] = 0x30;
-        data[3] = 0x00;
-        data[4] = (byte)(width / 8);
-        data[5] = 0x00;
-        data[6] = (byte)(height % 256);
-        data[7] = (byte)(height / 256);
+        // Modo 8-dot single-density (densidad simple de 8 puntos)
+        bytes.Add(0x00);
 
-        var k = 8;
-        for (var i = 0; i < height; i++)
+        // Ancho de la imagen (bajo y alto)
+        bytes.Add((byte)(ancho % 256));
+        bytes.Add((byte)(ancho / 256));
+
+        for (int y = 0; y < alto; y++)
         {
-            for (var j = 0; j < width; j += 8)
+            for (int x = 0; x < ancho; x++)
             {
-                byte b = 0;
-                for (var n = 0; n < 8; n++)
-                {
-                    if (j + n < width)
-                    {
-                        var pixel = scaledBitmap.GetPixel(j + n, i);
-                        var r = (pixel >> 16) & 0xff;
-                        var g = (pixel >> 8) & 0xff00;
-                        var b1 = pixel & 0xff;
-                        var luminance = (r + g + b1) / 3;
-                        if (luminance < 128)
-                        {
-                            b |= (byte)(1 << (7 - n));
-                        }
-                    }
-                }
+                // Obtén el pixel en las coordenadas x, y
+                var pixel = imagen.GetPixel(x, y);
 
-                data[k++] = b;
+                // Convierte el pixel a escala de grises
+                byte gris = (byte)(0.3 * pixel.Red + 0.59 * pixel.Green + 0.11 * pixel.Blue);
+
+                // Convierte el pixel gris a blanco y negro
+                byte bw = (byte)(gris > 128 ? 0 : 1);
+
+                // Añade el pixel a los bytes de la imagen
+                bytes.Add(bw);
             }
-            i += 24;
         }
-        return data;
+
+        return bytes.ToArray();
     }
+
 
     public void Print()
     {
@@ -103,10 +94,10 @@ public class PrintByBluetooth
                 if (!string.IsNullOrWhiteSpace(logo.Value))
                 {
                     var logoByte = Convert.FromBase64String(logo.Value!);
-                    var bitmap = BitmapFactory.DecodeByteArray(logoByte, 0, logoByte.Length);
+                    var bitmap = SKBitmap.Decode(logoByte);
                     printer.AlignCenter();
                     var outputStream = _socket.OutputStream;
-                    var posData = ConvertBitmapToPosFormat(bitmap!);
+                    var posData = ConvertirImagen(bitmap!);
                     outputStream!.Write(posData, 0, posData.Length);
                 }
 
