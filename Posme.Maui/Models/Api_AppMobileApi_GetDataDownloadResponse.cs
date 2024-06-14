@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using DevExpress.Maui.Core;
 using SQLite;
 
@@ -16,7 +17,7 @@ public class Api_AppMobileApi_GetDataDownloadResponse
     public List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse> ListDocumentCreditAmortization { get; set; } = [];
 }
 
-[Table("tb_customers")]
+[SQLite.Table("tb_customers")]
 public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
 {
     [PrimaryKey, AutoIncrement]
@@ -38,13 +39,17 @@ public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
     [DataMember] public string? LastName { get; set; }
 
     [DataMember] public decimal Balance { get; set; }
-    
+
     [DataMember] public int CurrencyId { get; set; }
+    
     [DataMember] public int CustomerCreditLineId { get; set; }
     public bool Modificado { get; set; }
+
+    [NotMapped]
+    public string? NombreCompleto => $"{FirstName} {LastName}";
 }
 
-[Table("tb_document_credit")]
+[SQLite.Table("tb_document_credit")]
 public class Api_AppMobileApi_GetDataDownloadDocumentCreditResponse
 {
     [PrimaryKey, AutoIncrement] public int CustomerCreditDocumentId { get; set; }
@@ -63,10 +68,10 @@ public class Api_AppMobileApi_GetDataDownloadDocumentCreditResponse
     public decimal ExchangeRate { get; set; }
 }
 
-[Table("document_credit_amortization")]
+[SQLite.Table("document_credit_amortization")]
 public class Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse
 {
-    [PrimaryKey,AutoIncrement] public int CreditAmortizationID { get; set; }    
+    [PrimaryKey, AutoIncrement] public int CreditAmortizationID { get; set; }
     public string? CustomerNumber { get; set; }
 
     public string? FirstName { get; set; }

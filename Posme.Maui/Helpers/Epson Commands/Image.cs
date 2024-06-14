@@ -14,7 +14,7 @@ namespace ESC_POS_USB_NET.EpsonCommands
   
                 var threshold = 127;
                 var index = 0;
-                double multiplier = 576; // this depends on your printer model.
+                double multiplier = 400; // this depends on your printer model.
                 double scale = multiplier / bmp.Width;
                 int xheight = (int)(bmp.Height * scale);
                 int xwidth = (int)(bmp.Width * scale);
@@ -25,9 +25,9 @@ namespace ESC_POS_USB_NET.EpsonCommands
                 {
                     for (var x = 0; x < xwidth; x++)
                     {
-                        var _x = (int)(x / scale);
-                        var _y = (int)(y / scale);
-                        var color = bmp.GetPixel(_x, _y);
+                        var i = (int)(x / scale);
+                        var j = (int)(y / scale);
+                        var color = bmp.GetPixel(i, j);
                         var luminance = (int)(color.Red * 0.3 + color.Green * 0.59 + color.Blue * 0.11);
                         dots[index] = (luminance < threshold);
                         index++;

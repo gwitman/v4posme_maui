@@ -66,33 +66,17 @@ public partial class ParameterPage : ContentPage
         if (result == null)
             return;
 
-        ImageSource imageSource;
-        if (Path.IsPathRooted(result.FullPath))
-        {
-            imageSource = ImageSource.FromFile(result.FullPath);
-        }
-        else
-        {
-            var encoding = Encoding.UTF8;
-            await using var stream = await result.OpenReadAsync();
-            var streamReader = new StreamReader(stream, encoding);
-            imageSource = ImageSource.FromStream(() => streamReader.BaseStream);
-            using var memoryStream = new MemoryStream();
-            await streamReader.BaseStream.CopyToAsync(memoryStream);
-            var imageBytes = memoryStream.ToArray();
-            // Convertir el array de bytes a una cadena Base64
-            VariablesGlobales.LogoTemp = Convert.ToBase64String(imageBytes);
-        }
+        var imageSource = ImageSource.FromFile(result.FullPath);
+        var encoding = Encoding.UTF8;
+        var stream = await result.OpenReadAsync();
+        var streamReader = new StreamReader(stream, encoding);
+        var memoryStream = new MemoryStream();
+        await streamReader.BaseStream.CopyToAsync(memoryStream);
+        var imageBytes = memoryStream.ToArray();
+        VariablesGlobales.LogoTemp = Convert.ToBase64String(imageBytes);
         Preview.Source = imageSource;
-        /*var editorPage = new ImageEditView(imageSource);
-        await Navigation.PushAsync(editorPage);
-        var cropResult = await editorPage.WaitForResultAsync();
-        if (cropResult != null)
-        {
-            Preview.Source = cropResult;
-        }
-
-        editorPage.Handler!.DisconnectHandler();*/
+        streamReader.Close();
+        memoryStream.Close();
     }
 
     private void RefreshView_OnRefreshing(object? sender, EventArgs e)

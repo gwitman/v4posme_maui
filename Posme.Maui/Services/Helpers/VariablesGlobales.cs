@@ -14,7 +14,6 @@ public static class VariablesGlobales
     public static string? PagePrincipalNavegacion = string.Empty;
     public static string? FilePdf;
     public static DtoInvoice DtoInvoice;
-
     static VariablesGlobales()
     {
         UnityContainer = new UnityContainer();

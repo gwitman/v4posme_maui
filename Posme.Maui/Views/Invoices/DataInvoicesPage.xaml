@@ -3,16 +3,40 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:invoices="clr-namespace:Posme.Maui.ViewModels.Invoices"
-             xmlns:core="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+             xmlns:dxdf="clr-namespace:DevExpress.Maui.DataForm;assembly=DevExpress.Maui.Editors"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+             Title="{Binding Title}"
              x:Class="Posme.Maui.Views.Invoices.DataInvoicesPage">
     <ContentPage.BindingContext>
-        <invoices:DataInvoicesViewModel/>
+        <invoices:DataInvoicesViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <core:DXStackLayout>
-                
-            </core:DXStackLayout>
+            <dx:DXStackLayout>
+                <dx:DXStackLayout Orientation="Vertical">
+                    <dx:DXBorder HeightRequest="1" BorderThickness="1"
+                                 BackgroundColor="{AppThemeBinding Light={StaticResource SeparatorColor}, Dark={StaticResource SeparatorColorDark}}" />
+                    <dx:DXImage Source="invoice_green" WidthRequest="150" HeightRequest="150" />
+                </dx:DXStackLayout>
+                <dxdf:DataFormView x:Name="FormInvoice"
+                                   DataObject="{Binding Item}"
+                                   EditorLabelColor="{StaticResource Primary}"
+                                   EditorLabelWidth="0"
+                                   IsAutoGenerationEnabled="False"
+                                   ValidationMode="LostFocus"
+                                   ValidateForm="FormInvoice_OnValidateForm"
+                                   Margin="0,10,0,0" Background="Transparent">
+                    <dxdf:DataFormCustomItem>
+                        <dxe:TextEdit
+                            x:Name="TxtCustomer"
+                            IsReadOnly="True"
+                            StartIcon="identificacion"
+                            Text="{Binding Item.NombreCompleto}"
+                            LabelText="Nombre completo" />
+                    </dxdf:DataFormCustomItem>
+                </dxdf:DataFormView>
+            </dx:DXStackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -1,11 +1,18 @@
-﻿using System.Web;
+﻿using System.Diagnostics;
+using System.Text;
+using System.Web;
 using System.Windows.Input;
 using CommunityToolkit.Maui.Core;
+using ESC_POS_USB_NET.Printer;
+using ESCPOS_NET;
+using ESCPOS_NET.Emitters;
+using ESCPOS_NET.Utilities;
 using Posme.Maui.Models;
 using Posme.Maui.Services;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Views.Abonos;
+using SkiaSharp;
 using Unity;
 
 namespace Posme.Maui.ViewModels.Abonos;
@@ -26,19 +33,33 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
     private async void OnPrintCommand(object obj)
     {
         var parametroPrinter = await _parameterSystem.PosMeFindPrinter();
-#if ANDROID
-        try
+        var logo = await _parameterSystem.PosMeFindLogo();
+        if (string.IsNullOrWhiteSpace(parametroPrinter.Value))
         {
-            var printService = new PrintByBluetooth();
-            printService.Connect(parametroPrinter.Value!);
-            printService.Print();
-            printService.Disconnect();
+            return;
         }
-        catch (Exception)
-        {
-            ShowToast("Revisar conexión Bluetooth o logo q este correcto", ToastDuration.Long, 18);
-        }
-#endif
+
+        var printer = new Printer(parametroPrinter.Value);
+        var readImage = Convert.FromBase64String(logo.Value!);
+        printer.AlignCenter();
+        printer.Image(SKBitmap.Decode(readImage));
+        printer.AlignCenter();
+        printer.BoldMode("FERRETERIA NARVAEZ");
+        printer.NewLine();
+        printer.AlignLeft();
+        printer.Append($"Le informamos que: \n{VariablesGlobales.DtoAplicarAbono!.FirstName} {VariablesGlobales.DtoAplicarAbono.LastName} creó un código para abono de factura con los siguientes datos");
+        printer.NewLine();
+        printer.Append($"Código de abono: {VariablesGlobales.DtoAplicarAbono.CodigoAbono}");
+        printer.Append($"     N°. Cedula: {VariablesGlobales.DtoAplicarAbono.Identification}");
+        printer.Append($"          Fecha: {VariablesGlobales.DtoAplicarAbono.Fecha:yyyy-M-d}");
+        printer.Append($"  Saldo inicial: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.SaldoInicial:N2}");
+        printer.Append($" Monto de abono: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.MontoAplicar:N2}");
+        printer.Append($"    Saldo Final: {VariablesGlobales.DtoAplicarAbono.CurrencyName} {VariablesGlobales.DtoAplicarAbono.SaldoFinal:N2}");
+        printer.NewLine();
+        printer.Append($"Comentarios: {VariablesGlobales.DtoAplicarAbono.Description}");
+        printer.NewLine();
+        printer.FullPaperCut();
+        printer.Print();
     }
 
     private async void OnAplicarOtroCommand()

@@ -28,7 +28,6 @@ namespace Posme.Maui
         {
             DependencyService.Register<NavigationService>();
             DependencyService.Register<IPrintService>();
-            DependencyService.Register<IBluetoothPrintService>();
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             Routing.RegisterRoute(typeof(CustomerDetailInvoicePage).FullName, typeof(CustomerDetailInvoicePage));
             Routing.RegisterRoute(typeof(AbonosPage).FullName, typeof(AbonosPage));

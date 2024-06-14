@@ -45,7 +45,6 @@ public class InvoicesViewModel : BaseViewModel
         }
 
         IsBusy = true;
-        VariablesGlobales.DtoInvoice.SelectedCustomer = item;
         await NavigationService.NavigateToAsync<DataInvoicesViewModel>(item.CustomerNumber!);
         IsBusy = false;
     }

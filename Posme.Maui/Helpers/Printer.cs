@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 using System.Text;
-using Android.Bluetooth;
 using ESC_POS_USB_NET.Enums;
 using ESC_POS_USB_NET.EpsonCommands;
 using ESC_POS_USB_NET.Helper;
 using ESC_POS_USB_NET.Interfaces.Command;
 using ESC_POS_USB_NET.Interfaces.Printer;
+using Posme.Maui.Services;
 using SkiaSharp;
 
 namespace ESC_POS_USB_NET.Printer
@@ -16,49 +16,42 @@ namespace ESC_POS_USB_NET.Printer
         private string _printerName;
         private readonly IPrintCommand _command;
         private readonly string _codepage;
-        public Printer(string printerName, string codepage= "IBM860")
+
+        public Printer(string printerName, string codepage = "IBM860")
         {
             _printerName = string.IsNullOrEmpty(printerName) ? "escpos.prn" : printerName.Trim();
             _command = new EscPos();
             _codepage = codepage;
+            _buffer = [];
         }
 
-        public Printer(string codepage= "IBM860")
+        public Printer(string printerName)
         {
             _buffer = [];
-            _printerName = string.Empty;
+            _printerName = printerName;
             _command = new EscPos();
-            _codepage = codepage;
+            _codepage = "IBM860";
         }
-        public void Print(BluetoothSocket? _socket)
+
+        public void Print()
         {
-            var outputStream = _socket.OutputStream;
-            outputStream!.Write(_buffer, 0, _buffer.Length);
-            outputStream.Flush();
+            var bluetoothService = new BluetoothService(_printerName);
+            bluetoothService.Print(_buffer);
         }
 
         public int ColsNomal
         {
-            get
-            {
-                return _command.ColsNomal;
-            }
+            get { return _command.ColsNomal; }
         }
 
         public int ColsCondensed
         {
-            get
-            {
-                return _command.ColsCondensed;
-            }
+            get { return _command.ColsCondensed; }
         }
 
         public int ColsExpanded
         {
-            get
-            {
-                return _command.ColsExpanded;
-            }
+            get { return _command.ColsExpanded; }
         }
 
         public void PrintDocument()
@@ -122,7 +115,7 @@ namespace ESC_POS_USB_NET.Printer
 
         public void Separator(char speratorChar = '-')
         {
-            Append(_command.Separator(speratorChar ));
+            Append(_command.Separator(speratorChar));
         }
 
         public void AutoTest()
@@ -277,24 +270,24 @@ namespace ESC_POS_USB_NET.Printer
             Append(_command.QrCode.Print(qrData));
         }
 
-        public void QrCode(string qrData, QrCodeSize qrCodeSize )
+        public void QrCode(string qrData, QrCodeSize qrCodeSize)
         {
             Append(_command.QrCode.Print(qrData, qrCodeSize));
         }
 
         public void Code128(string code, Positions printString = Positions.NotPrint)
         {
-            Append(_command.BarCode.Code128(code,  printString));
+            Append(_command.BarCode.Code128(code, printString));
         }
 
-        public void Code39(string code, Positions printString=Positions.NotPrint)
+        public void Code39(string code, Positions printString = Positions.NotPrint)
         {
-            Append(_command.BarCode.Code39(code,  printString));
+            Append(_command.BarCode.Code39(code, printString));
         }
 
         public void Ean13(string code, Positions printString = Positions.NotPrint)
         {
-            Append(_command.BarCode.Ean13(code,  printString));
+            Append(_command.BarCode.Ean13(code, printString));
         }
 
         public void InitializePrint()
@@ -306,6 +299,7 @@ namespace ESC_POS_USB_NET.Printer
         {
             Append(_command.Image.Print(image));
         }
+
         public void NormalLineHeight()
         {
             Append(_command.LineHeight.Normal());
@@ -322,4 +316,3 @@ namespace ESC_POS_USB_NET.Printer
         }
     }
 }
-

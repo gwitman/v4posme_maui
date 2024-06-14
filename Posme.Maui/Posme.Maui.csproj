@@ -46,15 +46,13 @@
       <MauiCss Remove="ServicesLibrary\**" />
       <MauiXaml Remove="ServicesLibrary\**" />
       <None Remove="ServicesLibrary\**" />
-      <Compile Update="Platforms\Android\PrintService.cs">
-        <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
-      </Compile>
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="BouncyCastle.Cryptography" Version="2.4.0" />
         <PackageReference Include="CommunityToolkit.Maui" Version="9.0.1" />
         <PackageReference Include="ESC-POS-USB-NET" Version="1.1.3" />
+        <PackageReference Include="ESCPOS_NET" Version="3.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0-preview.3.24172.9" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-preview.3.24172.9" />
         <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
