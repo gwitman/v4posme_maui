@@ -30,7 +30,7 @@ namespace Posme.Maui.Services.HelpersPrinters.Epson_Commands
             Drawer = new Drawer();
             QrCode = new QrCode();
             BarCode = new BarCode();
-            Image = new Posme.Maui.HelpersPrinters.Epson_Commands.Image();
+            Image = new Posme.Maui.Services.HelpersPrinters.Epson_Commands.Image();
             LineHeight = new LineHeight();
             InitializePrint = new InitializePrint();
         }
