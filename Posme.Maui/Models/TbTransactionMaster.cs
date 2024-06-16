@@ -1,6 +1,6 @@
 ﻿using Posme.Maui.Services.Helpers;
 using SQLite;
-
+using Posme.Maui.Services.SystemNames;
 namespace Posme.Maui.Models;
 
 [Table("tb_transaction_master")]

@@ -12,7 +12,7 @@
              x:Class="Posme.Maui.Views.LoginPage"
              BackgroundColor="White">
     <ContentPage.BindingContext>
-        <local:LoginViewModel />
+        <local:PosMeZMasterLoginViewModel />
     </ContentPage.BindingContext>
     <VerticalStackLayout Padding="15" VerticalOptions="Center">
         <dxco:DXPopup x:Name="Popup"

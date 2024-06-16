@@ -16,7 +16,7 @@
              ios:Page.UseSafeArea="true"
              x:Class="Posme.Maui.Views.Items.ItemsPage">
     <ContentPage.BindingContext>
-        <local:ItemsViewModel />
+        <local:PosMeItemsViewModel />
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="barcode_scan" Command="{Binding OnBarCode}"/>

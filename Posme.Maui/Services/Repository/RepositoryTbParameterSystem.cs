@@ -1,6 +1,7 @@
 ﻿using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
-
+using Posme.Maui.Services.SystemNames;
+using Posme.Maui.Services.Api;
 namespace Posme.Maui.Services.Repository;
 
 public class RepositoryTbParameterSystem(DataBase dataBase) : RepositoryFacade<TbParameterSystem>(dataBase), IRepositoryTbParameterSystem

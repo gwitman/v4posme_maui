@@ -1,7 +1,8 @@
 ﻿using Posme.Maui.Services.Helpers;
 using Posme.Maui.Views;
 using Unity;
-
+using Posme.Maui.Services.Api;
+using Posme.Maui.Services.SystemNames;
 namespace Posme.Maui.ViewModels;
 
 public class PosMeDownloadViewModel : BaseViewModel

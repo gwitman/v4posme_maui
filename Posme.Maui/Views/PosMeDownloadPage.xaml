@@ -7,7 +7,7 @@
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:viewModels="clr-namespace:Posme.Maui.ViewModels">
     <ContentPage.BindingContext>
-        <viewModels:DownloadViewModel/>
+        <viewModels:PosMeDownloadViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <VerticalStackLayout

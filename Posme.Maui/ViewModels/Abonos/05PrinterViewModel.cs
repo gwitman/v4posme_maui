@@ -5,7 +5,9 @@ using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using SkiaSharp;
 using Unity;
-using Printer = Posme.Maui.HelpersPrinters.Printer;
+using Posme.Maui.Services.Api;
+using Posme.Maui.Services.SystemNames;
+using Printer = Posme.Maui.Services.HelpersPrinters.Printer;
 
 namespace Posme.Maui.ViewModels.Abonos;
 

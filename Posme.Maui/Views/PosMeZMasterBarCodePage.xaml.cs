@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Posme.Maui.Services.Helpers;
 using ZXing.Net.Maui;
-
+using Posme.Maui.Services.SystemNames;
 namespace Posme.Maui.Views;
 
 public partial class BarCodePage : ContentPage

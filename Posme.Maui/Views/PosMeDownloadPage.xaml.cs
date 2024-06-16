@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.ViewModels;
-
+using Posme.Maui.Services.Api;
+using Posme.Maui.Services.SystemNames;
 namespace Posme.Maui.Views;
 
 public partial class DownloadPage : ContentPage

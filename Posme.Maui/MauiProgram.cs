@@ -9,12 +9,12 @@ using Posme.Maui.Services.Repository;
 using Posme.Maui.ViewModels;
 using Posme.Maui.Views;
 using Posme.Maui.Views.Items;
-using Syncfusion.Maui.Core.Hosting;
 using System.Text;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using Unity;
 using ZXing.Net.Maui.Controls;
-
+using Posme.Maui.Services.Api;
+using Posme.Maui.Services.SystemNames;
 namespace Posme.Maui
 {
     public static class MauiProgram
@@ -25,8 +25,7 @@ namespace Posme.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseSkiaSharp()
-                .ConfigureSyncfusionCore()
+                .UseSkiaSharp()                
                 .UseMauiCommunityToolkit()
                 .UseDevExpress(useLocalization: true)
                 .UseBarcodeReader()

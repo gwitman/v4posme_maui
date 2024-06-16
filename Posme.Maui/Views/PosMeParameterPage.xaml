@@ -8,7 +8,7 @@
              xmlns:viewModels="clr-namespace:Posme.Maui.ViewModels"
              x:Class="Posme.Maui.Views.ParameterPage">
     <ContentPage.BindingContext>
-        <viewModels:ParameterViewModel />
+        <viewModels:PosMeParameterViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary Source="../Resources/Styles/Colors.xaml" />
