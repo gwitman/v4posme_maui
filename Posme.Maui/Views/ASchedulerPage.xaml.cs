@@ -8,10 +8,10 @@ namespace Posme.Maui.Views
         public SchedulerPage(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            BindingContext = ViewModel = new SchedulerViewModel(serviceProvider);
+            BindingContext = ViewModel = new ASchedulerViewModel(serviceProvider);
         }
 
-        SchedulerViewModel ViewModel { get; }
+        ASchedulerViewModel ViewModel { get; }
 
         protected override void OnAppearing()
         {

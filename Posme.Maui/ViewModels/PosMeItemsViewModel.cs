@@ -10,11 +10,11 @@ using Unity;
 
 namespace Posme.Maui.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel
+    public class PosMeItemsViewModel : BaseViewModel
     {
         private readonly IRepositoryItems _repositoryItems;
 
-        public ItemsViewModel()
+        public PosMeItemsViewModel()
         {
             _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
             Title = "Productos";

@@ -1,14 +1,16 @@
-﻿using System.Text;
-using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
 using DevExpress.Maui;
 using DevExpress.Maui.Charts;
 using DevExpress.Maui.Core;
+using Posme.Maui.Models;
 using Posme.Maui.Services;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.ViewModels;
 using Posme.Maui.Views;
 using Posme.Maui.Views.Items;
+using Syncfusion.Maui.Core.Hosting;
+using System.Text;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using Unity;
 using ZXing.Net.Maui.Controls;
@@ -24,6 +26,7 @@ namespace Posme.Maui
             builder
                 .UseMauiApp<App>()
                 .UseSkiaSharp()
+                .ConfigureSyncfusionCore()
                 .UseMauiCommunityToolkit()
                 .UseDevExpress(useLocalization: true)
                 .UseBarcodeReader()
@@ -46,12 +49,12 @@ namespace Posme.Maui
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryTbParameterSystem, RepositoryTbParameterSystem>();
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryTransactionMaster, RepositoryTransactionMaster>();
             VariablesGlobales.UnityContainer.RegisterSingleton<DataBase>();
-            VariablesGlobales.UnityContainer.RegisterSingleton<Helper>();
+            VariablesGlobales.UnityContainer.RegisterSingleton<HelperCore>();
             VariablesGlobales.UnityContainer.RegisterSingleton<DownloadPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<SchedulerPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<ItemDetailPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<ItemsPage>();
-            VariablesGlobales.UnityContainer.RegisterSingleton<ItemsViewModel>();
+            VariablesGlobales.UnityContainer.RegisterSingleton<PosMeItemsViewModel>();
             Initializer.Init();
             DevExpress.Maui.CollectionView.Initializer.Init();
             DevExpress.Maui.Controls.Initializer.Init();

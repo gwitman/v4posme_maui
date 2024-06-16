@@ -8,12 +8,12 @@ namespace Posme.Maui.Views;
 
 public partial class ParameterPage : ContentPage
 {
-    private readonly ParameterViewModel _viewModel;
+    private readonly PosMeParameterViewModel _viewModel;
 
     public ParameterPage()
     {
         InitializeComponent();
-        BindingContext = _viewModel = new ParameterViewModel();
+        BindingContext = _viewModel = new PosMeParameterViewModel();
     }
 
     protected override void OnAppearing()

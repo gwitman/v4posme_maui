@@ -16,7 +16,7 @@ namespace Posme.Maui.Views.Items
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            ((ItemsViewModel)BindingContext).OnAppearing(Navigation);
+            ((PosMeItemsViewModel)BindingContext).OnAppearing(Navigation);
         }
     }
 }

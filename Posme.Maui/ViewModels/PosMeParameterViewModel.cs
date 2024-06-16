@@ -7,7 +7,7 @@ using Unity;
 
 namespace Posme.Maui.ViewModels;
 
-public class ParameterViewModel : BaseViewModel
+public class PosMeParameterViewModel : BaseViewModel
 {
     private readonly IRepositoryTbParameterSystem _repositoryTbParameterSystem;
     private TbParameterSystem _posMeFindCounter = new();
@@ -17,7 +17,7 @@ public class ParameterViewModel : BaseViewModel
     public ICommand RefreshCommand { get; }
     public ICommand SaveCommand { get; }
 
-    public ParameterViewModel()
+    public PosMeParameterViewModel()
     {
         _repositoryTbParameterSystem = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
         Task.Run(async () =>

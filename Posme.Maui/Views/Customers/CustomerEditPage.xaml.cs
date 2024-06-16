@@ -11,14 +11,14 @@ public partial class CustomerEditPage : ContentPage
 {
     private DetailEditFormViewModel ViewModel => (DetailEditFormViewModel)BindingContext;
     private static IRepositoryTbCustomer RepositoryTbCustomer => VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
-    private readonly Helper _helperContador;
+    private readonly HelperCore _helperContador;
     private Api_AppMobileApi_GetDataDownloadCustomerResponse _saveItem;
     private Api_AppMobileApi_GetDataDownloadCustomerResponse _defaultItem;
 
     public CustomerEditPage()
     {
         InitializeComponent();
-        _helperContador = VariablesGlobales.UnityContainer.Resolve<Helper>();
+        _helperContador = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
         _saveItem = new Api_AppMobileApi_GetDataDownloadCustomerResponse();
         _defaultItem = new Api_AppMobileApi_GetDataDownloadCustomerResponse();
         Title = "Editar Cliente";

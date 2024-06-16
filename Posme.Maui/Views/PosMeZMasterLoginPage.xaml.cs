@@ -17,7 +17,7 @@ namespace Posme.Maui.Views
 
         protected override void OnAppearing()
         {
-            ((LoginViewModel)BindingContext).OnAppearing(Navigation);
+            ((PosMeZMasterLoginViewModel)BindingContext).OnAppearing(Navigation);
         }
 
         private void ClosePopup_Clicked(object sender, EventArgs e)

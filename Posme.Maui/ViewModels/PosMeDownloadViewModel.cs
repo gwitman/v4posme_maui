@@ -4,15 +4,15 @@ using Unity;
 
 namespace Posme.Maui.ViewModels;
 
-public class DownloadViewModel : BaseViewModel
+public class PosMeDownloadViewModel : BaseViewModel
 {
     private bool _switch;
     private readonly RestApiAppMobileApi _restApiDownload;
-    private readonly Helper _helperContador;
+    private readonly HelperCore _helperContador;
 
-    public DownloadViewModel()
+    public PosMeDownloadViewModel()
     {
-        _helperContador = VariablesGlobales.UnityContainer.Resolve<Helper>();
+        _helperContador = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
         _restApiDownload = new RestApiAppMobileApi();
         DownloadCommand = new Command(OnDownloadClicked, ValidateDownload);
         PropertyChanged += (_, _) => DownloadCommand.ChangeCanExecute();

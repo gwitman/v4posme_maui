@@ -13,14 +13,14 @@ public partial class ItemEditPage : ContentPage
     private readonly IRepositoryItems _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
     private Api_AppMobileApi_GetDataDownloadItemsResponse _saveItem;
     private Api_AppMobileApi_GetDataDownloadItemsResponse _defaultItem;
-    private readonly Helper _helperContador;
+    private readonly HelperCore _helperContador;
 
     public ItemEditPage()
     {
         InitializeComponent();
         _saveItem = new Api_AppMobileApi_GetDataDownloadItemsResponse();
         _defaultItem = new Api_AppMobileApi_GetDataDownloadItemsResponse();
-        _helperContador = VariablesGlobales.UnityContainer.Resolve<Helper>();
+        _helperContador = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
         DataForm.CommitMode = CommitMode.Manually;
         Title = "Editar Producto";
     }

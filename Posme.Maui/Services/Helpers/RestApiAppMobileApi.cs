@@ -28,7 +28,7 @@ public class RestApiAppMobileApi
 
     public async Task<bool> GetDataDownload()
     {
-        var _helper = VariablesGlobales.UnityContainer.Resolve<Helper>();
+        var _helper = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
         Constantes.UrlRequestDownload = Constantes.UrlRequestDownload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
         Constantes.UrlRequestDownload = await _helper.ParseUrl(Constantes.UrlRequestDownload);
 

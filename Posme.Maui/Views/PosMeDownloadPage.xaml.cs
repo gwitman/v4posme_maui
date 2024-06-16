@@ -25,6 +25,6 @@ public partial class DownloadPage : ContentPage
 
     protected override void OnAppearing()
     {
-        ((DownloadViewModel)BindingContext).OnAppearing(Navigation);
+        ((PosMeDownloadViewModel)BindingContext).OnAppearing(Navigation);
     }
 }

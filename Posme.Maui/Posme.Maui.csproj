@@ -47,6 +47,14 @@
       <MauiXaml Remove="ServicesLibrary\**" />
       <None Remove="ServicesLibrary\**" />
     </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Services\Helpers\Constantes.cs" />
+      <Compile Remove="Services\Helpers\Enums.cs" />
+      <Compile Remove="Services\Helpers\Mensajes.cs" />
+      <Compile Remove="Services\Helpers\RestApiAppMobileApi.cs" />
+      <Compile Remove="Services\Helpers\RestApiCoreAcount.cs" />
+      <Compile Remove="Services\Helpers\VariablesGlobales.cs" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="BouncyCastle.Cryptography" Version="2.4.0" />
@@ -80,28 +88,58 @@
 
 
     <ItemGroup>
-        <Compile Update="Views\Abonos\01AbonosPage.xaml.cs">
-          <DependentUpon>01AbonosPage.xaml</DependentUpon>
+        <Compile Update="Views\Abonos\01CustomersPage.xaml.cs">
+          <DependentUpon>01CustomersPage.xaml</DependentUpon>
         </Compile>
-        <Compile Update="Views\Abonos\02CustomerDetailInvoicePage.xaml.cs">
-          <DependentUpon>02CustomerDetailInvoicePage.xaml</DependentUpon>
+        <Compile Update="Views\Abonos\02InvoicePage.xaml.cs">
+          <DependentUpon>02InvoicePage.xaml</DependentUpon>
         </Compile>
-        <Compile Update="Views\Abonos\03CreditDetailInvoicePage.xaml.cs">
-          <DependentUpon>03CreditDetailInvoicePage.xaml</DependentUpon>
+        <Compile Update="Views\Abonos\03AmortizationPage.xaml.cs">
+          <DependentUpon>03AmortizationPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\PosMeZMasterImageEditView.xaml.cs">
+          <DependentUpon>PosMeZMasterImageEditView.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\PosMeZMasterMainPage.xaml.cs">
+          <DependentUpon>PosMeZMasterMainPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\PosMeParameterPage.xaml.cs">
+          <DependentUpon>PosMeParameterPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\PosMeZMasterLoginPage.xaml.cs">
+          <DependentUpon>PosMeZMasterLoginPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\PosMeZMasterLoadingPage.xaml.cs">
+          <DependentUpon>PosMeZMasterLoadingPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\PosMeDownloadPage.xaml.cs">
+          <DependentUpon>PosMeDownloadPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\PosMeZMasterBarCodePage.xaml.cs">
+          <DependentUpon>PosMeZMasterBarCodePage.xaml</DependentUpon>
         </Compile>
         <Compile Update="Views\Clientes\ClientesPage.xaml.cs">
             <DependentUpon>ClientesPage.xaml</DependentUpon>
         </Compile>
-        <Compile Update="Views\Abonos\04AplicarAbonoPage.xaml.cs">
-          <DependentUpon>04AplicarAbonoPage.xaml</DependentUpon>
+        <Compile Update="Views\Abonos\04ApplySharePage.xaml.cs">
+          <DependentUpon>04ApplySharePage.xaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
-        <Compile Update="Views\Abonos\05ValidarAbonoPage.xaml.cs">
-          <DependentUpon>05ValidarAbonoPage.xaml</DependentUpon>
+        <Compile Update="Views\Abonos\05PrinterPage.xaml.cs">
+          <DependentUpon>05PrinterPage.xaml</DependentUpon>
           <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Views\Invoices\01CustomersPage.xaml.cs">
+          <DependentUpon>01CustomersPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Invoices\02DataInvoicesPage.xaml.cs">
+          <DependentUpon>02DataInvoicesPage.xaml</DependentUpon>
         </Compile>
         <Compile Update="Views\Invoices\SeleccionarProductoPage.xaml.cs">
           <DependentUpon>SeleccionarProductoPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\ASchedulerPage.xaml.cs">
+          <DependentUpon>ASchedulerPage.xaml</DependentUpon>
         </Compile>
     </ItemGroup>
 
@@ -110,10 +148,10 @@
         <MauiXaml Update="Views\Clientes\ClientesPage.xaml">
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
-        <MauiXaml Update="Views\Abonos\04AplicarAbonoPage.xaml">
+        <MauiXaml Update="Views\Abonos\04ApplySharePage.xaml">
           <SubType>Designer</SubType>
         </MauiXaml>
-        <MauiXaml Update="Views\Abonos\05ValidarAbonoPage.xaml">
+        <MauiXaml Update="Views\Abonos\05PrinterPage.xaml">
           <SubType>Designer</SubType>
         </MauiXaml>
     </ItemGroup>
@@ -123,5 +161,11 @@
       <Reference Include="Mono.Android">
         <HintPath>C:\Program Files\dotnet\packs\Microsoft.Android.Ref.34\34.0.52\ref\net8.0\Mono.Android.dll</HintPath>
       </Reference>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="Services\Api\" />
+      <Folder Include="Services\SystemNames\" />
     </ItemGroup>
 </Project>

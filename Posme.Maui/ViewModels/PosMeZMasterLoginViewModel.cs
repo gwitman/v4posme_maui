@@ -6,7 +6,7 @@ using static Microsoft.Maui.Controls.Application;
 
 namespace Posme.Maui.ViewModels
 {
-    public class LoginViewModel : BaseViewModel
+    public class PosMeZMasterLoginViewModel : BaseViewModel
     {
         private readonly RestApiCoreAcount _restServiceUser = new();
         private readonly IRepositoryTbUser _repositoryTbUser;
@@ -17,7 +17,7 @@ namespace Posme.Maui.ViewModels
         private bool _popupShow;
         private bool _remember;
 
-        public LoginViewModel()
+        public PosMeZMasterLoginViewModel()
         {
             _repositoryTbUser = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbUser>();
             LoginCommand = new Command(OnLoginClicked, ValidateLogin);

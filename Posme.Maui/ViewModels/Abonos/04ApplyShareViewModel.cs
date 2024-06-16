@@ -15,7 +15,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
     private readonly IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization;
     private readonly IRepositoryTbCustomer _repositoryTbCustomer;
     private readonly IRepositoryTransactionMaster _repositoryTransactionMaster;
-    private readonly Helper _helper;
+    private readonly HelperCore _helper;
     private readonly HelperCustomerCreditDocumentAmortization _helperCustomerCreditDocumentAmortization;
     private Api_AppMobileApi_GetDataDownloadDocumentCreditResponse _documentCreditResponse;
     private Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse _documentCreditAmortization;
@@ -26,7 +26,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         _documentCreditResponse = new();
         _documentCreditAmortization = new();
         _customerResponse = new();
-        _helper = VariablesGlobales.UnityContainer.Resolve<Helper>();
+        _helper = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
         _helperCustomerCreditDocumentAmortization = VariablesGlobales.UnityContainer.Resolve<HelperCustomerCreditDocumentAmortization>();
         Title = "Completar Abono 4/5";
         _repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();

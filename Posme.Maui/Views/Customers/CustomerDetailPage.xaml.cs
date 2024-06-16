@@ -33,7 +33,7 @@ public partial class CustomerDetailPage : ContentPage
 
         try
         {
-            var helper = VariablesGlobales.UnityContainer.Resolve<Helper>();
+            var helper = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
             _isDeleting = await _repositoryTbCustomer.PosMeDelete(SelectedItem);
             if (_isDeleting)
             {

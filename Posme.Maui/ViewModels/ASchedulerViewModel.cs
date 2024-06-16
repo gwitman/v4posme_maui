@@ -5,10 +5,10 @@ using Posme.Maui.Services.Repository;
 
 namespace Posme.Maui.ViewModels
 {
-    public class SchedulerViewModel : BaseViewModel
+    public class ASchedulerViewModel : BaseViewModel
     {
         private IRepositoryItems _repositoryItems;
-        public SchedulerViewModel(IServiceProvider serviceProvider)
+        public ASchedulerViewModel(IServiceProvider serviceProvider)
         {
             Title = "Scheduler";
             Items = new ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse>();

@@ -4,7 +4,7 @@ namespace Posme.Maui.Views.Customers;
 
 public partial class CustomersPage : ContentPage
 {
-    private CustomerViewModel? _clientesViewModel;
+    private PosMeCustomerViewModel? _clientesViewModel;
     
     public CustomersPage()
     {
@@ -14,7 +14,7 @@ public partial class CustomersPage : ContentPage
 
     protected override void OnAppearing()
     {
-        _clientesViewModel = (CustomerViewModel)BindingContext;
+        _clientesViewModel = (PosMeCustomerViewModel)BindingContext;
         _clientesViewModel.OnAppearing(Navigation);
     }
 }

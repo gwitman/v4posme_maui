@@ -4,7 +4,7 @@ using Posme.Maui.Models;
 
 namespace Posme.Maui.Services.Helpers;
 
-public class Helper(IRepositoryTbParameterSystem repositoryParameters)
+public class HelperCore(IRepositoryTbParameterSystem repositoryParameters)
 {
     public async Task<int> GetCounter()
     {
