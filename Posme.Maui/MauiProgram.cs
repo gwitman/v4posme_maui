@@ -1,16 +1,14 @@
-﻿using CommunityToolkit.Maui;
+﻿using System.Text;
+using CommunityToolkit.Maui;
 using DevExpress.Maui;
 using DevExpress.Maui.Charts;
 using DevExpress.Maui.Core;
-using Posme.Maui.Models;
 using Posme.Maui.Services;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.ViewModels;
 using Posme.Maui.Views;
 using Posme.Maui.Views.Items;
-using Syncfusion.Maui.Core.Hosting;
-using System.Text;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using Unity;
 using ZXing.Net.Maui.Controls;
@@ -26,7 +24,6 @@ namespace Posme.Maui
             builder
                 .UseMauiApp<App>()
                 .UseSkiaSharp()
-                .ConfigureSyncfusionCore()
                 .UseMauiCommunityToolkit()
                 .UseDevExpress(useLocalization: true)
                 .UseBarcodeReader()

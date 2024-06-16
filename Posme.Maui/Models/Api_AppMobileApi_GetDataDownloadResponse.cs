@@ -96,6 +96,7 @@ public class Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse
 [SQLite.Table("tb_items")]
 public class Api_AppMobileApi_GetDataDownloadItemsResponse : BindableBase
 {
+
     [PrimaryKey, AutoIncrement]
     [DataMember]
     public int ItemPk

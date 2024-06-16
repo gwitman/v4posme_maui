@@ -45,6 +45,12 @@ public class InvoicesViewModel : BaseViewModel
         }
 
         IsBusy = true;
+        VariablesGlobales.DtoInvoice = new DtoInvoice
+        {
+            FirstName = item.FirstName,
+            LastName = item.LastName,
+            Balance = item.Balance
+        };
         await NavigationService.NavigateToAsync<DataInvoicesViewModel>(item.CustomerNumber!);
         IsBusy = false;
     }
@@ -70,7 +76,7 @@ public class InvoicesViewModel : BaseViewModel
         await Task.Run(async () =>
         {
             Customers.Clear();
-            var findAll = await _customerRepositoryTbCustomer.PosMeFilter10();
+            var findAll = await _customerRepositoryTbCustomer.PosMeTake10();
             foreach (var response in findAll)
             {
                 Customers.Add(response);

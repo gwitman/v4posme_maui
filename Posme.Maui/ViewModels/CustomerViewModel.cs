@@ -62,7 +62,7 @@ public class CustomerViewModel : BaseViewModel
         await Task.Run(async () =>
         {
             Customers.Clear();
-            var findAll = await _customerRepositoryTbCustomer.PosMeFilter10();
+            var findAll = await _customerRepositoryTbCustomer.PosMeTake10();
             foreach (var response in findAll)
             {
                 Customers.Add(response);

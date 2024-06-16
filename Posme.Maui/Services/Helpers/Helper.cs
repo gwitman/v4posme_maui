@@ -33,7 +33,7 @@ public class Helper(IRepositoryTbParameterSystem repositoryParameters)
         var find = await repositoryParameters.PosMeFindCodigoAbono();
         var codigo = find.Value!;
 
-        if (codigo.IndexOf("-") < 0 )
+        if (codigo.IndexOf("-", StringComparison.Ordinal) < 0 )
         throw new Exception(Mensajes.MnesajeCountadoDeAbonoMalFormado);
 
         
@@ -47,5 +47,14 @@ public class Helper(IRepositoryTbParameterSystem repositoryParameters)
         await repositoryParameters.PosMeUpdate(find);
 
         return codigo;
+    }
+    
+    public string GetFilePath(string filename)
+    {
+        var folderPath = Environment.GetFolderPath(DeviceInfo.Platform == DevicePlatform.Android
+            ? Environment.SpecialFolder.LocalApplicationData
+            : Environment.SpecialFolder.MyDocuments);
+
+        return Path.Combine(folderPath, filename);
     }
 }

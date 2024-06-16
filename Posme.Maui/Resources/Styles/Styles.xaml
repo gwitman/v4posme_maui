@@ -16,17 +16,27 @@
         <Setter Property="IconColor" Value="{StaticResource Primary}" />
         <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
     </Style>
+    <Style TargetType="dx:DXButton" x:Key="SinFondoColorRedondeado">
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="IconColor" Value="{StaticResource Primary}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="PressedBackgroundColor" Value="{StaticResource Secondary}"/>
+    </Style>
     <Style TargetType="dx:DXButton" x:Key="ButtonDefault">
         <Setter Property="TextColor" Value="{StaticResource Primary}" />
         <Setter Property="IconColor" Value="{StaticResource Primary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderColor" Value="Black" />
+        <Setter Property="CornerRadius" Value="50" />
         <Setter Property="HorizontalOptions" Value="Start" />
         <Setter Property="PressedBackgroundColor" Value="{StaticResource Secondary}"/>
     </Style>
     <Style TargetType="dx:DXButton">
         <Setter Property="TextColor" Value="{StaticResource White}" />
         <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="PressedBackgroundColor" Value="{StaticResource Secondary}"/>
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Padding" Value="14,10" />

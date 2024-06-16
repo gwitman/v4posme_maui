@@ -41,6 +41,11 @@ public abstract class RepositoryFacade<T>(DataBase dataBase) : IRepositoryFacade
         return await dataBase.Database.Table<T>().Skip(lastLoadedIndex).Take(loadBatchSize).ToListAsync();
     }
 
+    public Task<List<T>> PosMeTake10()
+    {
+        return dataBase.Database.Table<T>().Take(10).ToListAsync();
+    }
+
     public async Task<int> PosMeCount()
     {
         return await dataBase.Database.Table<T>().CountAsync();

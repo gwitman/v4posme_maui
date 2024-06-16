@@ -1,27 +1,17 @@
 ﻿using System.Diagnostics;
-using System.Text;
 using CommunityToolkit.Maui.Core;
-using ESC_POS_USB_NET.Printer;
-using Plugin.BLE;
-using Plugin.BLE.Abstractions.Contracts;
-using Posme.Maui.Services.Helpers;
-using Posme.Maui.Services.Repository;
 using Posme.Maui.ViewModels.Abonos;
-using Unity;
 
 namespace Posme.Maui.Views.Abonos;
 
 public partial class ValidarAbonoPage : ContentPage
 {
-    private PrinterServices _printerServices;
     //IBluetoothLE ble;
     //IAdapter adapter;
     //IDevice printerDevice;
     public ValidarAbonoPage()
     {
         InitializeComponent();
-        _printerServices = new PrinterServices();
-
     }
 
     protected override async void OnAppearing()
@@ -84,5 +74,4 @@ public partial class ValidarAbonoPage : ContentPage
         await File.WriteAllBytesAsync(filePath, memoryStream.ToArray());
         return filePath;
     }
-   
 }

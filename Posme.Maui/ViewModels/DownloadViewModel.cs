@@ -20,7 +20,7 @@ public class DownloadViewModel : BaseViewModel
 
     private bool ValidateDownload()
     {
-        return Switch;
+        return Connectivity.Current.NetworkAccess != NetworkAccess.None && Switch;
     }
 
     private async void OnDownloadClicked()
