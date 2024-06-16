@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using Newtonsoft.Json;
 using Posme.Maui.Models;
-namespace Posme.Maui.Services.Helpers;
+namespace Posme.Maui.Services.Api;
 
 public class RestApiCoreAcount
 {

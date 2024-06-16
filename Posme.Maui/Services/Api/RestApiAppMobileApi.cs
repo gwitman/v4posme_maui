@@ -4,7 +4,7 @@ using Posme.Maui.Models;
 using Posme.Maui.Services.Repository;
 using Unity;
 
-namespace Posme.Maui.Services.Helpers;
+namespace Posme.Maui.Services.Api;
 
 public class RestApiAppMobileApi
 {

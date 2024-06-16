@@ -1,7 +1,7 @@
 ﻿using Posme.Maui.Models;
 using Unity;
 
-namespace Posme.Maui.Services.Helpers;
+namespace Posme.Maui.Services.SystemNames;
 
 public static class VariablesGlobales
 {

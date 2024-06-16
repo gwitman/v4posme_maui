@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace Posme.Maui.Services.Helpers;
+namespace Posme.Maui.Services.SystemNames;
 
 public static class Mensajes
 {
