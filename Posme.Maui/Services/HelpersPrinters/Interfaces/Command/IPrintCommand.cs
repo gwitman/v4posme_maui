@@ -1,5 +1,5 @@
 ﻿
-using Posme.Maui.HelpersPrinters.Epson_Commands;
+using Posme.Maui.Services.HelpersPrinters.Epson_Commands;
 
 namespace Posme.Maui.Services.HelpersPrinters.Interfaces.Command
 {

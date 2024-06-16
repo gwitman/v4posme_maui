@@ -1,7 +1,7 @@
-﻿using Posme.Maui.HelpersPrinters.Enums;
-using Posme.Maui.HelpersPrinters.Extensions;
-using Posme.Maui.HelpersPrinters.Interfaces.Command;
-using IImage = Posme.Maui.HelpersPrinters.Interfaces.Command.IImage;
+﻿using Posme.Maui.Services.HelpersPrinters.Enums;
+using Posme.Maui.Services.HelpersPrinters.Extensions;
+using Posme.Maui.Services.HelpersPrinters.Interfaces.Command;
+using IImage = Posme.Maui.Services.HelpersPrinters.Interfaces.Command.IImage;
 
 namespace Posme.Maui.Services.HelpersPrinters.Epson_Commands
 {

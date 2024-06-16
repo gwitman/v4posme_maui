@@ -1,4 +1,4 @@
-﻿using Posme.Maui.HelpersPrinters.Enums;
+﻿using Posme.Maui.Services.HelpersPrinters.Enums;
 using SkiaSharp;
 
 namespace Posme.Maui.Services.HelpersPrinters.Interfaces.Printer

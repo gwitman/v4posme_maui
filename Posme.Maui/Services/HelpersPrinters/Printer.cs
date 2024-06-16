@@ -1,14 +1,14 @@
 ﻿using System.Text;
-using Posme.Maui.HelpersPrinters.Epson_Commands;
-using Posme.Maui.HelpersPrinters.Helper;
-using Posme.Maui.HelpersPrinters.Interfaces.Command;
+using Posme.Maui.Services.HelpersPrinters.Epson_Commands;
+using Posme.Maui.Services.HelpersPrinters.Helper;
+using Posme.Maui.Services.HelpersPrinters.Interfaces.Command;
 using Posme.Maui.Services.HelpersPrinters.Interfaces.Printer;
 using Posme.Maui.Services;
 using SkiaSharp;
-using Fonts = Posme.Maui.HelpersPrinters.Enums.Fonts;
-using Positions = Posme.Maui.HelpersPrinters.Enums.Positions;
-using PrinterModeState = Posme.Maui.HelpersPrinters.Enums.PrinterModeState;
-using QrCodeSize = Posme.Maui.HelpersPrinters.Enums.QrCodeSize;
+using Fonts = Posme.Maui.Services.HelpersPrinters.Enums.Fonts;
+using Positions = Posme.Maui.Services.HelpersPrinters.Enums.Positions;
+using PrinterModeState = Posme.Maui.Services.HelpersPrinters.Enums.PrinterModeState;
+using QrCodeSize = Posme.Maui.Services.HelpersPrinters.Enums.QrCodeSize;
 
 namespace Posme.Maui.Services.HelpersPrinters
 {

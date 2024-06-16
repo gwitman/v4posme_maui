@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Posme.Maui.Services.HelpersPrinters.Enums;
-using Posme.Maui.HelpersPrinters.Extensions;
-using Posme.Maui.HelpersPrinters.Interfaces.Command;
+using Posme.Maui.Services.HelpersPrinters.Extensions;
+using Posme.Maui.Services.HelpersPrinters.Interfaces.Command;
 
 namespace Posme.Maui.Services.HelpersPrinters.Epson_Commands
 {
