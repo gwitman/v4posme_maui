@@ -3,7 +3,7 @@ using Posme.Maui.HelpersPrinters.Extensions;
 using Posme.Maui.HelpersPrinters.Interfaces.Command;
 using IImage = Posme.Maui.HelpersPrinters.Interfaces.Command.IImage;
 
-namespace Posme.Maui.HelpersPrinters.Epson_Commands
+namespace Posme.Maui.Services.HelpersPrinters.Epson_Commands
 {
     internal class EscPos : IPrintCommand
     {

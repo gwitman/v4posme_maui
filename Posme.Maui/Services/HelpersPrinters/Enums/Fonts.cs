@@ -1,4 +1,4 @@
-﻿namespace Posme.Maui.HelpersPrinters.Enums
+﻿namespace Posme.Maui.Services.HelpersPrinters.Enums
 {
    ///<Summary>
    /// This enum is used to set font type

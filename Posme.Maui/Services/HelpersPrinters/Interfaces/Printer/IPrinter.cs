@@ -1,7 +1,7 @@
 ﻿using Posme.Maui.HelpersPrinters.Enums;
 using SkiaSharp;
 
-namespace Posme.Maui.HelpersPrinters.Interfaces.Printer
+namespace Posme.Maui.Services.HelpersPrinters.Interfaces.Printer
 {
     internal interface IPrinter
     {

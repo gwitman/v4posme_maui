@@ -2,7 +2,7 @@
 using Posme.Maui.HelpersPrinters.Epson_Commands;
 using Posme.Maui.HelpersPrinters.Helper;
 using Posme.Maui.HelpersPrinters.Interfaces.Command;
-using Posme.Maui.HelpersPrinters.Interfaces.Printer;
+using Posme.Maui.Services.HelpersPrinters.Interfaces.Printer;
 using Posme.Maui.Services;
 using SkiaSharp;
 using Fonts = Posme.Maui.HelpersPrinters.Enums.Fonts;
@@ -10,7 +10,7 @@ using Positions = Posme.Maui.HelpersPrinters.Enums.Positions;
 using PrinterModeState = Posme.Maui.HelpersPrinters.Enums.PrinterModeState;
 using QrCodeSize = Posme.Maui.HelpersPrinters.Enums.QrCodeSize;
 
-namespace Posme.Maui.HelpersPrinters
+namespace Posme.Maui.Services.HelpersPrinters
 {
     public class Printer : IPrinter
     {

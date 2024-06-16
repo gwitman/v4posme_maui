@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Posme.Maui.HelpersPrinters.Helper
+namespace Posme.Maui.Services.HelpersPrinters.Helper
 {
     internal class RawPrinterHelper
     {

@@ -1,4 +1,4 @@
-﻿namespace Posme.Maui.HelpersPrinters.Interfaces.Command
+﻿namespace Posme.Maui.Services.HelpersPrinters.Interfaces.Command
 {
     interface ILineHeight
     {

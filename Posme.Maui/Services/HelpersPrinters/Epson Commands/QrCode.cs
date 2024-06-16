@@ -1,9 +1,9 @@
 ﻿using System.Text;
-using Posme.Maui.HelpersPrinters.Enums;
+using Posme.Maui.Services.HelpersPrinters.Enums;
 using Posme.Maui.HelpersPrinters.Extensions;
 using Posme.Maui.HelpersPrinters.Interfaces.Command;
 
-namespace Posme.Maui.HelpersPrinters.Epson_Commands
+namespace Posme.Maui.Services.HelpersPrinters.Epson_Commands
 {
     public class QrCode : IQrCode
     {

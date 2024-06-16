@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using SkiaSharp;
-using IImage = Posme.Maui.HelpersPrinters.Interfaces.Command.IImage;
+using IImage = Posme.Maui.Services.HelpersPrinters.Interfaces.Command.IImage;
 
-namespace Posme.Maui.HelpersPrinters.Epson_Commands
+namespace Posme.Maui.Services.HelpersPrinters.Epson_Commands
 {
     public class Image : IImage
     {

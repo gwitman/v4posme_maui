@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Posme.Maui.HelpersPrinters.Extensions
+namespace Posme.Maui.Services.HelpersPrinters.Extensions
 {
     internal static class PrinterExtensions
     {

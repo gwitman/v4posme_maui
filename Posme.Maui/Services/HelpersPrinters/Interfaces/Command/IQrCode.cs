@@ -1,6 +1,6 @@
 ﻿using Posme.Maui.HelpersPrinters.Enums;
 
-namespace Posme.Maui.HelpersPrinters.Interfaces.Command
+namespace Posme.Maui.Services.HelpersPrinters.Interfaces.Command
 {
     internal interface IQrCode
     {
