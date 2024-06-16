@@ -40,11 +40,17 @@
         <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
     <ItemGroup>
+      <AndroidResource Remove="HelpersPrinters\**" />
       <AndroidResource Remove="ServicesLibrary\**" />
+      <Compile Remove="HelpersPrinters\**" />
       <Compile Remove="ServicesLibrary\**" />
+      <EmbeddedResource Remove="HelpersPrinters\**" />
       <EmbeddedResource Remove="ServicesLibrary\**" />
+      <MauiCss Remove="HelpersPrinters\**" />
       <MauiCss Remove="ServicesLibrary\**" />
+      <MauiXaml Remove="HelpersPrinters\**" />
       <MauiXaml Remove="ServicesLibrary\**" />
+      <None Remove="HelpersPrinters\**" />
       <None Remove="ServicesLibrary\**" />
     </ItemGroup>
     <ItemGroup>
