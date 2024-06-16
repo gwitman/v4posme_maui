@@ -30,9 +30,9 @@ public class DtoInvoice
 
     public string? Referencia { get; set; } = string.Empty;
 
-    public DtoCurrency? Currency { get; set; }
+    public DtoCatalogItem? Currency { get; set; }
 
-    public DtoTipoDocumento? TipoDocumento { get; set; }
+    public DtoCatalogItem? TipoDocumento { get; set; }
 
     public ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> Items { get; }
 

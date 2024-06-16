@@ -86,11 +86,11 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
         set => SetProperty(ref _referencias, value);
     }
 
-    public ObservableCollection<DtoCurrency> Currencies { get; }
-    public ObservableCollection<DtoTipoDocumento> TipoDocumentos { get; }
+    public ObservableCollection<DtoCatalogItem> Currencies { get; }
+    public ObservableCollection<DtoCatalogItem> TipoDocumentos { get; }
     public Command SeleccionarProductosCommand { get; }
-    public DtoCurrency? SelectedCurrency { get; set;  }
-    public DtoTipoDocumento? SelectedTipoDocumento { get; set; }
+    public DtoCatalogItem? SelectedCurrency { get; set;  }
+    public DtoCatalogItem? SelectedTipoDocumento { get; set; }
 
     public void OnAppearing(INavigation? navigation)
     {
@@ -109,10 +109,10 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
         Item = VariablesGlobales.DtoInvoice;
         VariablesGlobales.DtoInvoice.CustomerResponse = customer;
         Currencies.Clear();
-        Currencies.Add(new DtoCurrency(1, "Córdobas"));
-        Currencies.Add(new DtoCurrency(2, "Dolares"));
+        Currencies.Add(new DtoCatalogItem(1, "Córdobas"));
+        Currencies.Add(new DtoCatalogItem(2, "Dolares"));
         TipoDocumentos.Clear();
-        TipoDocumentos.Add(new DtoTipoDocumento(1, "Crédito"));
-        TipoDocumentos.Add(new DtoTipoDocumento(2, "Contado"));
+        TipoDocumentos.Add(new DtoCatalogItem(1, "Crédito"));
+        TipoDocumentos.Add(new DtoCatalogItem(2, "Contado"));
     }
 }
