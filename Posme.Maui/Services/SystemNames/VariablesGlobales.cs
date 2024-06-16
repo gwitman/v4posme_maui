@@ -13,7 +13,7 @@ public static class VariablesGlobales
     public static ViewTempDtoAbono? DtoAplicarAbono;
     public static string? PagePrincipalNavegacion = string.Empty;
     public static string? FilePdf;
-    public static DtoInvoice DtoInvoice;
+    public static ViewTempDtoInvoice DtoInvoice;
     static VariablesGlobales()
     {
         UnityContainer = new UnityContainer();

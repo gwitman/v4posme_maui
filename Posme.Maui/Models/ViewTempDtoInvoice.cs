@@ -2,9 +2,9 @@
 
 namespace Posme.Maui.Models;
 
-public class DtoInvoice
+public class ViewTempDtoInvoice
 {
-    public DtoInvoice()
+    public ViewTempDtoInvoice()
     {
         Items = new();
     }

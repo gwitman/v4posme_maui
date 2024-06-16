@@ -46,7 +46,7 @@ public class InvoicesViewModel : BaseViewModel
         }
 
         IsBusy = true;
-        VariablesGlobales.DtoInvoice = new DtoInvoice
+        VariablesGlobales.DtoInvoice = new ViewTempDtoInvoice
         {
             FirstName = item.FirstName,
             LastName = item.LastName,

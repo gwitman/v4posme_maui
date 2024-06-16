@@ -69,7 +69,7 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
     public bool ErrorTipoDocumento { get; set; }
     public bool ErrorComentarios { get; set; }
     public bool ErrorReferencia { get; set; }
-    public DtoInvoice Item { get; private set; }
+    public ViewTempDtoInvoice Item { get; private set; }
     private string _comentarios;
 
     public string Comentarios
