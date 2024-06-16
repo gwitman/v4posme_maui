@@ -135,8 +135,8 @@
         <Compile Update="Views\Invoices\02DataInvoicesPage.xaml.cs">
           <DependentUpon>02DataInvoicesPage.xaml</DependentUpon>
         </Compile>
-        <Compile Update="Views\Invoices\SeleccionarProductoPage.xaml.cs">
-          <DependentUpon>SeleccionarProductoPage.xaml</DependentUpon>
+        <Compile Update="Views\Invoices\03SeleccionarProductoPage.xaml.cs">
+          <DependentUpon>03SeleccionarProductoPage.xaml</DependentUpon>
         </Compile>
         <Compile Update="Views\ASchedulerPage.xaml.cs">
           <DependentUpon>ASchedulerPage.xaml</DependentUpon>
