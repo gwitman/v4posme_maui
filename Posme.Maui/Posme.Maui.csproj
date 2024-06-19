@@ -52,11 +52,11 @@
       <MauiXaml Remove="ServicesLibrary\**" />
       <None Remove="HelpersPrinters\**" />
       <None Remove="ServicesLibrary\**" />
-      <MauiXaml Update="Views\Invoices\ModificarValorPage.xaml">
+      <MauiXaml Update="Views\Invoices\04Z01_ModificarValorPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <Compile Update="Views\Invoices\ModificarValorPage.xaml.cs">
-        <DependentUpon>ModificarValorPage.xaml</DependentUpon>
+      <Compile Update="Views\Invoices\04Z01_ModificarValorPage.xaml.cs">
+        <DependentUpon>04Z01_ModificarValorPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
@@ -109,6 +109,9 @@
         </Compile>
         <Compile Update="Views\Abonos\03AmortizationPage.xaml.cs">
           <DependentUpon>03AmortizationPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Invoices\04RevisarProductosPage.xaml.cs">
+          <DependentUpon>04RevisarProductosPage.xaml</DependentUpon>
         </Compile>
         <Compile Update="Views\PosMeZMasterImageEditView.xaml.cs">
           <DependentUpon>PosMeZMasterImageEditView.xaml</DependentUpon>
