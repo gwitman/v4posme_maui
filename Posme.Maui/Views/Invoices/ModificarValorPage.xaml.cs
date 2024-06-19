@@ -1,0 +1,72 @@
+﻿using DevExpress.Data.Extensions;
+using Posme.Maui.Models;
+using Posme.Maui.Services.SystemNames;
+
+namespace Posme.Maui.Views.Invoices;
+
+public partial class ModificarValorPage : ContentPage
+{
+    public ModificarValorPage()
+    {
+        InitializeComponent();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        TxtValor.Focus();
+    }
+
+    private decimal Quantity { get; set; }
+    private decimal Precio { get; set; }
+
+    public void SetQuantity(decimal value)
+    {
+        Quantity = value;
+        Precio = decimal.Zero;
+        TxtValor.Text = value.ToString("N2");
+    }
+
+    public void SetPrecio(decimal value)
+    {
+        Precio = decimal.Zero;
+        Precio = value;
+        TxtValor.Text = value.ToString("N2");
+    }
+
+    public void SetItemSelected(Api_AppMobileApi_GetDataDownloadItemsResponse itemsResponse)
+    {
+        SelectedItem = itemsResponse;
+    }
+
+    private Api_AppMobileApi_GetDataDownloadItemsResponse? SelectedItem { get; set; }
+
+    private void DXButtonBase_OnClicked(object? sender, EventArgs e)
+    {
+        var valueText = TxtValor.Text;
+        if (string.IsNullOrWhiteSpace(valueText))
+        {
+            TxtValor.HasError = true;
+            return;
+        }
+
+        var value = decimal.Parse(valueText);
+        if (SelectedItem is null) return;
+        if (decimal.Compare(Quantity, decimal.Zero) > 0)
+        {
+            SelectedItem.Quantity = value;
+        }
+
+        if (decimal.Compare(Precio, decimal.Zero) > 0)
+        {
+            SelectedItem.PrecioPublico = value;
+        }
+
+        SelectedItem.Importe = decimal.Multiply(SelectedItem.Quantity, SelectedItem.PrecioPublico);
+        VariablesGlobales.DtoInvoice.Balance = VariablesGlobales.DtoInvoice.Items.Sum(response => response.Importe);
+        var findIndex = VariablesGlobales.DtoInvoice.Items.FindIndex(response => response.ItemNumber == SelectedItem.ItemNumber);
+        VariablesGlobales.DtoInvoice.Items.RemoveAt(findIndex);
+        VariablesGlobales.DtoInvoice.Items.Insert(findIndex, SelectedItem);
+        Navigation.PopAsync(true);
+    }
+}

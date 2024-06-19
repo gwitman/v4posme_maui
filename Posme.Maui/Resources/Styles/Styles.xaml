@@ -4,12 +4,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
-    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core">
-
+    xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
+    xmlns:dxc="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls">
+    
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{StaticResource Primary}" />
     </Style>
-
+    <Style TargetType="dxc:ShimmerView" x:Key="ShimmerEffect">
+        <Setter Property="WaveWidth" Value="0.7"/>
+        <Setter Property="WaveOpacity" Value="0.8"/>
+        <Setter Property="WaveDuration" Value="0:0:0.8"/>
+    </Style>
     <Style TargetType="dxe:ComboBoxEdit">
         <Setter Property="DropDownBackgroundColor" Value="{StaticResource Secondary}" />
         <Setter Property="DropDownItemTextColor" Value="{StaticResource White}" />

@@ -22,6 +22,8 @@
         <ToolbarItem IconImageSource="barcode_scan" Command="{Binding OnBarCode}"/>
     </ContentPage.ToolbarItems>
     <AbsoluteLayout>
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}" />
         <Grid
             RowDefinitions="Auto,*"
             HorizontalOptions="Center">

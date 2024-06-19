@@ -24,6 +24,8 @@ public class ViewTempDtoInvoice
         get => $"{FirstName} {LastName}";
     }
 
+    public int CantidadTotalSeleccionada { get; set; }
+
     public decimal Balance { get; set; }
 
     public string? Comentarios { get; set; } = string.Empty;

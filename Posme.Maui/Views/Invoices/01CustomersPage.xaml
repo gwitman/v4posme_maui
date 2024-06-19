@@ -11,6 +11,9 @@
     <ContentPage.BindingContext>
         <invoices:InvoicesViewModel/>
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="barcode_scan" Command="{Binding OnBarCode}" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <dxc:DXStackLayout Orientation="Vertical">
             <ActivityIndicator IsRunning="{Binding IsBusy}" 

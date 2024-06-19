@@ -1,12 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
-using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
-using Unity;
 using Posme.Maui.Services.SystemNames;
-using Posme.Maui.Services.Api;
+using Posme.Maui.Views;
+using Unity;
+
 namespace Posme.Maui.ViewModels.Invoices;
 
 public class SeleccionarProductoViewModel : BaseViewModel
@@ -19,6 +18,45 @@ public class SeleccionarProductoViewModel : BaseViewModel
         Productos = new();
         _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
         AnadirProducto = new Command<Api_AppMobileApi_GetDataDownloadItemsResponse>(OnAnadirProducto);
+        SearchBarCodeCommand = new Command(OnSearchBarCode);
+        SearchCommand = new Command(OnSearch);
+        ProductosSeleccionadosCommand = new Command(OnRevisarProductos);
+    }
+
+    private async void OnRevisarProductos(object obj)
+    {
+        await NavigationService.NavigateToAsync<RevisarProductosSeleccionadosViewModel>();
+    }
+
+    private async void OnSearch()
+    {
+        if (string.IsNullOrWhiteSpace(Search))
+        {
+            IsPanelVisible = !IsPanelVisible;
+            return;
+        }
+
+        IsPanelVisible = !IsPanelVisible;
+        IsBusy = true;
+        await Task.Run(async () =>
+        {
+            Productos.Clear();
+            var searchItems = await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(Search);
+            foreach (var itemsResponse in searchItems)
+            {
+                itemsResponse.MonedaSimbolo = VariablesGlobales.DtoInvoice.Currency!.Simbolo;
+                Productos.Add(itemsResponse);
+            }
+        });
+        IsBusy = false;
+    }
+
+    private async void OnSearchBarCode()
+    {
+        var barCodePage = new BarCodePage();
+        await Navigation!.PushModalAsync(barCodePage);
+        Search = barCodePage.BarCode;
+        IsPanelVisible = !IsPanelVisible;
     }
 
     private void OnAnadirProducto(Api_AppMobileApi_GetDataDownloadItemsResponse? obj)
@@ -34,17 +72,20 @@ public class SeleccionarProductoViewModel : BaseViewModel
         if (find is not null)
         {
             find.Quantity = decimal.Add(decimal.One, find.Quantity);
-            VariablesGlobales.DtoInvoice.Balance = decimal.Multiply(find.Quantity, find.PrecioPublico);
+            find.Importe = decimal.Multiply(find.Quantity, find.PrecioPublico);
+            VariablesGlobales.DtoInvoice.Balance += decimal.Multiply(decimal.One, find.PrecioPublico);
         }
         else
         {
             obj.Quantity = decimal.One;
+            obj.Importe = decimal.Multiply(obj.Quantity, obj.PrecioPublico);
             VariablesGlobales.DtoInvoice.Items.Add(obj);
-            VariablesGlobales.DtoInvoice.Balance = decimal.Multiply(obj.Quantity, obj.PrecioPublico);
+            VariablesGlobales.DtoInvoice.Balance += decimal.Multiply(decimal.One, obj.PrecioPublico);
         }
 
-        Cantidad++;
-        ProductosSeleccionados = $"{Cantidad} Items = {VariablesGlobales.DtoInvoice.Balance}";
+        VariablesGlobales.DtoInvoice.CantidadTotalSeleccionada ++;
+        ProductosSeleccionadosCantidad = $"Enviar {VariablesGlobales.DtoInvoice.CantidadTotalSeleccionada} Items";
+        ProductosSeleccionadosCantidadTotal = $"{VariablesGlobales.DtoInvoice.CantidadTotalSeleccionada} Items = {VariablesGlobales.DtoInvoice.Balance}";
     }
 
     private async void LoadProductos()
@@ -54,6 +95,7 @@ public class SeleccionarProductoViewModel : BaseViewModel
         Productos.Clear();
         foreach (var itemsResponse in findProductos)
         {
+            itemsResponse.MonedaSimbolo = VariablesGlobales.DtoInvoice.Currency!.Simbolo;
             Productos.Add(itemsResponse);
         }
 
@@ -68,12 +110,20 @@ public class SeleccionarProductoViewModel : BaseViewModel
 
     public ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> Productos { get; }
 
-    private string _productosSeleccionados = "Seleccione los productos";
+    private string _productosSeleccionadosCantidadTotal = "Seleccione los productos";
 
-    public string ProductosSeleccionados
+    public string ProductosSeleccionadosCantidadTotal
     {
-        get => _productosSeleccionados;
-        set => SetProperty(ref _productosSeleccionados, value);
+        get => _productosSeleccionadosCantidadTotal;
+        set => SetProperty(ref _productosSeleccionadosCantidadTotal, value);
+    }
+
+    private string _productosSeleccionadosCantidad = "Seleccione los productos";
+
+    public string ProductosSeleccionadosCantidad
+    {
+        get => _productosSeleccionadosCantidad;
+        set => SetProperty(ref _productosSeleccionadosCantidad, value);
     }
 
     private int _cantidad;
@@ -85,4 +135,15 @@ public class SeleccionarProductoViewModel : BaseViewModel
     }
 
     public Command AnadirProducto { get; }
+    public Command SearchCommand { get; }
+    public Command SearchBarCodeCommand { get; }
+    private bool _isPanelVisible;
+
+    public bool IsPanelVisible
+    {
+        get => _isPanelVisible;
+        set => SetProperty(ref _isPanelVisible, value);
+    }
+
+    public Command ProductosSeleccionadosCommand { get; }
 }

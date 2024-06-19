@@ -33,7 +33,7 @@ public class InvoicesViewModel : BaseViewModel
         var barCodePage = new BarCodePage();
         await Navigation!.PushModalAsync(barCodePage);
         if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
-        Search = VariablesGlobales.BarCode;
+        Search = barCodePage.BarCode;
         VariablesGlobales.BarCode = "";
         OnSearchCommand(Search);
     }

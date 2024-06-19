@@ -1,16 +1,14 @@
-﻿using System.Diagnostics;
-using Posme.Maui.Services.Helpers;
+﻿using Posme.Maui.Services.SystemNames;
 using ZXing.Net.Maui;
-using Posme.Maui.Services.SystemNames;
+
 namespace Posme.Maui.Views;
 
 public partial class BarCodePage : ContentPage
 {
-    
     private bool _isAnimating = true;
-    private const int StepSize = 100; 
+    private const int StepSize = 100;
     private double _currentY = 0;
-    
+
     public BarCodePage()
     {
         InitializeComponent();
@@ -25,29 +23,23 @@ public partial class BarCodePage : ContentPage
 
     private async void OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
     {
-        MainThread.BeginInvokeOnMainThread(() =>
+        await Task.Run(() =>
         {
-            try
+            var barCode = e.Results.FirstOrDefault();
+            if (barCode is null)
             {
-                var barCode = e.Results.FirstOrDefault();
-                if (barCode is null)
-                {
-                    VariablesGlobales.BarCode = "";
-                    return;
-                }
+                VariablesGlobales.BarCode = "";
+                return;
+            }
 
-                VariablesGlobales.BarCode = barCode.Value;
-                if (Navigation.ModalStack.Count <= 0) return;
-                StopScanAnimation();
-                Navigation.PopModalAsync();
-            }
-            catch (Exception exception)
-            {
-                Debug.WriteLine(exception);
-            }
+            BarCode = barCode.Value;
+            VariablesGlobales.BarCode = barCode.Value;
+            if (Navigation.ModalStack.Count <= 0) return;
+            StopScanAnimation();
+            Navigation.PopModalAsync();
         });
     }
-    
+
     private async void StartScanAnimation()
     {
         _isAnimating = true;
@@ -75,5 +67,6 @@ public partial class BarCodePage : ContentPage
         base.OnDisappearing();
         StopScanAnimation();
     }
-    
+
+    public string BarCode { get; private set; }
 }

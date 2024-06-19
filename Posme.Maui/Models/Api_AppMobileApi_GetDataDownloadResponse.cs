@@ -41,12 +41,11 @@ public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
     [DataMember] public decimal Balance { get; set; }
 
     [DataMember] public int CurrencyId { get; set; }
-    
+
     [DataMember] public int CustomerCreditLineId { get; set; }
     public bool Modificado { get; set; }
 
-    [NotMapped]
-    public string? NombreCompleto => $"{FirstName} {LastName}";
+    [NotMapped] public string? NombreCompleto => $"{FirstName} {LastName}";
 }
 
 [SQLite.Table("tb_document_credit")]
@@ -96,7 +95,6 @@ public class Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse
 [SQLite.Table("tb_items")]
 public class Api_AppMobileApi_GetDataDownloadItemsResponse : BindableBase
 {
-
     [PrimaryKey, AutoIncrement]
     [DataMember]
     public int ItemPk
@@ -166,6 +164,31 @@ public class Api_AppMobileApi_GetDataDownloadItemsResponse : BindableBase
     }
 
     public bool Modificado { get; set; }
+
+    /*
+     * Se usa para cuando se selecciona en el grid de la factur y mostrar más detalles
+     * del producto, como cantidad, precio unitario y descuento
+     */
+    [NotMapped]
+    public bool IsSelected
+    {
+        get => GetValue<bool>();
+        set => SetValue(value);
+    }
+
+    [NotMapped]
+    public string MonedaSimbolo
+    {
+        get => GetValue<string>();
+        set => SetValue(value);
+    }
+
+    [NotMapped]
+    public decimal Importe
+    {
+        get => GetValue<decimal>();
+        set => SetValue(value);
+    }
 }
 
 [SQLite.Table("tb_parameters")]

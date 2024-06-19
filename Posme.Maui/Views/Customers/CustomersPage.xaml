@@ -22,26 +22,29 @@
                 RowDefinitions="Auto,*"
                 HorizontalOptions="Center">
                 <Grid ColumnDefinitions="0.2*">
-                    <dxe:TextEdit x:Name="SearchBar"
-                                  Grid.Column="1"
-                                  Margin="5"
-                                  StartIcon="search"
-                                  Text="{Binding Search}"
-                                  StartIconCommand="{Binding SearchCommand}"
-                                  ReturnCommand="{Binding SearchCommand}"
-                                  PlaceholderText="Buscar por código, identificacion y nombres"
-                                  TextChangedCommand="{Binding SearchCommand}" />
+                    <dxe:TextEdit
+                        x:Name="SearchBar"
+                        Grid.Column="1"
+                        Margin="5"
+                        StartIcon="search"
+                        StartIconColor="{StaticResource Primary}"
+                        Text="{Binding Search}"
+                        StartIconCommand="{Binding SearchCommand}"
+                        ReturnCommand="{Binding SearchCommand}"
+                        PlaceholderText="Buscar por código, identificacion y nombres"
+                        TextChangedCommand="{Binding SearchCommand}" />
                 </Grid>
-                <dxcv:DXCollectionView x:Name="ClientesCollectionView"
-                                       Grid.Row="1"
-                                       ItemsSource="{Binding Customers}"
-                                       DetailFormTemplate="{DataTemplate  customers:CustomerDetailPage}"
-                                       DetailEditFormTemplate="{DataTemplate customers:CustomerEditPage}"
-                                       DetailNewItemFormTemplate="{DataTemplate customers:CustomerEditPage}"
-                                       SelectedItem="{Binding SelectedCustomer}"
-                                       SelectionMode="Single"
-                                       TapCommand="{Binding Source={x:Reference ClientesCollectionView}, Path=Commands.ShowDetailForm}"
-                                       IsRefreshing="{Binding  IsBusy, Mode=OneWay}">
+                <dxcv:DXCollectionView
+                    x:Name="ClientesCollectionView"
+                    Grid.Row="1"
+                    ItemsSource="{Binding Customers}"
+                    DetailFormTemplate="{DataTemplate  customers:CustomerDetailPage}"
+                    DetailEditFormTemplate="{DataTemplate customers:CustomerEditPage}"
+                    DetailNewItemFormTemplate="{DataTemplate customers:CustomerEditPage}"
+                    SelectedItem="{Binding SelectedCustomer}"
+                    SelectionMode="Single"
+                    TapCommand="{Binding Source={x:Reference ClientesCollectionView}, Path=Commands.ShowDetailForm}"
+                    IsRefreshing="{Binding  IsBusy, Mode=OneWay}">
                     <dxcv:DXCollectionView.ItemTemplate>
                         <DataTemplate>
                             <dxc:DXStackLayout

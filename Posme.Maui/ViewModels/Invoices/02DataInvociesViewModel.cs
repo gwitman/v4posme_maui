@@ -109,10 +109,10 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
         Item = VariablesGlobales.DtoInvoice;
         VariablesGlobales.DtoInvoice.CustomerResponse = customer;
         Currencies.Clear();
-        Currencies.Add(new DtoCatalogItem(1, "Córdobas"));
-        Currencies.Add(new DtoCatalogItem(2, "Dolares"));
+        Currencies.Add(new DtoCatalogItem(1, "Córdobas", "C$"));
+        Currencies.Add(new DtoCatalogItem(2, "Dolares","$"));
         TipoDocumentos.Clear();
-        TipoDocumentos.Add(new DtoCatalogItem(1, "Crédito"));
-        TipoDocumentos.Add(new DtoCatalogItem(2, "Contado"));
+        TipoDocumentos.Add(new DtoCatalogItem(1, "Crédito","C"));
+        TipoDocumentos.Add(new DtoCatalogItem(2, "Contado","D"));
     }
 }

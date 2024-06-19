@@ -52,6 +52,13 @@
       <MauiXaml Remove="ServicesLibrary\**" />
       <None Remove="HelpersPrinters\**" />
       <None Remove="ServicesLibrary\**" />
+      <MauiXaml Update="Views\Invoices\ModificarValorPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <Compile Update="Views\Invoices\ModificarValorPage.xaml.cs">
+        <DependentUpon>ModificarValorPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
     <ItemGroup>
       <Compile Remove="Services\Helpers\Constantes.cs" />
