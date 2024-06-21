@@ -6,7 +6,7 @@ namespace Posme.Maui.Models;
 public class TbTransactionMasterDetail
 {
     [PrimaryKey, AutoIncrement] public int TransactionMasterDetailId { get; set; }
-    public string TransactionMasterId { get; set; }
+    public int TransactionMasterId { get; set; }
     public int Componentid { get; set; }
     public int ComponentItemid { get; set; }
     public decimal Quantity { get; set; }

@@ -129,13 +129,13 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
     {
         Currencies =
         [
-            new DtoCatalogItem(1, "Córdobas", "C$"),
-            new DtoCatalogItem(2, "Dolares", "$")
+            new DtoCatalogItem((int)TypeCurrency.Cordoba, "Córdobas", "C$"),
+            new DtoCatalogItem((int)TypeCurrency.Dolar, "Dolares", "$")
         ];
         TipoDocumentos =
         [
-            new DtoCatalogItem(1, "Contado", "D"),
-            new DtoCatalogItem(2, "Crédito", "C")
+            new DtoCatalogItem((int)TypeTransactionCausal.Contado, "Contado", "D"),
+            new DtoCatalogItem((int)TypeTransactionCausal.Credito, "Crédito", "C")
         ];
         if (Currencies.Any())
         {

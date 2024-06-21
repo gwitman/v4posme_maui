@@ -17,4 +17,13 @@ namespace Posme.Maui.Services.SystemNames
         Cordoba = 1,
         Dolar = 2,
     }
+    public enum TypeTransactionCausal {
+        Contado = 21,
+        Credito = 22
+    }
+    public enum  TypeComponent
+    {
+        Itme = 33,
+        Customer = 36
+    }
 }

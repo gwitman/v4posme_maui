@@ -64,15 +64,14 @@ public class PaymentInvoiceViewModel : BaseViewModel
             TransactionId = TypeTransaction.TransactionInvoiceBilling,
             Amount = Monto,
             TransactionOn = DateTime.Now,
-            TransactionCausalId = 0, //crear enum
+            TransactionCausalId = dtoInvoice.TipoDocumento!.Key, //crear enum
             Comment = dtoInvoice.Comentarios,
             Discount = decimal.Zero,
-            Taxi1 = decimal.Zero,
+            Taxi1 = decimal.Zero,            
             ExchangeRate = decimal.Zero, //definir
             EntityId = dtoInvoice.CustomerResponse!.EntityId,
             EntitySecondaryId = VariablesGlobales.User!.UserId.ToString(),
-            TransactionNumber = codigo,
-            TipoDocumento = dtoInvoice.TipoDocumento!.Key,
+            TransactionNumber = codigo,            
             CurrencyId = dtoInvoice.Currency!.Key
         };
         transactionMaster.SubAmount = dtoInvoice.Balance - transactionMaster.Discount + transactionMaster.Taxi1;
@@ -84,15 +83,15 @@ public class PaymentInvoiceViewModel : BaseViewModel
             var findPrecioOriginal = await _repositoryItems.PosMeFindByItemNumber(item.ItemNumber);
             var detail = new TbTransactionMasterDetail
             {
-                Quantity = item.Quantity,
-                UnitaryCost = findPrecioOriginal.PrecioPublico,
+                Quantity     = item.Quantity,
+                UnitaryCost  = findPrecioOriginal.PrecioPublico,
                 UnitaryPrice = item.PrecioPublico,
-                TransactionMasterId = codigo,
+                TransactionMasterId = 0, /**/
                 SubAmount = item.Importe,
                 Discount = decimal.Zero,
                 Tax1 = decimal.Zero,
-                Componentid = 0,
-                ComponentItemid = 0
+                Componentid = (int)TypeComponent.Itme,
+                ComponentItemid = item.ItemId
             };
             detail.Amount=detail.SubAmount-detail.Discount+detail.Tax1;
             listMasterDetail.Add(detail);
