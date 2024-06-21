@@ -113,6 +113,12 @@
         <Compile Update="Views\Invoices\04RevisarProductosPage.xaml.cs">
           <DependentUpon>04RevisarProductosPage.xaml</DependentUpon>
         </Compile>
+        <Compile Update="Views\Invoices\05PaymentInvoicePage.xaml.cs">
+          <DependentUpon>05PaymentInvoicePage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\Invoices\06PrinterInvoicePage.xaml.cs">
+          <DependentUpon>06PrinterInvoicePage.xaml</DependentUpon>
+        </Compile>
         <Compile Update="Views\PosMeZMasterImageEditView.xaml.cs">
           <DependentUpon>PosMeZMasterImageEditView.xaml</DependentUpon>
         </Compile>
