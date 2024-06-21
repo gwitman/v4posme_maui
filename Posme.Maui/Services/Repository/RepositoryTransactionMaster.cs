@@ -2,6 +2,6 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public class RepositoryTransactionMaster(DataBase dataBase) : RepositoryFacade<TbTransactionMaster>(dataBase),IRepositoryTransactionMaster
+public class RepositoryTbTransactionMaster(DataBase dataBase) : RepositoryFacade<TbTransactionMaster>(dataBase),IRepositoryTbTransactionMaster
 {
 }

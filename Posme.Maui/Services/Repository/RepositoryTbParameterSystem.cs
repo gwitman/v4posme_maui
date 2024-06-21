@@ -40,4 +40,11 @@ public class RepositoryTbParameterSystem(DataBase dataBase) : RepositoryFacade<T
             .Where(system => system.Name == Constantes.ParametroCodigoAbono)
             .FirstOrDefaultAsync();
     }
+
+    public Task<TbParameterSystem> PosMeFindCodigoFactura()
+    {
+        return dataBase.Database.Table<TbParameterSystem>()
+            .Where(system => system.Name == Constantes.ParameterCodigoFactura)
+            .FirstOrDefaultAsync();
+    }
 }

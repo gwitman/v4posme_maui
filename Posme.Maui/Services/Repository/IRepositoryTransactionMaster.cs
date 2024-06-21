@@ -2,7 +2,7 @@
 
 namespace Posme.Maui.Services.Repository;
 
-public interface IRepositoryTransactionMaster : IRepositoryFacade<TbTransactionMaster>
+public interface IRepositoryTbTransactionMaster : IRepositoryFacade<TbTransactionMaster>
 {
     
 }

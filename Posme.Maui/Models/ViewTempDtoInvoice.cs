@@ -37,6 +37,10 @@ public class ViewTempDtoInvoice
     public DtoCatalogItem? TipoDocumento { get; set; }
 
     public ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> Items { get; }
+    public string Codigo { get; set; }
+    public decimal Monto { get; set; }
+    public decimal Cambio { get; set; }
+    public DateTime TransactionOn { get; set; }
 
     public void ClearItems()
     {

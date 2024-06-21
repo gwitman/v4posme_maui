@@ -15,7 +15,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
     private readonly IRepositoryDocumentCredit _repositoryDocumentCredit;
     private readonly IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization;
     private readonly IRepositoryTbCustomer _repositoryTbCustomer;
-    private readonly IRepositoryTransactionMaster _repositoryTransactionMaster;
+    private readonly IRepositoryTbTransactionMaster _repositoryTransactionMaster;
     private readonly HelperCore _helper;
     private readonly HelperCustomerCreditDocumentAmortization _helperCustomerCreditDocumentAmortization;
     private Api_AppMobileApi_GetDataDownloadDocumentCreditResponse _documentCreditResponse;
@@ -33,7 +33,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         _repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
         _repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
         _repositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
-        _repositoryTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTransactionMaster>();
+        _repositoryTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
         AplicarAbonoCommand = new Command(OnAplicarAbono,OnValidateMonto);
         PropertyChanged += (_, _) => AplicarAbonoCommand.ChangeCanExecute();
     }

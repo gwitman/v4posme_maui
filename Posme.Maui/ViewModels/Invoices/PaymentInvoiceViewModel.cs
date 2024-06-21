@@ -1,12 +1,26 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices.ComTypes;
+using Posme.Maui.Models;
+using Posme.Maui.Services.Helpers;
+using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
+using Unity;
 
 namespace Posme.Maui.ViewModels.Invoices;
 
 public class PaymentInvoiceViewModel : BaseViewModel
 {
+    private readonly HelperCore _helper;
+    private readonly IRepositoryTbTransactionMasterDetail _repositoryTbTransactionMasterDetail;
+    private readonly IRepositoryTbTransactionMaster _repositoryTbTransactionMaster;
+    private readonly IRepositoryItems _repositoryItems;
+
     public PaymentInvoiceViewModel()
     {
+        _helper = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
+        _repositoryTbTransactionMasterDetail = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMasterDetail>();
+        _repositoryTbTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
+        _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
         Title = "Pago 5/5";
         SelectionEfectivoCommand = new Command(OnSelectionEfectivoCommand);
         SelectionDebitoCommand = new Command(OnSelectionDebitoCommand);
@@ -19,13 +33,15 @@ public class PaymentInvoiceViewModel : BaseViewModel
         PagarSeleccion = "Pagar con Selección";
         PropertyChanged += (_, _) => AplicarPagoCommand.ChangeCanExecute();
     }
+
     private bool Validate()
     {
         return decimal.Compare(Monto, decimal.Zero) <= 0;
     }
+
     private void OnClearMontoCommand(object obj)
     {
-        Monto=decimal.Zero;
+        Monto = decimal.Zero;
         Cambio = decimal.Zero;
     }
 
@@ -34,8 +50,59 @@ public class PaymentInvoiceViewModel : BaseViewModel
         return !Validate();
     }
 
-    private void OnAplicarPagoCommand()
+    private async void OnAplicarPagoCommand()
     {
+        IsBusy = true;
+        var dtoInvoice = VariablesGlobales.DtoInvoice;
+        var codigo = await _helper.GetCodigoFactura();
+        VariablesGlobales.DtoInvoice.Codigo = codigo;
+        VariablesGlobales.DtoInvoice.Monto = Monto;
+        VariablesGlobales.DtoInvoice.Cambio = Cambio;
+        VariablesGlobales.DtoInvoice.TransactionOn = DateTime.Now;
+        var transactionMaster = new TbTransactionMaster
+        {
+            TransactionId = TypeTransaction.TransactionInvoiceBilling,
+            Amount = Monto,
+            TransactionOn = DateTime.Now,
+            TransactionCausalId = 0, //crear enum
+            Comment = dtoInvoice.Comentarios,
+            Discount = decimal.Zero,
+            Taxi1 = decimal.Zero,
+            ExchangeRate = decimal.Zero, //definir
+            EntityId = dtoInvoice.CustomerResponse!.EntityId,
+            EntitySecondaryId = VariablesGlobales.User!.UserId.ToString(),
+            TransactionNumber = codigo,
+            TipoDocumento = dtoInvoice.TipoDocumento!.Key,
+            CurrencyId = dtoInvoice.Currency!.Key
+        };
+        transactionMaster.SubAmount = dtoInvoice.Balance - transactionMaster.Discount + transactionMaster.Taxi1;
+
+        var listMasterDetail = new List<TbTransactionMasterDetail>();
+
+        foreach (var item in dtoInvoice.Items)
+        {
+            var findPrecioOriginal = await _repositoryItems.PosMeFindByItemNumber(item.ItemNumber);
+            var detail = new TbTransactionMasterDetail
+            {
+                Quantity = item.Quantity,
+                UnitaryCost = findPrecioOriginal.PrecioPublico,
+                UnitaryPrice = item.PrecioPublico,
+                TransactionMasterId = codigo,
+                SubAmount = item.Importe,
+                Discount = decimal.Zero,
+                Tax1 = decimal.Zero,
+                Componentid = 0,
+                ComponentItemid = 0
+            };
+            detail.Amount=detail.SubAmount-detail.Discount+detail.Tax1;
+            listMasterDetail.Add(detail);
+        }
+
+        await _repositoryTbTransactionMaster.PosMeInsert(transactionMaster);
+        await _repositoryTbTransactionMasterDetail.PosMeInsertAll(listMasterDetail);
+        await _helper.PlusCounter();
+        IsBusy = false;
+        await NavigationService.NavigateToAsync<PrinterInvoiceViewModel>();
     }
 
     private void OnSelectionOtrosCommand()
@@ -151,9 +218,9 @@ public class PaymentInvoiceViewModel : BaseViewModel
     public Command SelectionMonederoCommand { get; }
     public Command SelectionChequeCommand { get; }
     public Command SelectionOtrosCommand { get; }
-    private string _pagarSeleccion;
+    private string? _pagarSeleccion;
 
-    public string PagarSeleccion
+    public string? PagarSeleccion
     {
         get => _pagarSeleccion;
         set => SetProperty(ref _pagarSeleccion, value);

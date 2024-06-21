@@ -25,7 +25,8 @@ public class DataBase
                 new() { Name = "LOGO", Description = "Logo de la aplicación", Value = "" },
                 new() { Name = "ACCESS_POINT", Description = "Punto de acceso", Value = "https://posme.net/v4posme/" },
                 new() { Name = "PRINTER", Description = "Impresora", Value = "Printer" },
-                new() { Name = "TRANSACTION_SHARE", Description = "Número de abono", Value = "ABO-00001" }
+                new() { Name = "TRANSACTION_SHARE", Description = "Número de abono", Value = "ABO-00001" },
+                new() { Name = "TRANSACTION_INVOICE", Description = "Número de factura", Value = "FAC-00001" }
             };
             await Database.InsertAllAsync(parametrosDefault);
         }
@@ -39,5 +40,6 @@ public class DataBase
         await Database.CreateTableAsync<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse>();
         await Database.CreateTableAsync<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
         await Database.CreateTableAsync<TbTransactionMaster>();
+        await Database.CreateTableAsync<TbTransactionMasterDetail>();
     }
 }

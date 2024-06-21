@@ -15,6 +15,7 @@ public static class Constantes
     public static string ParametroCodigoAbono = "TRANSACTION_SHARE";
     public static int CompanyId = 2;
     public const string UrlBase = "https://posme.net/v4posme/";
+    public const string ParameterCodigoFactura = "TRANSACTION_INVOICE";
     public static string UrlRequestLogin = UrlBase + "{CompanyKey}/public/core_acount/loginMobile";
     public static string UrlRequestDownload = UrlBase + "{CompanyKey}/public/app_mobile_api/getDataDownload";
 }

@@ -3,6 +3,7 @@ using System.Runtime.Intrinsics.Arm;
 using Posme.Maui.Models;
 using Posme.Maui.Services.SystemNames;
 using Posme.Maui.Services.Api;
+
 namespace Posme.Maui.Services.Helpers;
 
 public class HelperCore(IRepositoryTbParameterSystem repositoryParameters)
@@ -30,26 +31,41 @@ public class HelperCore(IRepositoryTbParameterSystem repositoryParameters)
 
     public async Task<string> GetCodigoAbono()
     {
-
         var find = await repositoryParameters.PosMeFindCodigoAbono();
         var codigo = find.Value!;
 
-        if (codigo.IndexOf("-", StringComparison.Ordinal) < 0 )
-        throw new Exception(Mensajes.MnesajeCountadoDeAbonoMalFormado);
+        if (codigo.IndexOf("-", StringComparison.Ordinal) < 0)
+            throw new Exception(Mensajes.MnesajeCountadoDeAbonoMalFormado);
 
-        
-
-        var prefix  = find.Value!.Split("-")[0];
+        var prefix = find.Value!.Split("-")[0];
         var counter = find.Value!.Split("-")[1];
-        var numero  = Convert.ToInt32(counter);
-        numero      += 1;
+        var numero = Convert.ToInt32(counter);
+        numero += 1;
         var nuevoCodigoAbono = prefix + "-" + Convert.ToString(numero).PadLeft(8, '0');
-        find.Value  = nuevoCodigoAbono;
+        find.Value = nuevoCodigoAbono;
         await repositoryParameters.PosMeUpdate(find);
 
         return codigo;
     }
-    
+    public async Task<string> GetCodigoFactura()
+    {
+        var find = await repositoryParameters.PosMeFindCodigoFactura();
+        var codigo = find.Value!;
+
+        if (codigo.IndexOf("-", StringComparison.Ordinal) < 0)
+            throw new Exception(Mensajes.MnesajeCountadoDeAbonoMalFormado);
+
+        var prefix = find.Value!.Split("-")[0];
+        var counter = find.Value!.Split("-")[1];
+        var numero = Convert.ToInt32(counter);
+        numero += 1;
+        var nuevoCodigoFactura = prefix + "-" + Convert.ToString(numero).PadLeft(8, '0');
+        find.Value = nuevoCodigoFactura;
+        await repositoryParameters.PosMeUpdate(find);
+
+        return codigo;
+    }
+
     public string GetFilePath(string filename)
     {
         var folderPath = Environment.GetFolderPath(DeviceInfo.Platform == DevicePlatform.Android

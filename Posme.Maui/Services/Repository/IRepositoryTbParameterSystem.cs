@@ -9,4 +9,5 @@ public interface IRepositoryTbParameterSystem : IRepositoryFacade<TbParameterSys
     Task<TbParameterSystem> PosMeFindAccessPoint();
     Task<TbParameterSystem> PosMeFindPrinter();
     Task<TbParameterSystem> PosMeFindCodigoAbono();
+    Task<TbParameterSystem> PosMeFindCodigoFactura();
 }
