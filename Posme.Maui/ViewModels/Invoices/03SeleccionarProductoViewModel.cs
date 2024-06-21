@@ -73,17 +73,16 @@ public class SeleccionarProductoViewModel : BaseViewModel
         {
             find.Quantity = decimal.Add(decimal.One, find.Quantity);
             find.Importe = decimal.Multiply(find.Quantity, find.PrecioPublico);
-            VariablesGlobales.DtoInvoice.Balance += decimal.Multiply(decimal.One, find.PrecioPublico);
         }
         else
         {
             obj.Quantity = decimal.One;
             obj.Importe = decimal.Multiply(obj.Quantity, obj.PrecioPublico);
             VariablesGlobales.DtoInvoice.Items.Add(obj);
-            VariablesGlobales.DtoInvoice.Balance += decimal.Multiply(decimal.One, obj.PrecioPublico);
         }
 
-        VariablesGlobales.DtoInvoice.CantidadTotalSeleccionada ++;
+        VariablesGlobales.DtoInvoice.Balance = VariablesGlobales.DtoInvoice.Items.Sum(response => response.Importe);
+        VariablesGlobales.DtoInvoice.CantidadTotalSeleccionada++;
         ProductosSeleccionadosCantidad = $"Enviar {VariablesGlobales.DtoInvoice.CantidadTotalSeleccionada} Items";
         ProductosSeleccionadosCantidadTotal = $"{VariablesGlobales.DtoInvoice.CantidadTotalSeleccionada} Items = {VariablesGlobales.DtoInvoice.Balance}";
     }
@@ -110,7 +109,7 @@ public class SeleccionarProductoViewModel : BaseViewModel
 
     public ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> Productos { get; }
 
-    private string _productosSeleccionadosCantidadTotal = "Seleccione los productos";
+    private string _productosSeleccionadosCantidadTotal = "Items";
 
     public string ProductosSeleccionadosCantidadTotal
     {
@@ -118,7 +117,7 @@ public class SeleccionarProductoViewModel : BaseViewModel
         set => SetProperty(ref _productosSeleccionadosCantidadTotal, value);
     }
 
-    private string _productosSeleccionadosCantidad = "Seleccione los productos";
+    private string _productosSeleccionadosCantidad = "Seleccionar Productos";
 
     public string ProductosSeleccionadosCantidad
     {

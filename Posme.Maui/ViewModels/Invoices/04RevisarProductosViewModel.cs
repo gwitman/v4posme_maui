@@ -14,6 +14,12 @@ public class RevisarProductosSeleccionadosViewModel : BaseViewModel
         TapCommandProducto = new Command(OnTapCommand);
         PrecioCommand = new Command<Api_AppMobileApi_GetDataDownloadItemsResponse>(OnPrecioCommand);
         QuantityCommand = new Command<Api_AppMobileApi_GetDataDownloadItemsResponse>(OnQuantityCommand);
+        PagoCommand = new Command(OnPagoCommand);
+    }
+
+    private void OnPagoCommand()
+    {
+        Navigation!.PushAsync(new PaymentInvoicePage(), true);
     }
 
     private void OnQuantityCommand(Api_AppMobileApi_GetDataDownloadItemsResponse obj)
@@ -57,18 +63,11 @@ public class RevisarProductosSeleccionadosViewModel : BaseViewModel
         }
     }
 
-    public Command TapCommandProducto { get; }
-    private bool _isPanelVisible;
-
-    private bool IsPanelVisible
-    {
-        get => _isPanelVisible;
-        set => SetProperty(ref _isPanelVisible, value);
-    }
-
     public Api_AppMobileApi_GetDataDownloadItemsResponse? SelectedItem { get; set; }
+    public Command TapCommandProducto { get; }
     public Command PrecioCommand { get; }
     public Command QuantityCommand { get; }
+    public Command PagoCommand { get; }
 
     private decimal _subTotal;
 

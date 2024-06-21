@@ -252,6 +252,7 @@
                         </Label.FormattedText>
                     </Label>
                     <dx:DXButton
+                        Command="{Binding PagoCommand}"
                         Margin="0,0,0,10"
                         VerticalOptions="End">
                         <StackLayout Orientation="Horizontal">

@@ -20,9 +20,4 @@ public partial class DataInvoicesPage : ContentPage
         base.OnAppearing();
         ((DataInvoicesViewModel)BindingContext).OnAppearing(Navigation);
     }
-
-    private void FormInvoice_OnValidateForm(object sender, DataFormValidationEventArgs e)
-    {
-        
-    }
 }

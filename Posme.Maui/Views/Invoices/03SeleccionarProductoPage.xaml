@@ -39,9 +39,9 @@
                                             <RowDefinition Height="50" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="0.5*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="0.1*" />
+                                            <ColumnDefinition Width="0.2*" />
+                                            <ColumnDefinition Width="0.01*" />
                                         </Grid.ColumnDefinitions>
                                         <dx:DXStackLayout
                                             Grid.Column="0"
@@ -190,6 +190,7 @@
                                        FontSize="Medium"
                                        HorizontalOptions="Center" />
                                 <Entry Placeholder="Buscar..."
+                                       TextColor="Black"
                                        Text="{Binding Search}" />
                                 <Button Text="Buscar"
                                         Command="{Binding SearchCommand}" />

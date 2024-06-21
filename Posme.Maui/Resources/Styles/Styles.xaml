@@ -21,6 +21,13 @@
         <Setter Property="IconColor" Value="{StaticResource Primary}" />
         <Setter Property="FocusedBorderColor" Value="{StaticResource Primary}" />
     </Style>
+    <Style TargetType="dx:DXToggleButton" x:Key="SinFondoColorSinRedondeado">
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="IconColor" Value="{StaticResource Primary}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="3" />
+        <Setter Property="CheckedBackgroundColor" Value="{StaticResource Secondary}"/>
+    </Style>
     <Style TargetType="dx:DXButton" x:Key="SinFondoColorRedondeado">
         <Setter Property="TextColor" Value="{StaticResource Primary}" />
         <Setter Property="IconColor" Value="{StaticResource Primary}" />

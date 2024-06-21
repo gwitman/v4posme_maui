@@ -21,11 +21,10 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
     {
         _repositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
         Title = "Datos de facturacion 2/5";
-        Currencies = new();
-        TipoDocumentos = new();
         Item = VariablesGlobales.DtoInvoice;
         SeleccionarProductosCommand = new Command(OnSeleccionarProductos, ValidateFields);
         PropertyChanged += (_, _) => SeleccionarProductosCommand.ChangeCanExecute();
+        LoadComboBox();
     }
 
     private bool Validate()
@@ -70,31 +69,46 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
     public bool ErrorComentarios { get; set; }
     public bool ErrorReferencia { get; set; }
     public ViewTempDtoInvoice Item { get; private set; }
-    private string _comentarios;
+    private string? _comentarios;
 
-    public string Comentarios
+    public string? Comentarios
     {
         get => _comentarios;
         set => SetProperty(ref _comentarios, value);
     }
 
-    private string _referencias;
+    private string? _referencias;
 
-    public string Referencias
+    public string? Referencias
     {
         get => _referencias;
         set => SetProperty(ref _referencias, value);
     }
 
-    public ObservableCollection<DtoCatalogItem> Currencies { get; }
-    public ObservableCollection<DtoCatalogItem> TipoDocumentos { get; }
+    private ObservableCollection<DtoCatalogItem>? _currencies;
+
+    public ObservableCollection<DtoCatalogItem>? Currencies
+    {
+        get => _currencies;
+        set => SetProperty(ref _currencies, value);
+    }
+
+    private ObservableCollection<DtoCatalogItem>? _tipoDocumentos;
+
+    public ObservableCollection<DtoCatalogItem>? TipoDocumentos
+    {
+        get => _tipoDocumentos;
+        set => SetProperty(ref _tipoDocumentos, value);
+    }
+
     public Command SeleccionarProductosCommand { get; }
-    public DtoCatalogItem? SelectedCurrency { get; set;  }
+    public DtoCatalogItem? SelectedCurrency { get; set; }
     public DtoCatalogItem? SelectedTipoDocumento { get; set; }
 
     public void OnAppearing(INavigation? navigation)
     {
         Navigation = navigation;
+        LoadComboBox();
     }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -108,11 +122,29 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
         var customer = await _repositoryTbCustomer.PosMeFindCustomer(id!);
         Item = VariablesGlobales.DtoInvoice;
         VariablesGlobales.DtoInvoice.CustomerResponse = customer;
-        Currencies.Clear();
-        Currencies.Add(new DtoCatalogItem(1, "Córdobas", "C$"));
-        Currencies.Add(new DtoCatalogItem(2, "Dolares","$"));
-        TipoDocumentos.Clear();
-        TipoDocumentos.Add(new DtoCatalogItem(1, "Crédito","C"));
-        TipoDocumentos.Add(new DtoCatalogItem(2, "Contado","D"));
+        LoadComboBox();
+    }
+
+    private void LoadComboBox()
+    {
+        Currencies =
+        [
+            new DtoCatalogItem(1, "Córdobas", "C$"),
+            new DtoCatalogItem(2, "Dolares", "$")
+        ];
+        TipoDocumentos =
+        [
+            new DtoCatalogItem(1, "Contado", "D"),
+            new DtoCatalogItem(2, "Crédito", "C")
+        ];
+        if (Currencies.Any())
+        {
+            SelectedCurrency = Currencies.First();
+        }
+
+        if (TipoDocumentos.Any())
+        {
+            SelectedTipoDocumento = TipoDocumentos.First();
+        }
     }
 }

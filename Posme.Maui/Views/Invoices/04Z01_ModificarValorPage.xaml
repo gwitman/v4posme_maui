@@ -12,7 +12,10 @@
             HorizontalOptions="Center"
             ItemSpacing="30">
             <core:DXImage
-                Source="value_box"/>
+                HeightRequest="150"
+                WidthRequest="150"
+                Aspect="AspectFill"
+                Source="pencil_square"/>
             <editors:TextEdit
                 StartIcon="quantity"
                 x:Name="TxtValor"
