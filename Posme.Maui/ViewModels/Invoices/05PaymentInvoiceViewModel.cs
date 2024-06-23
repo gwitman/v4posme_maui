@@ -67,37 +67,38 @@ public class PaymentInvoiceViewModel : BaseViewModel
             TransactionCausalId = dtoInvoice.TipoDocumento!.Key, //crear enum
             Comment = dtoInvoice.Comentarios,
             Discount = decimal.Zero,
-            Taxi1 = decimal.Zero,            
+            Taxi1 = decimal.Zero,
             ExchangeRate = decimal.Zero, //definir
             EntityId = dtoInvoice.CustomerResponse!.EntityId,
             EntitySecondaryId = VariablesGlobales.User!.UserId.ToString(),
-            TransactionNumber = codigo,            
+            TransactionNumber = codigo,
             CurrencyId = dtoInvoice.Currency!.Key
         };
         transactionMaster.SubAmount = dtoInvoice.Balance - transactionMaster.Discount + transactionMaster.Taxi1;
 
         var listMasterDetail = new List<TbTransactionMasterDetail>();
+        await _repositoryTbTransactionMaster.PosMeInsert(transactionMaster);
+        var transactionMasterId = transactionMaster.TransactionMasterId;
 
         foreach (var item in dtoInvoice.Items)
         {
             var findPrecioOriginal = await _repositoryItems.PosMeFindByItemNumber(item.ItemNumber);
             var detail = new TbTransactionMasterDetail
             {
-                Quantity     = item.Quantity,
-                UnitaryCost  = findPrecioOriginal.PrecioPublico,
+                Quantity = item.Quantity,
+                UnitaryCost = findPrecioOriginal.PrecioPublico,
                 UnitaryPrice = item.PrecioPublico,
-                TransactionMasterId = 0, /**/
+                TransactionMasterId = transactionMasterId, /**/
                 SubAmount = item.Importe,
                 Discount = decimal.Zero,
                 Tax1 = decimal.Zero,
                 Componentid = (int)TypeComponent.Itme,
                 ComponentItemid = item.ItemId
             };
-            detail.Amount=detail.SubAmount-detail.Discount+detail.Tax1;
+            detail.Amount = detail.SubAmount - detail.Discount + detail.Tax1;
             listMasterDetail.Add(detail);
         }
 
-        await _repositoryTbTransactionMaster.PosMeInsert(transactionMaster);
         await _repositoryTbTransactionMasterDetail.PosMeInsertAll(listMasterDetail);
         await _helper.PlusCounter();
         IsBusy = false;

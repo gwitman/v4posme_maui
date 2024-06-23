@@ -7,9 +7,9 @@ public abstract class RepositoryFacade<T>(DataBase dataBase) : IRepositoryFacade
         await dataBase.Database.InsertAllAsync(list);
     }
 
-    public async Task PosMeInsert(T model)
+    public Task<int> PosMeInsert(T model)
     {
-        await dataBase.Database.InsertAsync(model);
+        return dataBase.Database.InsertAsync(model);
     }
 
     public async Task PosMeUpdate(T model)
@@ -49,5 +49,10 @@ public abstract class RepositoryFacade<T>(DataBase dataBase) : IRepositoryFacade
     public async Task<int> PosMeCount()
     {
         return await dataBase.Database.Table<T>().CountAsync();
+    }
+
+    public Task<T> PosMeFindFirst()
+    {
+        return dataBase.Database.Table<T>().FirstOrDefaultAsync();
     }
 }

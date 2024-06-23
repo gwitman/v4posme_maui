@@ -18,6 +18,7 @@ namespace Posme.Maui.ViewModels
         private string? _company;
         private bool _popupShow;
         private bool _remember;
+        private readonly IRepositoryTbCompany _repositoryTbCompany;
 
         public PosMeZMasterLoginViewModel()
         {
@@ -25,12 +26,12 @@ namespace Posme.Maui.ViewModels
             LoginCommand = new Command(OnLoginClicked, ValidateLogin);
             MensajeCommand = new Command(OnMensaje, ValidateError);
             PropertyChanged += (_, _) => LoginCommand.ChangeCanExecute();
+            _repositoryTbCompany = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCompany>();
         }
 
         public Command LoginCommand { get; }
         private Command MensajeCommand { get; }
 
-        
 
         public bool PopupShow
         {
@@ -126,6 +127,7 @@ namespace Posme.Maui.ViewModels
                 VariablesGlobales.User = findUserRemember;
             }
 
+            VariablesGlobales.TbCompany = await _repositoryTbCompany.PosMeFindFirst();
             Current!.MainPage = new MainPage();
             await Navigation.PopModalAsync();
         }

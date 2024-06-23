@@ -41,6 +41,7 @@ namespace Posme.Maui
 
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryTbUser, RepositoryTbUser>();
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryTbCustomer, RepositoryTbCustomer>();
+            VariablesGlobales.UnityContainer.RegisterType<IRepositoryTbCompany, RepositoryTbCompany>();
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryDocumentCreditAmortization, RepositoryDocumentCreditAmortization>();
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryDocumentCredit, RepositoryDocumentCredit>();
             VariablesGlobales.UnityContainer.RegisterType<IRepositoryItems, RepositoryItems>();

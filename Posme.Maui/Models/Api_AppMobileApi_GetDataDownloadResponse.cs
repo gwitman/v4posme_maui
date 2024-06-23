@@ -9,6 +9,8 @@ public class Api_AppMobileApi_GetDataDownloadResponse
 {
     public bool Error { get; set; }
     public string? Message { get; set; }
+
+    public TbCompany ObjCompany { get; set; } = new();
     public List<Api_AppMobileApi_GetDataDownloadItemsResponse> ListItem { get; set; } = [];
     public List<Api_AppMobileApi_GetDataDownloadCustomerResponse> ListCustomer { get; set; } = [];
     public List<Api_AppMobileApi_GetDataDownloadParametersResponse> ListParameter { get; set; } = [];
@@ -46,6 +48,25 @@ public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
     public bool Modificado { get; set; }
 
     [NotMapped] public string? NombreCompleto => $"{FirstName} {LastName}";
+}
+
+[SQLite.Table("tb_company")]
+public class TbCompany
+{
+    /*
+     * "companyID": "2",
+        "name": "Prueba",
+        "createdOn": "2013-11-22 13:00:35",
+        "address": "Teatro Municipal 1C. Sur",
+        "flavorID": "483",
+        "type": "bluemoon"
+     */
+    [PrimaryKey]public int CompanyId { get; set; }
+    public string? Name { get; set; }
+    public DateTime CreatedOn { get; set; }
+    public string? Address { get; set; }
+    public int FlavorId { get; set; }
+    public string? Type { get; set; }
 }
 
 [SQLite.Table("tb_document_credit")]

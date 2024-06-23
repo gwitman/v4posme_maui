@@ -14,11 +14,13 @@ public static class VariablesGlobales
     public static string? PagePrincipalNavegacion = string.Empty;
     public static string? FilePdf;
     public static ViewTempDtoInvoice DtoInvoice;
-
+    public static TbCompany? TbCompany=new();
     static VariablesGlobales()
     {
         UnityContainer = new UnityContainer();
         DtoInvoice = new();
         BarCode = string.Empty;
     }
+
+    
 }

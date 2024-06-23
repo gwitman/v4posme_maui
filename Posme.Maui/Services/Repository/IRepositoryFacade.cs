@@ -3,7 +3,7 @@
 public interface IRepositoryFacade<T>
 {
     Task PosMeInsertAll(List<T> list);
-    Task PosMeInsert(T model);
+    Task<int> PosMeInsert(T model);
 
     Task PosMeUpdate(T model);
 
@@ -20,4 +20,6 @@ public interface IRepositoryFacade<T>
     Task<List<T>> PosMeTake10();
 
     Task<int> PosMeCount();
+
+    Task<T> PosMeFindFirst();
 }

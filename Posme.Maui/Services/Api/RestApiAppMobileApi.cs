@@ -5,12 +5,11 @@ using Posme.Maui.Services.Repository;
 using Unity;
 using Posme.Maui.Services.SystemNames;
 using Posme.Maui.Services.Helpers;
+
 namespace Posme.Maui.Services.Api;
 
 public class RestApiAppMobileApi
 {
-    
-
     private readonly HttpClient _httpClient = new();
 
     private readonly IRepositoryTbCustomer? _repositoryTbCustomer =
@@ -27,11 +26,13 @@ public class RestApiAppMobileApi
     private readonly IRepositoryDocumentCredit? _repositoryDocumentCredit =
         VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
 
+    private readonly IRepositoryTbCompany _repositoryTbCompany = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCompany>();
+
     public async Task<bool> GetDataDownload()
     {
-        var _helper = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
+        var helper = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
         Constantes.UrlRequestDownload = Constantes.UrlRequestDownload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
-        Constantes.UrlRequestDownload = await _helper.ParseUrl(Constantes.UrlRequestDownload);
+        Constantes.UrlRequestDownload = await helper.ParseUrl(Constantes.UrlRequestDownload);
 
         if (VariablesGlobales.User is null)
         {
@@ -62,11 +63,13 @@ public class RestApiAppMobileApi
             var documentCreditAmortizationDeleteAll = _repositoryDocumentCreditAmortization!.PosMeDeleteAll();
             var parametersDeleteAll = _repositoryParameters!.PosMeDeleteAll();
             var documentCreditDeleteAll = _repositoryDocumentCredit!.PosMeDeleteAll();
+            var companyDeleteAll = _repositoryTbCompany.PosMeDeleteAll();
             await Task.WhenAll([
                 customerDeleteAll, itemsDeleteAll, documentCreditAmortizationDeleteAll, parametersDeleteAll,
-                documentCreditDeleteAll
+                documentCreditDeleteAll, companyDeleteAll
             ]);
 
+            var taskCompany = _repositoryTbCompany.PosMeInsert(apiResponse.ObjCompany);
             var taskCustomer = _repositoryTbCustomer!.PosMeInsertAll(apiResponse.ListCustomer);
             var taskItem = _repositoryItems!.PosMeInsertAll(apiResponse.ListItem);
             var taskDocumentCreditAmortization =
@@ -74,7 +77,8 @@ public class RestApiAppMobileApi
             var taskParameters = _repositoryParameters!.PosMeInsertAll(apiResponse.ListParameter);
             var taskDocumentCredit = _repositoryDocumentCredit!.PosMeInsertAll(apiResponse.ListDocumentCredit);
             await Task.WhenAll([
-                taskCustomer, taskItem, taskDocumentCreditAmortization, taskParameters, taskDocumentCredit
+                taskCustomer, taskItem, taskDocumentCreditAmortization, taskParameters,
+                taskDocumentCredit, taskCompany
             ]);
             return true;
         }

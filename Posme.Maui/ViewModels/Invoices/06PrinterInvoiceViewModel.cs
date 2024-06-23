@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using Posme.Maui.Models;
+using Posme.Maui.Services.HelpersPrinters;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
+using SkiaSharp;
 using Unity;
 
 namespace Posme.Maui.ViewModels.Invoices;
@@ -9,17 +11,63 @@ namespace Posme.Maui.ViewModels.Invoices;
 public class PrinterInvoiceViewModel : BaseViewModel
 {
     private readonly IRepositoryTbParameterSystem _parameterSystem;
+    private readonly IRepositoryParameters _repositoryParameters;
 
     public PrinterInvoiceViewModel()
     {
         Title = "Comprobante Pago Factura";
         _parameterSystem = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
+        _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
         AplicarOtroCommand = new Command(OnAplicarOtroCommand);
         PrintCommand = new Command(OnPrintCommand);
     }
 
-    private void OnPrintCommand(object obj)
+    private async void OnPrintCommand(object obj)
     {
+        var parametroPrinter = await _parameterSystem.PosMeFindPrinter();
+        var logo = await _parameterSystem.PosMeFindLogo();
+        if (string.IsNullOrWhiteSpace(parametroPrinter.Value))
+        {
+            return;
+        }
+
+        var dtoInvoice = VariablesGlobales.DtoInvoice;
+        var printer = new Printer(parametroPrinter.Value);
+        var readImage = Convert.FromBase64String(logo.Value!);
+        printer.AlignRight();
+        printer.Image(SKBitmap.Decode(readImage));
+        printer.AlignCenter();
+        printer.BoldMode(Company!.Name!);
+        printer.BoldMode($"RUC: {CompanyRuc!.Value}");
+        printer.BoldMode("FACTURA");
+        printer.BoldMode(dtoInvoice.Codigo);
+        printer.BoldMode($"FECHA: {dtoInvoice.TransactionOn:yyyy-MM-dd hh:mm tt}");
+        printer.NewLine();
+        printer.AlignLeft();
+        var detalleHeader = $"""
+                             VENDEDOR     :{VariablesGlobales.User!.Nickname}
+                             CODIGO       :{dtoInvoice.CustomerNumber}
+                             MONEDA       :{dtoInvoice.Currency!.Simbolo}
+                             CLIENTE       
+                             {dtoInvoice.NombreCompleto}
+                             {dtoInvoice.Comentarios}
+                             """;
+        printer.Append(detalleHeader);
+        printer.Append("CANT.           PREC             TOTAL");
+        foreach (var item in dtoInvoice.Items)
+        {
+            printer.Append(item.Name);
+            printer.Append($"{item.Quantity}            {item.PrecioPublico:N2}             {item.Importe:N2}");
+        }
+
+        printer.Append($"TOTAL:               {dtoInvoice.Balance:N2}");
+        printer.Append($"RECIBIDO:            {dtoInvoice.Monto:N2}");
+        printer.Append($"CAMBIO:              {dtoInvoice.Cambio:N2}");
+        printer.AlignCenter();
+        printer.Append($"{Company.Address}");
+        printer.Append($"{CompanyTelefono!.Value}");
+        printer.FullPaperCut();
+        printer.Print();
     }
 
     private void OnAplicarOtroCommand(object obj)
@@ -39,7 +87,14 @@ public class PrinterInvoiceViewModel : BaseViewModel
         set => SetProperty(ref _logoSource, value);
     }
 
-    public Api_AppMobileApi_GetDataDownloadCustomerResponse CustomerResponse => VariablesGlobales.DtoInvoice.CustomerResponse!;
+    private TbCompany? _company;
+
+    public TbCompany? Company
+    {
+        get => _company;
+        set => SetProperty(ref _company, value);
+    }
+
     public ViewTempDtoInvoice DtoInvoice => VariablesGlobales.DtoInvoice;
     public ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> ItemsResponses => VariablesGlobales.DtoInvoice.Items;
     public string Moneda => VariablesGlobales.DtoInvoice.Currency!.Simbolo;
@@ -48,7 +103,25 @@ public class PrinterInvoiceViewModel : BaseViewModel
     public string Cambio => VariablesGlobales.DtoInvoice.Cambio.ToString("N2");
     public Command PrintCommand { get; }
     public Command AplicarOtroCommand { get; }
+    public string SimboloMoneda => VariablesGlobales.DtoInvoice.Currency!.Simbolo;
+    public string NombreCliente => VariablesGlobales.DtoInvoice.NombreCompleto!;
+    public string CodigoVendedor => VariablesGlobales.User!.Nickname!;
 
+    private Api_AppMobileApi_GetDataDownloadParametersResponse? _companyTelefono;
+
+    public Api_AppMobileApi_GetDataDownloadParametersResponse? CompanyTelefono
+    {
+        get => _companyTelefono;
+        private set => SetProperty(ref _companyTelefono, value);
+    }
+
+    private Api_AppMobileApi_GetDataDownloadParametersResponse? _companyRuc;
+
+    public Api_AppMobileApi_GetDataDownloadParametersResponse? CompanyRuc
+    {
+        get => _companyRuc;
+        private set => SetProperty(ref _companyRuc, value);
+    }
 
     public async void OnAppearing(INavigation navigation)
     {
@@ -58,6 +131,9 @@ public class PrinterInvoiceViewModel : BaseViewModel
             var paramter = await _parameterSystem.PosMeFindLogo();
             var imageBytes = Convert.FromBase64String(paramter.Value!);
             LogoSource = ImageSource.FromStream(() => new MemoryStream(imageBytes));
+            CompanyTelefono = await _repositoryParameters.PosMeFindByKey("CORE_PHONE");
+            CompanyRuc = await _repositoryParameters.PosMeFindByKey("CORE_COMPANY_IDENTIFIER");
+            Company = VariablesGlobales.TbCompany;
         });
     }
 }
