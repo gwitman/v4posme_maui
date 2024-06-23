@@ -52,20 +52,25 @@ public class PrinterInvoiceViewModel : BaseViewModel
                              {dtoInvoice.NombreCompleto}
                              {dtoInvoice.Comentarios}
                              """;
+        printer.NewLine();
         printer.Append(detalleHeader);
-        printer.Append("CANT.           PREC             TOTAL");
+        printer.NewLine();
+        printer.Append("CANT.       PREC         TOTAL");
         foreach (var item in dtoInvoice.Items)
         {
             printer.Append(item.Name);
-            printer.Append($"{item.Quantity}            {item.PrecioPublico:N2}             {item.Importe:N2}");
+            printer.Append($"{item.Quantity}        {item.PrecioPublico:N2}         {item.Importe:N2}");
         }
-
+        printer.NewLine();
         printer.Append($"TOTAL:               {dtoInvoice.Balance:N2}");
         printer.Append($"RECIBIDO:            {dtoInvoice.Monto:N2}");
         printer.Append($"CAMBIO:              {dtoInvoice.Cambio:N2}");
+        printer.NewLine();
         printer.AlignCenter();
         printer.Append($"{Company.Address}");
         printer.Append($"{CompanyTelefono!.Value}");
+        printer.NewLine();
+        printer.NewLine();
         printer.FullPaperCut();
         printer.Print();
     }
