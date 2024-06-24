@@ -48,7 +48,7 @@ class HelperCustomerCreditDocumentAmortization
         }
 
         //Actualizar Documento
-        objCustomerDocument.Balance -= amountApplyBackup;
+        objCustomerDocument.Remaining -= amountApplyBackup;
 
 
         //Actulizar Saldo del Cliente 
@@ -68,11 +68,10 @@ class HelperCustomerCreditDocumentAmortization
         }
 
 
-        var taskAmortization = repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
-        var taskDocument = repositoryDocumentCredit.PosMeUpdate(objCustomerDocument);
-        var taskCustomer = repositoryTbCustomer.PosMeUpdate(objCustomerResponse);
-        await Task.WhenAll([taskAmortization, taskDocument, taskCustomer]);
-
+        await repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
+        await repositoryDocumentCredit.PosMeUpdate(objCustomerDocument);
+        await repositoryTbCustomer.PosMeUpdate(objCustomerResponse);
+        
         return resultado;
     }
 

@@ -41,6 +41,7 @@ public class ViewTempDtoInvoice
     public decimal Monto { get; set; }
     public decimal Cambio { get; set; }
     public DateTime TransactionOn { get; set; }
+    public int TransactionMasterId { get; set; }
 
     public void ClearItems()
     {

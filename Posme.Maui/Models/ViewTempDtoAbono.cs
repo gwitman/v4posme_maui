@@ -2,7 +2,7 @@
 
 public record ViewTempDtoAbono(
     string CodigoAbono,
-    string CustomerNumber,
+    int EntityId,
     string FirstName,
     string LastName,
     string Identification,

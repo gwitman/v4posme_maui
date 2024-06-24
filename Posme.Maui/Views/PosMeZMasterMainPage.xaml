@@ -10,6 +10,7 @@
        xmlns:customers="clr-namespace:Posme.Maui.Views.Customers"
        xmlns:abonos="clr-namespace:Posme.Maui.Views.Abonos"
        xmlns:invoices="clr-namespace:Posme.Maui.Views.Invoices"
+       xmlns:printers="clr-namespace:Posme.Maui.Views.Printers"
        ios:Page.UseSafeArea="true"
        x:Class="Posme.Maui.Views.MainPage">
 
@@ -101,8 +102,8 @@
 
     <FlyoutItem Title="Impresiones" Icon="printer.svg">
 
-        <ShellContent Title="Inicio" Icon="basic_home.svg"
-                      ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Impresiones" Icon="printer.svg"
+                      ContentTemplate="{DataTemplate printers:DashboardPrinterPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"
                       ContentTemplate="{DataTemplate abonos:AbonosPage}" />

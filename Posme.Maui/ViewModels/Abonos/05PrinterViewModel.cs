@@ -11,7 +11,7 @@ using Printer = Posme.Maui.Services.HelpersPrinters.Printer;
 
 namespace Posme.Maui.ViewModels.Abonos;
 
-public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
+public class ValidarAbonoViewModel : BaseViewModel
 {
     private readonly IRepositoryTbParameterSystem _parameterSystem;
 
@@ -22,6 +22,12 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
         Item = VariablesGlobales.DtoAplicarAbono!;
         AplicarOtroCommand = new Command(OnAplicarOtroCommand);
         PrintCommand = new Command(OnPrintCommand);
+        AnularCommand = new Command(OnAnularCommand);
+    }
+
+    private void OnAnularCommand(object obj)
+    {
+        
     }
 
     private async void OnPrintCommand(object obj)
@@ -81,17 +87,13 @@ public class ValidarAbonoViewModel : BaseViewModel, IQueryAttributable
     public ICommand AplicarOtroCommand { get; }
 
     public ICommand PrintCommand { get; }
+    public Command AnularCommand { get; }
 
     public override async Task InitializeAsync(object parameter)
     {
         await OnAppearing(Navigation!);
     }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        var id = HttpUtility.UrlDecode(query["id"] as string);
-        await OnAppearing(Navigation!);
-    }
 
     public async Task OnAppearing(INavigation navigation)
     {

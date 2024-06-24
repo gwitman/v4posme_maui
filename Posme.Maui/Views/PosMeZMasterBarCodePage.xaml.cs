@@ -8,7 +8,7 @@ public partial class BarCodePage : ContentPage
     private bool _isAnimating = true;
     private const int StepSize = 100;
     private double _currentY = 0;
-
+    private  TaskCompletionSource<string?> _pageResultCompletionSource;
     public BarCodePage()
     {
         InitializeComponent();
@@ -19,6 +19,11 @@ public partial class BarCodePage : ContentPage
             Multiple = false
         };
         StartScanAnimation();
+        _pageResultCompletionSource = new TaskCompletionSource<string?>();
+    }
+    public Task<string?> WaitForResultAsync()
+    {
+        return _pageResultCompletionSource.Task;
     }
 
     private async void OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
@@ -36,6 +41,7 @@ public partial class BarCodePage : ContentPage
             VariablesGlobales.BarCode = barCode.Value;
             if (Navigation.ModalStack.Count <= 0) return;
             StopScanAnimation();
+            _pageResultCompletionSource.SetResult(BarCode);
             Navigation.PopModalAsync();
         });
     }

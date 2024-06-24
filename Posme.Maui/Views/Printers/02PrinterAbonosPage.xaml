@@ -1,14 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:abonos="clr-namespace:Posme.Maui.ViewModels.Abonos"
              Title="{Binding Title}"
-             x:Class="Posme.Maui.Views.Abonos.ValidarAbonoPage"
+             x:Class="Posme.Maui.Views.Abonos.PrinterAbonoPage"
              Style="{StaticResource DetailPageStyle}">
-    <Shell.BackButtonBehavior>
-        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
-    </Shell.BackButtonBehavior>
     <Shell.PresentationMode>Animated</Shell.PresentationMode>
     <ContentPage.BindingContext>
         <abonos:ValidarAbonoViewModel />
@@ -16,6 +14,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="shared" Clicked="MenuItem_OnClicked" />
         <ToolbarItem Text="Imprimir" Order="Secondary" x:Name="ItemPrint" Command="{Binding PrintCommand}" />
+        <ToolbarItem Text="Anular" Order="Secondary" x:Name="ItemAnular" Command="{Binding AnularCommand}" />
         <ToolbarItem Text="Aplicar Otro" Order="Secondary" Command="{Binding AplicarOtroCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>

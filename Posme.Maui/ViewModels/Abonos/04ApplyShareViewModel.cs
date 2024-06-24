@@ -58,7 +58,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
             _customerResponse = await _repositoryTbCustomer.PosMeFindCustomer(DocumentCreditAmortizationResponse.CustomerNumber!);
             VariablesGlobales.DtoAplicarAbono = new ViewTempDtoAbono(
                 codigoAbono,
-                _customerResponse.CustomerNumber!,
+                _customerResponse.EntityId,
                 _customerResponse.FirstName!,
                 _customerResponse.LastName!,
                 _customerResponse.Identification!,
@@ -87,13 +87,14 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
                 TransactionOn = DateTime.Now,
                 EntitySecondaryId = _customerResponse.CustomerNumber,
                 EntityId = _customerResponse.EntityId,
+                CurrencyId = CurrencyId,
                 Reference1 = reference
             };
             var taskTransactionMaster = _repositoryTransactionMaster.PosMeInsert(transactionMaster);
             var taskPlus = _helper.PlusCounter();
             await Task.WhenAll([taskPlus, taskTransactionMaster]);
             IsBusy = false;
-            await NavigationService.NavigateToAsync<ValidarAbonoViewModel>(DocumentCreditResponse.DocumentNumber!);
+            await NavigationService.NavigateToAsync<ValidarAbonoViewModel>();
         }
         catch (Exception e)
         {
@@ -201,10 +202,13 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         IsBusy = true;
         DocumentCreditResponse = await _repositoryDocumentCredit.PosMeFindDocumentNumber(parameter);
         DocumentCreditAmortizationResponse = await _repositoryDocumentCreditAmortization.PosMeFindByDocumentNumber(parameter);
+        CurrencyId = DocumentCreditResponse.CurrencyId;
         CurrencyName = DocumentCreditResponse.CurrencyName!;
         SaldoInicial = DocumentCreditResponse.Balance;
         IsBusy = false;
     }
+
+    public int CurrencyId { get; set; }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {

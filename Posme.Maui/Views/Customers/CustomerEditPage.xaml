@@ -60,7 +60,7 @@
                                 IsErrorIconVisible="True"
                                 IconColor="#006E98"
                                 StartIcon="identificacion"
-                                Text="{Binding CustomerNumber}"
+                                Text="{Binding EntityId}"
                                 LabelText="Código de cliente" />
                         </dxdf:DataFormCustomItem>
                         <dxdf:DataFormCustomItem>

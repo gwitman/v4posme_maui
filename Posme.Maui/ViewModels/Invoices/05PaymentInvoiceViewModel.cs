@@ -102,6 +102,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
         await _repositoryTbTransactionMasterDetail.PosMeInsertAll(listMasterDetail);
         await _helper.PlusCounter();
         IsBusy = false;
+        VariablesGlobales.EnableBackButton = false;
         await NavigationService.NavigateToAsync<PrinterInvoiceViewModel>();
     }
 

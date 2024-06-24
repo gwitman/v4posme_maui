@@ -22,5 +22,7 @@ public static class VariablesGlobales
         BarCode = string.Empty;
     }
 
-    
+
+    public static bool EnableBackButton { get; set; }
+    public static Api_AppMobileApi_GetDataDownloadItemsResponse Item { get; set; }
 }

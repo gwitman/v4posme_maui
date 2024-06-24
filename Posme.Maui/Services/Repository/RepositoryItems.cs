@@ -13,10 +13,16 @@ public class RepositoryItems(DataBase dataBase)
             .FirstOrDefaultAsync(response => response.BarCode == barCode);
     }
 
-    public async Task<Api_AppMobileApi_GetDataDownloadItemsResponse> PosMeFindByItemNumber(string? itemNumber)
+    public  Task<Api_AppMobileApi_GetDataDownloadItemsResponse> PosMeFindByItemNumber(string itemNumber)
     {
-        return await _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadItemsResponse>()
+        return  _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadItemsResponse>()
             .FirstOrDefaultAsync(response => response.ItemNumber == itemNumber);
+    }
+
+    public Task<Api_AppMobileApi_GetDataDownloadItemsResponse> PosMeFindByItemId(int itemId)
+    {
+        return  _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadItemsResponse>()
+            .FirstOrDefaultAsync(response => response.ItemId == itemId);
     }
 
     public async Task<List<Api_AppMobileApi_GetDataDownloadItemsResponse>> PosMeFilterdByItemNumber(string? textSearch)

@@ -6,12 +6,8 @@
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:models="clr-namespace:Posme.Maui.Models"
              Title="{Binding Title}"
-             x:Class="Posme.Maui.Views.Invoices.PrinterInvoicePage"
+             x:Class="Posme.Maui.Views.Printers.VoucherInvoicePage"
              Style="{StaticResource DetailPageStyle}">
-    <Shell.BackButtonBehavior>
-        <BackButtonBehavior IsEnabled="{Binding EnableBackButton}" 
-                            IsVisible="{Binding EnableBackButton}" />
-    </Shell.BackButtonBehavior>
     <Shell.PresentationMode>
         Animated
     </Shell.PresentationMode>
@@ -20,8 +16,17 @@
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="shared" Clicked="MenuItem_OnClicked" />
-        <ToolbarItem Text="Imprimir" Order="Secondary" x:Name="ItemPrint" Command="{Binding PrintCommand}" />
-        <ToolbarItem Text="Aplicar Otro" Order="Secondary" Command="{Binding AplicarOtroCommand}" />
+        <ToolbarItem Text="Anular Factura" 
+                     Order="Secondary" 
+                     x:Name="ItemCancelInvoice" 
+                     Command="{Binding AnularFacturaCommand}" />
+        <ToolbarItem Text="Imprimir" 
+                     Order="Secondary" 
+                     x:Name="ItemPrint" 
+                     Command="{Binding PrintCommand}" />
+        <ToolbarItem Text="Aplicar Otro" 
+                     Order="Secondary" 
+                     Command="{Binding AplicarOtroCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>

@@ -24,7 +24,7 @@
                 <dx:DXImage Source="person_charge" WidthRequest="150" HeightRequest="150" />
                 <dx:DXStackLayout Orientation="Vertical"
                                   HorizontalOptions="Center">
-                    <Label Text="{Binding Item.CustomerNumber}"
+                    <Label Text="{Binding Item.EntityId}"
                            FontSize="24"
                            HorizontalTextAlignment="Center"
                            FontAttributes="Bold" />

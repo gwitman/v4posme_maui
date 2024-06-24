@@ -330,7 +330,20 @@
         <Setter Property="Shell.TitleColor" Value="White" />
         <Setter Property="Shell.ForegroundColor" Value="White" />
     </Style>
-
+    <Style TargetType="dx:DXBorder" x:Key="BorderProducto">
+        <Setter Property="Margin" Value="10,8,10,8" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="BorderThickness" Value="5" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Radius="20"
+                        Brush="{StaticResource Secondary}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style TargetType="dx:DXBorder" x:Key="PropertyBorder">
         <Setter Property="Margin" Value="10,8,10,8" />
         <Setter Property="BackgroundColor"

@@ -20,9 +20,15 @@ public class PrinterInvoiceViewModel : BaseViewModel
         _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
         AplicarOtroCommand = new Command(OnAplicarOtroCommand);
         PrintCommand = new Command(OnPrintCommand);
+        AnularFacturaCommand = new Command(OnAnularFacturaCommand);
     }
 
-    private async void OnPrintCommand(object obj)
+    private void OnAnularFacturaCommand()
+    {
+        
+    }
+
+    private async void OnPrintCommand()
     {
         var parametroPrinter = await _parameterSystem.PosMeFindPrinter();
         var logo = await _parameterSystem.PosMeFindLogo();
@@ -61,6 +67,7 @@ public class PrinterInvoiceViewModel : BaseViewModel
             printer.Append(item.Name);
             printer.Append($"{item.Quantity}        {item.PrecioPublico:N2}         {item.Importe:N2}");
         }
+
         printer.NewLine();
         printer.Append($"TOTAL:               {dtoInvoice.Balance:N2}");
         printer.Append($"RECIBIDO:            {dtoInvoice.Monto:N2}");
@@ -128,6 +135,16 @@ public class PrinterInvoiceViewModel : BaseViewModel
         private set => SetProperty(ref _companyRuc, value);
     }
 
+    private bool _enableBackButton;
+
+    public bool EnableBackButton
+    {
+        get => _enableBackButton;
+        set => SetProperty(ref _enableBackButton, value);
+    }
+
+    public Command AnularFacturaCommand { get; }
+
     public async void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
@@ -139,6 +156,7 @@ public class PrinterInvoiceViewModel : BaseViewModel
             CompanyTelefono = await _repositoryParameters.PosMeFindByKey("CORE_PHONE");
             CompanyRuc = await _repositoryParameters.PosMeFindByKey("CORE_COMPANY_IDENTIFIER");
             Company = VariablesGlobales.TbCompany;
+            EnableBackButton = VariablesGlobales.EnableBackButton;
         });
     }
 }

@@ -44,9 +44,8 @@ namespace Posme.Maui.ViewModels
         {
             var barCodePage = new BarCodePage();
             await Navigation!.PushModalAsync(barCodePage);
-            if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
-            Search = VariablesGlobales.BarCode;
-            VariablesGlobales.BarCode = "";
+            var bar = await barCodePage.WaitForResultAsync();
+            Search = bar!;
             OnSearchItems(Search);
         }
 

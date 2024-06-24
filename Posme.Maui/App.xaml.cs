@@ -6,6 +6,7 @@ using Posme.Maui.Views.Invoices;
 using Posme.Maui.Views.Items;
 using Posme.Maui.Services.Api;
 using Posme.Maui.Services.SystemNames;
+using Posme.Maui.Views.Printers;
 using Application = Microsoft.Maui.Controls.Application;
 
 namespace Posme.Maui
@@ -39,7 +40,7 @@ namespace Posme.Maui
             Routing.RegisterRoute(typeof(DataInvoicesPage).FullName, typeof(DataInvoicesPage));
             Routing.RegisterRoute(typeof(SeleccionarProductoPage).FullName, typeof(SeleccionarProductoPage));
             Routing.RegisterRoute(typeof(RevisarProductosSeleccionadosPage).FullName, typeof(RevisarProductosSeleccionadosPage));
-            Routing.RegisterRoute(typeof(PrinterInvoicePage).FullName, typeof(PrinterInvoicePage));
+            Routing.RegisterRoute(typeof(VoucherInvoicePage).FullName, typeof(VoucherInvoicePage));
             VariablesGlobales.BarCode = string.Empty;
             
         }

@@ -27,8 +27,8 @@
                         </VisualStateGroupList>
                     </VisualStateManager.VisualStateGroups>
                     <dx:DXImage x:Name="Image"
-                                Width="24"
-                                Height="24"
+                                WidthRequest="24"
+                                HeightRequest="24"
                                 Source="{Binding Icon}"
                                 HorizontalOptions="Center"
                                 TintColor="{StaticResource Primary}" />

@@ -59,6 +59,20 @@
         <DependentUpon>04Z01_ModificarValorPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <MauiXaml Update="Views\Printers\01VoucherInvoicePage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <Compile Update="Views\Printers\01VoucherInvoicePage.xaml.cs">
+        <DependentUpon>06PrinterInvoicePage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <MauiXaml Update="Views\Printers\02PrinterAbonosPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <Compile Update="Views\Printers\02PrinterAbonosPage.xaml.cs">
+        <DependentUpon>05PrinterPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
     <ItemGroup>
       <Compile Remove="Services\Helpers\Constantes.cs" />
