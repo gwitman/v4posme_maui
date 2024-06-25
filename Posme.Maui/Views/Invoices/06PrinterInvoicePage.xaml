@@ -9,8 +9,8 @@
              x:Class="Posme.Maui.Views.Invoices.PrinterInvoicePage"
              Style="{StaticResource DetailPageStyle}">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior IsEnabled="{Binding EnableBackButton}" 
-                            IsVisible="{Binding EnableBackButton}" />
+        <BackButtonBehavior IsEnabled="False" 
+                            IsVisible="False" />
     </Shell.BackButtonBehavior>
     <Shell.PresentationMode>
         Animated

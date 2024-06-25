@@ -13,10 +13,14 @@ public class PrinterInvoiceViewModel : BaseViewModel
 {
     private readonly IRepositoryTbParameterSystem _parameterSystem;
     private readonly IRepositoryParameters _repositoryParameters;
+    private readonly IRepositoryTbTransactionMaster _repositoryTbTransactionMaster;
+    private readonly IRepositoryTbTransactionMasterDetail _repositoryTbTransactionMasterDetail;
 
     public PrinterInvoiceViewModel()
     {
         Title = "Comprobante Pago Factura";
+        _repositoryTbTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
+        _repositoryTbTransactionMasterDetail = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMasterDetail>();
         _parameterSystem = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
         _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
         AplicarOtroCommand = new Command(OnAplicarOtroCommand);
@@ -26,10 +30,16 @@ public class PrinterInvoiceViewModel : BaseViewModel
 
     private async void OnAnularFacturaCommand()
     {
-        var repositoryTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
-        var repositoryTransactionMasterDetail = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMasterDetail>();
         var transactionMasterId = VariablesGlobales.DtoInvoice.TransactionMasterId;
-        ShowToast($"Transaction master: {transactionMasterId}", ToastDuration.Long, 18);
+        var findTransactionMaster = await _repositoryTbTransactionMaster.PosMeFindByTransactionId(transactionMasterId);
+        var details = await _repositoryTbTransactionMasterDetail.PosMeItemByTransactionId(transactionMasterId);
+        await _repositoryTbTransactionMaster.PosMeDelete(findTransactionMaster);
+        foreach (var masterDetail in details)
+        {
+            await _repositoryTbTransactionMasterDetail.PosMeDelete(masterDetail);
+        }
+
+        await Navigation!.PopAsync(true);
     }
 
     private async void OnPrintCommand()
