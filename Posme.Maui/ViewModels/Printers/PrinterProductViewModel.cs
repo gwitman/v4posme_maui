@@ -24,33 +24,28 @@ public class PrinterProductViewModel : BaseViewModel
 
     private async void OnPrinterCommand(object obj)
     {
-        var parametroPrinter = await _parameterSystem.PosMeFindPrinter();
-        if (string.IsNullOrWhiteSpace(parametroPrinter.Value))
+        try
         {
-            return;
-        }
+            var parametroPrinter = await _parameterSystem.PosMeFindPrinter();
+            if (string.IsNullOrWhiteSpace(parametroPrinter.Value))
+            {
+                return;
+            }
 
-        var item = VariablesGlobales.Item;
-        var printer = new Printer(parametroPrinter.Value);
-        /*var barCodeImage = new BarcodeGeneratorView
+            var item = VariablesGlobales.Item;
+            var printer = new Printer(parametroPrinter.Value);
+            
+            printer.Code39CustomPosMe2px1p(item.BarCode);
+            printer.Append(item.Name);
+            printer.Append(item.BarCode);            
+            printer.Append(item.PrecioPublico.ToString("N2"));
+            printer.Append("-");
+            printer.Print();
+        }
+        catch (Exception ex)
         {
-            Format = BarcodeFormat.Codabar,
-            Value = item.BarCode,
-            ForegroundColor = Colors.Black,
-            HeightRequest = 100,
-            WidthRequest = 100
-        };
-        var imageBarcode = await barCodeImage.CaptureAsync();
-        var openReadAsync = await imageBarcode.OpenReadAsync();
-        var skBitmap = SKBitmap.Decode(openReadAsync);
-        printer.Image(skBitmap);*/
-        printer.Code39(item.BarCode);
-        printer.Append(item.Name);
-        printer.Append(item.BarCode);
-        printer.Append(item.ItemNumber!);
-        printer.Append(item.PrecioPublico.ToString("N2"));
-        printer.NewLines(2);
-        printer.Print();
+            Console.WriteLine(ex.ToString());
+        }
     }
 
     private Api_AppMobileApi_GetDataDownloadItemsResponse _itemsResponse;

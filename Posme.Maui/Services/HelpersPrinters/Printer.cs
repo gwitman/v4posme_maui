@@ -286,6 +286,10 @@ namespace Posme.Maui.Services.HelpersPrinters
         {
             Append(_command.BarCode.Code39(code, printString));
         }
+        public void Code39CustomPosMe2px1p(string code, Positions printString = Positions.NotPrint)
+        {
+            Append(_command.BarCode.Code39CustomPosMe2px1p(code, printString));
+        }
 
         public void Ean13(string code, Positions printString = Positions.NotPrint)
         {
@@ -316,5 +320,7 @@ namespace Posme.Maui.Services.HelpersPrinters
         {
             Append(logoByte);
         }
+
+
     }
 }
