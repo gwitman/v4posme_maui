@@ -72,7 +72,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
             );
 
             //Aplicar Abono
-            string reference = await _helperCustomerCreditDocumentAmortization.ApplyShare(_customerResponse.EntityId, DocumentCreditResponse.DocumentNumber!, Monto);
+            string reference = await HelperCustomerCreditDocumentAmortization.ApplyShare(_customerResponse.EntityId, DocumentCreditResponse.DocumentNumber!, Monto);
 
             //Ingrear Abono 
             var tmpMonto = Monto;

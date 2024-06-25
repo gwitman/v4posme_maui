@@ -21,6 +21,16 @@ public partial class ValidarAbonoPage : ContentPage
         Logo.Source = ((ValidarAbonoViewModel)BindingContext).LogoSource;
     }
 
+    protected override bool OnBackButtonPressed()
+    {
+        var stack = Shell.Current.Navigation.NavigationStack.ToArray();
+        for (var i = stack.Length - 1; i > 0; i--)
+        {
+            Shell.Current.Navigation.RemovePage(stack[i]);
+        }
+        return true;
+    }
+    
     private async void MenuItem_OnClicked(object? sender, EventArgs e)
     {
         try

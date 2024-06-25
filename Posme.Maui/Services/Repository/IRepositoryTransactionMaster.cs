@@ -9,4 +9,5 @@ public interface IRepositoryTbTransactionMaster : IRepositoryFacade<TbTransactio
     Task<List<TbTransactionMaster>> PosMeFilterFacturas();
     Task<List<TbTransactionMaster>> PosMeFilterAbonos();
     Task<TbTransactionMaster> PosMeFindByTransactionId(int id);
+    Task<TbTransactionMaster> PosMeFindByTransactionNumber(string transactionNumber);
 }

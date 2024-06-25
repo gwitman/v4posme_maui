@@ -25,9 +25,12 @@ public class ValidarAbonoViewModel : BaseViewModel
         AnularCommand = new Command(OnAnularCommand);
     }
 
-    private void OnAnularCommand(object obj)
+    private async void OnAnularCommand()
     {
-        
+        IsBusy = true;
+        await HelperCustomerCreditDocumentAmortization.AnularAbono(Item.CodigoAbono);
+        IsBusy = false;
+        OnAplicarOtroCommand();
     }
 
     private async void OnPrintCommand(object obj)

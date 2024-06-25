@@ -25,4 +25,11 @@ public class RepositoryDocumentCredit(DataBase dataBase) : RepositoryFacade<Api_
             .Where(response => response.DocumentNumber == filter)
             .FirstOrDefaultAsync();
     }
+
+    public Task<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse> PosMeFindByAmortizationId(int id)
+    {
+        return dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse>()
+            .Where(response => response.CreditAmortizationId == id)
+            .FirstOrDefaultAsync();
+    }
 }

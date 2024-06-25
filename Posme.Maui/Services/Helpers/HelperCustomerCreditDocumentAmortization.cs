@@ -5,11 +5,12 @@ using System.Reflection.Metadata;
 using Unity;
 using Posme.Maui.Services.SystemNames;
 using Posme.Maui.Services.Api;
+
 namespace Posme.Maui.Services.Helpers;
 
 class HelperCustomerCreditDocumentAmortization
 {
-    public async Task<string> ApplyShare(int entityId,string invoiceNumber,decimal amountApply)
+    public static async Task<string> ApplyShare(int entityId, string invoiceNumber, decimal amountApply)
     {
         var repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
         var repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
@@ -17,15 +18,16 @@ class HelperCustomerCreditDocumentAmortization
 
 
         string resultado = "";
-        
-        var objCustomDocumentAmortization   = await repositoryDocumentCreditAmortization.PosMeFilterByDocumentNumber(invoiceNumber);
-        var objCustomerDocument             = await repositoryDocumentCredit.PosMeFindDocumentNumber(invoiceNumber);
-        var objCustomerResponse             = await repositoryTbCustomer.PosMeFindEntityId(entityId);
+
+        var objCustomDocumentAmortization = await repositoryDocumentCreditAmortization.PosMeFilterByDocumentNumber(invoiceNumber);
+        var objCustomerDocument = await repositoryDocumentCredit.PosMeFindDocumentNumber(invoiceNumber);
+        var objCustomerResponse = await repositoryTbCustomer.PosMeFindEntityId(entityId);
 
 
-        var tmpListaSave        = new List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
-        var amountApplyBackup   = amountApply; 
-
+        var tmpListaSave = new List<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>();
+        var amountApplyBackup = amountApply;
+        var length = objCustomDocumentAmortization.Count;
+        var aux = 0;
         //Actualiar Tabla de Amortiation
         foreach (var documentCreditAmortization in objCustomDocumentAmortization)
         {
@@ -36,19 +38,40 @@ class HelperCustomerCreditDocumentAmortization
 
             if (decimal.Compare(documentCreditAmortization.Remaining, amountApply) <= 0)
             {
+                if (string.IsNullOrWhiteSpace(resultado))
+                {
+                    resultado += $"{documentCreditAmortization.CreditAmortizationID}:{amountApply}";
+                }
+                else
+                {
+                    resultado += $",{documentCreditAmortization.CreditAmortizationID}:{amountApply}";
+                }
+                
                 amountApply = decimal.Subtract(amountApply, documentCreditAmortization.Remaining);
                 documentCreditAmortization.Remaining = decimal.Zero;
+                documentCreditAmortization.Balance = decimal.Zero;
             }
             else
             {
+                if (string.IsNullOrWhiteSpace(resultado))
+                {
+                    resultado += $"{documentCreditAmortization.CreditAmortizationID}:{amountApply}";
+                }
+                else
+                {
+                    resultado += $",{documentCreditAmortization.CreditAmortizationID}:{amountApply}";
+                }
                 documentCreditAmortization.Remaining = decimal.Subtract(documentCreditAmortization.Remaining, amountApply);
+                documentCreditAmortization.Balance = decimal.Subtract(documentCreditAmortization.Remaining, amountApply);
                 amountApply = decimal.Zero;
             }
+
             tmpListaSave.Add(documentCreditAmortization);
         }
 
         //Actualizar Documento
         objCustomerDocument.Remaining -= amountApplyBackup;
+        objCustomerDocument.Balance -= amountApplyBackup;
 
 
         //Actulizar Saldo del Cliente 
@@ -57,22 +80,74 @@ class HelperCustomerCreditDocumentAmortization
             objCustomerResponse.Balance -= amountApplyBackup;
         }
         //Actualiar Saldo del cliente Linea de Credito en Dolares y Documento esta en cordoba
-        else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Cordoba && objCustomerDocument.CurrencyId==(int)TypeCurrency.Dolar)
+        else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Cordoba && objCustomerDocument.CurrencyId == (int)TypeCurrency.Dolar)
         {
-            objCustomerResponse.Balance -= decimal.Round(amountApplyBackup / objCustomerDocument.ExchangeRate,2);
+            objCustomerResponse.Balance -= decimal.Round(amountApplyBackup / objCustomerDocument.ExchangeRate, 2);
         }
         //Actualiar Saldo del cliente Linea de Credito en Cordoba y Documento esta en Dolares
         else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Dolar && objCustomerDocument.CurrencyId == (int)TypeCurrency.Cordoba)
         {
-            objCustomerResponse.Balance -= decimal.Round(amountApplyBackup * objCustomerDocument.ExchangeRate,2);
+            objCustomerResponse.Balance -= decimal.Round(amountApplyBackup * objCustomerDocument.ExchangeRate, 2);
         }
 
 
         await repositoryDocumentCreditAmortization.PosMeUpdateAll(tmpListaSave);
         await repositoryDocumentCredit.PosMeUpdate(objCustomerDocument);
         await repositoryTbCustomer.PosMeUpdate(objCustomerResponse);
-        
+
         return resultado;
     }
 
+    public static async Task AnularAbono(string transactionNumber)
+    {
+        var repositoryCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
+        var repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
+        var repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
+        var repositoryTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
+        
+        var findTransactionMaster = await repositoryTransactionMaster.PosMeFindByTransactionNumber(transactionNumber);
+        var objCustomerResponse = await repositoryCustomer.PosMeFindEntityId(findTransactionMaster.EntityId);
+        
+        
+        /*
+         * Buscamos los documentos afectados que estan en referencia1
+         */
+        var idDocumentAmortization = findTransactionMaster.Reference1!.Split(",");
+        foreach (var referencia in idDocumentAmortization)
+        {
+            var iddocument = referencia.Split(":")[0];
+            var monto = decimal.Parse(referencia.Split(":")[1]);
+            var documentCreditAmortization = await repositoryDocumentCreditAmortization.PosMeFindByAmortizationId(int.Parse(iddocument));
+            var objCustomerDocument = await repositoryDocumentCredit.PosMeFindDocumentNumber(documentCreditAmortization.DocumentNumber!);
+            var amountApplyBackup = findTransactionMaster.SubAmount;
+        
+            //Actulizar Saldo del Cliente 
+            if (objCustomerResponse.CurrencyId == objCustomerDocument.CurrencyId)
+            {
+                objCustomerResponse.Balance += amountApplyBackup;
+            }
+            //Actualiar Saldo del cliente Linea de Credito en Dolares y Documento esta en cordoba
+            else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Cordoba && objCustomerDocument.CurrencyId == (int)TypeCurrency.Dolar)
+            {
+                objCustomerResponse.Balance += decimal.Round(amountApplyBackup / objCustomerDocument.ExchangeRate, 2);
+            }
+            //Actualiar Saldo del cliente Linea de Credito en Cordoba y Documento esta en Dolares
+            else if (objCustomerDocument.CurrencyId == (int)TypeCurrency.Dolar && objCustomerDocument.CurrencyId == (int)TypeCurrency.Cordoba)
+            {
+                objCustomerResponse.Balance += decimal.Round(amountApplyBackup * objCustomerDocument.ExchangeRate, 2);
+            }
+
+
+            objCustomerDocument.Remaining = decimal.Add(objCustomerDocument.Remaining, amountApplyBackup);
+            objCustomerDocument.Balance = decimal.Add(objCustomerDocument.Balance, amountApplyBackup);
+            monto = decimal.Add(monto, documentCreditAmortization.Remaining);
+            documentCreditAmortization.Remaining = monto;
+            documentCreditAmortization.Balance = monto;
+            await repositoryDocumentCreditAmortization.PosMeUpdate(documentCreditAmortization);
+            await repositoryDocumentCredit.PosMeUpdate(objCustomerDocument);
+            await repositoryCustomer.PosMeUpdate(objCustomerResponse);
+        }
+       
+        await repositoryTransactionMaster.PosMeDelete(findTransactionMaster);
+    }
 }

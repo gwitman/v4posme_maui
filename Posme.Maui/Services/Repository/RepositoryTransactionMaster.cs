@@ -90,4 +90,10 @@ public class RepositoryTbTransactionMaster(DataBase dataBase) : RepositoryFacade
         return _dataBase.Database.Table<TbTransactionMaster>()
             .FirstOrDefaultAsync(master => master.TransactionMasterId == id);
     }
+
+    public Task<TbTransactionMaster> PosMeFindByTransactionNumber(string transactionNumber)
+    {
+        return _dataBase.Database.Table<TbTransactionMaster>()
+            .FirstOrDefaultAsync(master => master.TransactionNumber == transactionNumber);
+    }
 }

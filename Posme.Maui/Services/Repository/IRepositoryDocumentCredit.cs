@@ -8,4 +8,5 @@ public interface IRepositoryDocumentCredit : IRepositoryFacade<Api_AppMobileApi_
 
     Task<List<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse>> PosMeFilterDocumentNumber(string filter);
     Task<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse> PosMeFindDocumentNumber(string filter);
+    Task<Api_AppMobileApi_GetDataDownloadDocumentCreditResponse> PosMeFindByAmortizationId(int id);
 }

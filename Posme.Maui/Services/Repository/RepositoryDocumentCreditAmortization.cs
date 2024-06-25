@@ -47,4 +47,10 @@ public class RepositoryDocumentCreditAmortization(DataBase dataBase) : Repositor
         return await _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>()
             .FirstOrDefaultAsync(response => response.DocumentNumber == document);
     }
+
+    public Task<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse> PosMeFindByAmortizationId(int id)
+    {
+        return  _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse>()
+            .FirstOrDefaultAsync(response => response.CreditAmortizationID == id);
+    }
 }
