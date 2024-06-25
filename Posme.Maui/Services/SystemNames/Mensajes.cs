@@ -16,4 +16,5 @@ public static class Mensajes
     public const string MensajeDocumentCreditCustomerVacio = "No hay datos de facturación con el cliente seleccionado.";
     public const string MensajeDocumentCreditAmortizationVacio = "No hay datos de detalle para abono de factura con el documento seleccionado";
     public const string MnesajeCountadoDeAbonoMalFormado = "El countador de los abonos tiene un formato incorrecto, ABC-#";
+    public const string AnularAbonoValidacion = "No puede eliminar este abono, intente nuevamente";
 }

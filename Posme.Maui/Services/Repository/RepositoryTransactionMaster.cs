@@ -34,7 +34,7 @@ public class RepositoryTbTransactionMaster(DataBase dataBase) : RepositoryFacade
                             and tm.TransactionId =?
                      order by tm.TransactionOn DESC 
                      """;
-        return _dataBase.Database.QueryAsync<TbTransactionMaster>(query,param);
+        return _dataBase.Database.QueryAsync<TbTransactionMaster>(query, param);
     }
 
     public Task<List<TbTransactionMaster>> PosMeFilterByCodigoAndNombreClienteAbonos(string filter)
@@ -71,7 +71,7 @@ public class RepositoryTbTransactionMaster(DataBase dataBase) : RepositoryFacade
     {
         return _dataBase.Database.Table<TbTransactionMaster>()
             .Where(master => master.TransactionId == TypeTransaction.TransactionInvoiceBilling)
-            .OrderByDescending(master=>master.TransactionOn)
+            .OrderByDescending(master => master.TransactionOn)
             .Take(10)
             .ToListAsync();
     }
@@ -80,8 +80,17 @@ public class RepositoryTbTransactionMaster(DataBase dataBase) : RepositoryFacade
     {
         return _dataBase.Database.Table<TbTransactionMaster>()
             .Where(master => master.TransactionId == TypeTransaction.TransactionShare)
-            .OrderByDescending(master=>master.TransactionOn)
+            .OrderByDescending(master => master.TransactionOn)
             .Take(10)
+            .ToListAsync();
+    }
+
+    public Task<List<TbTransactionMaster>> PosMeFilterAbonosByCustomer(int entityId)
+    {
+        return _dataBase.Database.Table<TbTransactionMaster>()
+            .Where(master => master.TransactionId == TypeTransaction.TransactionShare
+                             && master.EntityId == entityId)
+            .OrderByDescending(master => master.TransactionOn)
             .ToListAsync();
     }
 

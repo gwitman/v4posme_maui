@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
@@ -14,11 +15,13 @@ namespace Posme.Maui.ViewModels.Abonos;
 public class ValidarAbonoViewModel : BaseViewModel
 {
     private readonly IRepositoryTbParameterSystem _parameterSystem;
+    private readonly IRepositoryTbTransactionMaster _repositoryTbTransactionMaster;
 
     public ValidarAbonoViewModel()
     {
         Title = "Comprobanto de Abono 5/5";
         _parameterSystem = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
+        _repositoryTbTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
         Item = VariablesGlobales.DtoAplicarAbono!;
         AplicarOtroCommand = new Command(OnAplicarOtroCommand);
         PrintCommand = new Command(OnPrintCommand);
@@ -28,6 +31,14 @@ public class ValidarAbonoViewModel : BaseViewModel
     private async void OnAnularCommand()
     {
         IsBusy = true;
+        var findAbonos = await _repositoryTbTransactionMaster.PosMeFilterAbonosByCustomer(Item.EntityId);
+        if (findAbonos.First().TransactionNumber != Item.CodigoAbono)
+        {
+            ShowToast(Mensajes.AnularAbonoValidacion, ToastDuration.Long, 18);
+            IsBusy = false;
+            return;
+        }
+
         await HelperCustomerCreditDocumentAmortization.AnularAbono(Item.CodigoAbono);
         IsBusy = false;
         OnAplicarOtroCommand();
