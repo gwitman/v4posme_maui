@@ -13,6 +13,7 @@ public class PrinterProductViewModel : BaseViewModel
 {
     private readonly IRepositoryTbParameterSystem _parameterSystem;
     private readonly IRepositoryParameters _repositoryParameters;
+
     public PrinterProductViewModel()
     {
         Title = "Detalle de Producto";
@@ -31,7 +32,7 @@ public class PrinterProductViewModel : BaseViewModel
 
         var item = VariablesGlobales.Item;
         var printer = new Printer(parametroPrinter.Value);
-        var barCodeImage = new BarcodeGeneratorView
+        /*var barCodeImage = new BarcodeGeneratorView
         {
             Format = BarcodeFormat.Codabar,
             Value = item.BarCode,
@@ -42,7 +43,8 @@ public class PrinterProductViewModel : BaseViewModel
         var imageBarcode = await barCodeImage.CaptureAsync();
         var openReadAsync = await imageBarcode.OpenReadAsync();
         var skBitmap = SKBitmap.Decode(openReadAsync);
-        printer.Image(skBitmap);
+        printer.Image(skBitmap);*/
+        printer.Code39(item.BarCode);
         printer.NewLine();
         printer.Append(item.Name);
         printer.Append(item.BarCode);

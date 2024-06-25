@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.HelpersPrinters;
 using Posme.Maui.Services.Repository;
@@ -23,9 +24,12 @@ public class PrinterInvoiceViewModel : BaseViewModel
         AnularFacturaCommand = new Command(OnAnularFacturaCommand);
     }
 
-    private void OnAnularFacturaCommand()
+    private async void OnAnularFacturaCommand()
     {
-        
+        var repositoryTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
+        var repositoryTransactionMasterDetail = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMasterDetail>();
+        var transactionMasterId = VariablesGlobales.DtoInvoice.TransactionMasterId;
+        ShowToast($"Transaction master: {transactionMasterId}", ToastDuration.Long, 18);
     }
 
     private async void OnPrintCommand()

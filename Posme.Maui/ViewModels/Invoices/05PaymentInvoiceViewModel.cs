@@ -4,6 +4,7 @@ using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
+using Posme.Maui.Views.Invoices;
 using Unity;
 
 namespace Posme.Maui.ViewModels.Invoices;
@@ -103,7 +104,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
         await _helper.PlusCounter();
         IsBusy = false;
         VariablesGlobales.EnableBackButton = false;
-        await NavigationService.NavigateToAsync<PrinterInvoiceViewModel>();
+        await Navigation!.PushAsync(new PrinterInvoicePage());
     }
 
     private void OnSelectionOtrosCommand()
@@ -238,5 +239,10 @@ public class PaymentInvoiceViewModel : BaseViewModel
         ChkCheque = cheque;
         ChkMonedero = monedero;
         ChkOtros = otros;
+    }
+
+    public void OnAppearing(INavigation navigation)
+    {
+        Navigation = navigation;
     }
 }
