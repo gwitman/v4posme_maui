@@ -45,7 +45,6 @@ public class PrinterProductViewModel : BaseViewModel
         var skBitmap = SKBitmap.Decode(openReadAsync);
         printer.Image(skBitmap);*/
         printer.Code39(item.BarCode);
-        printer.NewLine();
         printer.Append(item.Name);
         printer.Append(item.BarCode);
         printer.Append(item.ItemNumber!);
