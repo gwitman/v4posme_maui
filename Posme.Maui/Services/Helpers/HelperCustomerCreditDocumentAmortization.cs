@@ -49,7 +49,7 @@ class HelperCustomerCreditDocumentAmortization
 
                 amountApply = decimal.Subtract(amountApply, documentCreditAmortization.Remaining);
                 documentCreditAmortization.Remaining = decimal.Zero;
-                documentCreditAmortization.Balance = decimal.Zero;
+                
             }
             else
             {
@@ -62,8 +62,7 @@ class HelperCustomerCreditDocumentAmortization
                     resultado += $",{documentCreditAmortization.CreditAmortizationID}:{amountApply}";
                 }
 
-                documentCreditAmortization.Remaining = decimal.Subtract(documentCreditAmortization.Remaining, amountApply);
-                documentCreditAmortization.Balance = decimal.Subtract(documentCreditAmortization.Remaining, amountApply);
+                documentCreditAmortization.Remaining = decimal.Subtract(documentCreditAmortization.Remaining, amountApply);                
                 amountApply = decimal.Zero;
             }
 
@@ -72,7 +71,6 @@ class HelperCustomerCreditDocumentAmortization
 
         //Actualizar Documento
         objCustomerDocument.Remaining -= amountApplyBackup;
-        objCustomerDocument.Balance -= amountApplyBackup;
 
 
         //Actulizar Saldo del Cliente 
@@ -130,8 +128,6 @@ class HelperCustomerCreditDocumentAmortization
             }
             monto = decimal.Add(monto, documentCreditAmortization.Remaining);
             documentCreditAmortization.Remaining = monto;
-            documentCreditAmortization.Balance = monto;
-
             await repositoryDocumentCreditAmortization.PosMeUpdate(documentCreditAmortization);
             
         }
@@ -158,8 +154,7 @@ class HelperCustomerCreditDocumentAmortization
             }
 
 
-            objCustomerDocument.Remaining = decimal.Add(objCustomerDocument.Remaining, amountApplyBackup);
-            objCustomerDocument.Balance = decimal.Add(objCustomerDocument.Balance, amountApplyBackup);
+            objCustomerDocument.Remaining = decimal.Add(objCustomerDocument.Remaining, amountApplyBackup);            
             await repositoryDocumentCredit.PosMeUpdate(objCustomerDocument);
             await repositoryCustomer.PosMeUpdate(objCustomerResponse);
         }
