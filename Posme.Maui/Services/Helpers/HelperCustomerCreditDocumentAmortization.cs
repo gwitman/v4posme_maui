@@ -46,7 +46,7 @@ class HelperCustomerCreditDocumentAmortization
                 {
                     resultado += $",{documentCreditAmortization.CreditAmortizationID}:{amountApply}";
                 }
-                
+
                 amountApply = decimal.Subtract(amountApply, documentCreditAmortization.Remaining);
                 documentCreditAmortization.Remaining = decimal.Zero;
                 documentCreditAmortization.Balance = decimal.Zero;
@@ -61,6 +61,7 @@ class HelperCustomerCreditDocumentAmortization
                 {
                     resultado += $",{documentCreditAmortization.CreditAmortizationID}:{amountApply}";
                 }
+
                 documentCreditAmortization.Remaining = decimal.Subtract(documentCreditAmortization.Remaining, amountApply);
                 documentCreditAmortization.Balance = decimal.Subtract(documentCreditAmortization.Remaining, amountApply);
                 amountApply = decimal.Zero;
@@ -104,21 +105,40 @@ class HelperCustomerCreditDocumentAmortization
         var repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
         var repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
         var repositoryTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
-        
+
         var findTransactionMaster = await repositoryTransactionMaster.PosMeFindByTransactionNumber(transactionNumber);
         var objCustomerResponse = await repositoryCustomer.PosMeFindEntityId(findTransactionMaster.EntityId);
-        
-        
+
+
         /*
          * Buscamos los documentos afectados que estan en referencia1
          */
+        var documentNumbers = new List<string>();
         var idDocumentAmortization = findTransactionMaster.Reference1!.Split(",");
         foreach (var referencia in idDocumentAmortization)
         {
             var iddocument = referencia.Split(":")[0];
             var monto = decimal.Parse(referencia.Split(":")[1]);
             var documentCreditAmortization = await repositoryDocumentCreditAmortization.PosMeFindByAmortizationId(int.Parse(iddocument));
-            var objCustomerDocument = await repositoryDocumentCredit.PosMeFindDocumentNumber(documentCreditAmortization.DocumentNumber!);
+            if (documentNumbers.Count <= 0)
+            {
+                documentNumbers.Add(documentCreditAmortization.DocumentNumber!);
+            }
+            else if (!documentNumbers.Contains(documentCreditAmortization.DocumentNumber!))
+            {
+                documentNumbers.Add(documentCreditAmortization.DocumentNumber!);
+            }
+            monto = decimal.Add(monto, documentCreditAmortization.Remaining);
+            documentCreditAmortization.Remaining = monto;
+            documentCreditAmortization.Balance = monto;
+
+            await repositoryDocumentCreditAmortization.PosMeUpdate(documentCreditAmortization);
+            
+        }
+
+        foreach (var number in documentNumbers)
+        {
+            var objCustomerDocument = await repositoryDocumentCredit.PosMeFindDocumentNumber(number);
             var amountApplyBackup = findTransactionMaster.SubAmount;
         
             //Actulizar Saldo del Cliente 
@@ -140,14 +160,9 @@ class HelperCustomerCreditDocumentAmortization
 
             objCustomerDocument.Remaining = decimal.Add(objCustomerDocument.Remaining, amountApplyBackup);
             objCustomerDocument.Balance = decimal.Add(objCustomerDocument.Balance, amountApplyBackup);
-            monto = decimal.Add(monto, documentCreditAmortization.Remaining);
-            documentCreditAmortization.Remaining = monto;
-            documentCreditAmortization.Balance = monto;
-            await repositoryDocumentCreditAmortization.PosMeUpdate(documentCreditAmortization);
             await repositoryDocumentCredit.PosMeUpdate(objCustomerDocument);
             await repositoryCustomer.PosMeUpdate(objCustomerResponse);
         }
-       
         await repositoryTransactionMaster.PosMeDelete(findTransactionMaster);
     }
 }
