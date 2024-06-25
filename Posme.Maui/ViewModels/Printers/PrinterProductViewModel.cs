@@ -49,6 +49,7 @@ public class PrinterProductViewModel : BaseViewModel
         printer.Append(item.BarCode);
         printer.Append(item.ItemNumber!);
         printer.Append(item.PrecioPublico.ToString("N2"));
+        printer.NewLines(2);
         printer.Print();
     }
 
