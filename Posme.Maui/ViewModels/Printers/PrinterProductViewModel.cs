@@ -40,6 +40,7 @@ public class PrinterProductViewModel : BaseViewModel
             printer.Append(item.BarCode);            
             printer.Append(item.PrecioPublico.ToString("N2"));
             printer.Append("-");
+            printer.Avanza(35 /*8puntos = 1mm*/  );
             printer.Print();
         }
         catch (Exception ex)

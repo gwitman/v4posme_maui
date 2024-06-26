@@ -20,5 +20,9 @@ namespace Posme.Maui.Services.HelpersPrinters.Epson_Commands
         {
             return new byte[] { 27, 'a'.ToByte(), 1 };
         }
+        public byte[] Avanza(int puntos)
+        {
+            return new byte[] { 27, 74, (byte)puntos };//8puntos = 1mm
+        }
     }
 }

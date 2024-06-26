@@ -5,6 +5,7 @@
         byte[] Left();
         byte[] Right();
         byte[] Center();
+        byte[] Avanza(int puntos);
     }
 }
 
