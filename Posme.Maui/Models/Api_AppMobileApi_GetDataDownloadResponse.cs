@@ -55,14 +55,6 @@ public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
 [SQLite.Table("tb_company")]
 public class TbCompany
 {
-    /*
-     * "companyID": "2",
-        "name": "Prueba",
-        "createdOn": "2013-11-22 13:00:35",
-        "address": "Teatro Municipal 1C. Sur",
-        "flavorID": "483",
-        "type": "bluemoon"
-     */
     [PrimaryKey]public int CompanyId { get; set; }
     public string? Name { get; set; }
     public DateTime CreatedOn { get; set; }
