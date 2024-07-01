@@ -136,7 +136,7 @@
                                         Source="{Binding ShowImage}" />
                         </dx:DXBorder>
                         <dx:DXBorder x:Name="EditControl" BorderColor="White" BorderThickness="2"
-                                     BackgroundColor="Firebrick"
+                                     BackgroundColor="OrangeRed"
                                      WidthRequest="48" HeightRequest="48" CornerRadius="70" HorizontalOptions="End"
                                      VerticalOptions="End">
                             <dx:DXImage Source="pencil" WidthRequest="24" HeightRequest="24" />

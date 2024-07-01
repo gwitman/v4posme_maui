@@ -44,6 +44,8 @@ public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
 
     [DataMember] public int CurrencyId { get; set; }
 
+    [DataMember] public string? CurrencyName { get; set; }
+
     [DataMember] public int CustomerCreditLineId { get; set; }
     public bool Modificado { get; set; }
 
