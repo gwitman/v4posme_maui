@@ -77,7 +77,7 @@ public class InvoicesViewModel : BaseViewModel
         await Task.Run(async () =>
         {
             Customers.Clear();
-            var findAll = await _customerRepositoryTbCustomer.PosMeTake10();
+            var findAll = await _customerRepositoryTbCustomer.PosMeAscTake10();
             foreach (var response in findAll)
             {
                 Customers.Add(response);

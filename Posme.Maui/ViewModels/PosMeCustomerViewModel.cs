@@ -7,6 +7,7 @@ using Posme.Maui.Views;
 using Unity;
 using Posme.Maui.Services.SystemNames;
 using Posme.Maui.Services.Api;
+
 namespace Posme.Maui.ViewModels;
 
 public class PosMeCustomerViewModel : BaseViewModel
@@ -23,7 +24,14 @@ public class PosMeCustomerViewModel : BaseViewModel
 
     public ICommand OnBarCode { get; }
     public ICommand SearchCommand { get; }
-    public ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> Customers { get; set; }
+    private ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> _customers;
+
+    public ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> Customers
+    {
+        get => _customers;
+        set => SetProperty(ref _customers, value);
+    }
+
     private Api_AppMobileApi_GetDataDownloadCustomerResponse? _selectedCustomer;
 
     public Api_AppMobileApi_GetDataDownloadCustomerResponse? SelectedCustomer
@@ -39,10 +47,7 @@ public class PosMeCustomerViewModel : BaseViewModel
         {
             Customers.Clear();
             var finds = await _customerRepositoryTbCustomer.PosMeFilterBySearch(Search);
-            foreach (var customer in finds)
-            {
-                Customers.Add(customer);
-            }
+            Customers = new ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse>(finds);
         });
         IsBusy = false;
     }
@@ -62,12 +67,9 @@ public class PosMeCustomerViewModel : BaseViewModel
         IsBusy = true;
         await Task.Run(async () =>
         {
-            Customers.Clear();
-            var findAll = await _customerRepositoryTbCustomer.PosMeDescending();
-            foreach (var response in findAll)
-            {
-                Customers.Add(response);
-            }
+            Thread.Sleep(1000);
+            var findAll = await _customerRepositoryTbCustomer.PosMeAscTake10();
+            Customers = new ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse>(findAll);
         });
         IsBusy = false;
     }
