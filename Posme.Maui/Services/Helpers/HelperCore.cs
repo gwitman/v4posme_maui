@@ -41,7 +41,7 @@ public class HelperCore(IRepositoryTbParameterSystem repositoryParameters)
         var counter = find.Value!.Split("-")[1];
         var numero = Convert.ToInt32(counter);
         numero += 1;
-        var nuevoCodigoAbono = prefix + "-" + Convert.ToString(numero).PadLeft(8, '0');
+        var nuevoCodigoAbono = prefix + "-" + Convert.ToString(numero).PadLeft(4, '0');
         find.Value = nuevoCodigoAbono;
         await repositoryParameters.PosMeUpdate(find);
 
@@ -59,7 +59,7 @@ public class HelperCore(IRepositoryTbParameterSystem repositoryParameters)
         var counter = find.Value!.Split("-")[1];
         var numero = Convert.ToInt32(counter);
         numero += 1;
-        var nuevoCodigoFactura = prefix + "-" + Convert.ToString(numero).PadLeft(8, '0');
+        var nuevoCodigoFactura = prefix + "-" + Convert.ToString(numero).PadLeft(4, '0');
         find.Value = nuevoCodigoFactura;
         await repositoryParameters.PosMeUpdate(find);
 
