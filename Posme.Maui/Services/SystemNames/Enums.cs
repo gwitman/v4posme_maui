@@ -26,4 +26,14 @@ namespace Posme.Maui.Services.SystemNames
         Itme = 33,
         Customer = 36
     }
+
+    public enum TypePayment
+    {
+        TarjetaDebito=1,
+        TarjetaCredito,
+        Efectivo,
+        Cheque,
+        Monedero,
+        Otros
+    }
 }

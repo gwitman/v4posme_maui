@@ -118,7 +118,7 @@ public class PrinterInvoiceViewModel : BaseViewModel
     public TbCompany? Company
     {
         get => _company;
-        set => SetProperty(ref _company, value);
+        private set => SetProperty(ref _company, value);
     }
 
     public ViewTempDtoInvoice DtoInvoice => VariablesGlobales.DtoInvoice;

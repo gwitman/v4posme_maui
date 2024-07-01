@@ -61,4 +61,12 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<Api_AppM
                     """;
         return await _dataBase.Database.QueryAsync<Api_AppMobileApi_GetDataDownloadCustomerResponse>(query, search);
     }
+
+    public Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeDescending()
+    {
+        return _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadCustomerResponse>()
+            .OrderByDescending(response => response.CustomerNumber)
+            .Take(10)
+            .ToListAsync();
+    }
 }

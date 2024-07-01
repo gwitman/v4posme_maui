@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:printers="clr-namespace:Posme.Maui.ViewModels.Printers"
              xmlns:core="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
-             xmlns:controls="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             xmlns:controls="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              Title="{Binding Title}"
              x:Class="Posme.Maui.Views.Printers.PrinterProductoPage">
     <ContentPage.BindingContext>
@@ -15,62 +16,66 @@
         <ToolbarItem IconImageSource="printer" Command="{Binding PrinterCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <core:DXStackLayout
-            x:Name="DxStackLayout">
-            <core:DXBorder Style="{StaticResource BorderProducto}">
-                <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <controls:BarcodeGeneratorView
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.RowSpan="4"
-                    HeightRequest="100"
-                    WidthRequest="100"
-                    ForegroundColor="Black"
-                    Value="{Binding ItemsResponse.BarCode}"
-                    Format="Codabar"
-                    Margin="3" />
-                <Label 
-                    Grid.Column="1" 
-                    Grid.Row="0" 
-                    FontAttributes="Bold"
-                    Text="{Binding ItemsResponse.Name}" />
-                <Label 
-                    Grid.Column="1" 
-                    Grid.Row="1" 
-                    FontAttributes="Bold"
-                    Text="{Binding ItemsResponse.BarCode}" />
-                <HorizontalStackLayout
-                    Grid.Row="2"
-                    Grid.Column="1" >
-                    <Label
-                        HorizontalOptions="Start">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="{Binding ItemsResponse.ItemNumber}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </HorizontalStackLayout>
-                <HorizontalStackLayout
-                    Grid.Row="3"
-                    Grid.Column="1">
-                    <Label Text="Precio: C$ "  />
-                    <Label
-                        HorizontalOptions="End"
-                        Text="{Binding ItemsResponse.PrecioPublico}"  />
-                </HorizontalStackLayout>
-            </Grid>
-            </core:DXBorder>
-        </core:DXStackLayout>
+        <controls:ShimmerView
+            Style="{StaticResource ShimmerEffect}"
+            IsLoading="{Binding IsBusy}">
+            <core:DXStackLayout
+                x:Name="DxStackLayout">
+                <core:DXBorder Style="{StaticResource BorderProducto}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <zxing:BarcodeGeneratorView
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.RowSpan="4"
+                            HeightRequest="100"
+                            WidthRequest="100"
+                            ForegroundColor="Black"
+                            Value="{Binding ItemsResponse.BarCode}"
+                            Format="Codabar"
+                            Margin="3" />
+                        <Label
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            FontAttributes="Bold"
+                            Text="{Binding ItemsResponse.Name}" />
+                        <Label
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            FontAttributes="Bold"
+                            Text="{Binding ItemsResponse.BarCode}" />
+                        <HorizontalStackLayout
+                            Grid.Row="2"
+                            Grid.Column="1">
+                            <Label
+                                HorizontalOptions="Start">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding ItemsResponse.ItemNumber}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Grid.Row="3"
+                            Grid.Column="1">
+                            <Label Text="Precio: C$ " />
+                            <Label
+                                HorizontalOptions="End"
+                                Text="{Binding ItemsResponse.PrecioPublico}" />
+                        </HorizontalStackLayout>
+                    </Grid>
+                </core:DXBorder>
+            </core:DXStackLayout>
+        </controls:ShimmerView>
     </ContentPage.Content>
 </ContentPage>

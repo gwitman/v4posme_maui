@@ -14,7 +14,6 @@ public partial class CustomersPage : ContentPage
 
     protected override void OnAppearing()
     {
-        _clientesViewModel = (PosMeCustomerViewModel)BindingContext;
-        _clientesViewModel.OnAppearing(Navigation);
+        ((PosMeCustomerViewModel)BindingContext).OnAppearing(Navigation);
     }
 }

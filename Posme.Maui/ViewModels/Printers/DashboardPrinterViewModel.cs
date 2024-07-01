@@ -49,13 +49,13 @@ public class DashboardPrinterViewModel : BaseViewModel
             List<Api_AppMobileApi_GetDataDownloadItemsResponse> searchItems;
             if (string.IsNullOrWhiteSpace(SearchProduct))
             {
-                 searchItems = await _repositoryItems.PosMeTake10();
+                searchItems = await _repositoryItems.PosMeTake10();
             }
             else
             {
-                 searchItems = await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(SearchProduct);
+                searchItems = await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(SearchProduct);
             }
-            
+
             foreach (var itemsResponse in searchItems)
             {
                 Productos.Add(itemsResponse);
@@ -219,20 +219,27 @@ public class DashboardPrinterViewModel : BaseViewModel
 
     private async void Load()
     {
+        IsBusy = true;
         Facturas.Clear();
         var findAllFactura = await _repositoryTbTransactionMaster.PosMeFilterFacturas();
-        await FillFacturas(findAllFactura);
+        var taskFacturas = FillFacturas(findAllFactura);
 
         Abonos.Clear();
         var findAllAbonos = await _repositoryTbTransactionMaster.PosMeFilterAbonos();
-        await FillAbonos(findAllAbonos);
-
+        var taskAbonos = FillAbonos(findAllAbonos);
         Productos.Clear();
-        var findAllProductos = await _repositoryItems.PosMeTake10();
-        foreach (var item in findAllProductos)
+        var taskProductos = Task.Run(async () =>
         {
-            Productos.Add(item);
-        }
+            var findAllProductos = await _repositoryItems.PosMeDescending10();
+            foreach (var item in findAllProductos)
+            {
+                Productos.Add(item);
+            }
+        });
+
+        await Task.WhenAll(taskFacturas, taskAbonos, taskProductos);
+
+        IsBusy = false;
     }
 
     private async Task FillAbonos(List<TbTransactionMaster> findAllAbonos)
@@ -243,7 +250,7 @@ public class DashboardPrinterViewModel : BaseViewModel
         {
             var customer = await _repositoryTbCustomer.PosMeFindEntityId(abono.EntityId);
             string currencyName;
-            if (abono.CurrencyId == (int)TypeCurrency.Cordoba)
+            if (abono.CurrencyId == TypeCurrency.Cordoba)
             {
                 totalCordobas += abono.Amount;
                 currencyName = "C$";
@@ -290,14 +297,14 @@ public class DashboardPrinterViewModel : BaseViewModel
                 Comentarios = master.Comment,
                 TransactionMasterId = master.TransactionMasterId
             };
-            if (master.CurrencyId == (int)TypeCurrency.Cordoba)
+            if (master.CurrencyId == TypeCurrency.Cordoba)
             {
-                dto.Currency = new DtoCatalogItem(master.CurrencyId, "Cordoba", "C$");
+                dto.Currency = new DtoCatalogItem((int)master.CurrencyId, "Cordoba", "C$");
                 totalCordobas += master.SubAmount;
             }
             else
             {
-                dto.Currency = new DtoCatalogItem(master.CurrencyId, "Dolar", "$");
+                dto.Currency = new DtoCatalogItem((int)master.CurrencyId, "Dolar", "$");
                 totalDolares += master.SubAmount;
             }
 

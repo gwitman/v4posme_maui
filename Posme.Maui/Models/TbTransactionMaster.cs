@@ -1,12 +1,14 @@
 ﻿using Posme.Maui.Services.Helpers;
 using SQLite;
 using Posme.Maui.Services.SystemNames;
+
 namespace Posme.Maui.Models;
 
 [Table("tb_transaction_master")]
 public class TbTransactionMaster
 {
     public TypeTransaction TransactionId { get; set; }
+    public TypePayment TypePaymentId { get; set; } = TypePayment.Efectivo;
     [PrimaryKey, AutoIncrement] public int TransactionMasterId { get; set; }
     public string? TransactionNumber { get; set; }
     public int EntityId { get; set; }
@@ -16,9 +18,9 @@ public class TbTransactionMaster
     public decimal Discount { get; set; }
     public decimal Taxi1 { get; set; }
     public decimal Amount { get; set; }
-    public int TransactionCausalId { get; set; }
-    public decimal ExchangeRate { get; set; }    
-    public int CurrencyId { get; set; }
+    public TypeTransactionCausal TransactionCausalId { get; set; }
+    public decimal ExchangeRate { get; set; }
+    public TypeCurrency CurrencyId { get; set; }
     public string? Comment { get; set; }
     public string? Reference1 { get; set; }
     public string? Reference2 { get; set; }

@@ -1,10 +1,11 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using Posme.Maui.Services.HelpersPrinters.Epson_Commands;
 using Posme.Maui.Services.HelpersPrinters.Helper;
 using Posme.Maui.Services.HelpersPrinters.Interfaces.Command;
 using Posme.Maui.Services.HelpersPrinters.Interfaces.Printer;
-using Posme.Maui.Services;
 using SkiaSharp;
+using Exception = Java.Lang.Exception;
 using Fonts = Posme.Maui.Services.HelpersPrinters.Enums.Fonts;
 using Positions = Posme.Maui.Services.HelpersPrinters.Enums.Positions;
 using PrinterModeState = Posme.Maui.Services.HelpersPrinters.Enums.PrinterModeState;
@@ -38,7 +39,14 @@ namespace Posme.Maui.Services.HelpersPrinters
         public void Print()
         {
             var bluetoothService = new BluetoothService(_printerName);
-            bluetoothService.Print(_buffer);
+            try
+            {
+                bluetoothService.Print(_buffer);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
 
         public int ColsNomal
@@ -286,14 +294,17 @@ namespace Posme.Maui.Services.HelpersPrinters
         {
             Append(_command.BarCode.Code39(code, printString));
         }
+
         public void Code39CustomPosMe2px1p(string code, Positions printString = Positions.NotPrint)
         {
             Append(_command.BarCode.Code39CustomPosMe2px1p(code, printString));
         }
+
         public void Avanza(int puntos)
         {
             Append(_command.Alignment.Avanza(puntos));
         }
+
         public void Ean13(string code, Positions printString = Positions.NotPrint)
         {
             Append(_command.BarCode.Ean13(code, printString));
@@ -323,9 +334,5 @@ namespace Posme.Maui.Services.HelpersPrinters
         {
             Append(logoByte);
         }
-
-        
-
-
     }
 }

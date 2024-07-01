@@ -41,4 +41,12 @@ public class RepositoryItems(DataBase dataBase)
                                || response.Name.ToLower().Contains(textSearch))
             .ToListAsync();
     }
+
+    public Task<List<Api_AppMobileApi_GetDataDownloadItemsResponse>> PosMeDescending10()
+    {
+        return dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadItemsResponse>()
+            .Take(10)
+            .OrderByDescending(response => response.ItemNumber)
+            .ToListAsync();
+    }
 }

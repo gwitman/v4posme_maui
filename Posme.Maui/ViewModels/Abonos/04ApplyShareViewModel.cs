@@ -35,7 +35,13 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         _repositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
         _repositoryTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
         AplicarAbonoCommand = new Command(OnAplicarAbono,OnValidateMonto);
+        ClearMontoCommand = new Command(OnClearMontoCommand);
         PropertyChanged += (_, _) => AplicarAbonoCommand.ChangeCanExecute();
+    }
+
+    private void OnClearMontoCommand(object obj)
+    {
+        Monto = decimal.Zero;
     }
 
     private bool OnValidateMonto(object arg)
@@ -87,7 +93,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
                 TransactionOn = DateTime.Now,
                 EntitySecondaryId = _customerResponse.CustomerNumber,
                 EntityId = _customerResponse.EntityId,
-                CurrencyId = CurrencyId,
+                CurrencyId = (TypeCurrency)CurrencyId,
                 Reference1 = reference
             };
             var taskTransactionMaster = _repositoryTransactionMaster.PosMeInsert(transactionMaster);
@@ -116,12 +122,9 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
             return true;
         }
 
-        if (decimal.Compare(SaldoFinal, decimal.Zero)<0)
-        {
-            ShowToast("No se puede ingresar un saldo negativo", ToastDuration.Long, 16);
-            return true;
-        }
-        return false;
+        if (decimal.Compare(SaldoFinal, decimal.Zero) >= 0) return false;
+        ShowToast(Mensajes.MensajeSaldoNegativo, ToastDuration.Long, 16);
+        return true;
     }
 
     public Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse DocumentCreditAmortizationResponse
@@ -204,11 +207,12 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         DocumentCreditAmortizationResponse = await _repositoryDocumentCreditAmortization.PosMeFindByDocumentNumber(parameter);
         CurrencyId = DocumentCreditResponse.CurrencyId;
         CurrencyName = DocumentCreditResponse.CurrencyName!;
-        SaldoInicial = DocumentCreditResponse.Balance;
+        SaldoInicial = DocumentCreditResponse.Remaining;
         IsBusy = false;
     }
 
     public int CurrencyId { get; set; }
+    public Command ClearMontoCommand { get; }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {

@@ -29,7 +29,7 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
 
     private bool Validate()
     {
-        return string.IsNullOrWhiteSpace(Comentarios) || string.IsNullOrWhiteSpace(Referencias);
+        return string.IsNullOrWhiteSpace(Comentarios);
     }
 
 
@@ -69,17 +69,17 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
     public bool ErrorComentarios { get; set; }
     public bool ErrorReferencia { get; set; }
     public ViewTempDtoInvoice Item { get; private set; }
-    private string? _comentarios;
+    private string _comentarios="Sin Comentarios";
 
-    public string? Comentarios
+    public string Comentarios
     {
         get => _comentarios;
         set => SetProperty(ref _comentarios, value);
     }
 
-    private string? _referencias;
+    private string _referencias=string.Empty;
 
-    public string? Referencias
+    public string Referencias
     {
         get => _referencias;
         set => SetProperty(ref _referencias, value);

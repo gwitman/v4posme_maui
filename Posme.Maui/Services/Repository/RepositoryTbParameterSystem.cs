@@ -9,42 +9,36 @@ public class RepositoryTbParameterSystem(DataBase dataBase) : RepositoryFacade<T
     public Task<TbParameterSystem> PosMeFindLogo()
     {
         return dataBase.Database.Table<TbParameterSystem>()
-            .Where(system => system.Name == Constantes.ParametroLogo)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(system => system.Name == Constantes.ParametroLogo);
     }
 
     public Task<TbParameterSystem> PosMeFindCounter()
     {
         return dataBase.Database.Table<TbParameterSystem>()
-            .Where(system => system.Name == Constantes.ParametroCounter)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(system => system.Name == Constantes.ParametroCounter);
     }
 
     public Task<TbParameterSystem> PosMeFindAccessPoint()
     {
         return dataBase.Database.Table<TbParameterSystem>()
-            .Where(system => system.Name == Constantes.ParametroAccesPoint)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(system => system.Name == Constantes.ParametroAccesPoint);
     }
 
     public Task<TbParameterSystem> PosMeFindPrinter()
     {
         return dataBase.Database.Table<TbParameterSystem>()
-            .Where(system => system.Name == Constantes.ParametroPrinter)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(system => system.Name == Constantes.ParametroPrinter);
     }
 
     public Task<TbParameterSystem> PosMeFindCodigoAbono()
     {
         return dataBase.Database.Table<TbParameterSystem>()
-            .Where(system => system.Name == Constantes.ParametroCodigoAbono)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(system => system.Name == Constantes.ParametroCodigoAbono);
     }
 
     public Task<TbParameterSystem> PosMeFindCodigoFactura()
     {
         return dataBase.Database.Table<TbParameterSystem>()
-            .Where(system => system.Name == Constantes.ParameterCodigoFactura)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(system => system.Name == Constantes.ParameterCodigoFactura);
     }
 }

@@ -1,11 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Windows.Input;
 using Posme.Maui.Models;
-using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
-using Unity;
 using Posme.Maui.Services.SystemNames;
-using Posme.Maui.Services.Api;
+using Unity;
+
 namespace Posme.Maui.ViewModels;
 
 public class PosMeParameterViewModel : BaseViewModel
@@ -15,6 +14,8 @@ public class PosMeParameterViewModel : BaseViewModel
     private TbParameterSystem _posMeFindLogo = new();
     private TbParameterSystem _posMeFindAccessPoint = new();
     private TbParameterSystem _posmeFindPrinter = new();
+    private TbParameterSystem _posmeFindCodigoAbono = new();
+    private TbParameterSystem _posmeFindCodigFactura = new();
     public ICommand RefreshCommand { get; }
     public ICommand SaveCommand { get; }
 
@@ -72,6 +73,18 @@ public class PosMeParameterViewModel : BaseViewModel
             {
                 Printer = _posmeFindPrinter.Value;
             }
+
+            _posmeFindCodigoAbono = await _repositoryTbParameterSystem.PosMeFindCodigoAbono();
+            if (!string.IsNullOrWhiteSpace(_posmeFindCodigoAbono.Value))
+            {
+                CodigoAbono = _posmeFindCodigoAbono.Value;
+            }
+
+            _posmeFindCodigFactura = await _repositoryTbParameterSystem.PosMeFindCodigoFactura();
+            if (!string.IsNullOrWhiteSpace(_posmeFindCodigFactura.Value))
+            {
+                CodigoFactura = _posmeFindCodigFactura.Value;
+            }
         });
     }
 
@@ -79,7 +92,9 @@ public class PosMeParameterViewModel : BaseViewModel
     {
         PuntoAccesoHasError = string.IsNullOrWhiteSpace(PuntoAcceso);
         PrinterHasError = string.IsNullOrWhiteSpace(Printer);
-        return !(PuntoAccesoHasError || PrinterHasError);
+        AbonoHasError = string.IsNullOrWhiteSpace(CodigoAbono);
+        FacturaHasError = string.IsNullOrWhiteSpace(CodigoFactura);
+        return !(PuntoAccesoHasError || PrinterHasError || AbonoHasError || FacturaHasError);
     }
 
     private bool _printerhasError;
@@ -116,6 +131,10 @@ public class PosMeParameterViewModel : BaseViewModel
                 _repositoryTbParameterSystem.PosMeUpdate(_posMeFindAccessPoint);
                 _posmeFindPrinter.Value = Printer;
                 _repositoryTbParameterSystem.PosMeUpdate(_posmeFindPrinter);
+                _posmeFindCodigFactura.Value = CodigoFactura;
+                _repositoryTbParameterSystem.PosMeUpdate(_posmeFindCodigFactura);
+                _posmeFindCodigoAbono.Value = CodigoAbono;
+                _repositoryTbParameterSystem.PosMeUpdate(_posmeFindCodigoAbono);
                 Mensaje = Mensajes.MensajeParametrosGuardar;
                 PopupBackgroundColor = Colors.Green;
                 LoadValuesDefault();
@@ -186,5 +205,37 @@ public class PosMeParameterViewModel : BaseViewModel
     {
         get => _isRefreshing;
         set => SetProperty(ref _isRefreshing, value);
+    }
+
+    private string? _codigoAbono;
+
+    public string? CodigoAbono
+    {
+        get => _codigoAbono;
+        set => SetProperty(ref _codigoAbono, value);
+    }
+
+    private bool _abonoHasError;
+
+    public bool AbonoHasError
+    {
+        get => _abonoHasError;
+        set => SetProperty(ref _abonoHasError, value);
+    }
+
+    private string? _codigoFactura;
+
+    public string? CodigoFactura
+    {
+        get => _codigoFactura;
+        set => SetProperty(ref _codigoFactura, value);
+    }
+
+    private bool _facturaHasError;
+
+    public bool FacturaHasError
+    {
+        get => _facturaHasError;
+        set => SetProperty(ref _facturaHasError, value);
     }
 }

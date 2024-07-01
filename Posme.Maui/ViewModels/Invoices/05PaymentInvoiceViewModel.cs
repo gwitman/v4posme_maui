@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices.ComTypes;
-using Posme.Maui.Models;
+﻿using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
@@ -65,7 +63,8 @@ public class PaymentInvoiceViewModel : BaseViewModel
             TransactionId = TypeTransaction.TransactionInvoiceBilling,
             Amount = Monto,
             TransactionOn = DateTime.Now,
-            TransactionCausalId = dtoInvoice.TipoDocumento!.Key, //crear enum
+            TransactionCausalId = (TypeTransactionCausal)dtoInvoice.TipoDocumento!.Key,
+            TypePaymentId = TypePayment,
             Comment = dtoInvoice.Comentarios,
             Discount = decimal.Zero,
             Taxi1 = decimal.Zero,
@@ -73,7 +72,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
             EntityId = dtoInvoice.CustomerResponse!.EntityId,
             EntitySecondaryId = VariablesGlobales.User!.UserId.ToString(),
             TransactionNumber = codigo,
-            CurrencyId = dtoInvoice.Currency!.Key
+            CurrencyId = (TypeCurrency)dtoInvoice.Currency!.Key
         };
         transactionMaster.SubAmount = dtoInvoice.Balance - transactionMaster.Discount + transactionMaster.Taxi1;
 
@@ -221,6 +220,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
     public Command SelectionChequeCommand { get; }
     public Command SelectionOtrosCommand { get; }
     private string? _pagarSeleccion;
+    public TypePayment TypePayment { get; set; }
 
     public string? PagarSeleccion
     {
@@ -239,6 +239,35 @@ public class PaymentInvoiceViewModel : BaseViewModel
         ChkCheque = cheque;
         ChkMonedero = monedero;
         ChkOtros = otros;
+        if (efectivo)
+        {
+            TypePayment = TypePayment.Efectivo;
+        }
+
+        if (credito)
+        {
+            TypePayment = TypePayment.TarjetaCredito;
+        }
+
+        if (debito)
+        {
+            TypePayment = TypePayment.TarjetaDebito;
+        }
+
+        if (monedero)
+        {
+            TypePayment = TypePayment.Monedero;
+        }
+
+        if (cheque)
+        {
+            TypePayment = TypePayment.Cheque;
+        }
+
+        if (otros)
+        {
+            TypePayment = TypePayment.Otros;
+        }
     }
 
     public void OnAppearing(INavigation navigation)

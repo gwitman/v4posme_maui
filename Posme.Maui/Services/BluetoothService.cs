@@ -41,6 +41,7 @@ public class BluetoothService(string nameDevice)
     {
         //Bluetooth is turned off
         var adapter = BluetoothAdapter.DefaultAdapter;
+        //var adapter = _adapter;
         if (adapter is null) return;
 
         var device = GetDevice(adapter);

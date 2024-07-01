@@ -1,14 +1,12 @@
-﻿using System.Web;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
+using Posme.Maui.Services.HelpersPrinters;
 using Posme.Maui.Services.Repository;
+using Posme.Maui.Services.SystemNames;
 using SkiaSharp;
 using Unity;
-using Posme.Maui.Services.Api;
-using Posme.Maui.Services.SystemNames;
-using Printer = Posme.Maui.Services.HelpersPrinters.Printer;
 
 namespace Posme.Maui.ViewModels.Abonos;
 
@@ -16,11 +14,13 @@ public class ValidarAbonoViewModel : BaseViewModel
 {
     private readonly IRepositoryTbParameterSystem _parameterSystem;
     private readonly IRepositoryTbTransactionMaster _repositoryTbTransactionMaster;
+    private readonly IRepositoryParameters _repositoryParameters;
 
     public ValidarAbonoViewModel()
     {
         Title = "Comprobanto de Abono 5/5";
         _parameterSystem = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
+        _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
         _repositoryTbTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
         Item = VariablesGlobales.DtoAplicarAbono!;
         AplicarOtroCommand = new Command(OnAplicarOtroCommand);
@@ -58,7 +58,8 @@ public class ValidarAbonoViewModel : BaseViewModel
         printer.AlignRight();
         printer.Image(SKBitmap.Decode(readImage));
         printer.AlignCenter();
-        printer.BoldMode("FERRETERIA NARVAEZ");
+        printer.BoldMode(Company!.Name!);
+        printer.BoldMode($"RUC: {CompanyRuc!.Value}");
         printer.BoldMode($"ABONO: {VariablesGlobales.DtoAplicarAbono!.CodigoAbono}");
         printer.NewLine();
         printer.AlignLeft();
@@ -73,8 +74,8 @@ public class ValidarAbonoViewModel : BaseViewModel
         printer.Append($"Comentarios: {VariablesGlobales.DtoAplicarAbono.Description}");
         printer.NewLine();
         printer.AlignCenter();
-        printer.Append("Información, datos de muestra");
-        printer.Append("Dirección: dirección de muestra para información de abono");
+        printer.Append(CompanyTelefono!.Value!);
+        printer.Append(Company.Address!);
         printer.FullPaperCut();
         printer.Print();
     }
@@ -86,6 +87,30 @@ public class ValidarAbonoViewModel : BaseViewModel
         {
             Shell.Current.Navigation.RemovePage(stack[i]);
         }
+    }
+
+    private TbCompany? _company;
+
+    public TbCompany? Company
+    {
+        get => _company;
+        private set => SetProperty(ref _company, value);
+    }
+
+    private Api_AppMobileApi_GetDataDownloadParametersResponse? _companyTelefono;
+
+    public Api_AppMobileApi_GetDataDownloadParametersResponse? CompanyTelefono
+    {
+        get => _companyTelefono;
+        private set => SetProperty(ref _companyTelefono, value);
+    }
+
+    private Api_AppMobileApi_GetDataDownloadParametersResponse? _companyRuc;
+
+    public Api_AppMobileApi_GetDataDownloadParametersResponse? CompanyRuc
+    {
+        get => _companyRuc;
+        private set => SetProperty(ref _companyRuc, value);
     }
 
     public ViewTempDtoAbono Item { get; private set; }
@@ -118,6 +143,9 @@ public class ValidarAbonoViewModel : BaseViewModel
             var imageBytes = Convert.FromBase64String(paramter.Value!);
             LogoSource = ImageSource.FromStream(() => new MemoryStream(imageBytes));
             Item = VariablesGlobales.DtoAplicarAbono!;
+            CompanyTelefono = await _repositoryParameters.PosMeFindByKey("CORE_PHONE");
+            CompanyRuc = await _repositoryParameters.PosMeFindByKey("CORE_COMPANY_IDENTIFIER");
+            Company = VariablesGlobales.TbCompany;
         });
     }
 }

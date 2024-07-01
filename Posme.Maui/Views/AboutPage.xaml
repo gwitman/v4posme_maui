@@ -1,61 +1,111 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Title="{Binding Title}"
-             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-             xmlns:dxc="clr-namespace:DevExpress.Maui.Charts;assembly=DevExpress.Maui.Charts"
-             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
-             xmlns:dxsch="clr-namespace:DevExpress.Maui.Scheduler;assembly=DevExpress.Maui.Scheduler"
-             xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
-             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
-             xmlns:dxdf="clr-namespace:DevExpress.Maui.DataForm;assembly=DevExpress.Maui.Editors"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:viewModels="clr-namespace:Posme.Maui.ViewModels"
+             xmlns:controls="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:core="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              ios:Page.UseSafeArea="true"
              x:Class="Posme.Maui.Views.AboutPage">
-    <Grid RowDefinitions="100,*,Auto">
-        <Grid>
-            <Image Source="pm_png_144px.png"
-                   HorizontalOptions="Center"
-                   Aspect="AspectFit" />
-        </Grid>
-        <Grid Grid.Row="1"
-              RowDefinitions="Auto, Auto, Auto"
-              Padding="25,25,25,15"
-              RowSpacing="10">
-            <Label Grid.Row="0"
-                   HorizontalTextAlignment="Center"
-                   FontAttributes="Bold"
-                   FontSize="15"
-                   Text="Optimiza tu Tiempo con Prioridades Claras" />
-            <Label Grid.Row="1"
-                   Text="En el mundo de los negocios, la gestión eficaz del tiempo es crucial. Aquí tienes algunos consejos para mejorar tu productividad:" />
-            <Label Grid.Row="2">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="1. Define Prioridades: " FontAttributes="Bold" />
-                        <Span
-                            Text="Cada mañana, haz una lista de tareas y clasifícalas por importancia y urgencia. Enfócate primero en las tareas que más impacto tienen." />
-                        <Span Text="&#10;" />
-                        <Span Text="2. Evita la Multitarea: " FontAttributes="Bold" />
-                        <Span
-                            Text="En lugar de hacer varias cosas a la vez, concéntrate en una sola tarea y complétala antes de pasar a la siguiente. Esto mejora la calidad de tu trabajo y reduce el estrés." />
-                        <Span Text="&#10;" />
-                        <Span Text="3. Establece Plazos Realistas: " FontAttributes="Bold" />
-                        <Span
-                            Text="Asigna tiempos específicos para completar cada tarea. Los plazos ayudan a mantener el ritmo y evitar la procrastinación." />
-                        <Span Text="&#10;" />
-                        <Span Text="4. Descansa Adecuadamente: " FontAttributes="Bold" />
-                        <Span
-                            Text="Tomar pequeños descansos durante tu jornada laboral puede aumentar tu productividad. El cerebro necesita pausas para mantenerse fresco y enfocado." />
-                        <Span Text="&#10;" />
-                        <Span
-                            Text="Recuerda, la clave de la eficiencia no es hacer más en menos tiempo, sino hacer lo correcto en el momento adecuado." />
-                        <Span Text="&#10;" />
-                        <Span Text="&#10;" />
-                        <Span Text="¡Implementa estos consejos y observa cómo mejora tu gestión del tiempo y productividad!" 
-                              FontAttributes="Bold"/>
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-        </Grid>
-    </Grid>
+    <ContentPage.BindingContext>
+        <viewModels:AboutViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <controls:ShimmerView Style="{StaticResource ShimmerEffect}" IsLoading="{Binding IsBusy}">
+
+            <ScrollView>
+                <StackLayout Padding="10" Spacing="10">
+                    <Image Source="pm_png_144px.png"
+                           HorizontalOptions="Center"
+                           Aspect="AspectFit" />
+                    <core:DXBorder Style="{StaticResource PropertyBorder}" BorderThickness="0,0,5,0" BorderColor="Red">
+                        <Grid Padding="10" ColumnSpacing="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="payment_2" WidthRequest="40" HeightRequest="40" />
+                            <StackLayout Grid.Column="1" Spacing="0">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding CantidadAbonos}" 
+                                           FontSize="24" 
+                                           FontAttributes="Bold" />    
+                                </StackLayout>
+                                <Label Text="Abonos Aplicados" FontSize="14" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Monto Córdobas: C$" 
+                                           FontSize="12" TextColor="Red" />
+                                    <Label Text="{Binding MontoAbonosCordobas,StringFormat='{0:N2}'}" 
+                                           FontSize="12" TextColor="Red" />
+                                    <Label Text=" "/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Monto Dólares: $" 
+                                           FontSize="12" TextColor="Red" />
+                                    <Label Text="{Binding MontoAbonosDolares,StringFormat='{0:N2}'}" 
+                                           FontSize="12" TextColor="Red" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </core:DXBorder>
+
+                    <core:DXBorder Style="{StaticResource PropertyBorder}" BorderThickness="0,0,5,0" BorderColor="Yellow">
+                        <Grid Padding="10" ColumnSpacing="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="invoice_bill" WidthRequest="40" HeightRequest="40" />
+                            <StackLayout Grid.Column="1" Spacing="0">
+                                <Label Text="{Binding CantidadFacutrasContado}" FontSize="24" FontAttributes="Bold" />
+                                <Label Text="Facturas de Contado" FontSize="14" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Monto Córdobas: C$" 
+                                           FontSize="12" TextColor="YellowGreen" />
+                                    <Label Text="{Binding MontoFacturasContadoCordobas,StringFormat='{0:N2}'}" 
+                                           FontSize="12" TextColor="YellowGreen" />
+                                    <Label Text=" "/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Monto Dólares: $" 
+                                           FontSize="12" TextColor="YellowGreen" />
+                                    <Label Text="{Binding MontoFacturasContadoDolares,StringFormat='{0:N2}'}" 
+                                           FontSize="12" TextColor="YellowGreen" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </core:DXBorder>
+
+                    <core:DXBorder Style="{StaticResource PropertyBorder}" BorderThickness="0,0,5,0" BorderColor="Green">
+                        <Grid Padding="10" ColumnSpacing="25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="cash_pay" WidthRequest="40" HeightRequest="40" />
+                            <StackLayout Grid.Column="1" Spacing="0">
+                                <Label Text="{Binding CantidadFacutrasCredito}" FontSize="24" FontAttributes="Bold" />
+                                <Label Text="Facturas de Crédito" FontSize="14" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Monto Córdobas: C$" 
+                                           FontSize="12" TextColor="Green" />
+                                    <Label Text="{Binding MontoFacturasCreditoCordobas,StringFormat='{0:N2}'}" 
+                                           FontSize="12" TextColor="Green" />
+                                    <Label Text=" "/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Monto Dólares: $" 
+                                           FontSize="12" TextColor="Green" />
+                                    <Label Text="{Binding MontoFacturasCreditoDolares,StringFormat='{0:N2}'}" 
+                                           FontSize="12" TextColor="Green" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </core:DXBorder>
+                </StackLayout>
+            </ScrollView>
+
+        </controls:ShimmerView>
+    </ContentPage.Content>
+
 </ContentPage>

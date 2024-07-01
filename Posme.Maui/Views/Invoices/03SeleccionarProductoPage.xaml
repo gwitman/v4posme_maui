@@ -15,10 +15,6 @@
         <dxc:ShimmerView Style="{StaticResource ShimmerEffect}" IsLoading="{Binding IsBusy}">
             <dxc:ShimmerView.Content>
                 <AbsoluteLayout>
-                    <ActivityIndicator
-                        IsRunning="{Binding IsBusy}"
-                        IsVisible="{Binding IsBusy}" />
-
                     <Grid
                         AbsoluteLayout.LayoutFlags="All"
                         AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
@@ -39,9 +35,9 @@
                                             <RowDefinition Height="50" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="0.1*" />
                                             <ColumnDefinition Width="0.2*" />
-                                            <ColumnDefinition Width="0.01*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="50" />
                                         </Grid.ColumnDefinitions>
                                         <dx:DXStackLayout
                                             Grid.Column="0"
@@ -56,10 +52,9 @@
                                                 Icon="search" />
                                         </dx:DXStackLayout>
                                         <dx:DXStackLayout
-                                            Grid.Column="0"
+                                            Grid.Column="1"
                                             Grid.Row="0"
-                                            Orientation="Horizontal"
-                                            HorizontalOptions="End">
+                                            Orientation="Horizontal">
                                             <dx:DXButton
                                                 IconHeight="30"
                                                 IconWidth="30"
@@ -67,10 +62,10 @@
                                                 Icon="filter_clear" />
                                         </dx:DXStackLayout>
                                         <dx:DXStackLayout
-                                            Grid.Column="1"
+                                            Grid.Column="2"
                                             Grid.Row="0"
-                                            Orientation="Horizontal"
-                                            HorizontalOptions="End">
+                                            HorizontalOptions="End"
+                                            Orientation="Horizontal">
                                             <dx:DXButton
                                                 IconHeight="30"
                                                 IconWidth="30"
@@ -154,20 +149,19 @@
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
-                                    WidthRequest="250"
-                                    HorizontalOptions="Center"
                                     Style="{StaticResource ButtonDefault}"
                                     Command="{Binding ProductosSeleccionadosCommand}"
                                     Content="{Binding ProductosSeleccionadosCantidad}" />
-                                <dx:DXButton
+                                <!--<dx:DXButton
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource ButtonDefault}"
-                                    Content="Pedidos y Mesas" />
+                                    Content="Pedidos y Mesas" />-->
                                 <dx:DXButton
                                     Grid.Row="1"
-                                    Grid.Column="1"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
                                     Content="{Binding ProductosSeleccionadosCantidadTotal}" />
                             </Grid>
                         </StackLayout>

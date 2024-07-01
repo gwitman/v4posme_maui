@@ -41,7 +41,7 @@ public partial class ModificarValorPage : ContentPage
 
     private Api_AppMobileApi_GetDataDownloadItemsResponse? SelectedItem { get; set; }
 
-    private void DXButtonBase_OnClicked(object? sender, EventArgs e)
+    private async void DXButtonBase_OnClicked(object? sender, EventArgs e)
     {
         var valueText = TxtValor.Text;
         if (string.IsNullOrWhiteSpace(valueText))
@@ -51,6 +51,12 @@ public partial class ModificarValorPage : ContentPage
         }
 
         var value = decimal.Parse(valueText);
+        if (decimal.Compare(decimal.Zero, value)==0)
+        {
+            TxtValor.HasError = true;
+            TxtValor.ErrorText = Mensajes.MensajeValorZero;
+            return;
+        }
         if (SelectedItem is null) return;
         if (decimal.Compare(Quantity, decimal.Zero) > 0)
         {
@@ -67,6 +73,6 @@ public partial class ModificarValorPage : ContentPage
         var findIndex = VariablesGlobales.DtoInvoice.Items.FindIndex(response => response.ItemNumber == SelectedItem.ItemNumber);
         VariablesGlobales.DtoInvoice.Items.RemoveAt(findIndex);
         VariablesGlobales.DtoInvoice.Items.Insert(findIndex, SelectedItem);
-        Navigation.PopAsync(true);
+        await Navigation.PopAsync(true);
     }
 }

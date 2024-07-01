@@ -27,6 +27,22 @@ namespace Posme.Maui.ViewModels
             MensajeCommand = new Command(OnMensaje, ValidateError);
             PropertyChanged += (_, _) => LoginCommand.ChangeCanExecute();
             _repositoryTbCompany = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCompany>();
+            RealizarPagoCommand = new Command(OnRealizarPagoCommand);
+        }
+
+        private async void OnRealizarPagoCommand(object obj)
+        {
+            if (ValidateLogin())
+            {
+                return;
+            }
+
+            var findUserRemember =
+                await _repositoryTbUser.PosMeFindUserByNicknameAndPassword(UserName!, Password!);
+            if (findUserRemember is not null)
+            {
+                
+            }
         }
 
         public Command LoginCommand { get; }
@@ -68,6 +84,8 @@ namespace Posme.Maui.ViewModels
             get => _opcionPagar;
             set => SetProperty(ref this._opcionPagar, value);
         }
+
+        public Command RealizarPagoCommand { get; }
 
         private async void OnLoginClicked()
         {

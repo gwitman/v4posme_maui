@@ -12,9 +12,9 @@ public abstract class RepositoryFacade<T>(DataBase dataBase) : IRepositoryFacade
         return dataBase.Database.InsertAsync(model);
     }
 
-    public async Task PosMeUpdate(T model)
+    public Task PosMeUpdate(T model)
     {
-        await dataBase.Database.UpdateAsync(model);
+       return dataBase.Database.UpdateAsync(model);
     }
 
     public async Task PosMeUpdateAll(List<T> list)

@@ -7,8 +7,9 @@
              x:Class="Posme.Maui.Views.Invoices.ModificarValorPage">
     <ContentPage.Content>
         <core:DXStackLayout
+            Padding="0,50,0,0"
             Orientation="Vertical"
-            VerticalOptions="Center"
+            VerticalOptions="Start"
             HorizontalOptions="Center"
             ItemSpacing="30">
             <core:DXImage

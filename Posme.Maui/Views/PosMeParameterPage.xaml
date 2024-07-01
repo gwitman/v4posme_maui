@@ -49,13 +49,13 @@
                     <dx:DXBorder Margin="15"
                                  WidthRequest="100"
                                  BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
-                                 BorderThickness="0" CornerRadius="10">
+                                 BorderThickness="0" CornerRadius="0">
                         <Image Source="settings" WidthRequest="75" Aspect="Fill" />
                     </dx:DXBorder>
                     <dx:DXBorder
                         Margin="15"
                         BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
-                        BorderThickness="0" CornerRadius="10">
+                        BorderThickness="0" CornerRadius="0">
                         <dxe:NumericEdit
                             x:Name="TextContador"
                             MinValue="0"
@@ -69,7 +69,7 @@
                     </dx:DXBorder>
                     <dx:DXBorder Margin="15"
                                  BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
-                                 BorderThickness="0" CornerRadius="10">
+                                 BorderThickness="0" CornerRadius="0">
                         <dxe:TextEdit
                             x:Name="TextName"
                             HasError="{Binding PuntoAccesoHasError}"
@@ -93,6 +93,34 @@
                             Text="{Binding Printer}"
                             LabelText="Nombre de impresora" />
                     </dx:DXBorder>
+                    <dx:DXBorder
+                        Margin="15"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
+                        BorderThickness="0" CornerRadius="0">
+                        <dxe:TextEdit
+                            x:Name="TextCodigoAbono"
+                            HasError="{Binding AbonoHasError}"
+                            ErrorText="Debe especificar un código de abono..."
+                            IsErrorIconVisible="True"
+                            IconColor="#006E98"
+                            StartIcon="textbox"
+                            Text="{Binding CodigoAbono}"
+                            LabelText="Código de Abono" />
+                    </dx:DXBorder>
+                    <dx:DXBorder
+                        Margin="15"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
+                        BorderThickness="0" CornerRadius="0">
+                        <dxe:TextEdit
+                            x:Name="TextCodigoFactura"
+                            HasError="{Binding FacturaHasError}"
+                            ErrorText="Debe especificar un código de factura..."
+                            IsErrorIconVisible="True"
+                            IconColor="#006E98"
+                            StartIcon="textbox"
+                            Text="{Binding CodigoFactura}"
+                            LabelText="Código de Factura" />
+                    </dx:DXBorder>
                     <Grid HeightRequest="180" WidthRequest="160" Margin="0,30,0,10">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ImageTapped" />
@@ -108,7 +136,7 @@
                                         Source="{Binding ShowImage}" />
                         </dx:DXBorder>
                         <dx:DXBorder x:Name="EditControl" BorderColor="White" BorderThickness="2"
-                                     BackgroundColor="#FF8900"
+                                     BackgroundColor="Firebrick"
                                      WidthRequest="48" HeightRequest="48" CornerRadius="70" HorizontalOptions="End"
                                      VerticalOptions="End">
                             <dx:DXImage Source="pencil" WidthRequest="24" HeightRequest="24" />
@@ -116,17 +144,17 @@
                     </Grid>
                     <dxco:BottomSheet x:Name="BottomSheet" HalfExpandedRatio="0.3" AllowedState="HalfExpanded">
                         <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="5">
-                            <dx:DXButton Style="{StaticResource ButtonDefault}"
+                            <dx:DXButton Style="{StaticResource SinFondoColorRedondeado}"
                                          Icon="delete"
                                          Content="Eliminar logo"
                                          Tap="DeletePhotoClicked" />
                             <dx:DXButton Grid.Row="1"
-                                         Style="{StaticResource ButtonDefault}"
+                                         Style="{StaticResource SinFondoColorRedondeado}"
                                          Icon="take_photo"
                                          Content="Hacer foto"
                                          Tap="TakePhotoClicked" />
                             <dx:DXButton Grid.Row="2"
-                                         Style="{StaticResource ButtonDefault}"
+                                         Style="{StaticResource SinFondoColorRedondeado}"
                                          Icon="gallery"
                                          Content="Selecciona desde la galeria"
                                          Tap="SelectPhotoClicked" />

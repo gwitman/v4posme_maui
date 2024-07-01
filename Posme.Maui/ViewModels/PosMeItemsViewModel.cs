@@ -75,7 +75,7 @@ namespace Posme.Maui.ViewModels
             {
                 IsBusy = true;
                 Items.Clear();
-                var newItems = await _repositoryItems.PosMeFindAll();
+                var newItems = await _repositoryItems.PosMeDescending10();
                 await Task.Run(() =>
                 {
                     foreach (var item in newItems)

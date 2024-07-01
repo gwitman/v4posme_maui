@@ -1,4 +1,5 @@
 ﻿using Posme.Maui.ViewModels;
+using SelectionChangedEventArgs = DevExpress.Maui.Charts.SelectionChangedEventArgs;
 
 namespace Posme.Maui.Views
 {
@@ -8,7 +9,17 @@ namespace Posme.Maui.Views
         public AboutPage()
         {
             InitializeComponent();
-            BindingContext = new AboutViewModel();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            ((AboutViewModel)BindingContext).OnAppearing(Navigation);
+        }
+
+        private void ChartView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
         }
     }
 }

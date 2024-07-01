@@ -7,6 +7,13 @@
     xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
     xmlns:dxc="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls">
     
+    <Style TargetType="Border" x:Key="ShimmerElementAction">
+        <Setter Property="BackgroundColor" Value="{dx:ThemeColor SurfaceVariant}"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 25"/>
+        <Setter Property="WidthRequest" Value="100"/>
+        <Setter Property="HeightRequest" Value="100"/>
+        <Setter Property="StrokeThickness" Value="0"/>
+    </Style>
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{StaticResource Primary}" />
     </Style>
@@ -26,6 +33,8 @@
         <Setter Property="IconColor" Value="{StaticResource Primary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="CornerRadius" Value="3" />
+        <Setter Property="CheckedPressedBackgroundColor" Value="{StaticResource Secondary}" />
+        <Setter Property="PressedBackgroundColor" Value="{StaticResource Secondary}" />
         <Setter Property="CheckedBackgroundColor" Value="{StaticResource Secondary}"/>
     </Style>
     <Style TargetType="dx:DXButton" x:Key="SinFondoColorRedondeado">
@@ -42,7 +51,6 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderColor" Value="Black" />
         <Setter Property="CornerRadius" Value="50" />
-        <Setter Property="HorizontalOptions" Value="Start" />
         <Setter Property="PressedBackgroundColor" Value="{StaticResource Secondary}"/>
     </Style>
     <Style TargetType="dx:DXButton">
@@ -354,7 +362,7 @@
         <Setter Property="Shadow">
             <Setter.Value>
                 <Shadow Radius="20"
-                        Brush="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}" />
+                        Brush="{StaticResource Primary}" />
             </Setter.Value>
         </Setter>
     </Style>

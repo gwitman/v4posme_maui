@@ -30,8 +30,8 @@ namespace Posme.Maui.Services
 
         async Task InternalNavigateToAsync(Type viewModelType, object? parameter, bool isAbsoluteRoute = false)
         {
-            var viewName = viewModelType.FullName.Replace("ViewModels", "Views").Replace("ViewModel", "Page");
-            string absolutePrefix = isAbsoluteRoute ? "///" : string.Empty;
+            var viewName = viewModelType.FullName!.Replace("ViewModels", "Views").Replace("ViewModel", "Page");
+            var absolutePrefix = isAbsoluteRoute ? "///" : string.Empty;
             if (parameter != null)
             {
                 await Shell.Current.GoToAsync($"{absolutePrefix}{viewName}?id={HttpUtility.UrlEncode(parameter.ToString())}");
