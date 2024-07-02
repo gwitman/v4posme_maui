@@ -60,6 +60,8 @@ public class ValidarAbonoViewModel : BaseViewModel
             ShowToast(Mensajes.MensajeBluetoothState, ToastDuration.Long, 18);
             return;
         }
+
+        IsBusy = true;
         if (!string.IsNullOrWhiteSpace(logo.Value))
         {
             var readImage = Convert.FromBase64String(logo.Value!);

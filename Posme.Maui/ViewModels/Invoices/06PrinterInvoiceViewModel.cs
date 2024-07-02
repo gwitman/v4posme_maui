@@ -60,13 +60,14 @@ public class PrinterInvoiceViewModel : BaseViewModel
             return;
         }
 
-        if (printer.Device is null)
+        IsBusy = true;
+        if (!string.IsNullOrWhiteSpace(logo.Value))
         {
-            ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
+            var readImage = Convert.FromBase64String(logo.Value!);
+            printer.AlignRight();
+            printer.Image(SKBitmap.Decode(readImage));
         }
-        var readImage = Convert.FromBase64String(logo.Value!);
-        printer.AlignRight();
-        printer.Image(SKBitmap.Decode(readImage));
+
         printer.AlignCenter();
         printer.BoldMode(Company!.Name!);
         printer.BoldMode($"RUC: {CompanyRuc!.Value}");
@@ -105,6 +106,12 @@ public class PrinterInvoiceViewModel : BaseViewModel
         printer.NewLine();
         printer.FullPaperCut();
         printer.Print();
+        if (printer.Device is null)
+        {
+            ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
+        }
+
+        IsBusy = false;
     }
 
     private void OnAplicarOtroCommand(object obj)
@@ -173,15 +180,13 @@ public class PrinterInvoiceViewModel : BaseViewModel
     public async void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
-        await Task.Run(async () =>
-        {
-            var paramter = await _parameterSystem.PosMeFindLogo();
-            var imageBytes = Convert.FromBase64String(paramter.Value!);
-            LogoSource = ImageSource.FromStream(() => new MemoryStream(imageBytes));
-            CompanyTelefono = await _repositoryParameters.PosMeFindByKey("CORE_PHONE");
-            CompanyRuc = await _repositoryParameters.PosMeFindByKey("CORE_COMPANY_IDENTIFIER");
-            Company = VariablesGlobales.TbCompany;
-            EnableBackButton = VariablesGlobales.EnableBackButton;
-        });
+        var paramter = await _parameterSystem.PosMeFindLogo();
+        var imageBytes = Convert.FromBase64String(paramter.Value!);
+        LogoSource = ImageSource.FromStream(() => new MemoryStream(imageBytes));
+        CompanyTelefono = await _repositoryParameters.PosMeFindByKey("CORE_PHONE");
+        CompanyRuc = await _repositoryParameters.PosMeFindByKey("CORE_COMPANY_IDENTIFIER");
+        Company = VariablesGlobales.TbCompany;
+        EnableBackButton = VariablesGlobales.EnableBackButton;
+        IsBusy = false;
     }
 }

@@ -7,6 +7,7 @@ using Posme.Maui.Views;
 using Unity;
 using Posme.Maui.Services.SystemNames;
 using Posme.Maui.Services.Api;
+
 namespace Posme.Maui.ViewModels.Invoices;
 
 public class InvoicesViewModel : BaseViewModel
@@ -59,36 +60,30 @@ public class InvoicesViewModel : BaseViewModel
     private async void OnSearchCommand(object obj)
     {
         IsBusy = true;
-        await Task.Run(async () =>
+        Customers.Clear();
+        var finds = await _customerRepositoryTbCustomer.PosMeFilterByCustomerInvoice(Search);
+        foreach (var customer in finds)
         {
-            Customers.Clear();
-            var finds = await _customerRepositoryTbCustomer.PosMeFilterByCustomerInvoice(Search);
-            foreach (var customer in finds)
-            {
-                Customers.Add(customer);
-            }
-        });
+            Customers.Add(customer);
+        }
+
         IsBusy = false;
     }
 
-    private async void LoadsClientes()
+    public async void LoadsClientes()
     {
-        IsBusy = true;
-        await Task.Run(async () =>
+        Customers.Clear();
+        var findAll = await _customerRepositoryTbCustomer.PosMeAscTake10();
+        foreach (var response in findAll)
         {
-            Customers.Clear();
-            var findAll = await _customerRepositoryTbCustomer.PosMeAscTake10();
-            foreach (var response in findAll)
-            {
-                Customers.Add(response);
-            }
-        });
+            Customers.Add(response);
+        }
+
         IsBusy = false;
     }
 
     public void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
-        LoadsClientes();
     }
 }

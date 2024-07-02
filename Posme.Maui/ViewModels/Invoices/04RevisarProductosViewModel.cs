@@ -85,5 +85,6 @@ public class RevisarProductosSeleccionadosViewModel : BaseViewModel
     {
         Navigation = navigation;
         SubTotal = ProductosSeleccionados.Sum(response => response.Importe);
+        IsBusy = false;
     }
 }

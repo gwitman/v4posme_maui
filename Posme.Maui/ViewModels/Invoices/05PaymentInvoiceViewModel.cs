@@ -101,9 +101,9 @@ public class PaymentInvoiceViewModel : BaseViewModel
 
         await _repositoryTbTransactionMasterDetail.PosMeInsertAll(listMasterDetail);
         await _helper.PlusCounter();
-        IsBusy = false;
         VariablesGlobales.EnableBackButton = false;
         await Navigation!.PushAsync(new PrinterInvoicePage());
+        IsBusy = false;
     }
 
     private void OnSelectionOtrosCommand()
@@ -192,7 +192,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
         set => SetProperty(ref _chkOtros, value);
     }
 
-    private decimal _monto;
+    private decimal _monto=VariablesGlobales.DtoInvoice.Balance;
 
     public decimal Monto
     {
@@ -273,5 +273,6 @@ public class PaymentInvoiceViewModel : BaseViewModel
     public void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
+        IsBusy = false;
     }
 }

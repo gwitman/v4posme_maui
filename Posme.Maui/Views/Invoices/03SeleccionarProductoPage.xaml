@@ -191,9 +191,13 @@
                             </StackLayout>
                         </Frame>
                     </ContentView>
-
                 </AbsoluteLayout>
             </dxc:ShimmerView.Content>
+            <dxc:ShimmerView.LoadingView>
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   HeightRequest="50"
+                                   WidthRequest="50" />
+            </dxc:ShimmerView.LoadingView>
         </dxc:ShimmerView>
     </ContentPage.Content>
 </ContentPage>

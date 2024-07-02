@@ -8,6 +8,7 @@
              xmlns:models="clr-namespace:Posme.Maui.Models"
              xmlns:invoices="clr-namespace:Posme.Maui.ViewModels.Invoices"
              xmlns:controls="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:views="clr-namespace:Posme.Maui.Views"
              x:Class="Posme.Maui.Views.Invoices.InvoicesPage">
     <ContentPage.BindingContext>
         <invoices:InvoicesViewModel />
@@ -16,7 +17,9 @@
         <ToolbarItem IconImageSource="barcode_scan" Command="{Binding OnBarCode}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <controls:ShimmerView Style="{StaticResource ShimmerEffect}" IsLoading="{Binding IsBusy}">
+        <controls:ShimmerView
+            Style="{StaticResource ShimmerEffect}"
+            IsLoading="{Binding IsBusy}">
             <controls:ShimmerView.Content>
                 <dxc:DXStackLayout Orientation="Vertical">
                     <Grid
@@ -85,9 +88,10 @@
                                                     HorizontalOptions="End">
                                                     <Label.FormattedText>
                                                         <FormattedString>
-                                                            <Span Text="Balance"
+                                                            <Span Text="Balance "
                                                                   TextColor="White" />
-                                                            <Span Text=" " />
+                                                            <Span Text="{Binding CurrencyName}"
+                                                                  TextColor="White"/>
                                                             <Span Text="{Binding Balance,StringFormat='{0:N2}'}"
                                                                   TextColor="White" />
                                                         </FormattedString>
@@ -118,8 +122,8 @@
             </controls:ShimmerView.Content>
             <controls:ShimmerView.LoadingView>
                 <ActivityIndicator IsRunning="{Binding IsBusy}"
-                                   HeightRequest="100"
-                                   WidthRequest="100" />
+                                   HeightRequest="50"
+                                   WidthRequest="50" />
             </controls:ShimmerView.LoadingView>
         </controls:ShimmerView>
     </ContentPage.Content>

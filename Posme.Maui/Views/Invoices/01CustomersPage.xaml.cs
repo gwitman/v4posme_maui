@@ -9,14 +9,17 @@ namespace Posme.Maui.Views.Invoices;
 
 public partial class InvoicesPage : ContentPage
 {
+    private InvoicesViewModel? _viewModel;
     public InvoicesPage()
     {
         InitializeComponent();
+        _viewModel = (InvoicesViewModel?)BindingContext;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        ((InvoicesViewModel)BindingContext).OnAppearing(Navigation);
+        _viewModel!.OnAppearing(Navigation);
+        _viewModel.LoadsClientes();
     }
 }

@@ -45,6 +45,7 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
             return;
         }
 
+        IsBusy = true;
         if (SelectedCurrency is null)
         {
             ShowToast("Seleccione una moneda para continuar", ToastDuration.Long, 16);
@@ -62,6 +63,7 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
         Item.Currency = SelectedCurrency;
         Item.TipoDocumento = SelectedTipoDocumento;
         await NavigationService.NavigateToAsync<SeleccionarProductoViewModel>();
+        IsBusy = false;
     }
 
     public bool ErrorCurrency { get; set; }
@@ -108,7 +110,7 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
     public void OnAppearing(INavigation? navigation)
     {
         Navigation = navigation;
-        LoadComboBox();
+        //LoadComboBox();
     }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -123,6 +125,7 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
         Item = VariablesGlobales.DtoInvoice;
         VariablesGlobales.DtoInvoice.CustomerResponse = customer;
         LoadComboBox();
+        IsBusy = false;
     }
 
     private void LoadComboBox()

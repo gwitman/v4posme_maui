@@ -35,7 +35,7 @@
                                     HeightRequest="150"
                                     WidthRequest="150"
                                     Source="{Binding LogoSource}" />
-                        <Label Text="Comprobante de Abono a Factura"
+                        <Label Text="Comprobante de Abono"
                                FontSize="24"
                                HorizontalTextAlignment="Center"
                                FontAttributes="Bold" />

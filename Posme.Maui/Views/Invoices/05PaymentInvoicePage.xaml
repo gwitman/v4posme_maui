@@ -112,7 +112,7 @@
                             Style="{StaticResource SinFondoColorSinRedondeado}"
                             IconWidth="40"
                             IconHeight="40"
-                            Content="Tarjeta Débito"
+                            Content="Tar. Débito"
                             IsChecked="{Binding ChkDebito}"
                             Command="{Binding SelectionDebitoCommand}"
                             IconPlacement="Top"
@@ -123,7 +123,7 @@
                             Style="{StaticResource SinFondoColorSinRedondeado}"
                             IconWidth="40"
                             IconHeight="40"
-                            Content="Tarjeta Crédito"
+                            Content="Tar. Crédito"
                             IsChecked="{Binding ChkCredito}"
                             Command="{Binding SelectionCreditoCommand}"
                             IconPlacement="Top"
@@ -175,8 +175,8 @@
             </controls:ShimmerView.Content>
             <controls:ShimmerView.LoadingView>
                 <ActivityIndicator IsRunning="{Binding IsBusy}"
-                                   HeightRequest="100"
-                                   WidthRequest="100" />
+                                   HeightRequest="50"
+                                   WidthRequest="50" />
             </controls:ShimmerView.LoadingView>
         </controls:ShimmerView>
     </ContentPage.Content>
