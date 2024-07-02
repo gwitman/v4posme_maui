@@ -60,10 +60,13 @@ public class ValidarAbonoViewModel : BaseViewModel
             ShowToast(Mensajes.MensajeBluetoothState, ToastDuration.Long, 18);
             return;
         }
-        
-        var readImage = Convert.FromBase64String(logo.Value!);
-        printer.AlignRight();
-        printer.Image(SKBitmap.Decode(readImage));
+        if (!string.IsNullOrWhiteSpace(logo.Value))
+        {
+            var readImage = Convert.FromBase64String(logo.Value!);
+            printer.AlignRight();
+            printer.Image(SKBitmap.Decode(readImage));
+        }
+       
         printer.AlignCenter();
         printer.BoldMode(Company!.Name!);
         printer.BoldMode($"RUC: {CompanyRuc!.Value}");
