@@ -17,9 +17,11 @@ public class RevisarProductosSeleccionadosViewModel : BaseViewModel
         PagoCommand = new Command(OnPagoCommand);
     }
 
-    private void OnPagoCommand()
+    private async void OnPagoCommand()
     {
-        Navigation!.PushAsync(new PaymentInvoicePage(), true);
+        IsBusy = true;
+        await NavigationService.NavigateToAsync<PaymentInvoiceViewModel>();
+        IsBusy = false;
     }
 
     private void OnQuantityCommand(Api_AppMobileApi_GetDataDownloadItemsResponse obj)

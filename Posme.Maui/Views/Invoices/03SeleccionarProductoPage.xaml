@@ -12,7 +12,8 @@
         <invoices:SeleccionarProductoViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <dxc:ShimmerView Style="{StaticResource ShimmerEffect}" IsLoading="{Binding IsBusy}">
+        <dxc:ShimmerView Style="{StaticResource ShimmerEffect}" 
+                         IsLoading="{Binding IsBusy}">
             <dxc:ShimmerView.Content>
                 <AbsoluteLayout>
                     <Grid

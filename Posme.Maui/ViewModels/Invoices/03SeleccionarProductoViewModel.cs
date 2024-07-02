@@ -25,7 +25,9 @@ public class SeleccionarProductoViewModel : BaseViewModel
 
     private async void OnRevisarProductos(object obj)
     {
+        IsBusy = true;
         await NavigationService.NavigateToAsync<RevisarProductosSeleccionadosViewModel>();
+        IsBusy = false;
     }
 
     private async void OnSearch()
@@ -89,7 +91,6 @@ public class SeleccionarProductoViewModel : BaseViewModel
 
     private async void LoadProductos()
     {
-        IsBusy = true;
         var findProductos = await _repositoryItems.PosMeDescending10();
         Productos.Clear();
         foreach (var itemsResponse in findProductos)
