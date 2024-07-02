@@ -60,12 +60,7 @@ public class ValidarAbonoViewModel : BaseViewModel
             ShowToast(Mensajes.MensajeBluetoothState, ToastDuration.Long, 18);
             return;
         }
-
-        if (printer.Device is null)
-        {
-            ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
-            return;
-        }
+        
         var readImage = Convert.FromBase64String(logo.Value!);
         printer.AlignRight();
         printer.Image(SKBitmap.Decode(readImage));
@@ -90,6 +85,10 @@ public class ValidarAbonoViewModel : BaseViewModel
         printer.Append(Company.Address!);
         printer.FullPaperCut();
         printer.Print();
+        if (printer.Device is null)
+        {
+            ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
+        }
     }
 
     private void OnAplicarOtroCommand()
