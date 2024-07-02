@@ -45,6 +45,7 @@ public class PrinterProductViewModel : BaseViewModel
             if (printer.Device is null)
             {
                 ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
+                return;
             }
             printer.Code39CustomPosMe2px1p(item.BarCode);
             printer.Append(item.Name);
