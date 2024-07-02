@@ -94,6 +94,8 @@ public class ValidarAbonoViewModel : BaseViewModel
         {
             ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
         }
+
+        IsBusy = false;
     }
 
     private void OnAplicarOtroCommand()
