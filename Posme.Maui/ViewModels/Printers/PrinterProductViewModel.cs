@@ -1,4 +1,6 @@
-﻿using Posme.Maui.Models;
+﻿using CommunityToolkit.Maui.Core;
+using Plugin.BLE;
+using Posme.Maui.Models;
 using Posme.Maui.Services.HelpersPrinters;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
@@ -34,7 +36,16 @@ public class PrinterProductViewModel : BaseViewModel
 
             var item = VariablesGlobales.Item;
             var printer = new Printer(parametroPrinter.Value);
-            
+            if (!CrossBluetoothLE.Current.IsOn)
+            {
+                ShowToast(Mensajes.MensajeBluetoothState, ToastDuration.Long, 18);
+                return;
+            }
+
+            if (printer.Device is null)
+            {
+                ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
+            }
             printer.Code39CustomPosMe2px1p(item.BarCode);
             printer.Append(item.Name);
             printer.Append(item.BarCode);            

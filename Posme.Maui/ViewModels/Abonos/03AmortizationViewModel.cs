@@ -42,7 +42,6 @@ public class CreditDetailInvoiceViewModel : BaseViewModel, IQueryAttributable
 
     private async Task LoadInvoices(string? parameter)
     {
-        IsBusy = true;
         var find = await _repositoryDocumentCreditAmortization.PosMeFilterByDocumentNumber(parameter!);
         Items.Clear();
         foreach (var response in find)

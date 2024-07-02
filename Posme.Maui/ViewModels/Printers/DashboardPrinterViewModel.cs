@@ -219,7 +219,6 @@ public class DashboardPrinterViewModel : BaseViewModel
 
     private async void Load()
     {
-        IsBusy = true;
         Facturas.Clear();
         var findAllFactura = await _repositoryTbTransactionMaster.PosMeFilterFacturas();
         var taskFacturas = FillFacturas(findAllFactura);
@@ -252,12 +251,12 @@ public class DashboardPrinterViewModel : BaseViewModel
             string currencyName;
             if (abono.CurrencyId == TypeCurrency.Cordoba)
             {
-                totalCordobas += abono.Amount;
+                totalCordobas += abono.SubAmount;
                 currencyName = "C$";
             }
             else
             {
-                totalDolares += abono.Amount;
+                totalDolares += abono.SubAmount;
                 currencyName = "$";
             }
 
@@ -276,8 +275,8 @@ public class DashboardPrinterViewModel : BaseViewModel
             Abonos.Add(tmpAbono);
         }
 
-        TotalCordobasAbonos = $"C$ {totalCordobas}";
-        TotalDolaresAbonos = $"$ {totalDolares}";
+        TotalCordobasAbonos = $"C$ {totalCordobas:N2}";
+        TotalDolaresAbonos = $"$ {totalDolares:N2}";
     }
 
     private async Task FillFacturas(List<TbTransactionMaster> findAllFactura)

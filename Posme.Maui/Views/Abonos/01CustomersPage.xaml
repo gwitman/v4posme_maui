@@ -47,7 +47,7 @@
                                     <dxc:DXStackLayout
                                         CornerRadius="15"
                                         Margin="10">
-                                        <Grid x:DataType="models:Api_AppMobileApi_GetDataDownloadCustomerResponse"
+                                        <Grid
                                               HorizontalOptions="Fill"
                                               Padding="10"
                                               VerticalOptions="Fill"
@@ -88,9 +88,10 @@
                                                     HorizontalOptions="End">
                                                     <Label.FormattedText>
                                                         <FormattedString>
-                                                            <Span Text="Balance"
+                                                            <Span Text="Balance: "
                                                                   TextColor="White" />
-                                                            <Span Text=" " />
+                                                            <Span Text="{Binding CurrencyName}"
+                                                                  TextColor="White"/>
                                                             <Span Text="{Binding Balance,StringFormat='{0:N2}'}"
                                                                   TextColor="White" />
                                                         </FormattedString>
@@ -140,8 +141,8 @@
             </controls:ShimmerView.Content>
             <controls:ShimmerView.LoadingView>
                 <ActivityIndicator IsRunning="{Binding IsBusy}"
-                                   HeightRequest="100"
-                                   WidthRequest="100" />
+                                   HeightRequest="50"
+                                   WidthRequest="50" />
             </controls:ShimmerView.LoadingView>
         </controls:ShimmerView>
     </ContentPage.Content>

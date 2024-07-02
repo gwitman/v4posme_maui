@@ -18,6 +18,7 @@ public class BluetoothService(string nameDevice)
         return device;
     }
 
+
     private BluetoothDevice? GetDevice(BluetoothAdapter bluetoothAdapter)
     {
         return bluetoothAdapter.BondedDevices!.FirstOrDefault(device => device.Name == nameDevice);
@@ -44,11 +45,17 @@ public class BluetoothService(string nameDevice)
         //var adapter = _adapter;
         if (adapter is null) return;
 
-        var device = GetDevice(adapter);
+        this.Device = GetDevice(adapter);
         //Printer not found
-        if (device is null) return;
+        if (Device is null)
+        {
+            
+            return;
+        }
 
-        var socket = GetSocket(device);
+        var socket = GetSocket(Device);
         SendData(byteArray, socket);
     }
+
+    public BluetoothDevice? Device { get; set; }
 }

@@ -28,9 +28,9 @@
                         BackgroundColor="White"
                         x:Name="DxStackLayout"
                         Orientation="Vertical"
-                        Padding="0, 10, 0, 0">
+                        Padding="20">
                         <dx:DXStackLayout Orientation="Vertical"
-                                          Padding="25"
+                                          Margin="0,0,0,10"
                                           HorizontalOptions="Center">
                             <dx:DXImage x:Name="Logo"
                                         HeightRequest="150"
@@ -65,32 +65,72 @@
                                 <Label Text="Apellidos: " FontAttributes="Bold" FontSize="14" />
                                 <Label Text="{Binding Item.LastName}" FontSize="14" />
                             </dx:DXStackLayout>
-                            <dx:DXStackLayout Orientation="Horizontal">
-                                <Label Text="Fecha: " FontAttributes="Bold" FontSize="14" />
-                                <Label Text="{Binding Item.Fecha, StringFormat='{0:yyyy-MM-dd}'}"
+                            <Grid
+                                RowSpacing="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Text="Fecha:" 
+                                    FontAttributes="Bold" FontSize="14" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Text="{Binding Item.Fecha, StringFormat='{0:yyyy-MM-dd}'}"
                                        FontSize="14" />
-                            </dx:DXStackLayout>
-                            <dx:DXStackLayout Orientation="Horizontal">
-                                <Label Text="Saldo Inicial: " FontAttributes="Bold" FontSize="14" />
-                                <Label Text="{Binding Item.CurrencyName}" FontSize="14" />
-                                <Label Text=" " />
-                                <Label Text="{Binding Item.SaldoInicial, StringFormat='{0:N0}'}"
-                                       FontSize="14" />
-                            </dx:DXStackLayout>
-                            <dx:DXStackLayout Orientation="Horizontal">
-                                <Label Text="Monto Aplicar: " FontAttributes="Bold" FontSize="14" />
-                                <Label Text="{Binding Item.CurrencyName}" FontSize="14" />
-                                <Label Text=" " />
-                                <Label Text="{Binding Item.MontoAplicar, StringFormat='{0:N0}'}"
-                                       FontSize="14" />
-                            </dx:DXStackLayout>
-                            <dx:DXStackLayout Orientation="Horizontal">
-                                <Label Text="Saldo final: " FontAttributes="Bold" FontSize="14" />
-                                <Label Text="{Binding Item.CurrencyName}" FontSize="14" />
-                                <Label Text=" " />
-                                <Label Text="{Binding Item.SaldoFinal, StringFormat='{0:N0}'}"
-                                       FontSize="14" />
-                            </dx:DXStackLayout>
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="Saldo Inicial: " FontAttributes="Bold" 
+                                    FontSize="14" />
+                                <dx:DXStackLayout
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Orientation="Horizontal">
+                                    <Label Text="{Binding Item.CurrencyName}" FontSize="14" />
+                                    <Label Text=" " />
+                                    <Label Text="{Binding Item.SaldoInicial, StringFormat='{0:N2}'}"
+                                           FontSize="14" />
+                                </dx:DXStackLayout>
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Text="Monto Aplicar: " 
+                                    FontAttributes="Bold" 
+                                    FontSize="14" />
+                                <dx:DXStackLayout
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Orientation="Horizontal">
+                                    <Label Text="{Binding Item.CurrencyName}" FontSize="14" />
+                                    <Label Text=" " />
+                                    <Label Text="{Binding Item.MontoAplicar, StringFormat='{0:N0}'}"
+                                           FontSize="14" />
+                                </dx:DXStackLayout>
+                                <Label
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Text="Saldo final: " 
+                                       FontAttributes="Bold" FontSize="14" />
+                                <dx:DXStackLayout
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Orientation="Horizontal">
+                                    <Label Text="{Binding Item.CurrencyName}" FontSize="14" />
+                                    <Label Text=" " />
+                                    <Label Text="{Binding Item.SaldoFinal, StringFormat='{0:N0}'}"
+                                           FontSize="14" />
+                                </dx:DXStackLayout>
+                            </Grid>
                             <dx:DXStackLayout Orientation="Vertical">
                                 <Label Text="Comentarios: " FontAttributes="Bold" FontSize="14" />
                                 <Label Text="{Binding Item.Description}" FontSize="14" />
@@ -101,8 +141,8 @@
             </controls:ShimmerView.Content>
             <controls:ShimmerView.LoadingView>
                 <ActivityIndicator IsRunning="{Binding IsBusy}"
-                                   HeightRequest="100"
-                                   WidthRequest="100" />
+                                   HeightRequest="50"
+                                   WidthRequest="50" />
             </controls:ShimmerView.LoadingView>
         </controls:ShimmerView>
     </ContentPage.Content>

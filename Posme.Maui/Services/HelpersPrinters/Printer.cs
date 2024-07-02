@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text;
+using Android.Bluetooth;
+using Plugin.BLE.Abstractions.Contracts;
 using Posme.Maui.Services.HelpersPrinters.Epson_Commands;
 using Posme.Maui.Services.HelpersPrinters.Helper;
 using Posme.Maui.Services.HelpersPrinters.Interfaces.Command;
@@ -16,9 +18,10 @@ namespace Posme.Maui.Services.HelpersPrinters
     public class Printer : IPrinter
     {
         private byte[] _buffer;
-        private string _printerName;
+        private readonly string _printerName;
         private readonly IPrintCommand _command;
         private readonly string _codepage;
+        private readonly BluetoothService _bluetoothService;
 
         public Printer(string printerName, string codepage = "IBM860")
         {
@@ -26,22 +29,24 @@ namespace Posme.Maui.Services.HelpersPrinters
             _command = new EscPos();
             _codepage = codepage;
             _buffer = [];
+            _bluetoothService = new BluetoothService(printerName);
         }
 
         public Printer(string printerName)
         {
             _buffer = [];
+            _bluetoothService = new BluetoothService(printerName);
             _printerName = printerName;
             _command = new EscPos();
             _codepage = "IBM860";
         }
 
+        public BluetoothDevice? Device => _bluetoothService.Device;
         public void Print()
         {
-            var bluetoothService = new BluetoothService(_printerName);
             try
             {
-                bluetoothService.Print(_buffer);
+                _bluetoothService.Print(_buffer);
             }
             catch (Exception e)
             {
@@ -49,24 +54,15 @@ namespace Posme.Maui.Services.HelpersPrinters
             }
         }
 
-        public int ColsNomal
-        {
-            get { return _command.ColsNomal; }
-        }
+        public int ColsNomal => _command.ColsNomal;
 
-        public int ColsCondensed
-        {
-            get { return _command.ColsCondensed; }
-        }
+        public int ColsCondensed => _command.ColsCondensed;
 
-        public int ColsExpanded
-        {
-            get { return _command.ColsExpanded; }
-        }
+        public int ColsExpanded => _command.ColsExpanded;
 
         public void PrintDocument()
         {
-            if (_buffer == null)
+            if (_buffer.Length<=0)
                 return;
             if (!RawPrinterHelper.SendBytesToPrinter(_printerName, _buffer))
                 throw new ArgumentException("Unable to access printer : " + _printerName);
@@ -79,11 +75,10 @@ namespace Posme.Maui.Services.HelpersPrinters
 
         public void Append(byte[] value)
         {
-            if (value == null)
+            if (value.Length<=0)
                 return;
             var list = new List<byte>();
-            if (_buffer != null)
-                list.AddRange(_buffer);
+            list.AddRange(_buffer);
             list.AddRange(value);
             _buffer = list.ToArray();
         }
@@ -100,8 +95,7 @@ namespace Posme.Maui.Services.HelpersPrinters
             if (useLf)
                 value += "\n";
             var list = new List<byte>();
-            if (_buffer != null)
-                list.AddRange(_buffer);
+            list.AddRange(_buffer);
             var bytes = Encoding.GetEncoding(_codepage).GetBytes(value);
             list.AddRange(bytes);
             _buffer = list.ToArray();
@@ -120,7 +114,7 @@ namespace Posme.Maui.Services.HelpersPrinters
 
         public void Clear()
         {
-            _buffer = null;
+            _buffer = [];
         }
 
         public void Separator(char speratorChar = '-')

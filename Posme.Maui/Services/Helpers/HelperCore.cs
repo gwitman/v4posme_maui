@@ -74,4 +74,30 @@ public class HelperCore(IRepositoryTbParameterSystem repositoryParameters)
 
         return Path.Combine(folderPath, filename);
     }
+
+    public async Task<string> GenerarUrlPago()
+    {
+        var nickname = "";
+        var password = "";
+        HttpClient httpClient = new();
+        var nvc = new List<KeyValuePair<string, string>>
+        {
+            new("txtNickname", nickname),
+            new("txtPassword", password)
+        };
+        var req = new HttpRequestMessage(HttpMethod.Post, Constantes.UrlRequestDownload)
+        {
+            Content = new FormUrlEncodedContent(nvc)
+        };
+
+        var response = await httpClient.SendAsync(req);
+        if (!response.IsSuccessStatusCode)
+        {
+            return "";
+        }
+        else
+        {
+            return "";
+        }
+    }
 }

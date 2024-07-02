@@ -9,6 +9,7 @@ using Posme.Maui.Views;
 using Unity;
 using Posme.Maui.Services.SystemNames;
 using Posme.Maui.Services.Api;
+
 namespace Posme.Maui.ViewModels.Abonos;
 
 public class AbonosViewModel : BaseViewModel
@@ -90,24 +91,20 @@ public class AbonosViewModel : BaseViewModel
     public Command<Api_AppMobileApi_GetDataDownloadCustomerResponse> ItemTapped { get; }
     public ICommand OnBarCode { get; }
 
-    private async void LoadsClientes()
+    public async Task LoadsClientes()
     {
-        IsBusy = true;
-        await Task.Run(async () =>
+        Customers.Clear();
+        var findAll = await _customerRepositoryTbCustomer.PosMeFilterByInvoice();
+        foreach (var response in findAll)
         {
-            Customers.Clear();
-            var findAll = await _customerRepositoryTbCustomer.PosMeFilterByInvoice();
-            foreach (var response in findAll)
-            {
-                Customers.Add(response);
-            }
-        });
+            Customers.Add(response);
+        }
+
         IsBusy = false;
     }
 
     public void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
-        LoadsClientes();
     }
 }

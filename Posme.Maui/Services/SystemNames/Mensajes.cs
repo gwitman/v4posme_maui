@@ -20,4 +20,7 @@ public static class Mensajes
     public const string MensajeMontoMayorSaldoFinal = "No se puede ingresar un monto mayor al saldo final";
     public const string MensajeSaldoNegativo = "No se puede ingresar un saldo negativo";
     public const string MensajeValorZero = "No puede ingresar un valor en 0";
+    public const string MensajeBluetoothState = "El Bluetooth se encuentra desactivado";
+    public const string MensajeCompartirError = "No fue posible realizar la captura de los datos para compartir";
+    public const string MensajeDispositivoNoConectado = "No está conectado el dispositivo al celular o nombre es incorrecto";
 }

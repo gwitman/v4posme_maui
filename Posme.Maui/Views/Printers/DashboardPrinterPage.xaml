@@ -216,7 +216,7 @@
                                                                     <Span Text="{Binding CurrencyName}" />
                                                                     <Span Text=" " />
                                                                     <Span
-                                                                        Text="{Binding SaldoFinal, StringFormat='{0:N2}'}" />
+                                                                        Text="{Binding MontoAplicar, StringFormat='{0:N2}'}" />
                                                                 </FormattedString>
                                                             </Label.FormattedText>
                                                         </Label>

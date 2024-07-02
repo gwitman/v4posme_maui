@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using CommunityToolkit.Maui.Core;
+using Posme.Maui.Services.SystemNames;
 using Posme.Maui.ViewModels.Abonos;
 
 namespace Posme.Maui.Views.Abonos;
@@ -55,8 +56,7 @@ public partial class PrinterAbonoPage : ContentPage
         if (screenshotResult is null)
         {
             ((ValidarAbonoViewModel)BindingContext)
-                .ShowToast("No fue posible realizar la captura de los datos para compartir",
-                    ToastDuration.Long, 18);
+                .ShowToast(Mensajes.MensajeCompartirError, ToastDuration.Long, 18);
             return "";
         }
 

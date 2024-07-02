@@ -13,10 +13,11 @@ public partial class AbonosPage : ContentPage
         BindingContext = _viewModel = new AbonosViewModel();
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
         _viewModel.OnAppearing(Navigation);
+        await _viewModel.LoadsClientes();
     }
 
     private void ClosePopup_Clicked(object? sender, EventArgs e)

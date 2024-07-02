@@ -13,7 +13,9 @@
         <abonos:AplicarAbonoViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <controls:ShimmerView Style="{StaticResource ShimmerEffect}" IsLoading="{Binding IsBusy}">
+        <controls:ShimmerView
+            Style="{StaticResource ShimmerEffect}"
+            IsLoading="{Binding IsBusy}">
             <controls:ShimmerView.Content>
                 <ScrollView>
                     <dx:DXStackLayout Orientation="Vertical">
@@ -105,8 +107,8 @@
             </controls:ShimmerView.Content>
             <controls:ShimmerView.LoadingView>
                 <ActivityIndicator IsRunning="{Binding IsBusy}"
-                                   HeightRequest="100"
-                                   WidthRequest="100" />
+                                   HeightRequest="50"
+                                   WidthRequest="50" />
             </controls:ShimmerView.LoadingView>
         </controls:ShimmerView>
     </ContentPage.Content>

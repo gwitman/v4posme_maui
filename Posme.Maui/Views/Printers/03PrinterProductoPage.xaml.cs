@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Maui.Core;
+using Posme.Maui.Services.SystemNames;
 using Posme.Maui.ViewModels.Printers;
 
 namespace Posme.Maui.Views.Printers;
@@ -60,8 +61,7 @@ public partial class PrinterProductoPage : ContentPage
         if (screenshotResult is null)
         {
             ((PrinterProductViewModel)BindingContext)
-                .ShowToast("No fue posible realizar la captura de los datos para compartir",
-                    ToastDuration.Long, 18);
+                .ShowToast(Mensajes.MensajeCompartirError, ToastDuration.Long, 18);
             return "";
         }
 

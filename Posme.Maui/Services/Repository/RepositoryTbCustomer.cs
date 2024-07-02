@@ -36,7 +36,7 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<Api_AppM
     {
         var query = """
                     select distinct tbc.CustomerId, ComapnyId, BranchId, tbc.EntityId, CustomerNumber, Identification, 
-                                    FirstName, LastName, tbc.Balance, Modificado 
+                                    FirstName, LastName,tbc.CurrencyName, tbc.CurrencyId, tbc.Balance, Modificado 
                     from tb_customers tbc join tb_document_credit tdc on tbc.EntityId = tdc.EntityId
                     """;
         return await _dataBase.Database.QueryAsync<Api_AppMobileApi_GetDataDownloadCustomerResponse>(query);

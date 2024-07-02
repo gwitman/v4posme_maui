@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Core;
+using Plugin.BLE;
 using Posme.Maui.Models;
 using Posme.Maui.Services.HelpersPrinters;
 using Posme.Maui.Services.Repository;
@@ -53,6 +54,16 @@ public class PrinterInvoiceViewModel : BaseViewModel
 
         var dtoInvoice = VariablesGlobales.DtoInvoice;
         var printer = new Printer(parametroPrinter.Value);
+        if (!CrossBluetoothLE.Current.IsOn)
+        {
+            ShowToast(Mensajes.MensajeBluetoothState, ToastDuration.Long, 18);
+            return;
+        }
+
+        if (printer.Device is null)
+        {
+            ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
+        }
         var readImage = Convert.FromBase64String(logo.Value!);
         printer.AlignRight();
         printer.Image(SKBitmap.Decode(readImage));

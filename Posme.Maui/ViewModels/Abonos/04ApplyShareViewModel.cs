@@ -99,8 +99,8 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
             var taskTransactionMaster = _repositoryTransactionMaster.PosMeInsert(transactionMaster);
             var taskPlus = _helper.PlusCounter();
             await Task.WhenAll([taskPlus, taskTransactionMaster]);
-            IsBusy = false;
             await NavigationService.NavigateToAsync<ValidarAbonoViewModel>();
+            IsBusy = false;
         }
         catch (Exception e)
         {
@@ -201,8 +201,6 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         {
             return;
         }
-
-        IsBusy = true;
         DocumentCreditResponse = await _repositoryDocumentCredit.PosMeFindDocumentNumber(parameter);
         DocumentCreditAmortizationResponse = await _repositoryDocumentCreditAmortization.PosMeFindByDocumentNumber(parameter);
         CurrencyId = DocumentCreditResponse.CurrencyId;

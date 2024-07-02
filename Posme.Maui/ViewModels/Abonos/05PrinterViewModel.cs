@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Maui.Core;
+using Plugin.BLE;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.HelpersPrinters;
@@ -40,8 +41,8 @@ public class ValidarAbonoViewModel : BaseViewModel
         }
 
         await HelperCustomerCreditDocumentAmortization.AnularAbono(Item.CodigoAbono);
-        IsBusy = false;
         OnAplicarOtroCommand();
+        IsBusy = false;
     }
 
     private async void OnPrintCommand(object obj)
@@ -54,6 +55,16 @@ public class ValidarAbonoViewModel : BaseViewModel
         }
 
         var printer = new Printer(parametroPrinter.Value);
+        if (!CrossBluetoothLE.Current.IsOn)
+        {
+            ShowToast(Mensajes.MensajeBluetoothState, ToastDuration.Long, 18);
+            return;
+        }
+
+        if (printer.Device is null)
+        {
+            ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
+        }
         var readImage = Convert.FromBase64String(logo.Value!);
         printer.AlignRight();
         printer.Image(SKBitmap.Decode(readImage));
@@ -147,5 +158,6 @@ public class ValidarAbonoViewModel : BaseViewModel
             CompanyRuc = await _repositoryParameters.PosMeFindByKey("CORE_COMPANY_IDENTIFIER");
             Company = VariablesGlobales.TbCompany;
         });
+        IsBusy = false;
     }
 }

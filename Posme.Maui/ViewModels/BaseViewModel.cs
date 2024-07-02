@@ -8,7 +8,7 @@ namespace Posme.Maui.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        private bool _isBusy;
+        private bool _isBusy=true;
         private Color _popupBackgroundColor = Colors.White;
         private string _title = string.Empty;
         private string _search = string.Empty;
