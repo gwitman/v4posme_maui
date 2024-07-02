@@ -105,6 +105,8 @@ public class Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse
     public decimal Remaining { get; set; }
 
     public decimal Balance { get; set; }
+    
+    [NotMapped] public string CurrencyName { get; set; }
 }
 
 [SQLite.Table("tb_items")]

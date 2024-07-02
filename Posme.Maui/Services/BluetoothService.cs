@@ -1,4 +1,5 @@
-﻿using Android.Bluetooth;
+﻿using System.Diagnostics;
+using Android.Bluetooth;
 using Android.Content;
 using Java.Util;
 using Plugin.BLE;
@@ -40,22 +41,30 @@ public class BluetoothService(string nameDevice)
 
     public void Print(byte[] byteArray)
     {
-        //Bluetooth is turned off
-        var adapter = BluetoothAdapter.DefaultAdapter;
-        //var adapter = _adapter;
-        if (adapter is null) return;
-
-        this.Device = GetDevice(adapter);
-        //Printer not found
-        if (Device is null)
+        try
         {
-            
-            return;
-        }
+            if (!CrossBluetoothLE.Current.IsOn)
+            {
+                return;
+            }
+            var adapter = BluetoothAdapter.DefaultAdapter;
+            if (adapter is null) return;
 
-        var socket = GetSocket(Device);
-        SendData(byteArray, socket);
+            Device = GetDevice(adapter);
+            //Printer not found
+            if (Device is null)
+            {
+                return;
+            }
+
+            var socket = GetSocket(Device);
+            SendData(byteArray, socket);
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
+        }
     }
 
-    public BluetoothDevice? Device { get; set; }
+    public BluetoothDevice? Device { get; private set; }
 }

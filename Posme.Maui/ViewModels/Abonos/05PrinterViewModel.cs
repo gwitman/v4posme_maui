@@ -64,6 +64,7 @@ public class ValidarAbonoViewModel : BaseViewModel
         if (printer.Device is null)
         {
             ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
+            return;
         }
         var readImage = Convert.FromBase64String(logo.Value!);
         printer.AlignRight();
