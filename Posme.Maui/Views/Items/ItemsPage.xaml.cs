@@ -7,16 +7,19 @@ namespace Posme.Maui.Views.Items
     public partial class ItemsPage : ContentPage
     {
 
+        private PosMeItemsViewModel? _viewModel;
         public ItemsPage()
         {
             InitializeComponent();
             Title = "Productos";
+            _viewModel = (PosMeItemsViewModel?)BindingContext;
         }
         
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            ((PosMeItemsViewModel)BindingContext).OnAppearing(Navigation);
+            _viewModel!.OnAppearing(Navigation);
+            _viewModel.LoadItems();
         }
     }
 }

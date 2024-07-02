@@ -38,6 +38,7 @@ public class DashboardPrinterViewModel : BaseViewModel
         SelectedProductoCommand = new Command<Api_AppMobileApi_GetDataDownloadItemsResponse>(OnSelectedProductoCommand);
         SearchAbonoCommand = new Command(OnSearchAbonoCommand);
         SearchProductCommand = new Command(OnSearchProductCommand);
+        IsBusy = true;
     }
 
     private async void OnSearchProductCommand()
@@ -214,29 +215,27 @@ public class DashboardPrinterViewModel : BaseViewModel
     public void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
-        Load();
     }
 
-    private async void Load()
+    public async void Load()
     {
-        Facturas.Clear();
-        var findAllFactura = await _repositoryTbTransactionMaster.PosMeFilterFacturas();
-        var taskFacturas = FillFacturas(findAllFactura);
-
-        Abonos.Clear();
-        var findAllAbonos = await _repositoryTbTransactionMaster.PosMeFilterAbonos();
-        var taskAbonos = FillAbonos(findAllAbonos);
-        Productos.Clear();
-        var taskProductos = Task.Run(async () =>
+        await Task.Run(async () =>
         {
+            //Thread.Sleep(2000);
+            Facturas.Clear();
+            var findAllFactura = await _repositoryTbTransactionMaster.PosMeFilterFacturas();
+            await FillFacturas(findAllFactura);
+
+            Abonos.Clear();
+            var findAllAbonos = await _repositoryTbTransactionMaster.PosMeFilterAbonos();
+            await FillAbonos(findAllAbonos);
+            Productos.Clear();
             var findAllProductos = await _repositoryItems.PosMeDescending10();
             foreach (var item in findAllProductos)
             {
                 Productos.Add(item);
             }
         });
-
-        await Task.WhenAll(taskFacturas, taskAbonos, taskProductos);
 
         IsBusy = false;
     }

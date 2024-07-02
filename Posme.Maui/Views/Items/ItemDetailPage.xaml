@@ -96,6 +96,7 @@
                                  Style="{StaticResource PopupActionDeleteButtonStyle}" />
                     <dx:DXBorder Style="{StaticResource SeparatorStyle}" />
                     <dx:DXButton Content="Cancelar"
+                                 Icon="cancel"
                                  Clicked="CancelDeleteClick"
                                  Style="{StaticResource PopupActionButtonStyle}" />
                 </dx:DXStackLayout>

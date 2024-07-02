@@ -9,14 +9,18 @@ namespace Posme.Maui.Views.Printers;
 
 public partial class DashboardPrinterPage : ContentPage
 {
+    private readonly DashboardPrinterViewModel _viewModel;
+
     public DashboardPrinterPage()
     {
         InitializeComponent();
+        _viewModel = (DashboardPrinterViewModel)BindingContext;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        ((DashboardPrinterViewModel)BindingContext).OnAppearing(Navigation);
+        _viewModel.OnAppearing(Navigation);
+        _viewModel.Load();
     }
 }

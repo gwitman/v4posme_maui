@@ -9,6 +9,7 @@ using Posme.Maui.Views;
 using Unity;
 using Posme.Maui.Services.SystemNames;
 using Posme.Maui.Services.Api;
+
 namespace Posme.Maui.ViewModels
 {
     public class PosMeItemsViewModel : BaseViewModel
@@ -17,9 +18,10 @@ namespace Posme.Maui.ViewModels
 
         public PosMeItemsViewModel()
         {
+            IsBusy = true;
             _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
             Title = "Productos";
-            Items = new ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse>();
+            _items = new ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse>();
             CreateDetailFormViewModelCommand = new Command<CreateDetailFormViewModelEventArgs>(CreateDetailFormViewModel);
             SearchCommand = new Command(OnSearchItems);
             OnBarCode = new Command(OnSearchBarCode);
@@ -29,7 +31,13 @@ namespace Posme.Maui.ViewModels
         public ICommand OnBarCode { get; }
         public ICommand SearchCommand { get; }
         public ICommand CreateDetailFormViewModelCommand { get; }
-        public ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> Items { get; set; }
+        private ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> _items;
+
+        public ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> Items
+        {
+            get => _items;
+            set => SetProperty(ref _items, value);
+        }
 
 
         private Api_AppMobileApi_GetDataDownloadItemsResponse? _selectedItem;
@@ -57,39 +65,23 @@ namespace Posme.Maui.ViewModels
                 Search = obj.ToString()!;
             }
 
-            await Task.Run(async () =>
-            {
-                Items.Clear();
-                var searchItems = await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(Search);
-                foreach (var itemsResponse in searchItems)
-                {
-                    Items.Add(itemsResponse);
-                }
-            });
+            Items.Clear();
+            var searchItems = await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(Search);
+            Items = new ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse>(searchItems);
+
             IsBusy = false;
         }
 
-        private async void LoadMoreItems()
+        public async void LoadItems()
         {
-            try
+            Items.Clear();
+            await Task.Run(async () =>
             {
-                IsBusy = true;
-                Items.Clear();
+                Thread.Sleep(1000);
                 var newItems = await _repositoryItems.PosMeDescending10();
-                await Task.Run(() =>
-                {
-                    foreach (var item in newItems)
-                    {
-                        Items.Add(item);
-                    }
-                });
-
-                IsBusy = false;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+                Items = new ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse>(newItems);
+            });
+            IsBusy = false;
         }
 
         private void CreateDetailFormViewModel(CreateDetailFormViewModelEventArgs e)
@@ -103,7 +95,6 @@ namespace Posme.Maui.ViewModels
         public void OnAppearing(INavigation navigation)
         {
             Navigation = navigation;
-            LoadMoreItems();
         }
     }
 }

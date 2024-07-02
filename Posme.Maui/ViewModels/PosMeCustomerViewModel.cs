@@ -24,6 +24,7 @@ public class PosMeCustomerViewModel : BaseViewModel
 
     public ICommand OnBarCode { get; }
     public ICommand SearchCommand { get; }
+    
     private ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> _customers;
 
     public ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> Customers
@@ -64,7 +65,6 @@ public class PosMeCustomerViewModel : BaseViewModel
 
     private async void LoadsClientes()
     {
-        IsBusy = true;
         await Task.Run(async () =>
         {
             Thread.Sleep(1000);
