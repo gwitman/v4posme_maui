@@ -77,6 +77,7 @@
                             Keyboard="Numeric"
                             IconColor="#006E98"
                             StartIcon="quantity"
+                            ClearIconCommand="{Binding ClearCommand}"
                             Text="{Binding CantidadImprimir}" />
                     </core:DXStackLayout>
                 </core:DXStackLayout>

@@ -22,6 +22,12 @@ public class PrinterProductViewModel : BaseViewModel
         _parameterSystem = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
         _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
         PrinterCommand = new Command(OnPrinterCommand);
+        ClearCommand = new Command(OnClearCommand);
+    }
+
+    private void OnClearCommand(object obj)
+    {
+        CantidadImprimir = 1;
     }
 
     private async void OnPrinterCommand(object obj)
@@ -79,6 +85,8 @@ public class PrinterProductViewModel : BaseViewModel
         get => _cantidadImprimir;
         set => SetProperty(ref _cantidadImprimir, value);
     }
+
+    public Command ClearCommand { get; }
 
     public void OnAppearing(INavigation navigation)
     {
