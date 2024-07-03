@@ -25,7 +25,7 @@
                      Order="Secondary"
                      x:Name="ItemPrint"
                      Command="{Binding PrintCommand}" />
-        <ToolbarItem Text="Aplicar Otro"
+        <ToolbarItem Text="Regresar"
                      Order="Secondary"
                      Command="{Binding AplicarOtroCommand}" />
     </ContentPage.ToolbarItems>
