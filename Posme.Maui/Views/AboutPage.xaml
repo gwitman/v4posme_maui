@@ -44,11 +44,11 @@
                                     <Label Text="Monto Dólares: $" 
                                            FontSize="12" 
                                            FontAttributes="Bold"
-                                           TextColor="Black" />
+                                           TextColor="Red" />
                                     <Label Text="{Binding MontoAbonosDolares,StringFormat='{0:N2}'}" 
                                            FontSize="12"
                                            FontAttributes="Bold"
-                                           TextColor="Black" />
+                                           TextColor="Red" />
                                 </StackLayout>
                             </StackLayout>
                         </Grid>

@@ -58,7 +58,7 @@ public class PrinterProductViewModel : BaseViewModel
         printer.Append(item.PrecioPublico.ToString("N2"));
         printer.Append("-");
         printer.Avanza(35 /*8puntos = 1mm*/);
-        for (int i = 1; i <= CantidadImprimir; i++)
+        for (int i = 1; i <= CantidadImprimir * 2 ; i++)
         {
             printer.Print(); 
         }
