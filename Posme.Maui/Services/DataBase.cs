@@ -25,8 +25,8 @@ public class DataBase
                 new() { Name = "LOGO", Description = "Logo de la aplicación", Value = "" },
                 new() { Name = "ACCESS_POINT", Description = "Punto de acceso", Value = "https://posme.net/v4posme/" },
                 new() { Name = "PRINTER", Description = "Impresora", Value = "Printer" },
-                new() { Name = "TRANSACTION_SHARE", Description = "Número de abono", Value = "ABO-00001" },
-                new() { Name = "TRANSACTION_INVOICE", Description = "Número de factura", Value = "FAC-00001" }
+                new() { Name = "TRANSACTION_SHARE", Description = "Número de abono", Value = "ABO-0001" },
+                new() { Name = "TRANSACTION_INVOICE", Description = "Número de factura", Value = "FAC-0001" }
             };
             await Database.InsertAllAsync(parametrosDefault);
         }
