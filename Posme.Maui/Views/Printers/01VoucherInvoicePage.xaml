@@ -231,7 +231,9 @@
                 </ScrollView>
             </controls:ShimmerView.Content>
             <controls:ShimmerView.LoadingView>
-                <ActivityIndicator IsRunning="{Binding IsBusy}" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   HeightRequest="50"
+                                   WidthRequest="50"/>
             </controls:ShimmerView.LoadingView>
         </controls:ShimmerView>
     </ContentPage.Content>

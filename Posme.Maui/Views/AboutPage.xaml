@@ -15,9 +15,6 @@
 
             <ScrollView>
                 <StackLayout Padding="10" Spacing="10">
-                    <Image Source="pm_png_144px.png"
-                           HorizontalOptions="Center"
-                           Aspect="AspectFit" />
                     <core:DXBorder Style="{StaticResource PropertyBorder}" BorderThickness="0,0,5,0" BorderColor="Red">
                         <Grid Padding="10" ColumnSpacing="25">
                             <Grid.ColumnDefinitions>
@@ -34,16 +31,16 @@
                                 <Label Text="Abonos Aplicados" FontSize="14" />
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="Monto Córdobas: C$" 
-                                           FontSize="12" TextColor="Red" />
+                                           FontSize="12" TextColor="Black" />
                                     <Label Text="{Binding MontoAbonosCordobas,StringFormat='{0:N2}'}" 
-                                           FontSize="12" TextColor="Red" />
+                                           FontSize="12" TextColor="Black" />
                                     <Label Text=" "/>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="Monto Dólares: $" 
-                                           FontSize="12" TextColor="Red" />
+                                           FontSize="12" TextColor="Black" />
                                     <Label Text="{Binding MontoAbonosDolares,StringFormat='{0:N2}'}" 
-                                           FontSize="12" TextColor="Red" />
+                                           FontSize="12" TextColor="Black" />
                                 </StackLayout>
                             </StackLayout>
                         </Grid>
@@ -61,16 +58,16 @@
                                 <Label Text="Facturas de Contado" FontSize="14" />
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="Monto Córdobas: C$" 
-                                           FontSize="12" TextColor="YellowGreen" />
+                                           FontSize="12" TextColor="Black" />
                                     <Label Text="{Binding MontoFacturasContadoCordobas,StringFormat='{0:N2}'}" 
-                                           FontSize="12" TextColor="YellowGreen" />
+                                           FontSize="12" TextColor="Black" />
                                     <Label Text=" "/>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="Monto Dólares: $" 
-                                           FontSize="12" TextColor="YellowGreen" />
+                                           FontSize="12" TextColor="Black" />
                                     <Label Text="{Binding MontoFacturasContadoDolares,StringFormat='{0:N2}'}" 
-                                           FontSize="12" TextColor="YellowGreen" />
+                                           FontSize="12" TextColor="Black" />
                                 </StackLayout>
                             </StackLayout>
                         </Grid>
@@ -88,16 +85,16 @@
                                 <Label Text="Facturas de Crédito" FontSize="14" />
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="Monto Córdobas: C$" 
-                                           FontSize="12" TextColor="Green" />
+                                           FontSize="12" TextColor="Black" />
                                     <Label Text="{Binding MontoFacturasCreditoCordobas,StringFormat='{0:N2}'}" 
-                                           FontSize="12" TextColor="Green" />
+                                           FontSize="12" TextColor="Black" />
                                     <Label Text=" "/>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="Monto Dólares: $" 
-                                           FontSize="12" TextColor="Green" />
+                                           FontSize="12" TextColor="Black" />
                                     <Label Text="{Binding MontoFacturasCreditoDolares,StringFormat='{0:N2}'}" 
-                                           FontSize="12" TextColor="Green" />
+                                           FontSize="12" TextColor="Black" />
                                 </StackLayout>
                             </StackLayout>
                         </Grid>
