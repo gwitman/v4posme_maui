@@ -142,7 +142,7 @@ public class PosMeParameterViewModel : BaseViewModel
             else
             {
                 PopupBackgroundColor = Colors.Red;
-                Mensaje = "Debe especificar los datos a guardar";
+                Mensaje = Mensajes.MensajeEspecificarDatosGuardar;
             }
         }
         catch (Exception ex)

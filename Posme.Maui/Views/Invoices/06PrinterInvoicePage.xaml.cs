@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Diagnostics;
 using CommunityToolkit.Maui.Core;
+using Posme.Maui.Services.SystemNames;
 using Posme.Maui.ViewModels.Invoices;
 
 namespace Posme.Maui.Views.Invoices;
@@ -55,7 +56,7 @@ public partial class PrinterInvoicePage : ContentPage
     {
         await Share.Default.RequestAsync(new ShareFileRequest
         {
-            Title = "Compartir Comprobante de abono",
+            Title = Mensajes.MensajeCompartirComprobante,
             File = new ShareFile(imagePath)
         });
     }

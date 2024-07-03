@@ -26,39 +26,40 @@ public class PrinterProductViewModel : BaseViewModel
 
     private async void OnPrinterCommand(object obj)
     {
-        try
+        if (CantidadImprimir ==0)
         {
-            var parametroPrinter = await _parameterSystem.PosMeFindPrinter();
-            if (string.IsNullOrWhiteSpace(parametroPrinter.Value))
-            {
-                return;
-            }
-
-            var item = VariablesGlobales.Item;
-            var printer = new Printer(parametroPrinter.Value);
-            if (!CrossBluetoothLE.Current.IsOn)
-            {
-                ShowToast(Mensajes.MensajeBluetoothState, ToastDuration.Long, 18);
-                return;
-            }
-
-            if (printer.Device is null)
-            {
-                ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
-                return;
-            }
-            //printer.Code39CustomPosMe2px1p(item.BarCode);
-            printer.Code128(item.BarCode);
-            printer.Append(item.Name);
-            printer.Append(item.BarCode);            
-            printer.Append(item.PrecioPublico.ToString("N2"));
-            printer.Append("-");
-            printer.Avanza(35 /*8puntos = 1mm*/  );
-            printer.Print();
+            ShowToast(Mensajes.MensajeCantidadImprimir, ToastDuration.Long, 14);
+            return;
         }
-        catch (Exception ex)
+        var parametroPrinter = await _parameterSystem.PosMeFindPrinter();
+        if (string.IsNullOrWhiteSpace(parametroPrinter.Value))
         {
-            Console.WriteLine(ex.ToString());
+            return;
+        }
+
+        var item = VariablesGlobales.Item;
+        var printer = new Printer(parametroPrinter.Value);
+        if (!CrossBluetoothLE.Current.IsOn)
+        {
+            ShowToast(Mensajes.MensajeBluetoothState, ToastDuration.Long, 18);
+            return;
+        }
+
+        //printer.Code39CustomPosMe2px1p(item.BarCode);
+        printer.Code128(item.BarCode);
+        printer.Append(item.Name);
+        printer.Append(item.BarCode);
+        printer.Append(item.PrecioPublico.ToString("N2"));
+        printer.Append("-");
+        printer.Avanza(35 /*8puntos = 1mm*/);
+        for (int i = 1; i <= CantidadImprimir; i++)
+        {
+            printer.Print(); 
+        }
+        
+        if (printer.Device is null)
+        {
+            ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
         }
     }
 
@@ -71,6 +72,13 @@ public class PrinterProductViewModel : BaseViewModel
     }
 
     public Command PrinterCommand { get; }
+    private int _cantidadImprimir = 1;
+
+    public int CantidadImprimir
+    {
+        get => _cantidadImprimir;
+        set => SetProperty(ref _cantidadImprimir, value);
+    }
 
     public void OnAppearing(INavigation navigation)
     {

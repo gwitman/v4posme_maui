@@ -48,13 +48,13 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
         IsBusy = true;
         if (SelectedCurrency is null)
         {
-            ShowToast("Seleccione una moneda para continuar", ToastDuration.Long, 16);
+            ShowToast(Mensajes.MensajeSeleccionarMoneda, ToastDuration.Long, 16);
             return;
         }
 
         if (SelectedTipoDocumento is null)
         {
-            ShowToast("Seleccione un tipo de documento para continuar", ToastDuration.Long, 16);
+            ShowToast(Mensajes.MensajeSeleccionarTipoDocumento, ToastDuration.Long, 16);
             return;
         }
 
@@ -110,7 +110,6 @@ public class DataInvoicesViewModel : BaseViewModel, IQueryAttributable
     public void OnAppearing(INavigation? navigation)
     {
         Navigation = navigation;
-        //LoadComboBox();
     }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query)

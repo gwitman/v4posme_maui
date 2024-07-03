@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace Posme.Maui.Services.SystemNames;
 
 public static class Mensajes
@@ -23,4 +24,11 @@ public static class Mensajes
     public const string MensajeBluetoothState = "El Bluetooth se encuentra desactivado";
     public const string MensajeCompartirError = "No fue posible realizar la captura de los datos para compartir";
     public const string MensajeDispositivoNoConectado = "No está conectado el dispositivo al celular o nombre es incorrecto";
+    public const string MensajeCampoRequerido = "Todos los campos son requeridos, intente nuevamente.";
+    public const string MensajeCompartirComprobante = "Compartir Comprobante de Factura";
+    public const string MensajeSeleccionarMoneda = "Seleccione una moneda para continuar";
+    public const string MensajeSeleccionarTipoDocumento = "Seleccione un tipo de documento para continuar";
+    public const string MensajeCompartirComprobanteAbono = "Compartir Comprobante de abono";
+    public const string MensajeEspecificarDatosGuardar = "Debe especificar los datos a guardar";
+    public const string MensajeCantidadImprimir = "Debe ser mayor a cero la cantidad a imprimir";
 }

@@ -45,7 +45,7 @@ public partial class PrinterAbonoPage : ContentPage
     {
         await Share.Default.RequestAsync(new ShareFileRequest
         {
-            Title = "Compartir Comprobante de abono",
+            Title = Mensajes.MensajeCompartirComprobanteAbono,
             File = new ShareFile(imagePath)
         });
     }

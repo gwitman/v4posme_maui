@@ -30,7 +30,7 @@ public partial class ItemEditPage : ContentPage
     {
         if (!DataForm.Validate())
         {
-            TxtMensaje.Text = "Todos los campos son requeridos, intente nuevamente.";
+            TxtMensaje.Text = Mensajes.MensajeCampoRequerido;
             Popup.IsOpen = true;
             return;
         }
@@ -114,7 +114,7 @@ public partial class ItemEditPage : ContentPage
     protected override async void OnAppearing()
     {
         _saveItem = (Api_AppMobileApi_GetDataDownloadItemsResponse)DataForm.DataObject;
-        _defaultItem = await _repositoryItems.PosMeFindByItemNumber(_saveItem.ItemNumber);
+        _defaultItem = await _repositoryItems.PosMeFindByItemNumber(_saveItem.ItemNumber!);
         DataForm.CommitMode = CommitMode.LostFocus;
     }
 

@@ -65,7 +65,6 @@ public class SeleccionarProductoViewModel : BaseViewModel
     {
         if (obj is null)
         {
-            Debug.WriteLine("NO está pasando datos");
             return;
         }
 

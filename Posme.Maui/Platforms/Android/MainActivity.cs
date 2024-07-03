@@ -33,11 +33,6 @@ namespace Posme.Maui
                 {
                     // Permiso concedido
                 }
-                else
-                {
-                    // Permiso denegado
-                    Toast.MakeText(this, "El permiso de Bluetooth Connect es necesario para la aplicación.", ToastLength.Long).Show();
-                }
             }
         }
     }
