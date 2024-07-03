@@ -23,7 +23,7 @@
                 <core:DXStackLayout
                     x:Name="DxStackLayout">
                     <core:DXBorder Style="{StaticResource BorderProducto}">
-                        <Grid>
+                        <Grid ColumnSpacing="10">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -31,7 +31,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="0.8*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <zxing:BarcodeGeneratorView
@@ -39,11 +39,10 @@
                                 Grid.Column="0"
                                 Grid.RowSpan="4"
                                 HeightRequest="100"
-                                WidthRequest="100"
                                 ForegroundColor="Black"
                                 Value="{Binding ItemsResponse.BarCode}"
                                 Format="Code128"
-                                Margin="3" />
+                                Margin="0,0,0,0"/>
                             <Label
                                 Grid.Column="1"
                                 Grid.Row="0"
