@@ -33,11 +33,11 @@
                                     <Label Text="Monto Córdobas: C$" 
                                            FontSize="12" 
                                            FontAttributes="Bold"
-                                           TextColor="Black" />
+                                           TextColor="Red" />
                                     <Label Text="{Binding MontoAbonosCordobas,StringFormat='{0:N2}'}" 
                                            FontSize="12" 
                                            FontAttributes="Bold"
-                                           TextColor="Black" />
+                                           TextColor="Red" />
                                     <Label Text=" "/>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
