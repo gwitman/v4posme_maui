@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using Android.Speech;
 using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Repository;
@@ -43,7 +44,6 @@ public class DashboardPrinterViewModel : BaseViewModel
 
     private async void OnSearchProductCommand()
     {
-        IsBusy = true;
         await Task.Run(async () =>
         {
             Productos.Clear();
@@ -57,12 +57,9 @@ public class DashboardPrinterViewModel : BaseViewModel
                 searchItems = await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(SearchProduct);
             }
 
-            foreach (var itemsResponse in searchItems)
-            {
-                Productos.Add(itemsResponse);
-            }
+            Productos = new ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse>(searchItems);
+            
         });
-        IsBusy = false;
     }
 
     private async void OnSelectedProductoCommand(Api_AppMobileApi_GetDataDownloadItemsResponse obj)
@@ -79,16 +76,18 @@ public class DashboardPrinterViewModel : BaseViewModel
 
     private async void OnSearchAbonoCommand(object obj)
     {
+        IsBusy = true;
         Abonos.Clear();
         if (string.IsNullOrWhiteSpace(SearchAbonos))
         {
             var findAllAbonos = await _repositoryTbTransactionMaster.PosMeFilterAbonos();
-            await FillAbonos(findAllAbonos);
+            FillAbonos(findAllAbonos);
             return;
         }
 
         var filters = await _repositoryTbTransactionMaster.PosMeFilterByCodigoAndNombreClienteAbonos(SearchAbonos);
-        await FillAbonos(filters);
+        FillAbonos(filters);
+        IsBusy = false;
     }
 
     private async void OnSelectedFacturaCommand(ViewTempDtoInvoice obj)
@@ -100,16 +99,18 @@ public class DashboardPrinterViewModel : BaseViewModel
 
     private async void OnSearchFacturaCommand()
     {
+        IsBusy = true;
         Facturas.Clear();
         if (string.IsNullOrWhiteSpace(Search))
         {
             var findAllFactura = await _repositoryTbTransactionMaster.PosMeFilterFacturas();
-            await FillFacturas(findAllFactura);
+            FillFacturas(findAllFactura);
             return;
         }
 
         var filter = await _repositoryTbTransactionMaster.PosMeFilterByCodigoAndNombreClienteFacturas(Search);
-        await FillFacturas(filter);
+        FillFacturas(filter);
+        IsBusy = false;
     }
 
     private async void OnSearchBarCode()
@@ -154,7 +155,11 @@ public class DashboardPrinterViewModel : BaseViewModel
     public int SelectedIndex
     {
         get => _selectedIndex;
-        set => SetProperty(ref _selectedIndex, value);
+        set
+        {
+            SetProperty(ref _selectedIndex, value);
+            Load(value);
+        }
     }
 
     public Command<ViewTempDtoInvoice> SelectedFacturaCommand { get; }
@@ -217,30 +222,41 @@ public class DashboardPrinterViewModel : BaseViewModel
         Navigation = navigation;
     }
 
-    public async void Load()
+    public async void Load(int index)
     {
+        IsBusy = true;
         await Task.Run(async () =>
         {
-            //Thread.Sleep(2000);
-            Facturas.Clear();
-            var findAllFactura = await _repositoryTbTransactionMaster.PosMeFilterFacturas();
-            await FillFacturas(findAllFactura);
-
-            Abonos.Clear();
-            var findAllAbonos = await _repositoryTbTransactionMaster.PosMeFilterAbonos();
-            await FillAbonos(findAllAbonos);
-            Productos.Clear();
-            var findAllProductos = await _repositoryItems.PosMeDescending10();
-            foreach (var item in findAllProductos)
+            switch (index)
             {
-                Productos.Add(item);
+                case 0:
+                    Facturas.Clear();
+                    var findAllFactura = await _repositoryTbTransactionMaster.PosMeFilterFacturas();
+                    FillFacturas(findAllFactura);
+
+                    break;
+                case 1:
+                    Abonos.Clear();
+                    var findAllAbonos = await _repositoryTbTransactionMaster.PosMeFilterAbonos();
+                    FillAbonos(findAllAbonos);
+
+                    break;
+                case 2:
+                    Productos.Clear();
+                    var findAllProductos = await _repositoryItems.PosMeDescending10();
+                    foreach (var item in findAllProductos)
+                    {
+                        Productos.Add(item);
+                    }
+
+                    break;
             }
         });
 
         IsBusy = false;
     }
 
-    private async Task FillAbonos(List<TbTransactionMaster> findAllAbonos)
+    private async void FillAbonos(List<TbTransactionMaster> findAllAbonos)
     {
         var totalCordobas = decimal.Zero;
         var totalDolares = decimal.Zero;
@@ -278,7 +294,7 @@ public class DashboardPrinterViewModel : BaseViewModel
         TotalDolaresAbonos = $"$ {totalDolares:N2}";
     }
 
-    private async Task FillFacturas(List<TbTransactionMaster> findAllFactura)
+    private async void FillFacturas(List<TbTransactionMaster> findAllFactura)
     {
         var totalCordobas = decimal.Zero;
         var totalDolares = decimal.Zero;

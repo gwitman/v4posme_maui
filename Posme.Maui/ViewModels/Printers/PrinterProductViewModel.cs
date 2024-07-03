@@ -47,7 +47,8 @@ public class PrinterProductViewModel : BaseViewModel
                 ShowToast(Mensajes.MensajeDispositivoNoConectado, ToastDuration.Long, 18);
                 return;
             }
-            printer.Code39CustomPosMe2px1p(item.BarCode);
+            //printer.Code39CustomPosMe2px1p(item.BarCode);
+            printer.Code128(item.BarCode);
             printer.Append(item.Name);
             printer.Append(item.BarCode);            
             printer.Append(item.PrecioPublico.ToString("N2"));
@@ -75,5 +76,6 @@ public class PrinterProductViewModel : BaseViewModel
     {
         Navigation = navigation;
         ItemsResponse = VariablesGlobales.Item;
+        IsBusy = false;
     }
 }
