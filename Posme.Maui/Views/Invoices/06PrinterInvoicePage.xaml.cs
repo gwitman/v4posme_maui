@@ -67,7 +67,7 @@ public partial class PrinterInvoicePage : ContentPage
         if (screenshotResult is null)
         {
             ((PrinterInvoiceViewModel)BindingContext)
-                .ShowToast("No fue posible realizar la captura de los datos para compartir",
+                .ShowToast(Mensajes.MensajeCompartirError,
                     ToastDuration.Long, 18);
             return "";
         }
