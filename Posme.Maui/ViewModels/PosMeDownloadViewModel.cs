@@ -26,14 +26,14 @@ public class PosMeDownloadViewModel : BaseViewModel
 
     private async void OnDownloadClicked()
     {
-        await Navigation!.PushModalAsync(new LoadingPage());
+        IsBusy = true;
         var counter = await _helperContador.GetCounter();
         if (counter != 0)
         {
             Mensaje = Mensajes.MensajeDownloadCantidadTransacciones;
             PopupBackgroundColor = Colors.Red;
             PopUpShow = true;
-            await Navigation.PopModalAsync();
+            IsBusy = !IsBusy;
             return;
         }
 
@@ -50,7 +50,7 @@ public class PosMeDownloadViewModel : BaseViewModel
         }
 
         PopUpShow = true;
-        await Navigation.PopModalAsync();
+        IsBusy = false;
     }
 
     public bool Switch
@@ -64,5 +64,6 @@ public class PosMeDownloadViewModel : BaseViewModel
     public void OnAppearing(INavigation navigation)
     {
         Navigation = navigation;
+        IsBusy = false;
     }
 }
