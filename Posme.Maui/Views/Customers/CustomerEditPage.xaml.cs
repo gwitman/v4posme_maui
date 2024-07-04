@@ -30,9 +30,9 @@ public partial class CustomerEditPage : ContentPage
     {
         var barCodePage = new BarCodePage();
         await Navigation.PushModalAsync(barCodePage);
-        if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
-        TxtBarCode.Text = VariablesGlobales.BarCode;
-        VariablesGlobales.BarCode = "";
+        var bar = await barCodePage.WaitForResultAsync();
+        if (string.IsNullOrWhiteSpace(bar)) return;
+        TxtBarCode.Text = bar;
     }
 
     private async void SaveItemClick(object? sender, EventArgs e)
@@ -91,6 +91,7 @@ public partial class CustomerEditPage : ContentPage
 
     protected override async void OnAppearing()
     {
+        if (ViewModel.IsNew) return;
         _saveItem = (Api_AppMobileApi_GetDataDownloadCustomerResponse)DataForm.DataObject;
         _defaultItem = await RepositoryTbCustomer.PosMeFindCustomer(_saveItem.CustomerNumber!);
         DataForm.CommitMode = CommitMode.LostFocus;

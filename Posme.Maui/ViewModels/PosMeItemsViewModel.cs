@@ -31,6 +31,7 @@ namespace Posme.Maui.ViewModels
         public ICommand OnBarCode { get; }
         public ICommand SearchCommand { get; }
         public ICommand CreateDetailFormViewModelCommand { get; }
+        
         private ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> _items;
 
         public ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse> Items
@@ -88,8 +89,8 @@ namespace Posme.Maui.ViewModels
         {
             if (e.DetailFormType != DetailFormType.Edit) return;
             var eItem = (Api_AppMobileApi_GetDataDownloadItemsResponse)e.Item;
-            var editedContact = _repositoryItems.PosMeFindByItemNumber(eItem.ItemNumber);
-            e.Result = new DetailEditFormViewModel(editedContact, isNew: false);
+            var item = _repositoryItems.PosMeFindByItemNumber(eItem.ItemNumber!);
+            e.Result = new DetailEditFormViewModel(item, isNew: false);
         }
 
         public void OnAppearing(INavigation navigation)

@@ -1,5 +1,4 @@
 ﻿using Posme.Maui.Models;
-using SQLite;
 
 namespace Posme.Maui.Services.Repository;
 
@@ -49,17 +48,15 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<Api_AppM
             .ToListAsync();
     }
 
-    public async Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilterByCustomerInvoice(string search)
+    public Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilterByCustomerInvoice(string search)
     {
-        var query = """
-                    select distinct tbc.CustomerId, ComapnyId, BranchId, tbc.EntityId, CustomerNumber, Identification, 
-                                    FirstName, LastName, tbc.Balance, Modificado 
-                    from tb_customers tbc join tb_document_credit tdc on tbc.EntityId = tdc.EntityId
-                    where tbc.CustomerNumber like '%' || ? || '%' 
-                       or tbc.FirstName like '%' ||  ? || '%'
-                       or tbc.Identification like '%' || ?  || '%'  
-                    """;
-        return await _dataBase.Database.QueryAsync<Api_AppMobileApi_GetDataDownloadCustomerResponse>(query, search);
+        var query = $"""
+                     select distinct tbc.CustomerId, ComapnyId, BranchId, tbc.EntityId, CustomerNumber, Identification, 
+                                     FirstName, LastName,tbc.CurrencyName, tbc.CurrencyId, tbc.Balance, Modificado 
+                     from tb_customers tbc join tb_document_credit tdc on tbc.EntityId = tdc.EntityId
+                     where tbc.CustomerNumber like '%{search}%' or tbc.FirstName like '%{search}%' or tbc.identification like '%{search}%'
+                     """;
+        return _dataBase.Database.QueryAsync<Api_AppMobileApi_GetDataDownloadCustomerResponse>(query);
     }
 
     public Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeDescTake10()

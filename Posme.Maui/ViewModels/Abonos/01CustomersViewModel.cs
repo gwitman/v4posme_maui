@@ -28,14 +28,14 @@ public class AbonosViewModel : BaseViewModel
         ItemTapped = new Command<Api_AppMobileApi_GetDataDownloadCustomerResponse>(OnItemSelected);
     }
 
-    private async void OnBarCodeShow(object obj)
+    private async void OnBarCodeShow()
     {
         var barCodePage = new BarCodePage();
         await Navigation!.PushModalAsync(barCodePage);
-        if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
-        Search = VariablesGlobales.BarCode;
-        VariablesGlobales.BarCode = "";
-        OnSearchCommand(Search);
+        var bar = await barCodePage.WaitForResultAsync();
+        Search = bar!;
+        if (string.IsNullOrWhiteSpace(Search)) return;
+        OnSearchCommand();
     }
 
     private async void OnItemSelected(Api_AppMobileApi_GetDataDownloadCustomerResponse? item)
@@ -57,18 +57,25 @@ public class AbonosViewModel : BaseViewModel
         IsBusy = false;
     }
 
-    private async void OnSearchCommand(object obj)
+    private async void OnSearchCommand()
     {
         IsBusy = true;
-        await Task.Run(async () =>
+        List<Api_AppMobileApi_GetDataDownloadCustomerResponse> finds;
+        if (string.IsNullOrWhiteSpace(Search))
         {
-            Customers.Clear();
-            var finds = await _customerRepositoryTbCustomer.PosMeFilterByCustomerInvoice(Search);
-            foreach (var customer in finds)
-            {
-                Customers.Add(customer);
-            }
-        });
+            finds = await _customerRepositoryTbCustomer.PosMeFilterByInvoice();
+        }
+        else
+        {
+            finds = await _customerRepositoryTbCustomer.PosMeFilterByCustomerInvoice(Search);
+        }
+
+        Customers.Clear();
+        foreach (var customer in finds)
+        {
+            Customers.Add(customer);
+        }
+
         IsBusy = false;
     }
 

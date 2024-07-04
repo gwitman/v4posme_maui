@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
@@ -24,8 +25,8 @@ public class PosMeCustomerViewModel : BaseViewModel
 
     public ICommand OnBarCode { get; }
     public ICommand SearchCommand { get; }
-    
-    private ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> _customers;
+
+    private ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> _customers = [];
 
     public ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse> Customers
     {
@@ -44,12 +45,17 @@ public class PosMeCustomerViewModel : BaseViewModel
     private async void OnSearchCommand(object obj)
     {
         IsBusy = true;
-        await Task.Run(async () =>
+        List<Api_AppMobileApi_GetDataDownloadCustomerResponse> finds;
+        if (string.IsNullOrWhiteSpace(Search))
         {
-            Customers.Clear();
-            var finds = await _customerRepositoryTbCustomer.PosMeFilterBySearch(Search);
-            Customers = new ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse>(finds);
-        });
+            finds = await _customerRepositoryTbCustomer.PosMeAscTake10();
+        }
+        else
+        {
+            finds = await _customerRepositoryTbCustomer.PosMeFilterBySearch(Search);
+        }
+        Customers.Clear();
+        Customers = new ObservableCollection<Api_AppMobileApi_GetDataDownloadCustomerResponse>(finds);
         IsBusy = false;
     }
 
@@ -57,9 +63,9 @@ public class PosMeCustomerViewModel : BaseViewModel
     {
         var barCodePage = new BarCodePage();
         await Navigation!.PushModalAsync(barCodePage);
-        if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
-        Search = VariablesGlobales.BarCode;
-        VariablesGlobales.BarCode = "";
+        var bar = await barCodePage.WaitForResultAsync();
+        Search = bar!;
+        if (string.IsNullOrWhiteSpace(Search)) return;
         OnSearchCommand(Search);
     }
 

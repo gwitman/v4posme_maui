@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
@@ -43,7 +42,16 @@ public class SeleccionarProductoViewModel : BaseViewModel
         await Task.Run(async () =>
         {
             Productos.Clear();
-            var searchItems = await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(Search);
+            List<Api_AppMobileApi_GetDataDownloadItemsResponse> searchItems;
+            if (string.IsNullOrWhiteSpace(Search))
+            {
+                searchItems = await _repositoryItems.PosMeDescending10();
+            }
+            else
+            {
+                searchItems = await _repositoryItems.PosMeFilterdByItemNumberAndBarCodeAndName(Search);
+            }
+
             foreach (var itemsResponse in searchItems)
             {
                 itemsResponse.MonedaSimbolo = VariablesGlobales.DtoInvoice.Currency!.Simbolo;
@@ -57,7 +65,8 @@ public class SeleccionarProductoViewModel : BaseViewModel
     {
         var barCodePage = new BarCodePage();
         await Navigation!.PushModalAsync(barCodePage);
-        Search = barCodePage.BarCode;
+        var bar = await barCodePage.WaitForResultAsync();
+        Search = bar!;
         IsPanelVisible = !IsPanelVisible;
     }
 

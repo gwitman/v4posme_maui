@@ -33,8 +33,7 @@
                                           Text="{Binding Search}"
                                           StartIconCommand="{Binding SearchCommand}"
                                           ReturnCommand="{Binding SearchCommand}"
-                                          PlaceholderText="Buscar por código, identificacion y nombres"
-                                          TextChangedCommand="{Binding SearchCommand}" />
+                                          PlaceholderText="Buscar por código, identificacion y nombres" />
                         </Grid>
                         <dxcv:DXCollectionView x:Name="ClientesCollectionView"
                                                Grid.Row="1"

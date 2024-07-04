@@ -1,6 +1,7 @@
 ﻿using DevExpress.Maui.Core;
 using DevExpress.Maui.DataForm;
 using Posme.Maui.Models;
+using Posme.Maui.Services;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
@@ -10,12 +11,11 @@ namespace Posme.Maui.Views.Items;
 
 public partial class ItemEditPage : ContentPage
 {
-    DetailEditFormViewModel ViewModel => (DetailEditFormViewModel)BindingContext;
+    private DetailEditFormViewModel ViewModel => (DetailEditFormViewModel)BindingContext;
     private readonly IRepositoryItems _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
     private Api_AppMobileApi_GetDataDownloadItemsResponse _saveItem;
     private Api_AppMobileApi_GetDataDownloadItemsResponse _defaultItem;
     private readonly HelperCore _helperContador;
-
     public ItemEditPage()
     {
         InitializeComponent();
@@ -35,8 +35,6 @@ public partial class ItemEditPage : ContentPage
             return;
         }
 
-        DataForm.Commit();
-        ViewModel.Save();
         _saveItem = (Api_AppMobileApi_GetDataDownloadItemsResponse)DataForm.DataObject;
         _saveItem.Modificado = true;
         if (ViewModel.IsNew)
@@ -49,6 +47,8 @@ public partial class ItemEditPage : ContentPage
         }
 
         await _helperContador.PlusCounter();
+        DataForm.Commit();
+        ViewModel.Save();
     }
 
     private void DataForm_OnValidateForm(object sender, DataFormValidationEventArgs e)
@@ -98,39 +98,40 @@ public partial class ItemEditPage : ContentPage
     private async void SimpleButton_OnClicked(object? sender, EventArgs e)
     {
         var barCodePage = new BarCodePage();
-        await Navigation.PushModalAsync(barCodePage);
-        if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
-        TxtBarCode.Text = VariablesGlobales.BarCode;
-        VariablesGlobales.BarCode = "";
+        await Navigation.PushModalAsync(barCodePage, true);
+        var bar = await barCodePage.WaitForResultAsync();
+        if (string.IsNullOrWhiteSpace(bar)) return;
+        TxtBarCode.Text = bar;
     }
 
     private void TextCantidadEntrada_OnTextChanged(object? sender, EventArgs e)
     {
-        _saveItem = (Api_AppMobileApi_GetDataDownloadItemsResponse)DataForm.DataObject;
         _saveItem.CantidadFinal = decimal.Add(_saveItem.CantidadEntradas, _saveItem.Quantity) - _saveItem.CantidadSalidas;
-        TextCantidadFinal.Text = _saveItem.CantidadFinal.ToString("N");
+        TextCantidadFinal.Text = _saveItem.CantidadFinal.ToString("N2");
     }
 
     protected override async void OnAppearing()
     {
-        _saveItem = (Api_AppMobileApi_GetDataDownloadItemsResponse)DataForm.DataObject;
-        _defaultItem = await _repositoryItems.PosMeFindByItemNumber(_saveItem.ItemNumber!);
+        if (!ViewModel.IsNew)
+        {
+            _saveItem = (Api_AppMobileApi_GetDataDownloadItemsResponse)DataForm.DataObject;
+            _defaultItem = await _repositoryItems.PosMeFindByItemNumber(_saveItem.ItemNumber!);
+        }
+
         DataForm.CommitMode = CommitMode.LostFocus;
     }
 
     protected override void OnDisappearing()
     {
-        if (!ViewModel.IsSaved)
-        {
-            TxtBarCode.Text = _defaultItem.BarCode;
-            TextCantidadFinal.Text = _defaultItem.CantidadFinal.ToString("N");
-            TextCantidadEntrada.Text = _defaultItem.CantidadEntradas.ToString("N");
-            TextCantidadSalida.Text = _defaultItem.CantidadSalidas.ToString("N");
-            TextName.Text = _defaultItem.Name;
-            TextItemNumber.Text = _defaultItem.ItemNumber;
-            TextPrecioPublico.Text = _defaultItem.PrecioPublico.ToString("N");
-            DataForm.DataObject = _defaultItem;
-        }
+        if (ViewModel.IsSaved) return;
+        TxtBarCode.Text = _defaultItem.BarCode;
+        TextCantidadFinal.Text = _defaultItem.CantidadFinal.ToString("N2");
+        TextCantidadEntrada.Text = _defaultItem.CantidadEntradas.ToString("N2");
+        TextCantidadSalida.Text = _defaultItem.CantidadSalidas.ToString("N2");
+        TextName.Text = _defaultItem.Name;
+        TextItemNumber.Text = _defaultItem.ItemNumber;
+        TextPrecioPublico.Text = _defaultItem.PrecioPublico.ToString("N2");
+        DataForm.DataObject = _defaultItem;
     }
 
     private void ClosePopup_Clicked(object? sender, EventArgs e)

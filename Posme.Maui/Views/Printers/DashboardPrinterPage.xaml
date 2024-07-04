@@ -49,8 +49,7 @@
                                             Text="{Binding Search}"
                                             StartIconCommand="{Binding SearchFacturaCommand}"
                                             ReturnCommand="{Binding SearchFacturaCommand}"
-                                            PlaceholderText="Buscar por código"
-                                            TextChangedCommand="{Binding SearchFacturaCommand}" />
+                                            PlaceholderText="Buscar por código"/>
                                     </Grid>
                                     <CollectionView
                                         Margin="10"
@@ -171,8 +170,7 @@
                                             Text="{Binding SearchAbonos}"
                                             StartIconCommand="{Binding SearchAbonoCommand}"
                                             ReturnCommand="{Binding SearchAbonoCommand}"
-                                            PlaceholderText="Buscar por código"
-                                            TextChangedCommand="{Binding SearchAbonoCommand}" />
+                                            PlaceholderText="Buscar por código" />
                                     </Grid>
                                     <CollectionView
                                         Margin="10"
@@ -296,8 +294,7 @@
                                                           Text="{Binding SearchProduct}"
                                                           StartIconCommand="{Binding SearchProductCommand}"
                                                           ReturnCommand="{Binding SearchProductCommand}"
-                                                          PlaceholderText="Buscar por código, código de barra y descripción"
-                                                          TextChangedCommand="{Binding SearchProductCommand}" />
+                                                          PlaceholderText="Buscar por código, código de barra y descripción"/>
                                     </Grid>
                                     <CollectionView x:Name="ItemsListView"
                                                     ItemsSource="{Binding Productos}"

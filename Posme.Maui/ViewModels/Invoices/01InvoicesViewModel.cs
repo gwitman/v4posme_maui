@@ -1,12 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Posme.Maui.Models;
-using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
+using Posme.Maui.Services.SystemNames;
 using Posme.Maui.Views;
 using Unity;
-using Posme.Maui.Services.SystemNames;
-using Posme.Maui.Services.Api;
 
 namespace Posme.Maui.ViewModels.Invoices;
 
@@ -29,13 +27,13 @@ public class InvoicesViewModel : BaseViewModel
         Customers = new();
     }
 
-    private async void OnBarCodeShow(object obj)
+    private async void OnBarCodeShow()
     {
         var barCodePage = new BarCodePage();
         await Navigation!.PushModalAsync(barCodePage);
-        if (string.IsNullOrWhiteSpace(VariablesGlobales.BarCode)) return;
-        Search = barCodePage.BarCode;
-        VariablesGlobales.BarCode = "";
+        var bar = await barCodePage.WaitForResultAsync();
+        Search = bar!;
+        if (string.IsNullOrWhiteSpace(Search)) return;
         OnSearchCommand(Search);
     }
 
@@ -61,7 +59,16 @@ public class InvoicesViewModel : BaseViewModel
     {
         IsBusy = true;
         Customers.Clear();
-        var finds = await _customerRepositoryTbCustomer.PosMeFilterByCustomerInvoice(Search);
+        List<Api_AppMobileApi_GetDataDownloadCustomerResponse> finds;
+        if (string.IsNullOrWhiteSpace(Search))
+        {
+            finds = await _customerRepositoryTbCustomer.PosMeAscTake10();
+        }
+        else
+        {
+            finds = await _customerRepositoryTbCustomer.PosMeFilterByCustomerInvoice(Search);
+        }
+
         foreach (var customer in finds)
         {
             Customers.Add(customer);

@@ -8,7 +8,6 @@
              xmlns:models="clr-namespace:Posme.Maui.Models"
              xmlns:invoices="clr-namespace:Posme.Maui.ViewModels.Invoices"
              xmlns:controls="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
-             xmlns:views="clr-namespace:Posme.Maui.Views"
              x:Class="Posme.Maui.Views.Invoices.InvoicesPage">
     <ContentPage.BindingContext>
         <invoices:InvoicesViewModel />
@@ -33,8 +32,7 @@
                                           Text="{Binding Search}"
                                           StartIconCommand="{Binding SearchCommand}"
                                           ReturnCommand="{Binding SearchCommand}"
-                                          PlaceholderText="Buscar por código, identificacion y nombres"
-                                          TextChangedCommand="{Binding SearchCommand}" />
+                                          PlaceholderText="Buscar por código, identificacion y nombres" />
                         </Grid>
                         <dxcv:DXCollectionView x:Name="ClientesCollectionView"
                                                Grid.Row="1"
@@ -91,7 +89,7 @@
                                                             <Span Text="Balance "
                                                                   TextColor="White" />
                                                             <Span Text="{Binding CurrencyName}"
-                                                                  TextColor="White"/>
+                                                                  TextColor="White" />
                                                             <Span Text="{Binding Balance,StringFormat='{0:N2}'}"
                                                                   TextColor="White" />
                                                         </FormattedString>
@@ -109,8 +107,7 @@
                                                 <TapGestureRecognizer
                                                     NumberOfTapsRequired="1"
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type invoices:InvoicesViewModel}}, Path=ItemTapped}"
-                                                    CommandParameter="{Binding .}">
-                                                </TapGestureRecognizer>
+                                                    CommandParameter="{Binding .}" />
                                             </Grid.GestureRecognizers>
                                         </Grid>
                                     </dxc:DXStackLayout>

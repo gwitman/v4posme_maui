@@ -7,8 +7,6 @@
              xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
              xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
-             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
-             xmlns:models="clr-namespace:Posme.Maui.Models"
              Title="Editar Producto"
              Style="{StaticResource DetailPageStyle}">
     <ContentPage.Triggers>
@@ -35,10 +33,10 @@
                                FontAttributes="Bold"
                                FontSize="15"
                                TextColor="{StaticResource White}"
-                               Margin="20, 20"/>
-                        <Button Text="Aceptar" 
-                                Clicked="ClosePopup_Clicked" 
-                                BackgroundColor="{StaticResource Gray600}" 
+                               Margin="20, 20" />
+                        <Button Text="Aceptar"
+                                Clicked="ClosePopup_Clicked"
+                                BackgroundColor="{StaticResource Gray600}"
                                 FontSize="20"
                                 TextColor="White" />
                     </StackLayout>

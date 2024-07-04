@@ -30,8 +30,7 @@
                                           Text="{Binding Search}"
                                           StartIconCommand="{Binding SearchCommand}"
                                           ReturnCommand="{Binding SearchCommand}"
-                                          PlaceholderText="Buscar por código de factura"
-                                          TextChangedCommand="{Binding SearchCommand}" />
+                                          PlaceholderText="Buscar por código de factura" />
                         </Grid>
                         <dxcv:DXCollectionView x:Name="InvoicesCollectionView"
                                                Grid.Row="1"

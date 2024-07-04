@@ -3,7 +3,6 @@ using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
-using Posme.Maui.Services.Api;
 using Unity;
 
 namespace Posme.Maui.Views.Items
@@ -11,16 +10,27 @@ namespace Posme.Maui.Views.Items
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemDetailPage : ContentPage
     {
-        DetailFormViewModel ViewModel => ((DetailFormViewModel)BindingContext);
+        private DetailFormViewModel ViewModel => ((DetailFormViewModel)BindingContext);
         private readonly IRepositoryItems _repositoryItems;
         private bool _isDeleting;
-        private Api_AppMobileApi_GetDataDownloadItemsResponse SelectedItem => (Api_AppMobileApi_GetDataDownloadItemsResponse)ViewModel.Item;
+
+        private Api_AppMobileApi_GetDataDownloadItemsResponse SelectedItem { get; set; }
 
         public ItemDetailPage()
         {
             Title = "Datos de Producto";
             _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
+            SelectedItem = new();
             InitializeComponent();
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            var item = (Api_AppMobileApi_GetDataDownloadItemsResponse)ViewModel.Item;
+            var findItem = await _repositoryItems.PosMeFindByItemId(item.ItemId);
+            SelectedItem = findItem;
+            ViewModel.Item = SelectedItem;
         }
 
         private void DeleteItemClick(object? sender, EventArgs e)

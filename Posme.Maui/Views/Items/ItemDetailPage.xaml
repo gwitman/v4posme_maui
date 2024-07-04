@@ -5,7 +5,6 @@
              xmlns:dxcn="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              Title="{Binding Title}"
-             xmlns:local="clr-namespace:Posme.Maui.ViewModels"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              ios:Page.UseSafeArea="true"

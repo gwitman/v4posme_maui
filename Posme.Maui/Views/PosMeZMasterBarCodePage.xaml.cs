@@ -1,4 +1,4 @@
-﻿using Posme.Maui.Services.SystemNames;
+﻿using System.Diagnostics;
 using ZXing.Net.Maui;
 
 namespace Posme.Maui.Views;
@@ -8,7 +8,8 @@ public partial class BarCodePage : ContentPage
     private bool _isAnimating = true;
     private const int StepSize = 100;
     private double _currentY = 0;
-    private  TaskCompletionSource<string?> _pageResultCompletionSource;
+    private readonly TaskCompletionSource<string?> _pageResultCompletionSource;
+
     public BarCodePage()
     {
         InitializeComponent();
@@ -21,6 +22,7 @@ public partial class BarCodePage : ContentPage
         StartScanAnimation();
         _pageResultCompletionSource = new TaskCompletionSource<string?>();
     }
+
     public Task<string?> WaitForResultAsync()
     {
         return _pageResultCompletionSource.Task;
@@ -28,22 +30,28 @@ public partial class BarCodePage : ContentPage
 
     private async void OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
     {
-        await Task.Run(() =>
+        try
         {
+            
             var barCode = e.Results.FirstOrDefault();
             if (barCode is null)
             {
-                VariablesGlobales.BarCode = "";
                 return;
             }
 
-            BarCode = barCode.Value;
-            VariablesGlobales.BarCode = barCode.Value;
-            if (Navigation.ModalStack.Count <= 0) return;
-            StopScanAnimation();
-            _pageResultCompletionSource.SetResult(BarCode);
-            Navigation.PopModalAsync();
-        });
+            if (!_pageResultCompletionSource.Task.IsCompleted)
+            {
+                _pageResultCompletionSource.SetResult(barCode.Value);
+                await MainThread.InvokeOnMainThreadAsync(async () =>
+                {
+                    await Navigation.PopModalAsync();
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex);
+        }
     }
 
     private async void StartScanAnimation()
@@ -73,6 +81,4 @@ public partial class BarCodePage : ContentPage
         base.OnDisappearing();
         StopScanAnimation();
     }
-
-    public string BarCode { get; private set; }
 }

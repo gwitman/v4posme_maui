@@ -31,4 +31,5 @@ public static class Mensajes
     public const string MensajeCompartirComprobanteAbono = "Compartir Comprobante de abono";
     public const string MensajeEspecificarDatosGuardar = "Debe especificar los datos a guardar";
     public const string MensajeCantidadImprimir = "Debe ser mayor a cero la cantidad a imprimir";
+    public const string MensajeSinDatos = "No hay registros con el filtro indicado";
 }

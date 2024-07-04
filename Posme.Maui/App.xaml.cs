@@ -41,7 +41,6 @@ namespace Posme.Maui
             Routing.RegisterRoute(typeof(PaymentInvoicePage).FullName, typeof(PaymentInvoicePage));
             Routing.RegisterRoute(typeof(RevisarProductosSeleccionadosPage).FullName, typeof(RevisarProductosSeleccionadosPage));
             Routing.RegisterRoute(typeof(VoucherInvoicePage).FullName, typeof(VoucherInvoicePage));
-            VariablesGlobales.BarCode = string.Empty;
             
         }
     }

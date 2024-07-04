@@ -58,7 +58,6 @@ public class DashboardPrinterViewModel : BaseViewModel
             }
 
             Productos = new ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse>(searchItems);
-            
         });
     }
 
@@ -78,14 +77,16 @@ public class DashboardPrinterViewModel : BaseViewModel
     {
         IsBusy = true;
         Abonos.Clear();
+        List<TbTransactionMaster> filters;
         if (string.IsNullOrWhiteSpace(SearchAbonos))
         {
-            var findAllAbonos = await _repositoryTbTransactionMaster.PosMeFilterAbonos();
-            FillAbonos(findAllAbonos);
-            return;
+            filters = await _repositoryTbTransactionMaster.PosMeFilterAbonos();
+        }
+        else
+        {
+            filters = await _repositoryTbTransactionMaster.PosMeFilterByCodigoAndNombreClienteAbonos(SearchAbonos);
         }
 
-        var filters = await _repositoryTbTransactionMaster.PosMeFilterByCodigoAndNombreClienteAbonos(SearchAbonos);
         FillAbonos(filters);
         IsBusy = false;
     }
@@ -101,15 +102,17 @@ public class DashboardPrinterViewModel : BaseViewModel
     {
         IsBusy = true;
         Facturas.Clear();
+        List<TbTransactionMaster> findAllFactura;
         if (string.IsNullOrWhiteSpace(Search))
         {
-            var findAllFactura = await _repositoryTbTransactionMaster.PosMeFilterFacturas();
-            FillFacturas(findAllFactura);
-            return;
+            findAllFactura = await _repositoryTbTransactionMaster.PosMeFilterFacturas();
+        }
+        else
+        {
+            findAllFactura = await _repositoryTbTransactionMaster.PosMeFilterByCodigoAndNombreClienteFacturas(Search);
         }
 
-        var filter = await _repositoryTbTransactionMaster.PosMeFilterByCodigoAndNombreClienteFacturas(Search);
-        FillFacturas(filter);
+        FillFacturas(findAllFactura);
         IsBusy = false;
     }
 
