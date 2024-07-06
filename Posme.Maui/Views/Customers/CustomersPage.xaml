@@ -63,6 +63,7 @@
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -75,7 +76,7 @@
                                                 HeightRequest="60"
                                                 BackgroundColor="Transparent"
                                                 Grid.Column="0"
-                                                Grid.RowSpan="3">
+                                                Grid.RowSpan="4">
                                                 <dxc:DXImage WidthRequest="55"
                                                              HeightRequest="55"
                                                              Source="person_charge"
@@ -110,6 +111,17 @@
                                                 <Label Text="{Binding FirstName}" TextColor="White" />
                                                 <Label Text=" " />
                                                 <Label Text="{Binding LastName}" TextColor="White" />
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout
+                                                Grid.Row="3"
+                                                Grid.Column="1"
+                                                Grid.ColumnSpan="2">
+                                                <Label
+                                                    Text="Linea de crédito: "
+                                                    TextColor="White" />
+                                                <Label
+                                                    TextColor="White"
+                                                    Text="{Binding CustomerCreditLineId}" />
                                             </HorizontalStackLayout>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer

@@ -44,6 +44,7 @@ public class DashboardPrinterViewModel : BaseViewModel
 
     private async void OnSearchProductCommand()
     {
+        IsBusy = true;
         await Task.Run(async () =>
         {
             Productos.Clear();
@@ -59,6 +60,7 @@ public class DashboardPrinterViewModel : BaseViewModel
 
             Productos = new ObservableCollection<Api_AppMobileApi_GetDataDownloadItemsResponse>(searchItems);
         });
+        IsBusy = false;
     }
 
     private async void OnSelectedProductoCommand(Api_AppMobileApi_GetDataDownloadItemsResponse obj)

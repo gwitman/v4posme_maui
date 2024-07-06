@@ -6,6 +6,5 @@ public class UploadServices
 {
     public void UploadData()
     {
-        var urlPagadito = Constantes.UrlPagadito;
     }
 }

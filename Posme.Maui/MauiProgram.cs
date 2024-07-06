@@ -52,7 +52,6 @@ namespace Posme.Maui
             VariablesGlobales.UnityContainer.RegisterSingleton<DataBase>();
             VariablesGlobales.UnityContainer.RegisterSingleton<HelperCore>();
             VariablesGlobales.UnityContainer.RegisterSingleton<DownloadPage>();
-            VariablesGlobales.UnityContainer.RegisterSingleton<SchedulerPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<ItemDetailPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<ItemsPage>();
             VariablesGlobales.UnityContainer.RegisterSingleton<PosMeItemsViewModel>();

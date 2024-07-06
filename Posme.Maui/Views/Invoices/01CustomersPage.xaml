@@ -54,6 +54,7 @@
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -102,6 +103,17 @@
                                                 <Label Text="{Binding FirstName}" TextColor="White" />
                                                 <Label Text=" " />
                                                 <Label Text="{Binding LastName}" TextColor="White" />
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout
+                                                Grid.Row="3"
+                                                Grid.Column="1"
+                                                Grid.ColumnSpan="2">
+                                                <Label
+                                                    Text="Linea de crédito: "
+                                                    TextColor="White" />
+                                                <Label
+                                                    TextColor="White"
+                                                    Text="{Binding CustomerCreditLineId}" />
                                             </HorizontalStackLayout>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer

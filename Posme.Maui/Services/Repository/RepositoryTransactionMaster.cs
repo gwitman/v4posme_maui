@@ -9,7 +9,6 @@ public class RepositoryTbTransactionMaster(DataBase dataBase) : RepositoryFacade
 
     public Task<List<TbTransactionMaster>> PosMeFilterByCodigoAndNombreClienteFacturas(string filter)
     {
-        var param = (int)TypeTransaction.TransactionInvoiceBilling;
         var query = $"""
                      select tm.TransactionId,
                              tm.TransactionMasterId,
@@ -30,11 +29,11 @@ public class RepositoryTbTransactionMaster(DataBase dataBase) : RepositoryFacade
                              tm.Reference3
                      from tb_transaction_master tm
                               join tb_customers c on tm.EntityId = c.EntityId
-                     where tm.TransactionNumber like '%{filter}%' or c.FirstName like '%{filter}%'
-                            and tm.TransactionId =?
-                     order by tm.TransactionOn DESC 
+                     where tm.TransactionId={(int)TypeTransaction.TransactionInvoiceBilling} and 
+                           tm.TransactionNumber like '%{filter}%' or lower(c.FirstName) like '%{filter.ToLower()}%'
+                     order by tm.TransactionOn DESC
                      """;
-        return _dataBase.Database.QueryAsync<TbTransactionMaster>(query, param);
+        return _dataBase.Database.QueryAsync<TbTransactionMaster>(query);
     }
 
     public Task<List<TbTransactionMaster>> PosMeFilterByCodigoAndNombreClienteAbonos(string filter)
@@ -60,8 +59,8 @@ public class RepositoryTbTransactionMaster(DataBase dataBase) : RepositoryFacade
                              tm.Reference3
                      from tb_transaction_master tm
                               join tb_customers c on tm.EntityId = c.EntityId
-                     where tm.TransactionNumber like '%{filter}%' or c.FirstName like '%{filter}%'
-                            and tm.TransactionId =?
+                     where tm.TransactionId =? and tm.TransactionId={(int)TypeTransaction.TransactionShare} and
+                           tm.TransactionNumber like '%{filter}%' or c.FirstName like '%{filter}%'
                      order by tm.TransactionOn DESC 
                      """;
         return _dataBase.Database.QueryAsync<TbTransactionMaster>(query, param);

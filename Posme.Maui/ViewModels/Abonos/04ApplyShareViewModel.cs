@@ -8,6 +8,7 @@ using Posme.Maui.Views;
 using Unity;
 using Posme.Maui.Services.SystemNames;
 using Posme.Maui.Services.Api;
+
 namespace Posme.Maui.ViewModels.Abonos;
 
 public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
@@ -34,7 +35,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         _repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
         _repositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
         _repositoryTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
-        AplicarAbonoCommand = new Command(OnAplicarAbono,OnValidateMonto);
+        AplicarAbonoCommand = new Command(OnAplicarAbono, OnValidateMonto);
         ClearMontoCommand = new Command(OnClearMontoCommand);
         PropertyChanged += (_, _) => AplicarAbonoCommand.ChangeCanExecute();
     }
@@ -94,7 +95,8 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
                 EntitySecondaryId = _customerResponse.CustomerNumber,
                 EntityId = _customerResponse.EntityId,
                 CurrencyId = (TypeCurrency)CurrencyId,
-                Reference1 = reference
+                Reference1 = reference,
+                CustomerCreditLineId = _customerResponse.CustomerCreditLineId
             };
             var taskTransactionMaster = _repositoryTransactionMaster.PosMeInsert(transactionMaster);
             var taskPlus = _helper.PlusCounter();
@@ -201,6 +203,7 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
         {
             return;
         }
+
         DocumentCreditResponse = await _repositoryDocumentCredit.PosMeFindDocumentNumber(parameter);
         DocumentCreditAmortizationResponse = await _repositoryDocumentCreditAmortization.PosMeFindByDocumentNumber(parameter);
         CurrencyId = DocumentCreditResponse.CurrencyId;

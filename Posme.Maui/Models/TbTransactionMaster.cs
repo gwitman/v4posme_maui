@@ -18,6 +18,8 @@ public class TbTransactionMaster
     public decimal Discount { get; set; }
     public decimal Taxi1 { get; set; }
     public decimal Amount { get; set; }
+    
+    public int CustomerCreditLineId { get; set; }
     public TypeTransactionCausal TransactionCausalId { get; set; }
     public decimal ExchangeRate { get; set; }
     public TypeCurrency CurrencyId { get; set; }

@@ -35,7 +35,8 @@ public class PaymentInvoiceViewModel : BaseViewModel
 
     private bool Validate()
     {
-        return decimal.Compare(Monto, decimal.Zero) <= 0;
+        return decimal.Compare(Monto, decimal.Zero) <= 0
+            && ChkCheque || ChkCredito || ChkDebito || ChkEfectivo || ChkMonedero || _chkOtros;
     }
 
     private void OnClearMontoCommand(object obj)
@@ -72,7 +73,8 @@ public class PaymentInvoiceViewModel : BaseViewModel
             EntityId = dtoInvoice.CustomerResponse!.EntityId,
             EntitySecondaryId = VariablesGlobales.User!.UserId.ToString(),
             TransactionNumber = codigo,
-            CurrencyId = (TypeCurrency)dtoInvoice.Currency!.Key
+            CurrencyId = (TypeCurrency)dtoInvoice.Currency!.Key,
+            CustomerCreditLineId = dtoInvoice.CustomerResponse.CustomerCreditLineId
         };
         transactionMaster.SubAmount = dtoInvoice.Balance - transactionMaster.Discount + transactionMaster.Taxi1;
 
