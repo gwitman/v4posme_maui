@@ -25,16 +25,12 @@ public class RealizarPagos
                 details.Add("price", item.PrecioPublico);
             }
 
-            var simboloMoneda = "";
-            if (transactionMaster.CurrencyId == TypeCurrency.Cordoba)
+            var simboloMoneda = transactionMaster.CurrencyId switch
             {
-                simboloMoneda = "NIO";
-            }
-
-            if (transactionMaster.CurrencyId == TypeCurrency.Dolar)
-            {
-                simboloMoneda = "USD";
-            }
+                TypeCurrency.Cordoba => "NIO",
+                TypeCurrency.Dolar => "USD",
+                _ => ""
+            };
 
             var data = new Dictionary<string, object>
             {
