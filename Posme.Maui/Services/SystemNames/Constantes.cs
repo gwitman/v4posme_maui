@@ -18,6 +18,6 @@ public static class Constantes
     public const string ParameterCodigoFactura = "TRANSACTION_INVOICE";
     public static string UrlRequestLogin = UrlBase + "{CompanyKey}/public/core_acount/loginMobile";
     public static string UrlRequestDownload = UrlBase + "{CompanyKey}/public/app_mobile_api/getDataDownload";
-    public static string UrlUpload = "";
+    public static string UrlUpload = UrlBase + "{CompanyKey}/public/app_mobile_api/setDataUpload";
     public static string UrlPagadito = "https://connect.pagadito.com";
 }
