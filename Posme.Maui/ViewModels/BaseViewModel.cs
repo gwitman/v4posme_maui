@@ -101,5 +101,9 @@ namespace Posme.Maui.ViewModels
             var changed = PropertyChanged;
             changed?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        protected Task OpenUrl(string url)
+        {
+            return Browser.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
+        }
     }
 }

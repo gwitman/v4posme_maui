@@ -1,4 +1,7 @@
-﻿using Posme.Maui.Services.Helpers;
+﻿using Newtonsoft.Json;
+using Posme.Maui.Models;
+using Posme.Maui.Services;
+using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Views;
 using Unity;
@@ -32,16 +35,21 @@ namespace Posme.Maui.ViewModels
 
         private async void OnRealizarPagoCommand(object obj)
         {
-            if (ValidateLogin())
+            if (!ValidateLogin())
             {
                 return;
             }
 
             var findUserRemember =
                 await _repositoryTbUser.PosMeFindUserByNicknameAndPassword(UserName!, Password!);
-            if (findUserRemember is not null)
+            if (findUserRemember is null) return;
+            await OpenUrl("https://www.google.com");
+            var realizarPago = new RealizarPagos();
+            var response = await realizarPago.GenerarUrl(new List<Api_AppMobileApi_GetDataDownloadItemsResponse>(), new TbTransactionMaster());
+            
+            if (response)
             {
-                
+                var apiResponse = JsonConvert.DeserializeObject<ApiPagaditoResponse>(realizarPago.Mensaje); 
             }
         }
 
@@ -86,6 +94,13 @@ namespace Posme.Maui.ViewModels
         }
 
         public Command RealizarPagoCommand { get; }
+        private decimal _montoSeleccionado;
+
+        public decimal MontoSeleccionado
+        {
+            get => _montoSeleccionado;
+            set => SetProperty(ref _montoSeleccionado, value);
+        }
 
         private async void OnLoginClicked()
         {
