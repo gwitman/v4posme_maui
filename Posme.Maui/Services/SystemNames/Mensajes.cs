@@ -13,6 +13,9 @@ public static class Mensajes
     public const string MensajeDownloadError = "No fue posible descargar los datos, revise su conexion a internet e intente nuevamente.";
     public const string MensajeDownloadSuccess = "Se han descargado los datos de forma correcta.";
     public const string MensajeDownloadCantidadTransacciones = "No puede realizar la descarga sin antes subir la información pendiente.";
+    public const string MensajeUploadCantidadTransacciones = "No puede realizar la subida de datos ya que no hay datos a subir.";
+    public const string MensajeUploadError = "No fue posible realizar la subida de datos debido a un error interno o perdida de conexión a internet.";
+    public const string MensajeUploadSuccess = "Se han subido los datos de forma correcta al servidor.";
     public const string MensajeParametrosGuardar = "Se han guardado los parametros de forma correcta";
     public const string MensajeDocumentCreditCustomerVacio = "No hay datos de facturación con el cliente seleccionado.";
     public const string MensajeDocumentCreditAmortizationVacio = "No hay datos de detalle para abono de factura con el documento seleccionado";

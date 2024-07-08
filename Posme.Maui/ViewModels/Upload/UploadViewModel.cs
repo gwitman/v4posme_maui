@@ -1,4 +1,8 @@
-﻿using Posme.Maui.Services.Api;
+﻿using System.Diagnostics;
+using Newtonsoft.Json;
+using Posme.Maui.Models;
+using Posme.Maui.Services.Api;
+using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
 using Unity;
@@ -11,10 +15,12 @@ public class UploadViewModel : BaseViewModel
     private readonly IRepositoryTbCustomer _repositoryTbCustomer;
     private readonly IRepositoryTbTransactionMaster _repositoryTbTransactionMaster;
     private readonly IRepositoryTbTransactionMasterDetail _repositoryTbTransactionMasterDetail;
+    private readonly HelperCore _helperContador;
 
     public UploadViewModel()
     {
-        Title = "Suibr Datos";
+        Title = "Subir Datos";
+        _helperContador = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
         _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
         _repositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
         _repositoryTbTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
@@ -25,8 +31,50 @@ public class UploadViewModel : BaseViewModel
 
     private async void OnUploadCommand()
     {
+        IsBusy = true;
+        var counter = await _helperContador.GetCounter();
+        if (counter == 0)
+        {
+            Mensaje = Mensajes.MensajeUploadCantidadTransacciones;
+            PopupBackgroundColor = Colors.Red;
+            PopUpShow = true;
+            IsBusy = !IsBusy;
+            return;
+        }
+
         var api = new RestApiAppMobileApi();
-        await api.SendDataAsync();
+        var response = await api.SendDataAsync();
+        Debug.WriteLine(response);
+        var jsonStartIndex = response.IndexOf('{');
+        var jsonResponse = response[jsonStartIndex..];
+        var apiResponse = JsonConvert.DeserializeObject<ApiUploadResponse>(jsonResponse);
+        if (apiResponse is not null)
+        {
+            if (apiResponse.Error)
+            {
+                Mensaje = $"{Mensajes.MensajeUploadError} {apiResponse.Message} ";
+                PopupBackgroundColor = Colors.Red;
+            }
+            else
+            {
+                Mensaje = Mensajes.MensajeUploadSuccess;
+                PopupBackgroundColor = Colors.Green;
+                await _repositoryItems.PosMeDeleteAll();
+                await _repositoryTbCustomer.PosMeDeleteAll();
+                await _repositoryTbTransactionMaster.PosMeDeleteAll();
+                await _repositoryTbTransactionMasterDetail.PosMeDeleteAll();
+            }
+
+            PopUpShow = true;
+            IsBusy = !IsBusy;
+        }
+        else
+        {
+            Mensaje = Mensajes.MensajeUploadError;
+            PopupBackgroundColor = Colors.Red;
+            PopUpShow = true;
+            IsBusy = !IsBusy;
+        }
     }
 
     private bool ValidateUpload()

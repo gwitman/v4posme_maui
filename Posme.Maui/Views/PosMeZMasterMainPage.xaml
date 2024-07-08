@@ -55,7 +55,7 @@
 
     <FlyoutItem Title="Subir" Icon="upload.svg">
 
-        <ShellContent Title="Inicio" Icon="basic_home.svg"
+        <ShellContent Title="Subir Datos" Icon="basic_home.svg"
                       ContentTemplate="{DataTemplate upload:UploadPage}" />
 
         <ShellContent Title="Abono" Icon="coin.svg"

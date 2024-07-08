@@ -97,6 +97,9 @@ public class RestApiAppMobileApi
     {
         try
         {
+            
+            var nickname = VariablesGlobales.User!.Nickname!;
+            var password = VariablesGlobales.User.Password!;
             var helper = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
             var findCustomers = await _repositoryTbCustomer.PosMeTakeModificados();
             var findItems = await _repositoryItems.PosMeTakeModificado();
@@ -109,16 +112,16 @@ public class RestApiAppMobileApi
                 { "ObjTransactionMaster", findTransactionMaster },
                 { "ObjTransactionMasterDetail", findTransactionMasterDetail }
             };
-            var jsonData = JsonConvert.SerializeObject(data);            
+            var jsonData = JsonConvert.SerializeObject(data);
             var nvc = new List<KeyValuePair<string, string>>
             {
-                new("txtNickname", ""),
-                new("txtPassword", ""),
+                new("txtNickname", nickname),
+                new("txtPassword", password),
                 new("txtData", jsonData)
             };
             var content = new FormUrlEncodedContent(nvc);
 
-            Constantes.UrlUpload = Constantes.UrlRequestDownload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
+            Constantes.UrlUpload = Constantes.UrlUpload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
             Constantes.UrlUpload = await helper.ParseUrl(Constantes.UrlUpload);
             var req = new HttpRequestMessage(HttpMethod.Post, Constantes.UrlUpload)
             {

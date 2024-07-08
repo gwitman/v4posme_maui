@@ -5,6 +5,7 @@
              xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
              xmlns:dx="clr-namespace:DevExpress.Maui.Core;assembly=DevExpress.Maui.Core"
              xmlns:upload="clr-namespace:Posme.Maui.ViewModels.Upload"
+             Title="{Binding Title}"
              x:Class="Posme.Maui.Views.Upload.UploadPage">
     <ContentPage.BindingContext>
         <upload:UploadViewModel/>
