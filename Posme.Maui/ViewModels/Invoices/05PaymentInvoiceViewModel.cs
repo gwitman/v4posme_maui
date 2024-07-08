@@ -1,4 +1,5 @@
-﻿using Posme.Maui.Models;
+﻿using CommunityToolkit.Maui.Core;
+using Posme.Maui.Models;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
@@ -35,8 +36,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
 
     private bool Validate()
     {
-        return decimal.Compare(Monto, decimal.Zero) <= 0
-            && ChkCheque || ChkCredito || ChkDebito || ChkEfectivo || ChkMonedero || _chkOtros;
+        return decimal.Compare(Monto, decimal.Zero) <= 0 || !ValidarSeleccionPago();
     }
 
     private void OnClearMontoCommand(object obj)
@@ -50,8 +50,18 @@ public class PaymentInvoiceViewModel : BaseViewModel
         return !Validate();
     }
 
+    private bool ValidarSeleccionPago()
+    {
+        return ChkCheque || ChkCredito || ChkDebito || ChkEfectivo || ChkMonedero || ChkOtros;
+    }
     private async void OnAplicarPagoCommand()
     {
+        if (!ValidarSeleccionPago())
+        {
+            ShowToast(Mensajes.MensajeSeleccionarTipoPago, ToastDuration.Long, 12);
+            return;
+        }
+
         IsBusy = true;
         var dtoInvoice = VariablesGlobales.DtoInvoice;
         var codigo = await _helper.GetCodigoFactura();
@@ -146,6 +156,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
 
     public string Moneda => VariablesGlobales.DtoInvoice.Currency!.Simbolo;
     public decimal Balance => VariablesGlobales.DtoInvoice.Balance;
+
     private bool _chkEfectivo;
 
     public bool ChkEfectivo
@@ -194,7 +205,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
         set => SetProperty(ref _chkOtros, value);
     }
 
-    private decimal _monto=VariablesGlobales.DtoInvoice.Balance;
+    private decimal _monto = VariablesGlobales.DtoInvoice.Balance;
 
     public decimal Monto
     {
@@ -221,8 +232,8 @@ public class PaymentInvoiceViewModel : BaseViewModel
     public Command SelectionMonederoCommand { get; }
     public Command SelectionChequeCommand { get; }
     public Command SelectionOtrosCommand { get; }
+    private TypePayment TypePayment { get; set; }
     private string? _pagarSeleccion;
-    public TypePayment TypePayment { get; set; }
 
     public string? PagarSeleccion
     {

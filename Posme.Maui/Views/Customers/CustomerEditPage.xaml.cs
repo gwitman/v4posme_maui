@@ -44,6 +44,7 @@ public partial class CustomerEditPage : ContentPage
         saveCustomer.Modificado = true;
         if (ViewModel.IsNew)
         {
+            saveCustomer.CustomerCreditLineId = 0;
             await RepositoryTbCustomer.PosMeInsert(saveCustomer);
         }
         else

@@ -30,7 +30,7 @@
                                 </StackLayout>
                                 <Label Text="Abonos Aplicados" FontSize="14" />
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="TOTAL: C$"
+                                    <Label Text="Monto Córdobas: C$"
                                            FontSize="12"
                                            FontAttributes="Bold"
                                            TextColor="Red" />
@@ -41,7 +41,7 @@
                                     <Label Text=" " />
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="TOTAL: $"
+                                    <Label Text="Monto Dólares: $"
                                            FontSize="12"
                                            FontAttributes="Bold"
                                            TextColor="Red" />
@@ -125,6 +125,38 @@
                             </StackLayout>
                         </Grid>
                     </core:DXBorder>
+                    <!-- TOTALES -->
+                    <Grid Padding="0" ColumnSpacing="25">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout 
+                            Grid.Column="1" 
+                            Margin="0,10,10,0"
+                            Spacing="0">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                                <Label Text="TOTAL: C$"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource Secondary}" />
+                                <Label Text="{Binding TotalCordobas,StringFormat='{0:N2}'}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource Secondary}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                                <Label Text="TOTAL: $"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource Secondary}" />
+                                <Label Text="{Binding TotalDolares,StringFormat='{0:N2}'}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource Secondary}" />
+                            </StackLayout>
+                        </StackLayout>
+                    </Grid>
                 </StackLayout>
             </ScrollView>
 

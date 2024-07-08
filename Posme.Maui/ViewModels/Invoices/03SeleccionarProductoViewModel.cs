@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
@@ -24,6 +25,11 @@ public class SeleccionarProductoViewModel : BaseViewModel
 
     private async void OnRevisarProductos(object obj)
     {
+        if (VariablesGlobales.DtoInvoice.Items.Count<=0)
+        {
+            ShowToast(Mensajes.MensajeSeleccionarProductos, ToastDuration.Long,12);
+            return;
+        }
         IsBusy = true;
         await NavigationService.NavigateToAsync<RevisarProductosSeleccionadosViewModel>();
         IsBusy = false;

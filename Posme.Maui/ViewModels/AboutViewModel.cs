@@ -18,6 +18,22 @@ namespace Posme.Maui.ViewModels
             _repositoryTbTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
         }
 
+        private decimal _totalCorodbas;
+
+        public decimal TotalCordobas
+        {
+            get => _totalCorodbas;
+            set => SetProperty(ref _totalCorodbas, value);
+        }
+
+        private decimal _totalDolares;
+
+        public decimal TotalDolares
+        {
+            get => _totalDolares;
+            set => SetProperty(ref _totalDolares, value);
+        }
+
         private int _cantidadAbonos;
 
         public int CantidadAbonos
@@ -142,7 +158,7 @@ namespace Posme.Maui.ViewModels
             }
 
             //Abonos
-            CantidadAbonos = listaAbonosCordobas.Count+listaAbonosDolares.Count;
+            CantidadAbonos = listaAbonosCordobas.Count + listaAbonosDolares.Count;
             MontoAbonosCordobas = listaAbonosCordobas.Sum(master => master.SubAmount);
             MontoAbonosDolares = listaAbonosDolares.Sum(master => master.SubAmount);
             //Facutras Contado
@@ -153,6 +169,9 @@ namespace Posme.Maui.ViewModels
             CantidadFacutrasCredito = listaFacturasCreditoCordobas.Count + listaFacturasCreditoDolares.Count;
             MontoFacturasCreditoCordobas = listaFacturasCreditoCordobas.Sum(master => master.SubAmount);
             MontoFacturasCreditoDolares = listaFacturasCreditoDolares.Sum(master => master.SubAmount);
+            //Totales
+            TotalCordobas = MontoAbonosCordobas + MontoFacturasContadoCordobas;
+            TotalDolares = MontoAbonosDolares + MontoFacturasContadoDolares;
             IsBusy = false;
         }
     }

@@ -28,7 +28,7 @@ public class RepositoryTbTransactionMaster(DataBase dataBase) : RepositoryFacade
                              tm.Reference2,
                              tm.Reference3
                      from tb_transaction_master tm
-                              join tb_customers c on tm.EntityId = c.EntityId
+                              join tb_customers c on tm.CustomerCreditLineId = c.CustomerCreditLineId and tm.EntityId=c.EntityId
                      where tm.TransactionId={(int)TypeTransaction.TransactionInvoiceBilling} and 
                            tm.TransactionNumber like '%{filter}%' or lower(c.FirstName) like '%{filter.ToLower()}%'
                      order by tm.TransactionOn DESC
@@ -58,7 +58,7 @@ public class RepositoryTbTransactionMaster(DataBase dataBase) : RepositoryFacade
                              tm.Reference2,
                              tm.Reference3
                      from tb_transaction_master tm
-                              join tb_customers c on tm.EntityId = c.EntityId
+                              join tb_customers c on tm.CustomerCreditLineId = c.CustomerCreditLineId and tm.EntityId=c.EntityId
                      where tm.TransactionId =? and tm.TransactionId={(int)TypeTransaction.TransactionShare} and
                            tm.TransactionNumber like '%{filter}%' or c.FirstName like '%{filter}%'
                      order by tm.TransactionOn DESC 

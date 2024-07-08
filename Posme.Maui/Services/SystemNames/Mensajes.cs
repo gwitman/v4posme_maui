@@ -32,4 +32,6 @@ public static class Mensajes
     public const string MensajeEspecificarDatosGuardar = "Debe especificar los datos a guardar";
     public const string MensajeCantidadImprimir = "Debe ser mayor a cero la cantidad a imprimir";
     public const string MensajeSinDatos = "No hay registros con el filtro indicado";
+    public const string MensajeSeleccionarTipoPago = "Debe seleccionar un tipo de pago para continuar";
+    public const string MensajeSeleccionarProductos = "Seleccione productos para continuar";
 }
