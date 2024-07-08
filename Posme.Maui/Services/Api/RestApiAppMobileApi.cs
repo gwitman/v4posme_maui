@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics;
+using System.Text;
 using Newtonsoft.Json;
 using Posme.Maui.Models;
-using Posme.Maui.Services.Repository;
-using Unity;
-using Posme.Maui.Services.SystemNames;
 using Posme.Maui.Services.Helpers;
+using Posme.Maui.Services.Repository;
+using Posme.Maui.Services.SystemNames;
+using Unity;
 
 namespace Posme.Maui.Services.Api;
 
@@ -12,21 +13,24 @@ public class RestApiAppMobileApi
 {
     private readonly HttpClient _httpClient = new();
 
-    private readonly IRepositoryTbCustomer? _repositoryTbCustomer =
+    private readonly IRepositoryTbCustomer _repositoryTbCustomer =
         VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
 
-    private readonly IRepositoryItems? _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
+    private readonly IRepositoryItems _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
 
-    private readonly IRepositoryParameters? _repositoryParameters =
+    private readonly IRepositoryParameters _repositoryParameters =
         VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
 
-    private readonly IRepositoryDocumentCreditAmortization? _repositoryDocumentCreditAmortization =
+    private readonly IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization =
         VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
 
-    private readonly IRepositoryDocumentCredit? _repositoryDocumentCredit =
+    private readonly IRepositoryDocumentCredit _repositoryDocumentCredit =
         VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
 
     private readonly IRepositoryTbCompany _repositoryTbCompany = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCompany>();
+
+    private readonly IRepositoryTbTransactionMaster _repositoryTbTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
+    private readonly IRepositoryTbTransactionMasterDetail _repositoryTbTransactionMasterDetail = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMasterDetail>();
 
     public async Task<bool> GetDataDownload()
     {
@@ -86,6 +90,45 @@ public class RestApiAppMobileApi
         {
             Debug.WriteLine(@"\tERROR {0}", ex.Message);
             return false;
+        }
+    }
+
+    public async Task<string> SendDataAsync()
+    {
+        try
+        {
+            var findCustomers = await _repositoryTbCustomer.PosMeTakeModificados();
+            var findItems = await _repositoryItems.PosMeTakeModificado();
+            var findTransactionMaster = await _repositoryTbTransactionMaster.PosMeFindAll();
+            var findTransactionMasterDetail = await _repositoryTbTransactionMasterDetail.PosMeFindAll();
+            var data = new Dictionary<string, object>
+            {
+                { "ObjCustomers", findCustomers },
+                { "ObjItems", findItems },
+                { "ObjTransactionMaster", findTransactionMaster },
+                { "ObjTransactionMasterDetail", findTransactionMasterDetail }
+            };
+            var jsonData = JsonConvert.SerializeObject(data);
+            //var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var nvc = new List<KeyValuePair<string, string>>
+            {
+                new("txtNickname", ""),
+                new("txtPassword", ""),
+                new("data", jsonData)
+            };
+            var content = new FormUrlEncodedContent(nvc);
+            var req = new HttpRequestMessage(HttpMethod.Post, Constantes.UrlUpload)
+            {
+                Content = content
+            };
+            var response = await _httpClient.SendAsync(req);
+            response.EnsureSuccessStatusCode();
+            var responseBody = await response.Content.ReadAsStringAsync();
+            return $"Éxito: {responseBody}";
+        }
+        catch (HttpRequestException ex)
+        {
+            return $"Error: {ex.Message}";
         }
     }
 }

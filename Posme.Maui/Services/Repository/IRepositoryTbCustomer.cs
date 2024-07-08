@@ -15,5 +15,8 @@ public interface IRepositoryTbCustomer : IRepositoryFacade<Api_AppMobileApi_GetD
     Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilterByCustomerInvoice(string search);
 
     Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeDescTake10();
+    
     Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeAscTake10();
+
+    Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeTakeModificados();
 }

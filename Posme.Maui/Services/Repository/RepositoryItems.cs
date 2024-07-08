@@ -44,9 +44,15 @@ public class RepositoryItems(DataBase dataBase)
 
     public Task<List<Api_AppMobileApi_GetDataDownloadItemsResponse>> PosMeDescending10()
     {
-        return dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadItemsResponse>()
+        return _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadItemsResponse>()
             .Take(10)
             .OrderByDescending(response => response.ItemNumber)
             .ToListAsync();
+    }
+
+    public Task<List<Api_AppMobileApi_GetDataDownloadItemsResponse>> PosMeTakeModificado()
+    {
+        return _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadItemsResponse>()
+            .Where(response => response.Modificado).ToListAsync();
     }
 }

@@ -74,4 +74,10 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<Api_AppM
             .Take(10)
             .ToListAsync();
     }
+
+    public Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeTakeModificados()
+    {
+        return _dataBase.Database.Table<Api_AppMobileApi_GetDataDownloadCustomerResponse>()
+            .Where(response => response.Modificado).ToListAsync();
+    }
 }
