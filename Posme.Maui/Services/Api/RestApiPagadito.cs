@@ -12,8 +12,8 @@ namespace Posme.Maui.Services.Api
         public string Mensaje { get; private set; } = string.Empty;
 
         public async Task<Api_Pagadito_Response_Exec?> GenerarUrl(string uidcommece, string awkcomerce, string urlcommerce,
-           string operationRequest, string operationExec, List<Api_AppMobileApi_GetDataDownloadItemsResponse> itemsResponses,
-           TbTransactionMaster transactionMaster)
+            string operationRequest, string operationExec, List<Api_AppMobileApi_GetDataDownloadItemsResponse> itemsResponses,
+            TbTransactionMaster transactionMaster)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace Posme.Maui.Services.Api
                     new("format_return", "json"),
                     new("operation", operationRequest)
                 };
-                var urlPagadito=await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_URL_PAGADITO");
+                var urlPagadito = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_URL_PAGADITO");
                 var req = new HttpRequestMessage(HttpMethod.Post, urlPagadito!.Value)
                 {
                     Content = new FormUrlEncodedContent(nvc)
@@ -46,11 +46,21 @@ namespace Posme.Maui.Services.Api
                 var listaDetails = new List<Detalle>();
                 foreach (var item in itemsResponses)
                 {
+                    var precio = decimal.Zero;
+                    if (transactionMaster.CurrencyId == TypeCurrency.Dolar)
+                    {
+                        precio = item.PrecioPublico * VariablesGlobales.TipoCambio;
+                    }
+                    else
+                    {
+                        precio = item.PrecioPublico;
+                    }
+
                     var detail = new Detalle
                     {
                         Quantity = item.Quantity,
                         Description = item.Name,
-                        Price = item.PrecioPublico,
+                        Price = precio,
                         UrlProduct = urlcommerce
                     };
                     listaDetails.Add(detail);
@@ -70,13 +80,23 @@ namespace Posme.Maui.Services.Api
                 var ern = $"{VariablesGlobales.CompanyKey}_{DateTime.Now:yyyyMMddHHmmss}";
                 var detallesJson = JsonConvert.SerializeObject(listaDetails);
                 var parametrosJson = JsonConvert.SerializeObject(customParam);
+                var amount = decimal.Zero;
+                if (transactionMaster.CurrencyId == TypeCurrency.Dolar)
+                {
+                    amount = transactionMaster.Amount * VariablesGlobales.TipoCambio;
+                }
+                else
+                {
+                    amount = transactionMaster.Amount;
+                }
+
                 var data = new List<KeyValuePair<string, string>>
                 {
                     new("operation", operationExec),
                     new("token", authToken.Value),
                     new("format_return", "json"),
                     new("ern", ern),
-                    new("amount", transactionMaster.Amount.ToString("N2")),
+                    new("amount", amount.ToString("N2")),
                     new("currency", simboloMoneda),
                     new("details", detallesJson),
                     new("custom_params", parametrosJson)

@@ -57,7 +57,7 @@ namespace Posme.Maui.ViewModels
             };
             var tm = new TbTransactionMaster
             {
-                Amount = MontoSeleccionado,
+                Amount = MontoSeleccionado*VariablesGlobales.TipoCambio,
                 CurrencyId = TypeCurrency.Cordoba
             };
             var uid = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO");
