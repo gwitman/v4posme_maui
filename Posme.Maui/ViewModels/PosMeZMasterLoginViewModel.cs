@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using CommunityToolkit.Maui.Core;
 using Newtonsoft.Json;
 using Posme.Maui.Models;
 using Posme.Maui.Services;
@@ -41,6 +42,11 @@ namespace Posme.Maui.ViewModels
                 return;
             }
 
+            if (decimal.Compare(MontoSeleccionado, decimal.Zero)<=0)
+            {
+                ShowToast(Mensajes.MensajeMontoMenorIgualCero,ToastDuration.Long,12);
+                return;
+            }
             IsBusy = true;
             VariablesGlobales.CompanyKey = Company!.ToLower();
             var findUserRemember =
