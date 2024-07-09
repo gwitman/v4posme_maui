@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
+using Posme.Maui.Services;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
@@ -114,6 +115,8 @@ public class PaymentInvoiceViewModel : BaseViewModel
         await _repositoryTbTransactionMasterDetail.PosMeInsertAll(listMasterDetail);
         await _helper.PlusCounter();
         VariablesGlobales.EnableBackButton = false;
+        VariablesGlobales.DtoInvoice.TipoPayment = TypePayment;
+        VariablesGlobales.DtoInvoice.TransactionMaster = transactionMaster;
         await Navigation!.PushAsync(new PrinterInvoicePage());
         IsBusy = false;
     }

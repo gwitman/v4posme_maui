@@ -40,19 +40,16 @@ namespace Posme.Maui.ViewModels
             {
                 return;
             }
+
             VariablesGlobales.CompanyKey = Company!.ToLower();
             var findUserRemember =
                 await _repositoryTbUser.PosMeFindUserByNicknameAndPassword(UserName!, Password!);
             if (findUserRemember is null) return;
-            //await OpenUrl("https://www.google.com");
             var realizarPago = new RealizarPagos();
-            //quantity 1
-            //licencia mobil
-            //precio precio seleccionado (mismo amount)
-            //url product http://posme.net
             var product = new List<Api_AppMobileApi_GetDataDownloadItemsResponse>
             {
-                new() {
+                new()
+                {
                     Quantity = 1,
                     Name = Constantes.DescripcionRealizarPago,
                     PrecioPublico = MontoSeleccionado
@@ -64,6 +61,10 @@ namespace Posme.Maui.ViewModels
                 CurrencyId = TypeCurrency.Cordoba
             };
             var response = await realizarPago.GenerarUrl(product, tm);
+            if (response is not null)
+            {
+                await OpenUrl(response.Value);
+            }
         }
 
         public Command LoginCommand { get; }
@@ -107,6 +108,7 @@ namespace Posme.Maui.ViewModels
         }
 
         public Command RealizarPagoCommand { get; }
+
         private decimal _montoSeleccionado;
 
         public decimal MontoSeleccionado

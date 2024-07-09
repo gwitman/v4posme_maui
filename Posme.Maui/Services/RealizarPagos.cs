@@ -16,13 +16,13 @@ public class RealizarPagos
     private readonly IRepositoryParameters _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
     public string Mensaje { get; private set; } = string.Empty;
 
-    public async Task<bool> GenerarUrl(List<Api_AppMobileApi_GetDataDownloadItemsResponse> itemsResponses, TbTransactionMaster transactionMaster)
+    public async Task<ApiPagaditoResponse?> GenerarUrl(List<Api_AppMobileApi_GetDataDownloadItemsResponse> itemsResponses, TbTransactionMaster transactionMaster)
     {
         try
         {
             var company = await _repositoryTbCompany.PosMeFindFirst();
             var client = new HttpClient();
-            
+
             //generar token
             var usuarioPagadito = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO");
             var passwordPagadito = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE");
@@ -41,33 +41,37 @@ public class RealizarPagos
             };
 
             var responseTokenMessage = await client.SendAsync(req);
-            if (!responseTokenMessage.IsSuccessStatusCode) return false;
+            if (!responseTokenMessage.IsSuccessStatusCode) return null;
             var responseBodyToken = await responseTokenMessage.Content.ReadAsStringAsync();
             var authToken = JsonConvert.DeserializeObject<ApiTokenPagadito>(responseBodyToken);
             if (authToken is null)
             {
                 Mensaje = Mensajes.AuthTokenError;
-                return false;
+                return null;
             }
-            var listaDetails = new List<Dictionary<string, object>>();
-            var details = new Dictionary<string, object>();
+
+            var listaDetails = new List<Detalle>();
+            //var details = new Dictionary<string, object>();
             foreach (var item in itemsResponses)
             {
-                details.Add("quantity", item.Quantity.ToString("N"));
-                details.Add("description", item.Name);
-                details.Add("price", item.PrecioPublico.ToString("N2"));
-                details.Add("url_product", "");
-                listaDetails.Add(details);
+                var detail = new Detalle
+                {
+                    Quantity = item.Quantity,
+                    Description = item.Name,
+                    Price = item.PrecioPublico,
+                    UrlProduct = "http://posme.net"
+                };
+                listaDetails.Add(detail);
             }
 
             var customParam = new Dictionary<string, string>
             {
                 { "param1", "value1" }
             };
-            var listParametros = new List<Dictionary<string, string>>
-            {
-                customParam
-            };
+            //var listParametros = new List<Dictionary<string, string>>
+            //{
+            //    customParam
+            //};
             var simboloMoneda = transactionMaster.CurrencyId switch
             {
                 TypeCurrency.Cordoba => Mensajes.MonedaCordoba,
@@ -79,10 +83,10 @@ public class RealizarPagos
             var parametrosJson = JsonConvert.SerializeObject(customParam);
             var data = new List<KeyValuePair<string, string>>
             {
-                new("operation", "f3f191ce3326905ff4403bb05b0de150"),
+                new("operation", "41216f8caf94aaa598db137e36d4673e"),
                 new("token", authToken.Value),
                 new("format_return", "json"),
-                new("ern", "123"),
+                new("ern", ern),
                 new("amount", transactionMaster.Amount.ToString("N2")),
                 new("currency", simboloMoneda),
                 new("details", detallesJson),
@@ -98,14 +102,15 @@ public class RealizarPagos
             response.EnsureSuccessStatusCode();
 
             Mensaje = await response.Content.ReadAsStringAsync();
-            return true;
+            return JsonConvert.DeserializeObject<ApiPagaditoResponse>(Mensaje);
         }
         catch (Exception e)
         {
             Mensaje = e.Message;
-            return false;
+            return null;
         }
     }
+
     private string GenerateBasicAuthToken(string username, string password)
     {
         var authToken = $"{username}:{password}";

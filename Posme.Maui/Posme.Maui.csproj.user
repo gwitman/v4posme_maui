@@ -3,9 +3,9 @@
   <PropertyGroup>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <!--<ActiveDebugFramework>net8.0-android</ActiveDebugFramework>-->
-    <ActiveDebugProfile>Medium Phone API 33 (Android 13.0 - API 33)</ActiveDebugProfile>
-    <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
-    <DefaultDevice>pixel_5_-_api_34</DefaultDevice>
+    <ActiveDebugProfile>Samsung SM-A145M (Android 13.0 - API 33)</ActiveDebugProfile>
+    <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
+    <DefaultDevice>Medium_Phone_API_33</DefaultDevice>
     <ActiveDebugFramework>net8.0-android</ActiveDebugFramework>
   </PropertyGroup>
 </Project>

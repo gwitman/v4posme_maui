@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Posme.Maui.Services.SystemNames;
 
 namespace Posme.Maui.Models;
 
@@ -42,6 +43,8 @@ public class ViewTempDtoInvoice
     public decimal Cambio { get; set; }
     public DateTime TransactionOn { get; set; }
     public int TransactionMasterId { get; set; }
+    public TypePayment TipoPayment { get; set; }
+    public TbTransactionMaster TransactionMaster { get; set; }
 
     public void ClearItems()
     {
