@@ -12,6 +12,7 @@ public static class VariablesGlobales
     public static ViewTempDtoAbono? DtoAplicarAbono;
     public static ViewTempDtoInvoice DtoInvoice;
     public static TbCompany? TbCompany=new();
+    public static decimal TipoCambio = new(36.5);
     static VariablesGlobales()
     {
         UnityContainer = new UnityContainer();

@@ -52,7 +52,7 @@ namespace Posme.Maui.ViewModels
                 {
                     Quantity = 1,
                     Name = Constantes.DescripcionRealizarPago,
-                    PrecioPublico = MontoSeleccionado
+                    PrecioPublico = MontoSeleccionado*VariablesGlobales.TipoCambio
                 }
             };
             var tm = new TbTransactionMaster
