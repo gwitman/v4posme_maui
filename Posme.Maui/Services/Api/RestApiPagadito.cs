@@ -1,39 +1,34 @@
-﻿using Posme.Maui.Models;
+﻿using Newtonsoft.Json;
+using Posme.Maui.Models;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
-using System.Text;
-using Newtonsoft.Json;
 using Unity;
 
 namespace Posme.Maui.Services.Api
 {
-    internal class RestApiPagadito
+    public class RestApiPagadito
     {
-
-        private readonly IRepositoryTbCompany _repositoryTbCompany = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCompany>();
         private readonly IRepositoryParameters _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
         public string Mensaje { get; private set; } = string.Empty;
 
-        public async Task<Api_Pagadito_Response_Exec?> GenerarUrl(string uidcommece,string awkcomerce,string urlcommerce, string List<Api_AppMobileApi_GetDataDownloadItemsResponse> itemsResponses, TbTransactionMaster transactionMaster)
+        public async Task<Api_Pagadito_Response_Exec?> GenerarUrl(string uidcommece, string awkcomerce, string urlcommerce,
+           string operationRequest, string operationExec, List<Api_AppMobileApi_GetDataDownloadItemsResponse> itemsResponses,
+           TbTransactionMaster transactionMaster)
         {
             try
             {
-                var company = await _repositoryTbCompany.PosMeFindFirst();
                 var client = new HttpClient();
 
                 //generar token
-                var usuarioPagadito = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO");
-                var passwordPagadito = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE");
-                var nickname = usuarioPagadito!.Value;
-                var password = passwordPagadito!.Value;
                 var nvc = new List<KeyValuePair<string, string>>
-            {
-                new("uid", nickname!),
-                new("wsk", password!),
-                new("format_return", "json"),
-                new("operation", "f3f191ce3326905ff4403bb05b0de150")
-            };
-                var req = new HttpRequestMessage(HttpMethod.Post, Constantes.UrlPagaditoToken)
+                {
+                    new("uid", uidcommece),
+                    new("wsk", awkcomerce),
+                    new("format_return", "json"),
+                    new("operation", operationRequest)
+                };
+                var urlPagadito=await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_URL_PAGADITO");
+                var req = new HttpRequestMessage(HttpMethod.Post, urlPagadito!.Value)
                 {
                     Content = new FormUrlEncodedContent(nvc)
                 };
@@ -48,7 +43,7 @@ namespace Posme.Maui.Services.Api
                     return null;
                 }
 
-                var listaDetails = new List<Detalle>();                
+                var listaDetails = new List<Detalle>();
                 foreach (var item in itemsResponses)
                 {
                     var detail = new Detalle
@@ -56,7 +51,7 @@ namespace Posme.Maui.Services.Api
                         Quantity = item.Quantity,
                         Description = item.Name,
                         Price = item.PrecioPublico,
-                        UrlProduct = "http://posme.net"
+                        UrlProduct = urlcommerce
                     };
                     listaDetails.Add(detail);
                 }
@@ -65,7 +60,7 @@ namespace Posme.Maui.Services.Api
                 {
                     { "param1", "value1" }
                 };
-             
+
                 var simboloMoneda = transactionMaster.CurrencyId switch
                 {
                     TypeCurrency.Cordoba => Mensajes.MonedaCordoba,
@@ -76,20 +71,20 @@ namespace Posme.Maui.Services.Api
                 var detallesJson = JsonConvert.SerializeObject(listaDetails);
                 var parametrosJson = JsonConvert.SerializeObject(customParam);
                 var data = new List<KeyValuePair<string, string>>
-            {
-                new("operation", "41216f8caf94aaa598db137e36d4673e"),
-                new("token", authToken.Value),
-                new("format_return", "json"),
-                new("ern", ern),
-                new("amount", transactionMaster.Amount.ToString("N2")),
-                new("currency", simboloMoneda),
-                new("details", detallesJson),
-                new("custom_params", parametrosJson)
-            };
+                {
+                    new("operation", operationExec),
+                    new("token", authToken.Value),
+                    new("format_return", "json"),
+                    new("ern", ern),
+                    new("amount", transactionMaster.Amount.ToString("N2")),
+                    new("currency", simboloMoneda),
+                    new("details", detallesJson),
+                    new("custom_params", parametrosJson)
+                };
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Post,
-                    RequestUri = new Uri(Constantes.UrlPagaditoToken),
+                    RequestUri = new Uri(urlPagadito.Value!),
                     Content = new FormUrlEncodedContent(data)
                 };
                 var response = await client.SendAsync(request);
@@ -104,14 +99,5 @@ namespace Posme.Maui.Services.Api
                 return null;
             }
         }
-
-        private string GenerateBasicAuthToken(string username, string password)
-        {
-            var authToken = $"{username}:{password}";
-            var base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authToken));
-            return base64Token;
-        }
-
     }
-
 }

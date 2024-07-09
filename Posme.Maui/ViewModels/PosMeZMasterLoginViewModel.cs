@@ -23,7 +23,7 @@ namespace Posme.Maui.ViewModels
         private bool _popupShow;
         private bool _remember;
         private readonly IRepositoryTbCompany _repositoryTbCompany;
-
+        private readonly IRepositoryParameters _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
         public PosMeZMasterLoginViewModel()
         {
             _repositoryTbUser = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbUser>();
@@ -60,7 +60,13 @@ namespace Posme.Maui.ViewModels
                 Amount = MontoSeleccionado,
                 CurrencyId = TypeCurrency.Cordoba
             };
-            var response = await realizarPago.GenerarUrl(product, tm);
+            var uid = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO");
+            var awk = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE");
+            //var urlCommerce = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE_COMMERCECLIENTE");
+            var operationRequest = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_OPERTATIONID_CONNECT");
+            var operationExec = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_OPERTATIONID_EXEC");
+            var response = await realizarPago.GenerarUrl(uid!.Value!, awk!.Value!,"http://posme.net",
+                operationRequest!.Value!,operationExec!.Value!,product, tm);
             if (response is not null)
             {
                 await OpenUrl(response.Value);

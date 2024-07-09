@@ -189,25 +189,6 @@ public class PrinterInvoiceViewModel : BaseViewModel
         CompanyRuc = await _repositoryParameters.PosMeFindByKey("CORE_COMPANY_IDENTIFIER");
         Company = VariablesGlobales.TbCompany;
         EnableBackButton = VariablesGlobales.EnableBackButton;
-        var dtoInvoice = VariablesGlobales.DtoInvoice;
-        if (VariablesGlobales.DtoInvoice.TipoPayment==TypePayment.TarjetaCredito 
-            || VariablesGlobales.DtoInvoice.TipoPayment==TypePayment.TarjetaDebito)
-        {
-            var realizarPago = new RestApiPagadito();
-            var response = await realizarPago.GenerarUrl(VariablesGlobales.DtoInvoice.Items.ToList(), dtoInvoice.TransactionMaster);
-            if (response is not null)
-            {
-                await Share.RequestAsync(new ShareTextRequest
-                {
-                    Uri = response.Value,
-                    Title = "Realizar pago de compras"
-                });
-            }
-            else
-            {
-                ShowToast(realizarPago.Mensaje, ToastDuration.Long, 12);
-            }
-        }
         IsBusy = false;
     }
 }

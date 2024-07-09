@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Maui.Core;
 using Posme.Maui.Models;
-using Posme.Maui.Services;
+using Posme.Maui.Services.Api;
 using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
@@ -15,6 +15,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
     private readonly IRepositoryTbTransactionMasterDetail _repositoryTbTransactionMasterDetail;
     private readonly IRepositoryTbTransactionMaster _repositoryTbTransactionMaster;
     private readonly IRepositoryItems _repositoryItems;
+    private readonly IRepositoryParameters _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
 
     public PaymentInvoiceViewModel()
     {
@@ -55,6 +56,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
     {
         return ChkCheque || ChkCredito || ChkDebito || ChkEfectivo || ChkMonedero || ChkOtros;
     }
+
     private async void OnAplicarPagoCommand()
     {
         if (!ValidarSeleccionPago())
@@ -263,11 +265,13 @@ public class PaymentInvoiceViewModel : BaseViewModel
         if (credito)
         {
             TypePayment = TypePayment.TarjetaCredito;
+            Shareurl();
         }
 
         if (debito)
         {
             TypePayment = TypePayment.TarjetaDebito;
+            Shareurl();
         }
 
         if (monedero)
@@ -290,5 +294,35 @@ public class PaymentInvoiceViewModel : BaseViewModel
     {
         Navigation = navigation;
         IsBusy = false;
+    }
+
+    private async void Shareurl()
+    {
+        var uid = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO_COMMERCECLIENT");
+        var awk = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE_COMMERCECLIENTE");
+        //var urlCommerce = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE_COMMERCECLIENTE");
+        var urlCommerce = "http://posme.net";
+        var operationRequest = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_OPERTATIONID_CONNECT");
+        var operationExec = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_OPERTATIONID_EXEC");
+        var realizarPago = new RestApiPagadito();
+        var tm = new TbTransactionMaster()
+        {
+            Amount = Monto,
+            CurrencyId = (TypeCurrency)VariablesGlobales.DtoInvoice.Currency!.Key
+        };
+        var response = await realizarPago.GenerarUrl(uid!.Value!, awk!.Value!,urlCommerce,
+            operationRequest!.Value!,operationExec!.Value!,VariablesGlobales.DtoInvoice.Items.ToList(), tm);
+        if (response is not null)
+        {
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Uri = response.Value,
+                Title = "Realizar pago de compras"
+            });
+        }
+        else
+        {
+            ShowToast(realizarPago.Mensaje, ToastDuration.Long, 12);
+        }
     }
 }
