@@ -40,4 +40,5 @@ public static class Mensajes
     public const string MonedaCordoba = "NIO";
     public const string MonedaDolar = "USD";
     public const string AuthTokenError = "No fue posible generar el token";
+    public const string MensajeCompania = "Debe especificar nombre de compañia";
 }

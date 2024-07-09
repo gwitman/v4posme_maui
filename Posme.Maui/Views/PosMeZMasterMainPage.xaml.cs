@@ -18,6 +18,7 @@ namespace Posme.Maui.Views
         
         void OnMenuItemClicked(object sender, EventArgs e)
         {
+            VariablesGlobales.CompanyKey = string.Empty;
             Application.Current!.MainPage = new LoginPage();
         }
     }

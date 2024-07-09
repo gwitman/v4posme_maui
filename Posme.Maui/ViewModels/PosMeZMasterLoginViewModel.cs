@@ -25,6 +25,7 @@ namespace Posme.Maui.ViewModels
         private bool _remember;
         private readonly IRepositoryTbCompany _repositoryTbCompany;
         private readonly IRepositoryParameters _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
+
         public PosMeZMasterLoginViewModel()
         {
             _repositoryTbUser = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbUser>();
@@ -37,21 +38,61 @@ namespace Posme.Maui.ViewModels
 
         private async void OnRealizarPagoCommand(object obj)
         {
+            if (string.IsNullOrWhiteSpace(Company))
+            {
+                ShowToast(Mensajes.MensajeCompania, ToastDuration.Long, 12);
+            }
+
             if (!ValidateLogin())
             {
                 return;
             }
 
-            if (decimal.Compare(MontoSeleccionado, decimal.Zero)<=0)
+
+            if (decimal.Compare(MontoSeleccionado, decimal.Zero) <= 0)
             {
-                ShowToast(Mensajes.MensajeMontoMenorIgualCero,ToastDuration.Long,12);
+                ShowToast(Mensajes.MensajeMontoMenorIgualCero, ToastDuration.Long, 12);
                 return;
             }
+
             await Navigation!.PushModalAsync(new LoadingPage());
             VariablesGlobales.CompanyKey = Company!.ToLower();
             var findUserRemember =
                 await _repositoryTbUser.PosMeFindUserByNicknameAndPassword(UserName!, Password!);
-            if (findUserRemember is null) return;
+            if (Remember)
+            {
+                var response = await _restServiceUser.LoginMobile(UserName!, Password!);
+                if (!response)
+                {
+                    Mensaje = Mensajes.MensajeCredencialesInvalida;
+                    PopupShow = true;
+                    await Navigation.PopModalAsync();
+                    return;
+                }
+
+                PopupShow = false;
+            }
+            else
+            {
+                if (await _repositoryTbUser.PosMeRowCount() <= 0)
+                {
+                    Mensaje = Mensajes.MensajeSinDatosTabla;
+                    MensajeCommand.Execute(null);
+                    PopupShow = true;
+                    await Navigation.PopModalAsync();
+                    return;
+                }
+
+                if (findUserRemember is null)
+                {
+                    Mensaje = Mensajes.MensajeCredencialesInvalida;
+                    MensajeCommand.Execute(null);
+                    PopupShow = true;
+                    await Navigation.PopModalAsync();
+                    return;
+                }
+            }
+
             var realizarPago = new RestApiPagadito();
             var product = new List<Api_AppMobileApi_GetDataDownloadItemsResponse>
             {
@@ -59,23 +100,33 @@ namespace Posme.Maui.ViewModels
                 {
                     Quantity = 1,
                     Name = Constantes.DescripcionRealizarPago,
-                    PrecioPublico = MontoSeleccionado*VariablesGlobales.TipoCambio
+                    PrecioPublico = MontoSeleccionado * VariablesGlobales.TipoCambio
                 }
             };
             var tm = new TbTransactionMaster
             {
-                Amount = MontoSeleccionado*VariablesGlobales.TipoCambio,
+                Amount = MontoSeleccionado * VariablesGlobales.TipoCambio,
                 CurrencyId = TypeCurrency.Cordoba
             };
-            var uid = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO");
-            var awk = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE");            
-            var operationRequest = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_OPERTATIONID_CONNECT");
-            var operationExec = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_OPERTATIONID_EXEC");
-            var response = await realizarPago.GenerarUrl(uid!.Value!, awk!.Value!,"http://posme.net",
-                operationRequest!.Value!,operationExec!.Value!,product, tm);
-            if (response is not null)
+
+            try
             {
-                await OpenUrl(response.Value);
+                var uid = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO");
+                var awk = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE");
+                var operationRequest = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_OPERTATIONID_CONNECT");
+                var operationExec = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_OPERTATIONID_EXEC");
+                var responseUrlPago = await realizarPago.GenerarUrl(uid!.Value!, awk!.Value!, "http://posme.net",
+                    operationRequest!.Value!, operationExec!.Value!, product, tm);
+                if (responseUrlPago is not null)
+                {
+                    await OpenUrl(responseUrlPago.Value);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                Mensaje = Mensajes.MensajeCredencialesInvalida;
+                PopupShow = true;
             }
 
             await Navigation.PopModalAsync();
