@@ -37,4 +37,6 @@ public static class Mensajes
     public const string MensajeSinDatos = "No hay registros con el filtro indicado";
     public const string MensajeSeleccionarTipoPago = "Debe seleccionar un tipo de pago para continuar";
     public const string MensajeSeleccionarProductos = "Seleccione productos para continuar";
+    public const string MonedaCordoba = "NIO";
+    public const string MonedaDolar = "USD";
 }

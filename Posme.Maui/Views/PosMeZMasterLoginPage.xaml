@@ -80,6 +80,7 @@
         <dxe:ComboBoxEdit
             IsEnabled="{Binding OpcionPagar}"
             PickerShowMode="Popup"
+            SelectedItem="{Binding MontoSeleccionado}"
             StartIcon="money.svg">
             <dxe:ComboBoxEdit.ItemsSource>
                 <x:Array Type="{x:Type x:Decimal}">

@@ -44,10 +44,7 @@ public class UploadViewModel : BaseViewModel
 
         var api = new RestApiAppMobileApi();
         var response = await api.SendDataAsync();
-        Debug.WriteLine(response);
-        var jsonStartIndex = response.IndexOf('{');
-        var jsonResponse = response[jsonStartIndex..];
-        var apiResponse = JsonConvert.DeserializeObject<Api_AppMobileApi_SetDataUploadResponse>(jsonResponse);
+        var apiResponse = JsonConvert.DeserializeObject<Api_AppMobileApi_SetDataUploadResponse>(response);
         if (apiResponse is not null)
         {
             if (apiResponse.Error)

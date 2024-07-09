@@ -130,7 +130,7 @@ public class RestApiAppMobileApi
             var response = await _httpClient.SendAsync(req);
             response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
-            return $"Éxito: {responseBody}";
+            return responseBody;
         }
         catch (HttpRequestException ex)
         {

@@ -1,4 +1,8 @@
-﻿using Posme.Maui.Services.Helpers;
+﻿using System.Diagnostics;
+using Newtonsoft.Json;
+using Posme.Maui.Models;
+using Posme.Maui.Services;
+using Posme.Maui.Services.Helpers;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Views;
 using Unity;
@@ -32,17 +36,35 @@ namespace Posme.Maui.ViewModels
 
         private async void OnRealizarPagoCommand(object obj)
         {
-            if (ValidateLogin())
+            if (!ValidateLogin())
             {
                 return;
             }
 
             var findUserRemember =
                 await _repositoryTbUser.PosMeFindUserByNicknameAndPassword(UserName!, Password!);
-            if (findUserRemember is not null)
+            if (findUserRemember is null) return;
+            //await OpenUrl("https://www.google.com");
+            var realizarPago = new RealizarPagos();
+            //quantity 1
+            //licencia mobil
+            //precio precio seleccionado (mismo amount)
+            //url product http://posme.net
+            var product = new List<Api_AppMobileApi_GetDataDownloadItemsResponse>
             {
-                
-            }
+                new() {
+                    Quantity = 1,
+                    Name = Constantes.DescripcionRealizarPago,
+                    PrecioPublico = MontoSeleccionado
+                }
+            };
+            var tm = new TbTransactionMaster
+            {
+                Amount = MontoSeleccionado,
+                CurrencyId = TypeCurrency.Cordoba
+            };
+            //var response = await realizarPago.GenerarUrl(product, tm);
+             await realizarPago.ExecuteTransactionAsync();
         }
 
         public Command LoginCommand { get; }
@@ -86,6 +108,13 @@ namespace Posme.Maui.ViewModels
         }
 
         public Command RealizarPagoCommand { get; }
+        private decimal _montoSeleccionado;
+
+        public decimal MontoSeleccionado
+        {
+            get => _montoSeleccionado;
+            set => SetProperty(ref _montoSeleccionado, value);
+        }
 
         private async void OnLoginClicked()
         {
