@@ -47,7 +47,7 @@ public class UploadViewModel : BaseViewModel
         Debug.WriteLine(response);
         var jsonStartIndex = response.IndexOf('{');
         var jsonResponse = response[jsonStartIndex..];
-        var apiResponse = JsonConvert.DeserializeObject<ApiUploadResponse>(jsonResponse);
+        var apiResponse = JsonConvert.DeserializeObject<Api_AppMobileApi_SetDataUploadResponse>(jsonResponse);
         if (apiResponse is not null)
         {
             if (apiResponse.Error)
