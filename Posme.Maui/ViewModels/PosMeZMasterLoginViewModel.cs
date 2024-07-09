@@ -61,8 +61,7 @@ namespace Posme.Maui.ViewModels
                 CurrencyId = TypeCurrency.Cordoba
             };
             var uid = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO");
-            var awk = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE");
-            //var urlCommerce = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE_COMMERCECLIENTE");
+            var awk = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE");            
             var operationRequest = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_OPERTATIONID_CONNECT");
             var operationExec = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_OPERTATIONID_EXEC");
             var response = await realizarPago.GenerarUrl(uid!.Value!, awk!.Value!,"http://posme.net",
