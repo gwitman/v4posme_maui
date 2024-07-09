@@ -41,6 +41,7 @@ namespace Posme.Maui.ViewModels
                 return;
             }
 
+            IsBusy = true;
             VariablesGlobales.CompanyKey = Company!.ToLower();
             var findUserRemember =
                 await _repositoryTbUser.PosMeFindUserByNicknameAndPassword(UserName!, Password!);
@@ -70,6 +71,8 @@ namespace Posme.Maui.ViewModels
             {
                 await OpenUrl(response.Value);
             }
+
+            IsBusy = false;
         }
 
         public Command LoginCommand { get; }
