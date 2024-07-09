@@ -22,55 +22,80 @@ public class RealizarPagos
         {
             var company = await _repositoryTbCompany.PosMeFindFirst();
             var client = new HttpClient();
+            
+            //generar token
+            var usuarioPagadito = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO");
+            var passwordPagadito = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE");
+            var nickname = usuarioPagadito!.Value;
+            var password = passwordPagadito!.Value;
+            var nvc = new List<KeyValuePair<string, string>>
+            {
+                new("uid", nickname!),
+                new("wsk", password!),
+                new("format_return", "json"),
+                new("operation", "f3f191ce3326905ff4403bb05b0de150")
+            };
+            var req = new HttpRequestMessage(HttpMethod.Post, Constantes.UrlPagaditoToken)
+            {
+                Content = new FormUrlEncodedContent(nvc)
+            };
+
+            var responseTokenMessage = await client.SendAsync(req);
+            if (!responseTokenMessage.IsSuccessStatusCode) return false;
+            var responseBodyToken = await responseTokenMessage.Content.ReadAsStringAsync();
+            var authToken = JsonConvert.DeserializeObject<ApiTokenPagadito>(responseBodyToken);
+            if (authToken is null)
+            {
+                Mensaje = Mensajes.AuthTokenError;
+                return false;
+            }
+            var listaDetails = new List<Dictionary<string, object>>();
             var details = new Dictionary<string, object>();
-            var listaDetails = new List<object>();
-            var username = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO");
-            var password = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE");
-            var authToken = Encoding.UTF8.GetBytes($"{username!.Value}:{password!.Value}");
             foreach (var item in itemsResponses)
             {
-                details.Add("quantity", item.Quantity);
+                details.Add("quantity", item.Quantity.ToString("N"));
                 details.Add("description", item.Name);
-                details.Add("price", item.PrecioPublico);
+                details.Add("price", item.PrecioPublico.ToString("N2"));
+                details.Add("url_product", "");
                 listaDetails.Add(details);
             }
 
-            var customParam = new Dictionary<string, string>();
-
+            var customParam = new Dictionary<string, string>
+            {
+                { "param1", "value1" }
+            };
+            var listParametros = new List<Dictionary<string, string>>
+            {
+                customParam
+            };
             var simboloMoneda = transactionMaster.CurrencyId switch
             {
                 TypeCurrency.Cordoba => Mensajes.MonedaCordoba,
                 TypeCurrency.Dolar => Mensajes.MonedaDolar,
                 _ => ""
             };
-            var token = Convert.ToBase64String(authToken);
             var ern = $"{VariablesGlobales.CompanyKey}_{DateTime.Now:yyyyMMddHHmmss}";
-            var data = new Dictionary<string, object>
+            var detallesJson = JsonConvert.SerializeObject(listaDetails);
+            var parametrosJson = JsonConvert.SerializeObject(customParam);
+            var data = new List<KeyValuePair<string, string>>
             {
-                { "ern", ern },
-                { "amount", transactionMaster.Amount },
-                { "currency", simboloMoneda },
-                { "extended_expiration", false },
-                { "details", listaDetails }
+                new("operation", "f3f191ce3326905ff4403bb05b0de150"),
+                new("token", authToken.Value),
+                new("format_return", "json"),
+                new("ern", "123"),
+                new("amount", transactionMaster.Amount.ToString("N2")),
+                new("currency", simboloMoneda),
+                new("details", detallesJson),
+                new("custom_params", parametrosJson)
             };
-            var jsonData = JsonConvert.SerializeObject(data);
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri(Constantes.UrlPagadito),
-                Content = content
+                RequestUri = new Uri(Constantes.UrlPagaditoToken),
+                Content = new FormUrlEncodedContent(data)
             };
-
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", token);
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-            if (response.StatusCode != HttpStatusCode.OK)
-            {
-                Mensaje = response.StatusCode.ToString();
-                return false;
-            }
 
             Mensaje = await response.Content.ReadAsStringAsync();
             return true;
@@ -81,67 +106,10 @@ public class RealizarPagos
             return false;
         }
     }
-
-    public async Task<string> ExecuteTransactionAsync()
+    private string GenerateBasicAuthToken(string username, string password)
     {
-        var httpClient = new HttpClient();
-        var url = "https://connect.pagadito.com/api/v2/exec-trans";
-
-        var content = new
-        {
-            ern = "PG-0001",
-            amount = 10,
-            currency = "USD",
-            extended_expiration = false,
-            details = new[]
-            {
-                new
-                {
-                    quantity = 1,
-                    description = "Product 1",
-                    price = 10,
-                    url_product = "http://www.example.com/product1"
-                }
-            },
-            custom_params = new
-            {
-                param1 = "value1",
-                param2 = "value2",
-                param3 = "value3"
-            }
-        };
-
-        var jsonContent = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
-
-        var request = new HttpRequestMessage
-        {
-            Method = HttpMethod.Post,
-            RequestUri = new Uri(url),
-            Content = jsonContent
-        };
-
-        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        request.Headers.Authorization = new AuthenticationHeaderValue("Basic", "N2J1NjI1NWI2OWVkNmNhYzQ5ZGUyOWJkMzZmNDY2NWU6MTJlZjA0ZTcxOTdjMDAxYjY2OTIwNzY3ZmFjNjNjNDY=");
-        request.Headers.Add("X-CSRF-TOKEN", string.Empty);
-
-        try
-        {
-            var response = await httpClient.SendAsync(request);
-            var resultContent = await response.Content.ReadAsStringAsync();
-            if (!response.IsSuccessStatusCode)
-            {
-                Debug.WriteLine($"Error: {response.StatusCode}");
-                Debug.WriteLine($"Response: {resultContent}");
-                return resultContent;
-            }
-
-            Debug.WriteLine(resultContent);
-            return resultContent;
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"Exception: {ex.Message}");
-            return ex.Message;
-        }
+        var authToken = $"{username}:{password}";
+        var base64Token = Convert.ToBase64String(Encoding.UTF8.GetBytes(authToken));
+        return base64Token;
     }
 }

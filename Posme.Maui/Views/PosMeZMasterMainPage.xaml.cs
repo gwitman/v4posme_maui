@@ -12,7 +12,6 @@ namespace Posme.Maui.Views
             Navigated += (sender, e) =>
             {
                 var current = e.Current?.Location?.ToString();
-                VariablesGlobales.PagePrincipalNavegacion = current;
                 Debug.WriteLine($"Current tab: {current}");
             };
         }

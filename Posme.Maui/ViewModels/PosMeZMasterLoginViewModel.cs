@@ -40,7 +40,7 @@ namespace Posme.Maui.ViewModels
             {
                 return;
             }
-
+            VariablesGlobales.CompanyKey = Company!.ToLower();
             var findUserRemember =
                 await _repositoryTbUser.PosMeFindUserByNicknameAndPassword(UserName!, Password!);
             if (findUserRemember is null) return;
@@ -63,8 +63,7 @@ namespace Posme.Maui.ViewModels
                 Amount = MontoSeleccionado,
                 CurrencyId = TypeCurrency.Cordoba
             };
-            //var response = await realizarPago.GenerarUrl(product, tm);
-             await realizarPago.ExecuteTransactionAsync();
+            var response = await realizarPago.GenerarUrl(product, tm);
         }
 
         public Command LoginCommand { get; }

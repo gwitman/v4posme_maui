@@ -20,6 +20,7 @@ public static class Constantes
     public static string UrlRequestDownload = UrlBase + "{CompanyKey}/public/app_mobile_api/getDataDownload";
     public static string UrlUpload = UrlBase + "{CompanyKey}/public/app_mobile_api/setDataUpload";
     public const string UrlPagadito = "https://connect.pagadito.com/api/v2/exec-trans";
+    public const string UrlPagaditoToken = "https://comercios.pagadito.com/apipg/charges.php";
     public const string TokenPagadito = "";
     public const string DescripcionRealizarPago = "LICENCIA MOBIL";
 }
