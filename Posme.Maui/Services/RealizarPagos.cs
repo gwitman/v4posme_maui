@@ -16,7 +16,7 @@ public class RealizarPagos
     private readonly IRepositoryParameters _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
     public string Mensaje { get; private set; } = string.Empty;
 
-    public async Task<ApiPagaditoResponse?> GenerarUrl(List<Api_AppMobileApi_GetDataDownloadItemsResponse> itemsResponses, TbTransactionMaster transactionMaster)
+    public async Task<Api_Pagadito_Response_Exec?> GenerarUrl(List<Api_AppMobileApi_GetDataDownloadItemsResponse> itemsResponses, TbTransactionMaster transactionMaster)
     {
         try
         {
@@ -43,7 +43,7 @@ public class RealizarPagos
             var responseTokenMessage = await client.SendAsync(req);
             if (!responseTokenMessage.IsSuccessStatusCode) return null;
             var responseBodyToken = await responseTokenMessage.Content.ReadAsStringAsync();
-            var authToken = JsonConvert.DeserializeObject<ApiTokenPagadito>(responseBodyToken);
+            var authToken = JsonConvert.DeserializeObject<Api_Pagadito_Response_TokenPagadito>(responseBodyToken);
             if (authToken is null)
             {
                 Mensaje = Mensajes.AuthTokenError;
@@ -102,7 +102,7 @@ public class RealizarPagos
             response.EnsureSuccessStatusCode();
 
             Mensaje = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<ApiPagaditoResponse>(Mensaje);
+            return JsonConvert.DeserializeObject<Api_Pagadito_Response_Exec>(Mensaje);
         }
         catch (Exception e)
         {
