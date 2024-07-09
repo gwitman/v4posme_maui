@@ -298,6 +298,11 @@ public class PaymentInvoiceViewModel : BaseViewModel
 
     private async void Shareurl()
     {
+        if (decimal.Compare(Monto, decimal.Zero)<=0)
+        {
+            ShowToast(Mensajes.MensajeMontoMenorIgualCero,ToastDuration.Long,12);
+            return;
+        }
         IsBusy = true;
         var uid = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO_COMMERCECLIENT");
         var awk = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE_COMMERCECLIENTE");        

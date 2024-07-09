@@ -47,7 +47,7 @@ namespace Posme.Maui.ViewModels
                 ShowToast(Mensajes.MensajeMontoMenorIgualCero,ToastDuration.Long,12);
                 return;
             }
-            IsBusy = true;
+            await Navigation!.PushModalAsync(new LoadingPage());
             VariablesGlobales.CompanyKey = Company!.ToLower();
             var findUserRemember =
                 await _repositoryTbUser.PosMeFindUserByNicknameAndPassword(UserName!, Password!);
@@ -78,7 +78,7 @@ namespace Posme.Maui.ViewModels
                 await OpenUrl(response.Value);
             }
 
-            IsBusy = false;
+            await Navigation.PopModalAsync();
         }
 
         public Command LoginCommand { get; }
