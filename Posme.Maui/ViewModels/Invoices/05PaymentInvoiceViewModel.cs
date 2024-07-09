@@ -298,6 +298,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
 
     private async void Shareurl()
     {
+        IsBusy = true;
         var uid = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_USUARIO_COMMERCECLIENT");
         var awk = await _repositoryParameters.PosMeFindByKey("CORE_PAYMENT_PRODUCCION_CLAVE_COMMERCECLIENTE");        
         var urlCommerce = "http://posme.net";
@@ -311,6 +312,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
         };
         var response = await realizarPago.GenerarUrl(uid!.Value!, awk!.Value!,urlCommerce,
             operationRequest!.Value!,operationExec!.Value!,VariablesGlobales.DtoInvoice.Items.ToList(), tm);
+        IsBusy = false;
         if (response is not null)
         {
             await Share.RequestAsync(new ShareTextRequest
