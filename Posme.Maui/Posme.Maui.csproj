@@ -198,7 +198,6 @@
 
 
     <ItemGroup>
-      <Folder Include="Services\Api\" />
       <Folder Include="Services\SystemNames\" />
     </ItemGroup>
 </Project>

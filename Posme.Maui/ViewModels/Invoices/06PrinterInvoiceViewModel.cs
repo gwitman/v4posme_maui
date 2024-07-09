@@ -4,6 +4,7 @@ using Plugin.BLE;
 using Posme.Maui.Models;
 using Posme.Maui.Services;
 using Posme.Maui.Services.HelpersPrinters;
+using Posme.Maui.Services.Api;
 using Posme.Maui.Services.Repository;
 using Posme.Maui.Services.SystemNames;
 using SkiaSharp;
@@ -192,7 +193,7 @@ public class PrinterInvoiceViewModel : BaseViewModel
         if (VariablesGlobales.DtoInvoice.TipoPayment==TypePayment.TarjetaCredito 
             || VariablesGlobales.DtoInvoice.TipoPayment==TypePayment.TarjetaDebito)
         {
-            var realizarPago = new RealizarPagos();
+            var realizarPago = new RestApiPagadito();
             var response = await realizarPago.GenerarUrl(VariablesGlobales.DtoInvoice.Items.ToList(), dtoInvoice.TransactionMaster);
             if (response is not null)
             {

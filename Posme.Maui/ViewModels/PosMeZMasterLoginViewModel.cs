@@ -45,7 +45,7 @@ namespace Posme.Maui.ViewModels
             var findUserRemember =
                 await _repositoryTbUser.PosMeFindUserByNicknameAndPassword(UserName!, Password!);
             if (findUserRemember is null) return;
-            var realizarPago = new RealizarPagos();
+            var realizarPago = new RestApiPagadito();
             var product = new List<Api_AppMobileApi_GetDataDownloadItemsResponse>
             {
                 new()
