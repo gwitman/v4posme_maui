@@ -100,4 +100,12 @@ public class HelperCore(IRepositoryTbParameterSystem repositoryParameters)
             return "";
         }
     }
+
+    public async Task ZeroCounter()
+    {
+        var find = await repositoryParameters.PosMeFindCounter();
+        var value = 0;
+        find.Value = $"{value}";
+        await repositoryParameters.PosMeUpdate(find);
+    }
 }

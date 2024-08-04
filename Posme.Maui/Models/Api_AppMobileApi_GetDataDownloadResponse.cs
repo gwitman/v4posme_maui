@@ -113,73 +113,74 @@ public class Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse
 public class Api_AppMobileApi_GetDataDownloadItemsResponse : BindableBase
 {
     [PrimaryKey, AutoIncrement]
-    [DataMember]
     public int ItemPk
     {
         get => GetValue<int>();
         set => SetValue(value);
     }
 
-    [DataMember]
+    [DataMember(Name = "itemID")]
     public int ItemId
     {
         get => GetValue<int>();
         set => SetValue(value);
     }
 
-    [DataMember]
+    [DataMember(Name = "barCode")]
     public string BarCode
     {
         get => GetValue<string>();
         set => SetValue(value);
     }
 
-    [DataMember]
+    [DataMember(Name = "itemNumber")]
     public string? ItemNumber
     {
         get => GetValue<string>();
         set => SetValue(value);
     }
 
-    [DataMember]
+    [DataMember(Name = "name")]
     public string Name
     {
         get => GetValue<string>();
         set => SetValue(value);
     }
 
-    [DataMember]
+    [DataMember(Name ="quantity")]
     public decimal Quantity
     {
         get => GetValue<decimal>();
         set => SetValue(value);
     }
 
-    [DataMember]
+    [DataMember(Name = "precioPublico")]
     public decimal PrecioPublico
     {
         get => GetValue<decimal>();
         set => SetValue(value);
     }
-
+    [DataMember(Name = "cantidadEntradas")]
     public decimal CantidadEntradas
     {
         get => GetValue<decimal>();
         set => SetValue(value);
     }
 
+    [DataMember(Name = "cantidadSalidas")]
     public decimal CantidadSalidas
     {
         get => GetValue<decimal>();
         set => SetValue(value);
     }
 
+    [DataMember(Name = "cantidadFinal")]
     public decimal CantidadFinal
     {
         get => GetValue<decimal>();
         set => SetValue(value);
     }
-
+    
     public bool Modificado { get; set; }
 
     /*

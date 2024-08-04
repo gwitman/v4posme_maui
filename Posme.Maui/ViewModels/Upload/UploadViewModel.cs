@@ -60,6 +60,7 @@ public class UploadViewModel : BaseViewModel
                 await _repositoryTbCustomer.PosMeDeleteAll();
                 await _repositoryTbTransactionMaster.PosMeDeleteAll();
                 await _repositoryTbTransactionMasterDetail.PosMeDeleteAll();
+                await _helperContador.ZeroCounter();
             }
 
             PopUpShow = true;
