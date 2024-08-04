@@ -23,6 +23,16 @@
         <UseInterpreter Condition="$(TargetFramework.Contains('-ios')) AND '$(Configuration)' == 'Release'">True</UseInterpreter>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
+      <AndroidUseAapt2>True</AndroidUseAapt2>
+      <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+      <AndroidPackageFormat>aab</AndroidPackageFormat>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
+      <AndroidLinkTool>r8</AndroidLinkTool>
+    </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundScale="0.65" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#FFF" />
