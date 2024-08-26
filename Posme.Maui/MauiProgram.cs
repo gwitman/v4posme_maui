@@ -25,9 +25,15 @@ namespace Posme.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseSkiaSharp()                
-                .UseMauiCommunityToolkit()
                 .UseDevExpress(useLocalization: true)
+                .UseDevExpressDataGrid()
+                .UseDevExpressCollectionView()
+                .UseDevExpressEditors()
+                .UseDevExpressScheduler()
+                .UseDevExpressCharts()
+                .UseDevExpressControls()
+                .UseSkiaSharp()
+                .UseMauiCommunityToolkit()
                 .UseBarcodeReader()
                 .ConfigureFonts(fonts =>
                 {

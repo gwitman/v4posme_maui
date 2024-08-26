@@ -3,9 +3,13 @@
   <PropertyGroup>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <!--<ActiveDebugFramework>net8.0-android</ActiveDebugFramework>-->
-    <ActiveDebugProfile>Medium Phone API 33 (Android 13.0 - API 33)</ActiveDebugProfile>
+    <ActiveDebugProfile>Pixel 5 - API 34 (Android 14.0 - API 34)</ActiveDebugProfile>
     <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
-    <DefaultDevice>Medium_Phone_API_33</DefaultDevice>
-    <ActiveDebugFramework>net8.0-android</ActiveDebugFramework>
+    <DefaultDevice>pixel_5_-_api_34</DefaultDevice>
+    <ActiveDebugFramework>net8.0-android34.0</ActiveDebugFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetPlatformIdentifier)'=='iOS'">
+    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+    <PlatformTarget>arm64</PlatformTarget>
   </PropertyGroup>
 </Project>

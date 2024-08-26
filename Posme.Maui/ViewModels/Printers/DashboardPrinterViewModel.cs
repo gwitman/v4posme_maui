@@ -333,7 +333,7 @@ public class DashboardPrinterViewModel : BaseViewModel
             var findTransactionMasterDetails = await _repositoryTbTransactionMasterDetail.PosMeItemByTransactionId(master.TransactionMasterId);
             foreach (var detail in findTransactionMasterDetails)
             {
-                var findItem = await _repositoryItems.PosMeFindByItemId(detail.ComponentItemid);
+                var findItem = await _repositoryItems.PosMeFindByItemId(detail.ComponentItemId);
                 findItem.Importe = detail.SubAmount;
                 findItem.Quantity = detail.Quantity;
                 findItem.PrecioPublico = detail.UnitaryPrice;

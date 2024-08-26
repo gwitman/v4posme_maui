@@ -96,7 +96,8 @@ public class AplicarAbonoViewModel : BaseViewModel, IQueryAttributable
                 EntityId = _customerResponse.EntityId,
                 CurrencyId = (TypeCurrency)CurrencyId,
                 Reference1 = reference,
-                CustomerCreditLineId = _customerResponse.CustomerCreditLineId
+                CustomerCreditLineId = _customerResponse.CustomerCreditLineId,
+                CustomerIdentification = _customerResponse.Identification!
             };
             var taskTransactionMaster = _repositoryTransactionMaster.PosMeInsert(transactionMaster);
             var taskPlus = _helper.PlusCounter();

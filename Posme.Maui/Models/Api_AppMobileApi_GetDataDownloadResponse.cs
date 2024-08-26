@@ -26,27 +26,27 @@ public class Api_AppMobileApi_GetDataDownloadCustomerResponse : BindableBase
     [DataMember]
     public int CustomerId { get; set; }
 
-    [DataMember] public int ComapnyId { get; set; }
+    [DataMember(Name = "companyID")] public int CompanyId { get; set; }
 
-    [DataMember] public int BranchId { get; set; }
+    [DataMember(Name = "branchID")] public int BranchId { get; set; }
 
-    [DataMember] public int EntityId { get; set; }
+    [DataMember(Name = "entityID")] public int EntityId { get; set; }
 
-    [DataMember] public string? CustomerNumber { get; set; }
+    [DataMember(Name = "customerNumber")] public string? CustomerNumber { get; set; }
 
-    [DataMember] public string? Identification { get; set; }
+    [DataMember(Name = "identification")] public string? Identification { get; set; }
 
-    [DataMember] public string? FirstName { get; set; }
+    [DataMember(Name = "firstName")] public string? FirstName { get; set; }
 
-    [DataMember] public string? LastName { get; set; }
+    [DataMember(Name = "lastName")] public string? LastName { get; set; }
 
-    [DataMember] public decimal Balance { get; set; }
+    [DataMember(Name = "balance")] public decimal Balance { get; set; }
 
-    [DataMember] public int CurrencyId { get; set; }
+    [DataMember(Name = "currencyID")] public int CurrencyId { get; set; }
 
-    [DataMember] public string? CurrencyName { get; set; }
+    [DataMember(Name="currencyName")] public string? CurrencyName { get; set; }
 
-    [DataMember] public int CustomerCreditLineId { get; set; }
+    [DataMember(Name = "customerCreditLineID")] public int CustomerCreditLineId { get; set; }
     public bool Modificado { get; set; }
 
     [NotMapped] public string? NombreCompleto => $"{FirstName} {LastName}";

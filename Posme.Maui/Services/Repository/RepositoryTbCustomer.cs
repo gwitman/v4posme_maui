@@ -34,7 +34,7 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<Api_AppM
     public async Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilterByInvoice()
     {
         var query = """
-                    select distinct tbc.CustomerId, tbc.ComapnyId, BranchId, tbc.EntityId, CustomerNumber, Identification, 
+                    select distinct tbc.CustomerId, tbc.CompanyId, BranchId, tbc.EntityId, CustomerNumber, Identification, 
                                  tbc.CustomerCreditLineId, FirstName, LastName,tbc.CurrencyName, tbc.CurrencyId, tbc.Balance, Modificado 
                     from tb_customers tbc join tb_document_credit tdc on tbc.EntityId = tdc.EntityId
                     """;
@@ -51,9 +51,9 @@ public class RepositoryTbCustomer(DataBase dataBase) : RepositoryFacade<Api_AppM
     public Task<List<Api_AppMobileApi_GetDataDownloadCustomerResponse>> PosMeFilterByCustomerInvoice(string search)
     {
         var query = $"""
-                     select distinct tbc.CustomerId, ComapnyId, BranchId, tbc.EntityId, CustomerNumber, Identification, 
+                     select tbc.CustomerId, tbc.CompanyId, BranchId, tbc.EntityId, CustomerNumber, Identification, 
                                      FirstName, LastName,tbc.CurrencyName, tbc.CurrencyId, tbc.Balance, Modificado 
-                     from tb_customers tbc join tb_document_credit tdc on tbc.EntityId = tdc.EntityId
+                     from tb_customers tbc
                      where tbc.CustomerNumber like '%{search}%' or tbc.FirstName like '%{search}%' or tbc.identification like '%{search}%'
                      """;
         return _dataBase.Database.QueryAsync<Api_AppMobileApi_GetDataDownloadCustomerResponse>(query);

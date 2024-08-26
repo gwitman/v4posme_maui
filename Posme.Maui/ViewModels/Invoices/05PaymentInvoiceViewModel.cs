@@ -87,7 +87,8 @@ public class PaymentInvoiceViewModel : BaseViewModel
             EntitySecondaryId = VariablesGlobales.User!.UserId.ToString(),
             TransactionNumber = codigo,
             CurrencyId = (TypeCurrency)dtoInvoice.Currency!.Key,
-            CustomerCreditLineId = dtoInvoice.CustomerResponse.CustomerCreditLineId
+            CustomerCreditLineId = dtoInvoice.CustomerResponse.CustomerCreditLineId,
+            CustomerIdentification = dtoInvoice.CustomerResponse.Identification!
         };
         transactionMaster.SubAmount = dtoInvoice.Balance - transactionMaster.Discount + transactionMaster.Taxi1;
 
@@ -97,7 +98,7 @@ public class PaymentInvoiceViewModel : BaseViewModel
 
         foreach (var item in dtoInvoice.Items)
         {
-            var findPrecioOriginal = await _repositoryItems.PosMeFindByItemNumber(item.ItemNumber);
+            var findPrecioOriginal = await _repositoryItems.PosMeFindByItemNumber(item.ItemNumber!);
             var detail = new TbTransactionMasterDetail
             {
                 Quantity = item.Quantity,
@@ -108,7 +109,8 @@ public class PaymentInvoiceViewModel : BaseViewModel
                 Discount = decimal.Zero,
                 Tax1 = decimal.Zero,
                 Componentid = (int)TypeComponent.Itme,
-                ComponentItemid = item.ItemId
+                ComponentItemId = item.ItemId,
+                ItemBarCode = item.BarCode
             };
             detail.Amount = detail.SubAmount - detail.Discount + detail.Tax1;
             listMasterDetail.Add(detail);

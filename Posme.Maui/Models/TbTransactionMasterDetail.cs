@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using System.Runtime.Serialization;
+using SQLite;
 
 namespace Posme.Maui.Models;
 
@@ -6,16 +7,31 @@ namespace Posme.Maui.Models;
 public class TbTransactionMasterDetail
 {
     [PrimaryKey, AutoIncrement] public int TransactionMasterDetailId { get; set; }
+
+    [DataMember(Name = "transactionMasterID")]
     public int TransactionMasterId { get; set; }
-    public int Componentid { get; set; }
-    public int ComponentItemid { get; set; }
-    public decimal Quantity { get; set; }
-    public decimal UnitaryCost { get; set; }
-    public decimal UnitaryPrice { get; set; }
-    public decimal SubAmount { get; set; }
-    public decimal Discount { get; set; }
-    public decimal Tax1 { get; set; }
-    public decimal Amount { get; set; }
-    public string Reference1 { get; set; } = string.Empty;
-    public string Reference2 { get; set; } = string.Empty;
+
+    [DataMember(Name = "componentID")] public int Componentid { get; set; }
+
+    [DataMember(Name = "componentItemID")] public int ComponentItemId { get; set; }
+
+    [DataMember(Name = "quantity")] public decimal Quantity { get; set; }
+
+    [DataMember(Name = "unitaryCost")] public decimal UnitaryCost { get; set; }
+
+    [DataMember(Name = "unityPrice")] public decimal UnitaryPrice { get; set; }
+
+    [DataMember(Name = "subAmount")] public decimal SubAmount { get; set; }
+
+    [DataMember(Name = "discount")] public decimal Discount { get; set; }
+
+    [DataMember(Name = "tax1")] public decimal Tax1 { get; set; }
+
+    [DataMember(Name = "amount")] public decimal Amount { get; set; }
+
+    [DataMember(Name = "itemBarCode")] public string ItemBarCode { get; set; } = string.Empty;
+
+    [DataMember(Name = "referencie1")] public string Reference1 { get; set; } = string.Empty;
+
+    [DataMember(Name = "referencie2")] public string Reference2 { get; set; } = string.Empty;
 }

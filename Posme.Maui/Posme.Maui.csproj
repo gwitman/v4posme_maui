@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
+        <TargetFrameworks>net8.0-ios;net8.0-android34.0</TargetFrameworks>
         <OutputType>Exe</OutputType>
         <UseMaui>true</UseMaui>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -22,6 +22,7 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
         <UseInterpreter Condition="$(TargetFramework.Contains('-ios')) AND '$(Configuration)' == 'Release'">True</UseInterpreter>
         <Nullable>enable</Nullable>
+        <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
@@ -95,17 +96,17 @@
 
     <ItemGroup>
         <PackageReference Include="BouncyCastle.Cryptography" Version="2.4.0" />
-        <PackageReference Include="CommunityToolkit.Maui" Version="9.0.1" />
+        <PackageReference Include="CommunityToolkit.Maui" Version="9.0.2" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0-preview.3.24172.9" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-preview.3.24172.9" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.80" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.80" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Plugin.BLE" Version="3.1.0" />
         <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-        <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
-        <PackageReference Include="System.Drawing.Common" Version="8.0.6" />
+        <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.9" />
+        <PackageReference Include="System.Drawing.Common" Version="8.0.8" />
         <PackageReference Include="System.Text.Json" Version="9.0.0-preview.3.24172.9" />
         <PackageReference Include="Unity" Version="5.11.10" />
         <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
@@ -113,13 +114,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="DevExpress.Maui.Controls" Version="23.2.6" />
-        <PackageReference Include="DevExpress.Maui.Core" Version="23.2.6" />
-        <PackageReference Include="DevExpress.Maui.Charts" Version="23.2.6" />
-        <PackageReference Include="DevExpress.Maui.CollectionView" Version="23.2.6" />
-        <PackageReference Include="DevExpress.Maui.Editors" Version="23.2.6" />
-        <PackageReference Include="DevExpress.Maui.DataGrid" Version="23.2.6" />
-        <PackageReference Include="DevExpress.Maui.Scheduler" Version="23.2.6" />
+        <PackageReference Include="DevExpress.Maui.Controls" Version="24.1.5" />
+        <PackageReference Include="DevExpress.Maui.Core" Version="24.1.5" />
+        <PackageReference Include="DevExpress.Maui.Charts" Version="24.1.5" />
+        <PackageReference Include="DevExpress.Maui.CollectionView" Version="24.1.5" />
+        <PackageReference Include="DevExpress.Maui.Editors" Version="24.1.5" />
+        <PackageReference Include="DevExpress.Maui.DataGrid" Version="24.1.5" />
+        <PackageReference Include="DevExpress.Maui.Scheduler" Version="24.1.5" />
         <TrimmableAssembly Include="DevExpress.Data.v23.2" />
     </ItemGroup>
 

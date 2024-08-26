@@ -88,7 +88,7 @@ public class RestApiAppMobileApi
         }
         catch (Exception ex)
         {
-            Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            Debug.WriteLine($"ERROR {ex.Message}");
             return false;
         }
     }
@@ -130,7 +130,15 @@ public class RestApiAppMobileApi
             var response = await _httpClient.SendAsync(req);
             response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
-            return responseBody;
+            if (response.IsSuccessStatusCode)
+            {
+                var helperCore = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
+                await helperCore.ZeroCounter();
+                return responseBody;
+            }
+
+            return "{'status': 'false'; 'message': 'error'}";
+
         }
         catch (HttpRequestException ex)
         {
