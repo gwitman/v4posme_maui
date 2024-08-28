@@ -9,7 +9,7 @@ namespace Posme.Maui.Services.SystemNames
     public enum TypeTransaction
     {
         TransactionInvoiceBilling = 19,
-        TransactionShare = 25
+        TransactionShare = 23
     }
 
     public enum TypeCurrency
