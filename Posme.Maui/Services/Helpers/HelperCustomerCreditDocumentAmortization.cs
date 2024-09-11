@@ -40,11 +40,11 @@ class HelperCustomerCreditDocumentAmortization
             {
                 if (string.IsNullOrWhiteSpace(resultado))
                 {
-                    resultado += $"{documentCreditAmortization.CreditAmortizationID}:{amountApply}";
+                    resultado += $"{documentCreditAmortization.CreditAmortizationId}:{amountApply}";
                 }
                 else
                 {
-                    resultado += $",{documentCreditAmortization.CreditAmortizationID}:{amountApply}";
+                    resultado += $",{documentCreditAmortization.CreditAmortizationId}:{amountApply}";
                 }
 
                 amountApply = decimal.Subtract(amountApply, documentCreditAmortization.Remaining);
@@ -55,11 +55,11 @@ class HelperCustomerCreditDocumentAmortization
             {
                 if (string.IsNullOrWhiteSpace(resultado))
                 {
-                    resultado += $"{documentCreditAmortization.CreditAmortizationID}:{amountApply}";
+                    resultado += $"{documentCreditAmortization.CreditAmortizationId}:{amountApply}";
                 }
                 else
                 {
-                    resultado += $",{documentCreditAmortization.CreditAmortizationID}:{amountApply}";
+                    resultado += $",{documentCreditAmortization.CreditAmortizationId}:{amountApply}";
                 }
 
                 documentCreditAmortization.Remaining = decimal.Subtract(documentCreditAmortization.Remaining, amountApply);                

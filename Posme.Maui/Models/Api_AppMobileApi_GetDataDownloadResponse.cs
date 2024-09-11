@@ -66,7 +66,7 @@ public class TbCompany
 [SQLite.Table("tb_document_credit")]
 public class Api_AppMobileApi_GetDataDownloadDocumentCreditResponse
 {
-    [PrimaryKey, AutoIncrement] public int CustomerCreditDocumentId { get; set; }
+    [PrimaryKey] public int CustomerCreditDocumentId { get; set; }
     public int EntityId { get; set; }
     public int CustomerCreditLineId { get; set; }
     public string? DocumentNumber { get; set; }
@@ -85,7 +85,8 @@ public class Api_AppMobileApi_GetDataDownloadDocumentCreditResponse
 [SQLite.Table("document_credit_amortization")]
 public class Api_AppMobileApi_GetDataDownloadDocumentCreditAmortizationResponse
 {
-    [PrimaryKey, AutoIncrement] public int CreditAmortizationID { get; set; }
+    [PrimaryKey] public int CreditAmortizationId { get; set; }
+    
     public string? CustomerNumber { get; set; }
 
     public string? FirstName { get; set; }

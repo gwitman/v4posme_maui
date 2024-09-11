@@ -132,8 +132,6 @@ public class RestApiAppMobileApi
             var responseBody = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
-                var helperCore = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
-                await helperCore.ZeroCounter();
                 return responseBody;
             }
 
