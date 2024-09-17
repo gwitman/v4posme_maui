@@ -4,22 +4,27 @@ using Newtonsoft.Json;
 using Posme.Maui.Models;
 using Posme.Maui.Services.SystemNames;
 using Posme.Maui.Services.Helpers;
+using Posme.Maui.Services.Repository;
+using Unity;
+
 namespace Posme.Maui.Services.Api;
 
 public class RestApiCoreAcount
 {
     private readonly HttpClient _httpClient = new();
+    private readonly IRepositoryTbParameterSystem _parameterSystem = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
     
     public async Task<bool> LoginMobile(string nickname, string password)
     {
-        Constantes.UrlRequestLogin = Constantes.UrlRequestLogin.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
-
+        var tempUrl = Constantes.UrlRequestLogin.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
+        var accesPoint = await _parameterSystem.PosMeFindAccessPoint();
+        tempUrl = tempUrl.Replace("{UrlBase}", accesPoint.Value);
         try
         {
             var nvc = new List<KeyValuePair<string, string>>();
             nvc.Add(new KeyValuePair<string, string>("txtNickname", nickname));
             nvc.Add(new KeyValuePair<string, string>("txtPassword", password));
-            var req = new HttpRequestMessage(HttpMethod.Post, Constantes.UrlRequestLogin)
+            var req = new HttpRequestMessage(HttpMethod.Post, tempUrl)
             {
                 Content = new FormUrlEncodedContent(nvc)
             };

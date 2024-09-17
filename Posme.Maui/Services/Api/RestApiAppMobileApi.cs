@@ -13,30 +13,29 @@ public class RestApiAppMobileApi
 {
     private readonly HttpClient _httpClient = new();
 
-    private readonly IRepositoryTbCustomer _repositoryTbCustomer =
-        VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
+    private readonly IRepositoryTbCustomer _repositoryTbCustomer = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCustomer>();
 
     private readonly IRepositoryItems _repositoryItems = VariablesGlobales.UnityContainer.Resolve<IRepositoryItems>();
 
-    private readonly IRepositoryParameters _repositoryParameters =
-        VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
+    private readonly IRepositoryParameters _repositoryParameters = VariablesGlobales.UnityContainer.Resolve<IRepositoryParameters>();
 
-    private readonly IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization =
-        VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
+    private readonly IRepositoryDocumentCreditAmortization _repositoryDocumentCreditAmortization = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCreditAmortization>();
 
-    private readonly IRepositoryDocumentCredit _repositoryDocumentCredit =
-        VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
+    private readonly IRepositoryDocumentCredit _repositoryDocumentCredit = VariablesGlobales.UnityContainer.Resolve<IRepositoryDocumentCredit>();
 
     private readonly IRepositoryTbCompany _repositoryTbCompany = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbCompany>();
 
     private readonly IRepositoryTbTransactionMaster _repositoryTbTransactionMaster = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMaster>();
+    
     private readonly IRepositoryTbTransactionMasterDetail _repositoryTbTransactionMasterDetail = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbTransactionMasterDetail>();
 
+    private readonly IRepositoryTbParameterSystem _parameterSystem = VariablesGlobales.UnityContainer.Resolve<IRepositoryTbParameterSystem>();
+    
     public async Task<bool> GetDataDownload()
     {
-        var helper = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
-        Constantes.UrlRequestDownload = Constantes.UrlRequestDownload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
-        Constantes.UrlRequestDownload = await helper.ParseUrl(Constantes.UrlRequestDownload);
+        var tempUrl = Constantes.UrlRequestDownload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
+        var accesPoint = await _parameterSystem.PosMeFindAccessPoint();
+        tempUrl = tempUrl.Replace("{UrlBase}", accesPoint.Value);
 
         if (VariablesGlobales.User is null)
         {
@@ -52,7 +51,7 @@ public class RestApiAppMobileApi
                 new("txtNickname", nickname),
                 new("txtPassword", password)
             };
-            var req = new HttpRequestMessage(HttpMethod.Post, Constantes.UrlRequestDownload)
+            var req = new HttpRequestMessage(HttpMethod.Post, tempUrl)
             {
                 Content = new FormUrlEncodedContent(nvc)
             };
@@ -97,7 +96,6 @@ public class RestApiAppMobileApi
     {
         try
         {
-            
             var nickname = VariablesGlobales.User!.Nickname!;
             var password = VariablesGlobales.User.Password!;
             var helper = VariablesGlobales.UnityContainer.Resolve<HelperCore>();
@@ -121,9 +119,10 @@ public class RestApiAppMobileApi
             };
             var content = new FormUrlEncodedContent(nvc);
 
-            Constantes.UrlUpload = Constantes.UrlUpload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
-            Constantes.UrlUpload = await helper.ParseUrl(Constantes.UrlUpload);
-            var req = new HttpRequestMessage(HttpMethod.Post, Constantes.UrlUpload)
+            var tempUrl = Constantes.UrlUpload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
+            var accesPoint = await _parameterSystem.PosMeFindAccessPoint();
+            tempUrl = tempUrl.Replace("{UrlBase}", accesPoint.Value);
+            var req = new HttpRequestMessage(HttpMethod.Post, tempUrl)
             {
                 Content = content
             };
@@ -136,7 +135,6 @@ public class RestApiAppMobileApi
             }
 
             return "{'status': 'false'; 'message': 'error'}";
-
         }
         catch (HttpRequestException ex)
         {
