@@ -42,6 +42,9 @@
       <AndroidSigningKeyAlias>posme</AndroidSigningKeyAlias>
       <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
       <AndroidSigningKeyPass>posme2024</AndroidSigningKeyPass>
+      <RunAOTCompilation>True</RunAOTCompilation>
+      <Optimize>True</Optimize>
+      <PublishTrimmed>True</PublishTrimmed>
     </PropertyGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-android')) and '$(Configuration)' == 'Release'">
@@ -50,6 +53,7 @@
       <AndroidSigningKeyAlias>posme</AndroidSigningKeyAlias>
       <AndroidSigningKeyPass>posme2024</AndroidSigningKeyPass>
       <AndroidPackageFormat>apk</AndroidPackageFormat>
+      <DebugSymbols>True</DebugSymbols>
     </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
