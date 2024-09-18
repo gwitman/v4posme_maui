@@ -42,9 +42,9 @@
       <AndroidSigningKeyAlias>posme</AndroidSigningKeyAlias>
       <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
       <AndroidSigningKeyPass>posme2024</AndroidSigningKeyPass>
-      <RunAOTCompilation>True</RunAOTCompilation>
+      <!--<RunAOTCompilation>True</RunAOTCompilation>
       <Optimize>True</Optimize>
-      <PublishTrimmed>True</PublishTrimmed>
+      <PublishTrimmed>True</PublishTrimmed>-->
     </PropertyGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-android')) and '$(Configuration)' == 'Release'">
@@ -55,6 +55,10 @@
       <AndroidPackageFormat>apk</AndroidPackageFormat>
       <DebugSymbols>True</DebugSymbols>
     </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
+	  <Optimize>True</Optimize>
+	</PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundScale="0.65" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#FFF" />
