@@ -67,19 +67,7 @@
                             Value="{Binding Contador}"
                             LabelText="Contador de Transacciones" />
                     </dx:DXBorder>
-                    <dx:DXBorder Margin="15"
-                                 BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
-                                 BorderThickness="0" CornerRadius="0">
-                        <dxe:TextEdit
-                            x:Name="TextName"
-                            HasError="{Binding PuntoAccesoHasError}"
-                            ErrorText="Debe especificar un punto de acceso..."
-                            IconColor="#006E98"
-                            StartIcon="textbox"
-                            IsErrorIconVisible="True"
-                            Text="{Binding PuntoAcceso}"
-                            LabelText="Punto de acceso" />
-                    </dx:DXBorder>
+                   
                     <dx:DXBorder Margin="15"
                                  BackgroundColor="{AppThemeBinding Light={StaticResource CardColor}, Dark={StaticResource CardColorDark}}"
                                  BorderThickness="0" CornerRadius="10">

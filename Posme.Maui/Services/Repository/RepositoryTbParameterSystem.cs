@@ -17,13 +17,7 @@ public class RepositoryTbParameterSystem(DataBase dataBase) : RepositoryFacade<T
         return dataBase.Database.Table<TbParameterSystem>()
             .FirstOrDefaultAsync(system => system.Name == Constantes.ParametroCounter);
     }
-
-    public Task<TbParameterSystem> PosMeFindAccessPoint()
-    {
-        return dataBase.Database.Table<TbParameterSystem>()
-            .FirstOrDefaultAsync(system => system.Name == Constantes.ParametroAccesPoint);
-    }
-
+   
     public Task<TbParameterSystem> PosMeFindPrinter()
     {
         return dataBase.Database.Table<TbParameterSystem>()

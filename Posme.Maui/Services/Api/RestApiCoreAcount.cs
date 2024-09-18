@@ -16,9 +16,7 @@ public class RestApiCoreAcount
     
     public async Task<bool> LoginMobile(string nickname, string password)
     {
-        var tempUrl = Constantes.UrlRequestLogin.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
-        var accesPoint = await _parameterSystem.PosMeFindAccessPoint();
-        tempUrl = tempUrl.Replace("{UrlBase}", accesPoint.Value);
+        var tempUrl = Constantes.UrlRequestLogin.Replace("{UrlBase}", VariablesGlobales.CompanyKey);        
         try
         {
             var nvc = new List<KeyValuePair<string, string>>();

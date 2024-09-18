@@ -11,8 +11,7 @@ public class PosMeParameterViewModel : BaseViewModel
 {
     private readonly IRepositoryTbParameterSystem _repositoryTbParameterSystem;
     private TbParameterSystem _posMeFindCounter = new();
-    private TbParameterSystem _posMeFindLogo = new();
-    private TbParameterSystem _posMeFindAccessPoint = new();
+    private TbParameterSystem _posMeFindLogo = new();    
     private TbParameterSystem _posmeFindPrinter = new();
     private TbParameterSystem _posmeFindCodigoAbono = new();
     private TbParameterSystem _posmeFindCodigFactura = new();
@@ -62,12 +61,6 @@ public class PosMeParameterViewModel : BaseViewModel
                 ShowImage = ImageSource.FromStream(() => new MemoryStream(imageBytes));
             }
 
-            _posMeFindAccessPoint = await _repositoryTbParameterSystem.PosMeFindAccessPoint();
-            if (!string.IsNullOrWhiteSpace(_posMeFindAccessPoint.Value))
-            {
-                PuntoAcceso = _posMeFindAccessPoint.Value;
-            }
-
             _posmeFindPrinter = await _repositoryTbParameterSystem.PosMeFindPrinter();
             if (!string.IsNullOrWhiteSpace(_posmeFindPrinter.Value))
             {
@@ -85,16 +78,17 @@ public class PosMeParameterViewModel : BaseViewModel
             {
                 CodigoFactura = _posmeFindCodigFactura.Value;
             }
+
         });
     }
 
     private bool Validate()
     {
-        PuntoAccesoHasError = string.IsNullOrWhiteSpace(PuntoAcceso);
+        
         PrinterHasError = string.IsNullOrWhiteSpace(Printer);
         AbonoHasError = string.IsNullOrWhiteSpace(CodigoAbono);
         FacturaHasError = string.IsNullOrWhiteSpace(CodigoFactura);
-        return !(PuntoAccesoHasError || PrinterHasError || AbonoHasError || FacturaHasError);
+        return !( PrinterHasError || AbonoHasError || FacturaHasError);
     }
 
     private bool _printerhasError;
@@ -105,13 +99,6 @@ public class PosMeParameterViewModel : BaseViewModel
         set => SetProperty(ref _printerhasError, value);
     }
 
-    private bool _puntoAccesoHasError;
-
-    public bool PuntoAccesoHasError
-    {
-        get => _puntoAccesoHasError;
-        set => SetProperty(ref _puntoAccesoHasError, value);
-    }
 
     private void OnSaveParameters(object obj)
     {
@@ -126,9 +113,7 @@ public class PosMeParameterViewModel : BaseViewModel
                 }
 
                 _posMeFindCounter.Value = Contador.ToString();
-                _repositoryTbParameterSystem.PosMeUpdate(_posMeFindCounter);
-                _posMeFindAccessPoint.Value = PuntoAcceso;
-                _repositoryTbParameterSystem.PosMeUpdate(_posMeFindAccessPoint);
+                _repositoryTbParameterSystem.PosMeUpdate(_posMeFindCounter);                
                 _posmeFindPrinter.Value = Printer;
                 _repositoryTbParameterSystem.PosMeUpdate(_posmeFindPrinter);
                 _posmeFindCodigFactura.Value = CodigoFactura;
@@ -170,14 +155,7 @@ public class PosMeParameterViewModel : BaseViewModel
         get => _logo;
         set => SetProperty(ref _logo, value);
     }
-
-    private string? _puntoAcceso;
-
-    public string? PuntoAcceso
-    {
-        get => _puntoAcceso;
-        set => SetProperty(ref _puntoAcceso, value);
-    }
+    
 
     private ImageSource? _showImage;
 

@@ -33,10 +33,7 @@ public class RestApiAppMobileApi
     
     public async Task<bool> GetDataDownload()
     {
-        var tempUrl = Constantes.UrlRequestDownload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
-        var accesPoint = await _parameterSystem.PosMeFindAccessPoint();
-        tempUrl = tempUrl.Replace("{UrlBase}", accesPoint.Value);
-
+        var tempUrl = Constantes.UrlRequestDownload.Replace("{UrlBase}", VariablesGlobales.CompanyKey);
         if (VariablesGlobales.User is null)
         {
             return false;
@@ -119,9 +116,7 @@ public class RestApiAppMobileApi
             };
             var content = new FormUrlEncodedContent(nvc);
 
-            var tempUrl = Constantes.UrlUpload.Replace("{CompanyKey}", VariablesGlobales.CompanyKey);
-            var accesPoint = await _parameterSystem.PosMeFindAccessPoint();
-            tempUrl = tempUrl.Replace("{UrlBase}", accesPoint.Value);
+            var tempUrl = Constantes.UrlUpload.Replace("{UrlBase}", VariablesGlobales.CompanyKey);            
             var req = new HttpRequestMessage(HttpMethod.Post, tempUrl)
             {
                 Content = content

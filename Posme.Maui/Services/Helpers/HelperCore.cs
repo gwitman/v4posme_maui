@@ -22,13 +22,6 @@ public class HelperCore(IRepositoryTbParameterSystem repositoryParameters)
         await repositoryParameters.PosMeUpdate(find);
     }
 
-    public async Task<string> ParseUrl(string url)
-    {
-        var find = await repositoryParameters.PosMeFindAccessPoint();
-        var urlTaret = url.Replace(Constantes.UrlBase, find.Value);
-        return urlTaret;
-    }
-
     public async Task<string> GetCodigoAbono()
     {
         var find = await repositoryParameters.PosMeFindCodigoAbono();

@@ -22,8 +22,7 @@ public class DataBase
             var parametrosDefault = new List<TbParameterSystem>
             {
                 new() { Name = "COUNTER", Description = "Contador Global", Value = "0" },
-                new() { Name = "LOGO", Description = "Logo de la aplicación", Value = "" },
-                new() { Name = "ACCESS_POINT", Description = "Punto de acceso", Value = "https://posme.net/v4posme/" },
+                new() { Name = "LOGO", Description = "Logo de la aplicación", Value = "" },                
                 new() { Name = "PRINTER", Description = "Impresora", Value = "Printer" },
                 new() { Name = "TRANSACTION_SHARE", Description = "Número de abono", Value = "ABO-0001" },
                 new() { Name = "TRANSACTION_INVOICE", Description = "Número de factura", Value = "FAC-0001" }
